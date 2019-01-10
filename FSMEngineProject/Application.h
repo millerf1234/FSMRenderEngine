@@ -25,12 +25,13 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#define GLFW_INCLUDE_GLCOREARB
 #include "ThirdParty/easyloggingpp/include/easylogging++.h"
 #include "ThirdParty/GLFW/glfw3.h"
 
 class Application final {
 public:
-    Application();
+    Application(int argc = 0, char ** argv = nullptr);
     ~Application();
 
     void launch();

@@ -7,11 +7,9 @@
 
 #include <memory>
 #include "Application.h"
-#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
-INITIALIZE_EASYLOGGINGPP
+
 
 int main(int argc, char ** argv) {
-    START_EASYLOGGINGPP(argc, argv);
-    std::unique_ptr<Application> app = std::make_unique<Application>();
+    std::unique_ptr<Application> app = std::make_unique<Application>(argc, argv);
     app->launch();
 }

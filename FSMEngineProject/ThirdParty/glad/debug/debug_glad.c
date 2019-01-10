@@ -60,11 +60,9 @@
 #include "debug_glad.h" //Modified from the original ' #include "glad.h" '
 #if defined USE_DEBUG_    //Matching endif statement at bottom of file
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 void _pre_call_callback_default(const char *name, void *funcptr, int len_args, ...) {
 	(void)name;

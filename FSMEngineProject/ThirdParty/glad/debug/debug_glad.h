@@ -120,7 +120,7 @@ typedef void (* GLADcallback)(const char *name, void *funcptr, int len_args, ...
 
 GLAPI void glad_set_pre_callback(GLADcallback cb);
 GLAPI void glad_set_post_callback(GLADcallback cb);
-#include "KHR/khrplatform.h" //This line was changed from ' #include "khrplatform.h" '
+#include "..\KHR\khrplatform.h" //This line was changed from ' #include "khrplatform.h" '
 typedef unsigned int GLenum;
 typedef unsigned char GLboolean;
 typedef unsigned int GLbitfield;

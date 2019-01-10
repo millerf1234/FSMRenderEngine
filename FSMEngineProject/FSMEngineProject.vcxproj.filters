@@ -43,6 +43,12 @@
     <Filter Include="Notes">
       <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{14cbad73-a6a3-42dc-943b-1c6f691322cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{c3961245-a422-4a22-b27a-ea2f150e3f56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuildSettings.h">
@@ -65,6 +71,12 @@
     </ClInclude>
     <ClInclude Include="ThirdParty\GLFW\glfw3.h">
       <Filter>ThirdParty\glfw\include</Filter>
+    </ClInclude>
+    <ClInclude Include="EasyLogConfiguration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalGLIncludes.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

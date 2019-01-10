@@ -15,6 +15,16 @@
 //  http://muflihun.com
 //
 
+
+//////////////////////////////////////////////////////////////
+//  FSMEngine 
+//  Additional Logging Configuration Options
+
+#define ELPP_NO_LOG_TO_FILE	//Disable logging to file 
+
+///////////////////////////////////////////////////////////////
+
+
 #ifndef EASYLOGGINGPP_H
 #define EASYLOGGINGPP_H
 // Compilers and C++0x/C++11 Evaluation

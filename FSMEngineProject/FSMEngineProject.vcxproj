@@ -85,6 +85,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -117,6 +120,8 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="BuildSettings.h" />
+    <ClInclude Include="EasyLogConfiguration.h" />
+    <ClInclude Include="GlobalGLIncludes.h" />
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h" />
     <ClInclude Include="ThirdParty\glad\debug\debug_glad.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
