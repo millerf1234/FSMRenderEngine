@@ -42,7 +42,7 @@
 ////                           
 ////        After running this loader several times I noticed that early on the first time
 ////        an OpenGL function is called, the state returned by glGetError is that of having
-////        performed an illegal operation. I did some sluthing and it appears this error is 
+////        performed an illegal operation. I did some sleuthing and it appears this error is 
 ////        generated between lines 7251 and 7252 (in the unmodified version of this file),
 ////        which is right after where OpenGL version 1.0 is loaded. I have a hunch this might
 ////        have to do with the macro GLAD uses for every opengl function that calls the pre- and
@@ -56,8 +56,7 @@
 
 
 //I also added these next few lines to prevent both this version and non-debug GLAD from compiling
-
-#include "..\..\BuildSettings.h"
+#include "..\..\..\BuildSettings.h"
 #include "debug_glad.h" //Modified from the original ' #include "glad.h" '
 #if defined USE_DEBUG_    //Matching endif statement at bottom of file
 

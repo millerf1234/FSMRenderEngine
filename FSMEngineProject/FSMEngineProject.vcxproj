@@ -147,9 +147,15 @@
     <None Include="glfw3.ilk" />
     <None Include="glfw3.pdb" />
     <None Include="glfw3dll.exp" />
+    <None Include="Notes\WINDOWS2000_tips_windows_graphics_programming_win32_gdi_and_directd.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3dll.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="myeasylog.log" />
+    <Text Include="Notes\NotesOnMSVC.txt" />
+    <Text Include="Notes\Websites_Blogs_Fourms_etc.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

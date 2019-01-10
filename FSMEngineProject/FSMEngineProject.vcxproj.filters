@@ -37,6 +37,12 @@
     <Filter Include="ThirdParty\glfw\include">
       <UniqueIdentifier>{e7818402-4794-4b01-bb7b-edd694fe5a30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LogMessages">
+      <UniqueIdentifier>{d095ead3-d4e5-4b36-9087-c7fbcbfed94f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notes">
+      <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuildSettings.h">
@@ -91,10 +97,24 @@
     <None Include="glfw3dll.exp">
       <Filter>ThirdParty\glfw</Filter>
     </None>
+    <None Include="Notes\WINDOWS2000_tips_windows_graphics_programming_win32_gdi_and_directd.pdf">
+      <Filter>Notes</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3dll.lib">
       <Filter>ThirdParty\glfw</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="myeasylog.log">
+      <Filter>LogMessages</Filter>
+    </Text>
+    <Text Include="Notes\NotesOnMSVC.txt">
+      <Filter>Notes</Filter>
+    </Text>
+    <Text Include="Notes\Websites_Blogs_Fourms_etc.txt">
+      <Filter>Notes</Filter>
+    </Text>
   </ItemGroup>
 </Project>
