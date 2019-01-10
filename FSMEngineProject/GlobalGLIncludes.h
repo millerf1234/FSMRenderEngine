@@ -23,8 +23,16 @@
 //
 //
 //   References:
-//            glad generator links
+//            glad generator links  (Note that additional OpenGL extensions are made available by
+//                                   the inclusion of the file "glcorearb.h" to the same folder as
+//                                   the system's "gl.h" folder was located. Thus it is not necessary
+//                                   to try to have glad load any extensions)
 //
+//                  GLAD DEBUG:
+//                     http://glad.dav1d.de/#profile=core&api=gl%3D4.6&api=gles1%3Dnone&api=gles2%3Dnone&api=glsc2%3Dnone&language=c-debug&specification=gl&localfiles=on&loader=on
+//                  GLAD RELEASE:
+//                     http://glad.dav1d.de/#profile=core&api=gl%3D4.6&api=gles1%3Dnone&api=gles2%3Dnone&api=glsc2%3Dnone&language=c&specification=gl&localfiles=on&loader=on
+//                                   
 //
 //            glm reference:  https://github.com/g-truc/glm/blob/0.9.9.2/doc/manual.pdf
 //
@@ -38,6 +46,37 @@
 
 #ifndef GLOBAL_GL_INCLUDES_H_
 #define GLOBAL_GL_INCLUDES_H_
+
+
+////////////////////////////////////////////////////
+//  Include glad.h based off build configuration  //         (GLM is mathematics utility library)
+////////////////////////////////////////////////////
+#include "BuildSettings.h"  //Get the build settings
+
+////IMPORTANT! IF building this project in an environment other than microsoft's Visual Studio,
+//             chances are that the build will fail and to fix one of the sets of "glad.h" and "glad.c"
+//             need to be removed.
+
+//MSVC defines the macro '_DEBUG'. 
+//This application defines the macro 'USE_DEBUG_'.
+
+//If build environment is visual studio
+#if defined _MSC_VER
+  //If building for debug 
+  #if defined _DEBUG
+    #include "ThirdParty\glad\debug\glad.h"
+  #else 
+    #include "ThirdParty\glad\release\glad.h"
+  #endif //_DEBUG
+#else //If _MSC_VER was not defined, then build environment isn't visual studio
+  //So instead here we just check to see if the project's own debug macro is defined
+  #if defined USE_DEBUG_
+    #include "ThirdParty\glad\debug\glad.h"
+  #else 
+    #include "ThirdParty\glad\release\glad.h"
+  #endif //USE_DEBUG_
+#endif //_DEBUG
+
 
 
 //////////////////////////////

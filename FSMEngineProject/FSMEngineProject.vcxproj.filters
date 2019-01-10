@@ -63,9 +63,6 @@
     <ClInclude Include="ThirdParty\glad\KHR\khrplatform.h">
       <Filter>ThirdParty\glad\KHR</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\glad\debug\debug_glad.h">
-      <Filter>ThirdParty\glad\debug</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\glad\release\glad.h">
       <Filter>ThirdParty\glad\release</Filter>
     </ClInclude>
@@ -78,6 +75,9 @@
     <ClInclude Include="GlobalGLIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\glad\debug\glad.h">
+      <Filter>ThirdParty\glad\debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -89,11 +89,11 @@
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
       <Filter>ThirdParty\easylogging++</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\glad\debug\debug_glad.c">
-      <Filter>ThirdParty\glad\debug</Filter>
-    </ClCompile>
     <ClCompile Include="ThirdParty\glad\release\glad.c">
       <Filter>ThirdParty\glad\release</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\glad\debug\glad.c">
+      <Filter>ThirdParty\glad\debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

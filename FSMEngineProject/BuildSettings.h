@@ -7,6 +7,9 @@
 
 
 
+//#if defined _DEBUG //MSVC defined macro for building in debug mode
+
+
 
 //This macro is used to enable/disable debugging across the entire project. Turning this
 //macro on will cause the OpenGL context to operate in a 'debug' mode. Also, if the 
@@ -20,6 +23,8 @@
 //this macro be undefined will cause the release version of these libraries to be linked instead.
 #define USE_DEBUG_
 
+
+
 //The macro 'FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_' specifically affects the behavior of the
 //OpenGL context. Defining this macro will cause the context to be synchronized with the application
 //so that any messages/warnings/errors reported by the context will be reported close to the code/operation
@@ -27,7 +32,7 @@
 //could cause a dramatic performance boost but could also result in context messages to be reported 
 //long after the Application event that triggered them. It is recommended to leave this enabled while
 //debugging unless absolutely necessary. 
-//This macro will only be used if the 'USE_DEBUG_' macro is defined.
+//This macro will only have an effect if the 'USE_DEBUG_' macro is defined.
 #define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_
 
 
