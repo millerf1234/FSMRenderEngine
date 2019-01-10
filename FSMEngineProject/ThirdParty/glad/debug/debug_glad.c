@@ -56,8 +56,8 @@
 
 
 //I also added these next few lines to prevent both this version and non-debug GLAD from compiling
-//#include "c:/Users/Forrest/source/repos/OpenGL_GLFW_Project/OpenGL_GLFW_Project/DebugSettings.h"
-#include "../../DebugSettings.h"
+
+#include "..\..\BuildSettings.h"
 #include "debug_glad.h" //Modified from the original ' #include "glad.h" '
 #if defined USE_DEBUG_    //Matching endif statement at bottom of file
 

@@ -40,8 +40,7 @@
 
 
 //I also added these next few lines to prevent both this version and debug GLAD from compiling
-//#include "c:/Users/Forrest/source/repos/OpenGL_GLFW_Project/OpenGL_GLFW_Project/DebugSettings.h"
-#include "../../DebugSettings.h"
+#include "..\..\..\BuildSettings.h"
 #ifndef USE_DEBUG_    //Matching endif statement at bottom of file
 
 

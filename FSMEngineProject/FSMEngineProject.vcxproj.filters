@@ -9,9 +9,92 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{947e5c71-10cc-4d90-b687-4749a8d92860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\easylogging++">
+      <UniqueIdentifier>{8055b678-1fd7-4fa3-8d4a-a86892bbe60b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glad">
+      <UniqueIdentifier>{85c3f23a-429e-451e-9d19-69ce3e8501d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glad\debug">
+      <UniqueIdentifier>{e258d398-f08c-45b8-ade6-376baae69f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glad\KHR">
+      <UniqueIdentifier>{7b39a6e0-4244-4d38-9cea-61f3700bcf4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glad\release">
+      <UniqueIdentifier>{3300dc7d-7272-4732-8faa-198b4d5438f8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ThirdParty\glfw">
+      <UniqueIdentifier>{7cf2abe4-fa2a-40b7-bbd4-edde694d094c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glfw\include">
+      <UniqueIdentifier>{e7818402-4794-4b01-bb7b-edd694fe5a30}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BuildSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h">
+      <Filter>ThirdParty\easylogging++</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glad\KHR\khrplatform.h">
+      <Filter>ThirdParty\glad\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glad\debug\debug_glad.h">
+      <Filter>ThirdParty\glad\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glad\release\glad.h">
+      <Filter>ThirdParty\glad\release</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\GLFW\glfw3.h">
+      <Filter>ThirdParty\glfw\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
+      <Filter>ThirdParty\easylogging++</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\glad\debug\debug_glad.c">
+      <Filter>ThirdParty\glad\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\glad\release\glad.c">
+      <Filter>ThirdParty\glad\release</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="glfw3.dll">
+      <Filter>ThirdParty\glfw</Filter>
+    </None>
+    <None Include="glfw3.ilk">
+      <Filter>ThirdParty\glfw</Filter>
+    </None>
+    <None Include="glfw3.pdb">
+      <Filter>ThirdParty\glfw</Filter>
+    </None>
+    <None Include="glfw3dll.exp">
+      <Filter>ThirdParty\glfw</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="glfw3dll.lib">
+      <Filter>ThirdParty\glfw</Filter>
+    </Library>
   </ItemGroup>
 </Project>

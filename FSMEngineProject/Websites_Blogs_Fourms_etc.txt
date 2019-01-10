@@ -1,0 +1,21 @@
+
+
+//  After looking at the GLFW source code, I think there might be a chance that a hardware cursor is already being used perhaps.
+
+
+//  Windows GDI reference   (This is somewhat promising but also might have been deprecated long long ago... )
+https://docs.microsoft.com/en-us/windows/desktop/gdi/windows-gdi
+
+
+
+//This source is much more recent, but the thing it is talking about might not even be enabling/using hardware cursor
+https://j00ru.vexillium.org/2013/07/changing-the-cursor-shape-in-windows-proven-difficult-by-nvidia-and-amd/
+
+
+//Line 74 here shows the hardware cursor getting enabled, but it's an empty function call in the code? Perhaps some secret windows 
+//behind-the-scenes trickery
+https://github.com/liballeg/allegro5/blob/51edfee47fb0cef682176365d59d52a3fd71a4ea/src/win/wmouse.c
+
+
+//Windows hardware driver interface? Could be promising 
+https://docs.microsoft.com/en-us/windows-hardware/drivers/hid/hid-clients-supported-in-windows

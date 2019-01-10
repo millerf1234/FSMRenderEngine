@@ -1,0 +1,20 @@
+
+
+
+  Notes and information pertaining to potential Project Configuation, Properties and Settings 
+
+  /////////////////////////////////
+// Working with Project Properties //
+  /////////////////////////////////
+  https://docs.microsoft.com/en-us/cpp/ide/working-with-project-properties?view=vs-2017
+
+  /////////////////////////////
+// Compiler Optimization flags //
+  /////////////////////////////
+
+ /Ob{0|1|2}   (affects 'inline', '__inline', and '__forceinline' behavior, will be set to /Ob2
+                   if '/Ox' [Enable Most Speed Optimizations]  is used)
+https://docs.microsoft.com/en-us/cpp/build/reference/ob-inline-function-expansion?view=vs-2017
+
+ /Ox
+  https://docs.microsoft.com/en-us/cpp/build/reference/ox-full-optimization?view=vs-2017

@@ -40,7 +40,7 @@
 
 
 //I am adding this include statement and the following header guard
-#include "../../DebugSettings.h"  //Used to see if project is in debug mode
+#include "..\..\..\BuildSettings.h"  //Used to see if project is in debug mode
 #ifndef USE_DEBUG_    
 //Closing Statement at end of file
 
