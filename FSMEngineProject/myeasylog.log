@@ -1,9 +1,146 @@
-2019-01-10 10:28:33,838 INFO [default] Constructor for application called!
-
-2019-01-10 10:28:33,941 INFO [default] Application Launched!
-2019-01-10 10:40:54,186 INFO [default] Constructor for application called!
-
-2019-01-10 10:40:54,344 INFO [default] Application Launched!
-2019-01-10 10:46:23,410 INFO [default] Constructor for application called!
-
-2019-01-10 10:46:23,545 INFO [default] Application Launched!
+2019-01-10 19:00:13,796 WARNING [default] M y   f i r s t   u l t i m a t e   l o g   m e s s a g e   123   222   [1 ]  
+2019-01-10 19:00:13,800 INFO [default] M y   f i r s t   u l t i m a t e   l o g   m e s s a g e   %   % v   123   222  
+2019-01-10 19:00:13,811 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 19:00:13,813 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 19:00:13,822 DEBUG [performance1] [Forrest@FMPC] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:39] 
+2019-01-10 19:00:13,828 INFO [MsgLog] Application Launched! 
+2019-01-10 19:03:21,358 INFO [MsgLog] Application is closing 
+2019-01-10 20:19:12,247 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 20:19:12,252 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 20:19:12,254 INFO [MsgLog] Application Launched! 
+2019-01-10 20:19:20,817 INFO [MsgLog] Application is closing 
+2019-01-10 20:50:31,443 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 20:50:31,450 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 20:50:31,457 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 20:50:31,459 INFO [MsgLog] Application Launched! 
+2019-01-10 20:50:44,293 INFO [MsgLog] Application is closing 
+2019-01-10 22:49:57,316 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 22:49:57,318 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 22:49:57,323 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 22:49:57,325 INFO [MsgLog] Application Launched! 
+2019-01-10 22:50:07,620 INFO [MsgLog] Application is closing 
+2019-01-10 22:54:26,706 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 22:54:26,709 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 22:54:26,714 DEBUG [MsgLog] [Forrest@FMPC] [class std::optional<class std::filesystem::path> __cdecl EASYLOGPP_CONFIGURATION_INTERNAL::getLogFileDirectory(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:202] 
+Current working directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+ 
+2019-01-10 22:54:26,737 DEBUG [MsgLog] [Forrest@FMPC] [class std::optional<class std::filesystem::path> __cdecl EASYLOGPP_CONFIGURATION_INTERNAL::getLogFileDirectory(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:215] 
+Timetag string is:  _010_2019_22_54_26 
+2019-01-10 22:54:26,748 DEBUG [MsgLog] [Forrest@FMPC] [class std::optional<class std::filesystem::path> __cdecl EASYLOGPP_CONFIGURATION_INTERNAL::getLogFileDirectory(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:217] 
+Timetag string after removing spaces is:  _010_2019_22_54_26 
+2019-01-10 22:54:26,759 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 22:54:26,760 INFO [MsgLog] Application Launched! 
+2019-01-10 22:58:20,996 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 22:58:21,999 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 22:58:21,003 INFO [MsgLog] 
+Current working directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+ 
+2019-01-10 22:58:21,008 INFO [MsgLog] 
+Timetag string is:  _010_2019_22_58_21 
+2019-01-10 22:58:21,011 INFO [MsgLog] 
+Timetag string after removing spaces is:  _010_2019_22_58_21 
+2019-01-10 22:58:21,017 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 22:58:21,019 INFO [MsgLog] Application Launched! 
+2019-01-10 22:59:57,547 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 22:59:57,551 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 22:59:57,555 INFO [MsgLog] 
+Current working directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+ 
+2019-01-10 22:59:57,561 INFO [MsgLog] 
+Timetag string is:  _010_2019_22_59_57 
+2019-01-10 22:59:57,564 INFO [MsgLog] 
+Timetag string after removing spaces is:  _010_2019_22_59_57 
+2019-01-10 22:59:57,568 INFO [MsgLog] 
+Log files for this program will be stored in folder:
+	 C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject_010_2019_22_59_57 
+2019-01-10 22:59:57,577 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 22:59:57,580 INFO [MsgLog] Application Launched! 
+2019-01-10 23:02:10,203 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 23:02:10,207 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 23:02:10,214 INFO [MsgLog] 
+Current working directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\ 
+ 
+2019-01-10 23:02:10,219 INFO [MsgLog] 
+Timetag string is:  _010_2019_23_02_10 
+2019-01-10 23:02:10,222 INFO [MsgLog] 
+Timetag string after removing spaces is:  _010_2019_23_02_10 
+2019-01-10 23:02:10,226 INFO [MsgLog] 
+Log files for this program will be stored in folder:
+	 C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\_010_2019_23_02_10 
+2019-01-10 23:02:10,235 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 23:02:10,237 INFO [MsgLog] Application Launched! 
+2019-01-10 23:02:38,754 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 23:02:38,758 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 23:02:38,761 INFO [MsgLog] 
+Current working directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS_ 
+ 
+2019-01-10 23:02:38,766 INFO [MsgLog] 
+Timetag string is:  _010_2019_23_02_38 
+2019-01-10 23:02:38,768 INFO [MsgLog] 
+Timetag string after removing spaces is:  _010_2019_23_02_38 
+2019-01-10 23:02:38,771 INFO [MsgLog] 
+Log files for this program will be stored in folder:
+	 C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS__010_2019_23_02_38 
+2019-01-10 23:02:38,778 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 23:02:38,780 INFO [MsgLog] Application Launched! 
+2019-01-10 23:02:56,278 INFO [MsgLog] Application is closing 
+2019-01-10 23:03:54,515 INFO [MsgLog] Application is launching...
+ 
+2019-01-10 23:03:54,517 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-10 23:03:54,520 INFO [MsgLog] 
+Current working directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS_\ 
+ 
+2019-01-10 23:03:54,524 INFO [MsgLog] 
+Timetag string is:  _010_2019_23_03_54 
+2019-01-10 23:03:54,527 INFO [MsgLog] 
+Timetag string after removing spaces is:  _010_2019_23_03_54 
+2019-01-10 23:03:54,531 INFO [MsgLog] 
+Log files for this program will be stored in folder:
+	 C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS_\_010_2019_23_03_54 
+2019-01-10 23:03:54,538 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-10 23:03:54,539 INFO [MsgLog] Application Launched! 
+2019-01-11 00:20:08,720 INFO [MsgLog] Application is launching...
+ 
+2019-01-11 00:20:08,722 INFO [MsgLog] 
+Current Working Directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject 
+2019-01-11 00:20:08,724 INFO [MsgLog] 
+Current working directory is:  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS\ 
+ 
+2019-01-11 00:20:08,729 INFO [MsgLog] 
+Timetag string is:  2019_011_00_20_08 
+2019-01-11 00:20:08,733 INFO [MsgLog] 
+Timetag string after removing spaces is:  2019_011_00_20_08 
+2019-01-11 00:20:08,736 INFO [MsgLog] 
+Log files for this program will be stored in folder:
+	 C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS\2019_011_00_20_08 
+2019-01-11 00:20:08,744 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-11 00:20:08,747 INFO [MsgLog] Application Launched! 
+2019-01-11 00:20:19,332 INFO [MsgLog] Application is closing 

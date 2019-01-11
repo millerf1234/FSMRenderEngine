@@ -49,11 +49,29 @@
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{c3961245-a422-4a22-b27a-ea2f150e3f56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utility\Filepath">
+      <UniqueIdentifier>{a5aab355-8a84-4eff-a482-bbe5b23db19e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SetupAndConfiguration">
+      <UniqueIdentifier>{780c395d-e4fd-4809-b0a2-c1d83ad99d3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{800e60c4-aca0-494c-9941-b5062a7522e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Debug">
+      <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\CallbackFunctions">
+      <UniqueIdentifier>{f1c5edef-8ff1-4497-9b8c-f9af9e1981bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\CallbackFunctions\ErrorCallback">
+      <UniqueIdentifier>{6674a74a-3864-4dc4-81ea-da281ea9c265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\CallbackFunctions\MonitorEventCallback">
+      <UniqueIdentifier>{8a9adf10-95b3-4d25-91b2-35d61f61d280}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BuildSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -69,14 +87,35 @@
     <ClInclude Include="ThirdParty\GLFW\glfw3.h">
       <Filter>ThirdParty\glfw\include</Filter>
     </ClInclude>
-    <ClInclude Include="EasyLogConfiguration.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalGLIncludes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\glad\debug\glad.h">
       <Filter>ThirdParty\glad\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildSettings.h">
+      <Filter>Header Files\SetupAndConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="EasyLogConfiguration.h">
+      <Filter>Header Files\SetupAndConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="UniversalIncludes.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GLIncludes.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="FilepathWrapper.h">
+      <Filter>Source Files\Utility\Filepath</Filter>
+    </ClInclude>
+    <ClInclude Include="JoystickStatePrinter.h">
+      <Filter>Source Files\Utility\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMCallbackInitializer.h">
+      <Filter>Source Files\Engine\CallbackFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMErrorCallback.h">
+      <Filter>Source Files\Engine\CallbackFunctions\ErrorCallback</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMMonitorEventCallback.h">
+      <Filter>Source Files\Engine\CallbackFunctions\MonitorEventCallback</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +133,18 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\glad\debug\glad.c">
       <Filter>ThirdParty\glad\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="FilepathWrapper.cpp">
+      <Filter>Source Files\Utility\Filepath</Filter>
+    </ClCompile>
+    <ClCompile Include="JoystickStatePrinter.cpp">
+      <Filter>Source Files\Utility\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMCallbackInitializer.cpp">
+      <Filter>Source Files\Engine\CallbackFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMonitorEventCallback.cpp">
+      <Filter>Source Files\Engine\CallbackFunctions\MonitorEventCallback</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

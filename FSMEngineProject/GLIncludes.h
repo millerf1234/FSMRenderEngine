@@ -1,4 +1,4 @@
-//  File:                   GlobalGLIncludes.h
+//  File:                   GLIncludes.h
 //
 //  Important Consideration:    This file should be included BEFORE the 'glfw.h' library is 
 //                              included in any file that requires 'glfw.h'
@@ -44,8 +44,8 @@
 
 #pragma once
 
-#ifndef GLOBAL_GL_INCLUDES_H_
-#define GLOBAL_GL_INCLUDES_H_
+#ifndef GL_INCLUDES_H_
+#define GL_INCLUDES_H_
 
 
 ////////////////////////////////////////////////////
@@ -124,4 +124,4 @@
 
 
 
-#endif //GLOBAL_GL_INCLUDES_H_
+#endif //GL_INCLUDES_H_

@@ -7,7 +7,7 @@
 //  Copyright (c) 2012-2018 Muflihun Labs
 //  Copyright (c) 2012-2018 @abumusamq
 //
-//  This library is released under the MIT Licence.
+//  This library is released under the MIT License.
 //  https://github.com/muflihun/easyloggingpp/blob/master/LICENSE
 //
 //  https://github.com/muflihun/easyloggingpp
@@ -17,12 +17,39 @@
 
 
 //////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 //  FSMEngine 
 //  Additional Logging Configuration Options
+//////////////////////////////////////////////////////////////
 
-#define ELPP_NO_LOG_TO_FILE	//Disable logging to file 
+//#define ELPP_NO_LOG_TO_FILE	//Disable logging to file 
+
+//Disable verbose logging
+#define ELPP_DISABLE_VERBOSE_LOGS 
+
+#define ELPP_STL_LOGGING 1
+#define ELPP_LOG_STD_ARRAY 1  //Must have ELPP_STL_LOGGING defined
+
+
+//#define ELPP_SYSLOG  //Not supported on Windows, requires header file <syslog.h>
+
+//Logging flag values (I only wrote down a few of them):
+//   NewLineForContainer -------------------------->      1
+//   ImmediateFlush ------------------------------->     16
+//   ColoredTerminalOutput ------------------------>     64      (only has effect if OS supports color terminal)
+//   MultiLoggerSupport --------------------------->    128 
+//   HierarchicalLogging -------------------------->   2048      (Not able to work simultaneously with Verbose logging)
+//   CreateLoggerAutomatically -------------------->   4096
+//   AutoSpacing----------------------------------->   8192
+//   FixedTimeFormat------------------------------->  16384
+#define ELPP_DEFAULT_LOGGING_FLAGS  (1 | 64 | 128 | 2048 | 4096 | 8192 | 16384) 
+
+#define ELPP_FEATURE_PERFORMANCE_TRACKING  //Enable performance-tracking logging
 
 ///////////////////////////////////////////////////////////////
+//////    End of FSMEngine settings configuration
+///////////////////////////////////////////////////////////////
+
 
 
 #ifndef EASYLOGGINGPP_H
@@ -350,7 +377,7 @@ ELPP_INTERNAL_DEBUGGING_OUT_INFO << ELPP_INTERNAL_DEBUGGING_MSG(internalInfoStre
 #endif  // (!(ELPP_CXX0X || ELPP_CXX11))
 // Headers
 #if defined(ELPP_SYSLOG)
-#   include <syslog.h>
+#include <syslog.h>
 #endif  // defined(ELPP_SYSLOG)
 #include <ctime>
 #include <cstring>
@@ -646,7 +673,7 @@ enum class ConfigurationType : base::type::EnumType {
   ToStandardOutput = 4,
   /// @brief Determines format of logging corresponding level and logger.
   Format = 8,
-  /// @brief Determines log file (full path) to write logs to for correponding level and logger
+  /// @brief Determines log file (full path) to write logs to for corresponding level and logger
   Filename = 16,
   /// @brief Specifies precision of the subsecond part. It should be within range (1-6).
   SubsecondPrecision = 32,
