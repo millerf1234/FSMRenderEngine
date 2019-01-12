@@ -20,12 +20,11 @@
 //  Date:            January 10, 2019
 //
 
+//Disclaimer:       Sorry in advance for how confusing this code is, I was confused while writing it...
+
 
 #pragma once
 
-//https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
-#pragma warning( push )
-#pragma warning( disable : 4996 )
 
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
@@ -42,7 +41,7 @@ INITIALIZE_EASYLOGGINGPP
 
 
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for some implementation functions
-    std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level);
+    std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level); //Call with 'Global' level to just set up a directory for logs
     std::optional<std::filesystem::path> getLogFileDirectory(); 
 } 
 
@@ -122,24 +121,32 @@ void configureEasyLogger() {
     
        
     //--------------------------------------------------------------------------------------------------------//
-    //   At this point, it is time to configure what we want output for each logging level to look like.      \\  
+    //   At this point, it is time to configure what we want output for each logging level to look like.      //  
     //--------------------------------------------------------------------------------------------------------//
      
     ////////////////////
-    ////       Step 0       Get the current working directory filepath 
+    ////       Step 0       Set up a location in the filesystem for LOGs to go
     //////////////////
     std::error_code ec; //Make an error code
-    ec.clear();         //Clear it
+    ec.clear();         //ensure it is clear 
     auto fp = std::filesystem::current_path(ec);
-    if (ec) {
-        LOG(ERROR) << "Unable to communicate with filesystem to set up proper project log file targets!\n";
+    if (ec) { 
+        LOG(WARNING) << "\nSomething went wrong!\nUnable to communicate with Filesystem to set up proper LOG file locations!\n"
+                     << "Filesystem reported error:\n\t\"" << ec.message() << "\"\n\n";
+        LOG(WARNING) << "All logging messages will be redirected to default LOG file with default formatting...\n\n";
         return;
     } 
-    else {
-        LOG(INFO) << "\nCurrent Working Directory is: " << fp.c_str();
+    
+    auto possibleFileForLog = EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Global);
+
+    if (possibleFileForLog->empty()) {
+        LOG(WARNING) << "\nAn issue was encountered setting up a directory for LOG files.\n"
+                     << "All LOG output will be directed to the default file!\n\n";
+        return;
     }
 
-    EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace);
+    //Otherwise if we haven't returned yet, then we have a ready-to-go directory to place log files into
+
 
     ////////////////////
     ////        Step 1      CREATE CONFIGURATION OBJECT 
@@ -149,38 +156,146 @@ void configureEasyLogger() {
     logConfigurator.setToDefault();  //First we set everything to default  
     
 
+    ///NOTE on how to specify datetime format:   FORMAT               = "%datetime{%d/%M} %func %msg"
+
     ////////////////////
-    ////        Step 2      SET CONFIGURATION FOR LEVEL:   TRACE
+    ////        Step 2      SET CONFIGURATION FOR EACH LEVEL 
     /////////////////             
 
+    //Configure Trace
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Enabled, "true");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "true");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "false");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "true");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "true");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "true");
+  
+    //Configure Debug
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::MaxLogFileSize, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::LogFlushThreshold, "true");
+
+    //Configure Fatal
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Enabled, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToFile, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToStandardOutput, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::SubsecondPrecision, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::MaxLogFileSize, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::LogFlushThreshold, "true");
+
+    //Configure Error
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Enabled, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::ToFile, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::ToStandardOutput, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::SubsecondPrecision, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::MaxLogFileSize, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::LogFlushThreshold, "true");
+
+    //Configure Warning
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Enabled, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToFile, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToStandardOutput, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::SubsecondPrecision, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::MaxLogFileSize, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::LogFlushThreshold, "true");
+
+    //Configure Info
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::Enabled, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::ToFile, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::ToStandardOutput, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::SubsecondPrecision, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::MaxLogFileSize, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::LogFlushThreshold, "true");
+
+    //Configure Verbose
+    logConfigurator.set(el::Level::Verbose, el::ConfigurationType::Enabled, "false");
+
+    //Configure Unknown
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Enabled, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToFile, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToStandardOutput, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::SubsecondPrecision, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::MaxLogFileSize, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::LogFlushThreshold, "true");
 
 
-    ////////////////////////
-    // Set Global format: //
-    ////////////////////////
-    //defaultConf.set(el::Level::Trace,
-    //   el::ConfigurationType::Format, "%datetime");// %level %msg");
-    ///
-    ///
-    ///
-    ///defaultConf.set(el::Level::Info,
-    ///    el::ConfigurationType::Format, "%datetime");// %level %msg");
-   
+
+    ////////////////////
+    ////        Step 3      Assign Configuration to default logger object
+    /////////////////          
+    el::Loggers::reconfigureLogger("default", logConfigurator);
+
+    ////////////////////
+    ////        Step 4      Make this configuration the default for any future loggers that may be created
+    /////////////////          
+    el::Loggers::setDefaultConfigurations(logConfigurator);
+
 
 }
 
 
 
+
+
+
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {       
 
-    std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level) {
+    std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level level) {
         auto possiblyTheLogFileDirectory = getLogFileDirectory(); //This gives us a std::optional which may 
         if (!possiblyTheLogFileDirectory.has_value()) {           //have the filepath for where to create log files
             return std::nullopt;  //If we weren't about to get a filepath, return empty std::optional
         }
         else {
-            std::filesystem::path logFilepath = *possiblyTheLogFileDirectory;
-            return std::make_optional<std::filesystem::path>(logFilepath);
+            if (level == el::Level::Global) { //If called with parameter 'Global', then just return the directory 
+                return possiblyTheLogFileDirectory;
+            }
+            else {
+                std::filesystem::path logFilepath = (*possiblyTheLogFileDirectory).string() + "/";
+                logFilepath = logFilepath.make_preferred(); //Sets all of the '\' and '/' to the OS-preferred style
+                switch (level) {
+                case el::Level::Info:
+                    logFilepath += "Info.log";
+                    break;
+                case el::Level::Debug:
+                    logFilepath += "Debug.log";
+                    break;
+                case el::Level::Error:
+                    logFilepath += "Errors.log";
+                    break;
+                case el::Level::Fatal:
+                    logFilepath += "Fatal.log";
+                    break;
+                case el::Level::Trace:
+                    logFilepath += "Trace.log";
+                    break;
+                case el::Level::Warning:
+                    logFilepath += "Warnings.log";
+                    break;
+                case el::Level::Unknown:
+                    [[fallthrough]];
+                default:
+                    logFilepath += "Default.log";
+                    break;
+                }
+                return std::make_optional<std::filesystem::path>(logFilepath);
+            }
         }
     }
 
@@ -190,50 +305,69 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
         static std::filesystem::path logDirectory; //Static filepath will be initialized first time this function is called.
         //                                         //This filepath will then remain constant throughout the lifetime of the program
 
-        if (!(logDirectory.empty())) {
-            return std::make_optional<std::filesystem::path>(logDirectory);
+        if (!(logDirectory.empty())) { //If there is already a directory for log files created
+            return std::make_optional<std::filesystem::path>(logDirectory); 
         }
-        else { //else there hasn't been a filepath set yet for log files
+        else { //else there hasn't been a filepath set yet for log files to be placed
             //create one
             std::error_code ec; 
             ec.clear();         
             logDirectory = std::filesystem::current_path(ec);
             if (ec) {
                 LOG(ERROR) << "Unable to communicate with filesystem to set up directory for log files!\n"
-                    << "The OS reports error: " << ec.message() << "\n";
+                    << "The OS reports error: " << ec.message() << "\n\n";
                 return std::nullopt;
             }
             else { //we're in business
                 logDirectory = logDirectory.lexically_normal();
                 logDirectory = logDirectory.string() + "/LOGS/";
-                logDirectory = logDirectory.make_preferred(); //Make sure the path is in good form
-                LOG(INFO) << "\nCurrent working directory is: " << logDirectory.string() << "\n"; //Print it out to ensure sanity
+                logDirectory = logDirectory.make_preferred(); //Ensures each '/' and '\' in filepath are all set to OS-preferred separator 
+                //LOG(INFO) << "\nCurrent working directory is: " << logDirectory.string() << "\n"; //Print it out to ensure sanity
 
-                //Now it is time to append a unique identifier onto the end of it
+                //Now it is time to append a unique identifier onto the end of it. Date and time will be unique (hopefully)
+             
                 std::stringstream tag; //Tag is to be built into stringstream
                 auto timetag = std::chrono::system_clock::now(); //This is the system clock. However to get it into a format that will make a nice filepath tag,
                 time_t timetag2 = (std::chrono::system_clock::to_time_t(timetag)); //we have to do some crazy conversions from all these different time representations.
+                                                                   
+                /////////////////////
+                //HACK
+                //MSVC considers the C function 'localtime' to be deprecated since it is not thread safe and (i think) can cause buffer overflow. It is intended to be 
+                //replaced with 'localtime_s()' on windows or localtime_r() on POSIX-compliant. To use localtime_s though there needs to be some macros defined, which
+                //are:
+                //    check to make sure ' __STDC_LIB_EXT1__ ' is defined be the implementation
+                //    define ' __STDC_WANT_LIB_EXT1__ '  before the header 'time.h' is included.
+                //https://en.cppreference.com/w/c/chrono/localtime
+                //https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
+                //
+                // OR  just do this hack until C++20 provides a much easier way to do this
+                //
+#pragma warning( push )
+#pragma warning( disable : 4996 ) 
                 auto timetagC = std::localtime(&timetag2); //I'm not really sure what is going on but it works
+#pragma warning ( pop )
+                //End of hack
 
                 //  Reference: https://en.cppreference.com/w/cpp/io/manip/put_time
                 //Now we can extract the information we need
                 tag << std::put_time(timetagC, "%Y_%j_%H_%M_%S"); //Puts the 'day of the year', 'year', 'hour', 'minute', and 'second' into a stringstream
                 
                 std::string timetagString = tag.str();
-                LOG(INFO) << "\nTimetag string is: " << timetagString;
+                ///LOG(INFO) << "\nTimetag string is: " << timetagString;
+                //Remove any spaces that may have sneaked their way into the path
                 timetagString.erase(remove(timetagString.begin(), timetagString.end(), ' '), timetagString.end());
-                LOG(INFO) << "\nTimetag string after removing spaces is: " << timetagString;
+                ///LOG(INFO) << "\nTimetag string after removing spaces is: " << timetagString;
 
                 //Finally we can build the filepath
                 logDirectory = logDirectory.string() + timetagString;
 
                 //Create the new directory
                 if (!std::filesystem::create_directories(logDirectory)) {
-                    LOG(INFO) << "\nAn error occurred making a directory for logging files to go!\n";
+                    LOG(WARNING) << "\nAn error occurred while making a directory for logging files!\n";
                     return std::nullopt;
                 }
                 else {  //YAY we did it!
-                    LOG(INFO) << "\nLog files for this program will be stored in folder:\n\t" << logDirectory.string();
+                    ///LOG(INFO) << "\nLog files for this program will be stored in folder:\n\t" << logDirectory.string();
                     return std::make_optional<std::filesystem::path>(logDirectory);
                 }
             }
@@ -248,4 +382,3 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
 
 #endif //EASY_LOG_CONFIGURATION_H_
 
-#pragma warning ( pop )

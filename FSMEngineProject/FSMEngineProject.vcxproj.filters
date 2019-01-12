@@ -37,9 +37,6 @@
     <Filter Include="ThirdParty\glfw\include">
       <UniqueIdentifier>{e7818402-4794-4b01-bb7b-edd694fe5a30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="LogMessages">
-      <UniqueIdentifier>{d095ead3-d4e5-4b36-9087-c7fbcbfed94f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Notes">
       <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
     </Filter>
@@ -170,9 +167,6 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="myeasylog.log">
-      <Filter>LogMessages</Filter>
-    </Text>
     <Text Include="Notes\NotesOnMSVC.txt">
       <Filter>Notes</Filter>
     </Text>

@@ -1,7 +1,7 @@
 //File:                               FSMMonitorEventCallback.h
 //
 // Description:                       Provides an interface for responding to Monitor Callback events.
-//                                    See 'Anticiapted Usage' section for proper usage.
+//                                    See 'Anticipated Usage' section for proper usage.
 //
 //
 // Anticipated Usage Pattern:         Once every frame or so, the application should call
@@ -15,7 +15,7 @@
 // Other info:                        IMPORTANT! Please be aware that the queues here will not perform
 //                                    any validation on the data they receive from OS through the callback,
 //                                    so please ensure the Application validates every event (i.e. check
-//                                    to make sure the GLFWmonitor* is not NULL; if woried about security
+//                                    to make sure the GLFWmonitor* is not NULL; if worried about security
 //                                    then after a connection event check to make sure the GLFWmonitor* for
 //                                    new monitor is contained in array returned by 'glfwGetMonitors()', 
 //                                    etc...)
