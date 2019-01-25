@@ -1,0 +1,49 @@
+
+For now, just see: 
+https://docs.microsoft.com/en-us/cpp/build/common-visual-cpp-64-bit-migration-issues?view=vs-2017
+
+I intend to write more notes here later as I come across more reasons to do so
+
+
+-----------------------------------------------------------------------------------------------------------------------
+=============================================    MSVC inline assembly    ==============================================
+-----------------------------------------------------------------------------------------------------------------------
+
+//These posts look informative, but they start with x86 assembly before moving on to x64. 
+http://lallouslab.net/2014/07/03/introduction-to-writing-x86-assembly-code-in-visual-studio/   
+http://lallouslab.net/2016/01/11/introduction-to-writing-x64-assembly-in-visual-studio/
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////  SIMD   SSE SSE2   AVX   etc...  ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Notes on SSE supported versions 
+https://stackoverflow.com/questions/28185844/do-all-64-bit-intel-architectures-support-ssse3-sse4-1-sse4-2-instructions
+A comment on there says all x64 implementations are required to support SSE and SSE2
+
+
+This confirms that all x64 implementations must support sse2. In fact it confirms that to run 
+Windows 8, sse2 support is required (even for 32-bit)
+https://blogs.msdn.microsoft.com/chuckw/2012/09/11/directxmath-sse-sse2-and-arm-neon/
+Here is a quote from that blog post:
+   
+  "SSE and SSE2 fit these requirements rather well. All x64
+   capable CPUs must support both SSE and SSE2 because the x64
+   native code standard requires they be used for all float and
+   double computations (the 32-bit x87 instruction set was
+   deprecated for x64 native). In fact, this support is so
+   ubiquitous that the Windows 8 operating system itself requires
+   SSE and SSE2 instruction support even for 32-bit (x86) versions
+   and won’t install on a system without them--the same is true for
+   Windows 8.1 and Windows 10. "
+
+Note that because the x64 architecture deprecated x87, "the switches /arch:SSE, /arch:SSE2,
+and /arch:IA32 cannot be used for x64 native builds and will be ignored." 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

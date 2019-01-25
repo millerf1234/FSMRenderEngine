@@ -19,6 +19,14 @@ Online:
 https://glad.dav1d.de/#profile=core&language=c&specification=gl&loader=on&api=gl%3D4.6
 */
 
+//////////////////////////////////////// The Following was added to this file by Forrest Miller //////////////
+#pragma once 
+//This header-guard is needed to prevent both debug and release versions from compiling, thus producing duplicate symbols
+#ifdef _FSM_ENGINE_BUILD_SETTING___GLAD_USE_RELEASE___   // (there is also an extra '#endif' statement at the bottom of this file)
+#define _FSM_ENGINE__GLAD_SAFE_TO_BUILD_RELEASE__  //Define to have glad.c build    
+#pragma message ("\nProject will build with glad configured to use version: RELEASE\n")
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 #ifndef __glad_h_
 #define __glad_h_
@@ -3686,3 +3694,7 @@ extern "C" {
 #endif
 
 #endif
+
+
+
+#endif // #ifdef _FSM_ENGINE_BUILD_SETTING___GLAD_USE_RELEASE___    

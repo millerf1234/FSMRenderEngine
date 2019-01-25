@@ -52,31 +52,33 @@
 //  Include glad.h based off build configuration  //         (GLM is mathematics utility library)
 ////////////////////////////////////////////////////
 #include "BuildSettings.h"  //Get the build settings
+//
+//////IMPORTANT! IF building this project in an environment other than microsoft's Visual Studio,
+////             chances are that the build will fail and to fix one of the sets of "glad.h" and "glad.c"
+////             need to be removed.
+//
+////MSVC defines the macro '_DEBUG'. 
+////This application defines the macro 'USE_DEBUG_'.
+//
+////PITFALL -- This has never been tested outside of Visual Studio
+////If build environment is visual studio
+//#if defined _MSC_VER
+//  //If building for debug 
+//  #if defined _DEBUG
+//    #include "ThirdParty\glad\debug\glad.h"
+//  #else 
+//    #include "ThirdParty\glad\release\glad.h"
+//  #endif //_DEBUG
+//#else //If _MSC_VER was not defined, then build environment isn't visual studio
+//  //So instead here we just check to see if the project's own debug macro is defined
+//  #if defined USE_DEBUG_
+//    #include "ThirdParty\glad\debug\glad.h"
+//  #else 
+//    #include "ThirdParty\glad\release\glad.h"
+//  #endif //USE_DEBUG_
+//#endif //_DEBUG
 
-////IMPORTANT! IF building this project in an environment other than microsoft's Visual Studio,
-//             chances are that the build will fail and to fix one of the sets of "glad.h" and "glad.c"
-//             need to be removed.
-
-//MSVC defines the macro '_DEBUG'. 
-//This application defines the macro 'USE_DEBUG_'.
-
-//If build environment is visual studio
-#if defined _MSC_VER
-  //If building for debug 
-  #if defined _DEBUG
-    #include "ThirdParty\glad\debug\glad.h"
-  #else 
-    #include "ThirdParty\glad\release\glad.h"
-  #endif //_DEBUG
-#else //If _MSC_VER was not defined, then build environment isn't visual studio
-  //So instead here we just check to see if the project's own debug macro is defined
-  #if defined USE_DEBUG_
-    #include "ThirdParty\glad\debug\glad.h"
-  #else 
-    #include "ThirdParty\glad\release\glad.h"
-  #endif //USE_DEBUG_
-#endif //_DEBUG
-
+#include "ThirdParty\ThirdParty_IncludeWrappers\glad_includer.h"
 
 
 //////////////////////////////

@@ -24,6 +24,12 @@ https://glad.dav1d.de/#profile=core&language=c&specification=gl&loader=on&api=gl
 #include <string.h>
 #include "glad.h"
 
+////////////////  FSMEngine project adds the following header guard to this file ////////////////////
+//  Not that this macro should be defined in header "glad_debug.h"
+#ifdef _FSM_ENGINE__GLAD_SAFE_TO_BUILD_RELEASE__
+////////////////  End FSMEngine modifications to glad  //////////////////////////////////////////////
+
+
 static void* get_proc(const char *namez);
 
 #if defined(_WIN32) || defined(__CYGWIN__)
@@ -1834,3 +1840,9 @@ int gladLoadGLLoader(GLADloadproc load) {
     return GLVersion.major != 0 || GLVersion.minor != 0;
 }
 
+
+
+////////////// The following 2 lines were added to original file as part of FSMEngine project ////////////////////
+#undef _FSM_ENGINE__GLAD_RELEASE_SAFE_TO_BUILD__
+#endif // #ifdef _FSM_ENGINE__GLAD_SAFE_TO_BUILD_RELEASE__
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,3 +4,265 @@
  
 2019-01-11 16:21:55,228 INFO [MsgLog] Application Launched! 
 2019-01-11 16:21:59,149 INFO [MsgLog] Application is closing 
+2019-01-14 23:18:46,933 INFO [MsgLog] Application is launching...
+ 
+2019-01-14 23:18:46,937 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] 
+Will This print?
+
+ 
+2019-01-14 23:18:46,942 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:166] Will This print?
+ 
+2019-01-14 23:18:46,947 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-14 23:18:46,948 INFO [MsgLog] Application Launched! 
+2019-01-14 23:20:10,575 INFO [MsgLog] Application is closing 
+2019-01-14 23:22:06,319 INFO [MsgLog] Application is launching...
+ 
+2019-01-14 23:22:06,322 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] 
+Will This print?
+
+ 
+2019-01-14 23:22:06,327 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:166] Will This print?
+ 
+2019-01-14 23:22:06,331 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-14 23:22:06,333 INFO [MsgLog] Application Launched! 
+2019-01-14 23:22:34,646 INFO [MsgLog] Application is closing 
+2019-01-24 22:21:34,756 INFO [MsgLog] Application is launching...
+ 
+2019-01-24 22:21:34,760 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] 
+Will This print?
+
+ 
+2019-01-24 22:21:34,765 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:166] Will This print?
+ 
+2019-01-24 22:21:34,770 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-24 22:21:34,772 INFO [MsgLog] Application Launched! 
+2019-01-24 22:21:36,519 INFO [MsgLog] Application is closing 
+2019-01-24 22:30:25,332 INFO [MsgLog] Application is launching...
+ 
+2019-01-24 22:30:25,335 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] 
+Will This print?
+
+ 
+2019-01-24 22:30:25,340 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:166] Will This print?
+ 
+2019-01-24 22:30:25,345 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-24 22:30:25,346 INFO [MsgLog] Application Launched! 
+2019-01-24 22:30:26,357 INFO [MsgLog] Application is closing 
+2019-01-24 23:03:51,260 INFO [MsgLog] Application is launching...
+ 
+2019-01-24 23:03:51,263 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] 
+Will This print?
+
+ 
+2019-01-24 23:03:51,267 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:166] Will This print?
+ 
+2019-01-24 23:03:51,272 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-24 23:03:51,273 INFO [MsgLog] Application Launched! 
+2019-01-24 23:06:59,408 INFO [MsgLog] Application is launching...
+ 
+2019-01-24 23:06:59,411 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] 
+Will This print?
+
+ 
+2019-01-24 23:06:59,416 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:166] Will This print?
+ 
+2019-01-24 23:06:59,421 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-24 23:06:59,422 INFO [MsgLog] Application Launched! 
+2019-01-24 23:07:05,525 INFO [MsgLog] Application is closing 
+2019-01-24 23:08:29,384 INFO [MsgLog] Application is launching...
+ 
+2019-01-24 23:08:29,387 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:161] 
+Will This print?
+
+ 
+2019-01-24 23:08:29,391 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:162] Will This print?
+ 
+2019-01-24 23:08:29,396 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-24 23:08:29,397 INFO [MsgLog] Application Launched! 
+2019-01-24 23:08:45,043 INFO [MsgLog] Application is closing 
+2019-01-24 23:18:44,725 INFO [MsgLog] Application is launching...
+ 
+2019-01-24 23:18:44,731 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-24 23:18:44,739 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-24 23:18:44,743 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-24 23:18:44,747 INFO [MsgLog] Application Launched! 
+2019-01-24 23:18:51,654 INFO [MsgLog] Application is closing 
+2019-01-25 04:10:02,295 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 04:10:02,300 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 04:10:02,306 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 04:10:02,311 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 04:10:02,313 INFO [MsgLog] Application Launched! 
+2019-01-25 04:10:06,970 INFO [MsgLog] Application is closing 
+2019-01-25 11:06:59,822 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 11:06:59,825 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 11:06:59,829 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 11:06:59,834 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 11:06:59,835 INFO [MsgLog] Application Launched! 
+2019-01-25 11:07:02,553 INFO [MsgLog] Application is closing 
+2019-01-25 11:08:39,772 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 11:08:39,776 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 11:08:39,780 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 11:08:39,784 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 11:08:39,785 INFO [MsgLog] Application Launched! 
+2019-01-25 11:08:41,453 INFO [MsgLog] Application is closing 
+2019-01-25 11:11:47,050 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 11:11:47,055 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 11:11:47,058 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 11:11:47,064 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 11:11:47,065 INFO [MsgLog] Application Launched! 
+2019-01-25 11:12:16,356 INFO [MsgLog] Application is closing 
+2019-01-25 11:16:05,336 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 11:16:05,343 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 11:16:05,348 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 11:16:05,353 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 11:16:05,357 INFO [MsgLog] Application Launched! 
+2019-01-25 11:16:08,552 INFO [MsgLog] Application is closing 
+2019-01-25 11:16:48,676 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 11:16:48,681 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 11:16:48,688 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 11:16:48,692 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 11:16:48,695 INFO [MsgLog] Application Launched! 
+2019-01-25 11:16:50,500 INFO [MsgLog] Application is closing 
+2019-01-25 11:17:23,409 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 11:17:23,415 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 11:17:23,421 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 11:17:23,425 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 11:17:23,428 INFO [MsgLog] Application Launched! 
+2019-01-25 11:17:24,489 INFO [MsgLog] Application is closing 
+2019-01-25 13:50:05,532 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 13:50:05,537 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 13:50:05,544 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 13:50:05,549 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 13:50:05,550 INFO [MsgLog] Application Launched! 
+2019-01-25 13:55:45,922 INFO [MsgLog] Application is closing 
+2019-01-25 14:23:17,074 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 14:23:17,081 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 14:23:17,086 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 14:23:17,091 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 14:23:17,094 INFO [MsgLog] Application Launched! 
+2019-01-25 14:23:19,760 INFO [MsgLog] Application is closing 
+2019-01-25 14:25:13,855 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 14:25:13,860 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 14:25:13,866 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 14:25:13,871 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 14:25:13,875 INFO [MsgLog] Application Launched! 
+2019-01-25 14:25:16,577 INFO [MsgLog] Application is closing 
+2019-01-25 15:06:36,156 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 15:06:36,161 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 15:06:36,168 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 15:06:36,172 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 15:06:36,174 INFO [MsgLog] Application Launched! 
+2019-01-25 15:06:39,855 INFO [MsgLog] Application is closing 
+2019-01-25 15:13:34,197 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 15:13:34,202 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 15:13:34,209 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 15:13:34,213 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 15:13:34,215 INFO [MsgLog] Application Launched! 
+2019-01-25 15:14:16,193 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 15:14:16,199 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 15:14:16,204 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 15:14:16,209 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 15:14:16,211 INFO [MsgLog] Application Launched! 
+2019-01-25 15:15:30,358 INFO [MsgLog] Application is closing 
+2019-01-25 15:29:20,383 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 15:29:20,389 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 15:29:20,394 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 15:29:20,401 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 15:29:20,404 INFO [MsgLog] Application Launched! 
+2019-01-25 15:31:59,424 INFO [MsgLog] Application is closing 

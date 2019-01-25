@@ -5,7 +5,7 @@
 //                   preferably early in the program's launch.
 //
 //  IMPORTANT:       This file should only be included once in the entire solution.
-//                   TO be safe, only include this file in a single '.CPP' file.
+//                   TO be safe, only include this file in a single '.cpp' file in the rest of the project.
 //                   Having multiple instances of this file will be bad.
 //
 //
@@ -20,11 +20,7 @@
 //  Date:            January 10, 2019
 //
 
-//Disclaimer:       Sorry in advance for how confusing this code is, I was confused while writing it...
-
-
 #pragma once
-
 
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
@@ -41,6 +37,7 @@ INITIALIZE_EASYLOGGINGPP
 
 
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for some implementation functions
+    bool checkIfAlreadyConfigured();
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level); //Call with 'Global' level to just set up a directory for logs
     std::optional<std::filesystem::path> getLogFileDirectory(); 
 } 
@@ -51,7 +48,12 @@ void initializeEasyLogger(int argc, char ** argv) {
 
 //Not recommended (or expected) for this function to be called more than once
 void configureEasyLogger() {
-
+    if (EASYLOGPP_CONFIGURATION_INTERNAL::checkIfAlreadyConfigured()) {
+        LOG(WARNING) << "Unable to configure logs! Logs have already been configured!\n";
+        return;
+    }
+    
+    
     //This is a bit complicated, so I first wrote out a bunch of notes on how it all works
    
     //  +==========================================================================================+
@@ -66,7 +68,7 @@ void configureEasyLogger() {
     //                   CLOG(level, "nameOfNewLogger") << "string stuff";                //This will create a new logger called "nameOfNewLogger"                                          had already been created and then deleted.
     //                                         
     //
-    // Logging messages can be sent to the following 'Level's (I would call them 'Targets' in my previous projects)
+    // Logging messages can be sent to the following 'Level's  (I would call them 'Targets' in my previous projects)
     // +====================+==========================================================================================================================================================================+
     // |       Level        |     Description                                                                                                                                                          |
     // +====================+==========================================================================================================================================================================+                                                      |
@@ -86,17 +88,18 @@ void configureEasyLogger() {
     // |      Global        |    Generic level that represents all levels. Useful when setting global configuration for all levels.    |         
     // +~~~~~~~~~~~~~~~~~~~~+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
     //
-    //Please be aware that chances are this entire project is using hierarchical logging, which will cause the Verbose 'Level' to be disabled
+    //Please be aware that this entire project is using hierarchical logging, which will cause the Verbose 'Level' to be disabled
+
 
     //Loggers have their behavior determined by state-representing objects called el::Configurations.
     //el:Configurations can have the following configuration values specified to determine logging behavior:
     //       
     //      ++-----------------------------------------------------------------------------------++
-    //      ++`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`+_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_++
+    //      ++---------------------------------+-------------------------------------------------++
     //      ||            (enum)               |                                                 ||
     //      ||  el::ConfigurationType::Format  |                   Effect                        ||
     //      ||                                 |                                                 ||
-    //      ++_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_+`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`-_-`++
+    //      ++---------------------------------+-------------------------------------------------++
     //      ||                                 |                                                 ||
     //      ||            Enabled              |            To log or not to log?                ||
     //      ||                                 |                                                 ||
@@ -127,11 +130,11 @@ void configureEasyLogger() {
     ////////////////////
     ////       Step 0       Set up a location in the filesystem for LOGs to go
     //////////////////
-    std::error_code ec; //Make an error code
-    ec.clear();         //ensure it is clear 
+    std::error_code ec {}; 
     auto fp = std::filesystem::current_path(ec);
     if (ec) { 
-        LOG(WARNING) << "\nSomething went wrong!\nUnable to communicate with Filesystem to set up proper LOG file locations!\n"
+        LOG(WARNING) << "\nSomething went wrong!\n"
+                     << "Unable to communicate with Filesystem to set up proper LOG file locations!\n"
                      << "Filesystem reported error:\n\t\"" << ec.message() << "\"\n\n";
         LOG(WARNING) << "All logging messages will be redirected to default LOG file with default formatting...\n\n";
         return;
@@ -145,8 +148,10 @@ void configureEasyLogger() {
         return;
     }
 
-    //Otherwise if we haven't returned yet, then we have a ready-to-go directory to place log files into
 
+    //Otherwise if we haven't returned yet, then we have a ready-to-go directory to place log files.
+    //This also means we don't need to check the std::optional returned by 'getFilepathToLogForLevel()' for emptiness from
+    //here on since we have confirmed we have a directory ready to go
 
     ////////////////////
     ////        Step 1      CREATE CONFIGURATION OBJECT 
@@ -155,6 +160,12 @@ void configureEasyLogger() {
     el::Configurations logConfigurator;
     logConfigurator.setToDefault();  //First we set everything to default  
     
+    /// /////////////TEST DELETE ME LATER AT SOME POINT. TEST DEBUG LOG BEHAVIOR WHEN BUILDING FOR RELEASE////////
+    LOG(DEBUG) << "\nWill This print?\n\n";
+    LOG(TRACE) << "Will This print?\n";
+        return;
+    /// .................................................................................................////////////////
+        
 
     ///NOTE on how to specify datetime format:   FORMAT               = "%datetime{%d/%M} %func %msg"
 
@@ -167,17 +178,20 @@ void configureEasyLogger() {
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "true");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "false");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, 
+        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace)->string());
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "true");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "true");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "true");
   
-    //Configure Debug
+    //Configure Debug  
+    //TODO check to see if NDEBUG or _DEBUG is defined or else this log won't exist
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "true");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "true");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "true");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "true");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename,
+        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Debug)->string());
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "true");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::MaxLogFileSize, "true");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::LogFlushThreshold, "true");
@@ -187,7 +201,8 @@ void configureEasyLogger() {
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToFile, "true");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToStandardOutput, "true");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Format, "true");
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Filename,
+        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Fatal)->string());
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::SubsecondPrecision, "true");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::MaxLogFileSize, "true");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::LogFlushThreshold, "true");
@@ -197,7 +212,8 @@ void configureEasyLogger() {
     logConfigurator.set(el::Level::Error, el::ConfigurationType::ToFile, "true");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::ToStandardOutput, "true");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "true");
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Filename, 
+        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Error)->string());
     logConfigurator.set(el::Level::Error, el::ConfigurationType::SubsecondPrecision, "true");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::MaxLogFileSize, "true");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::LogFlushThreshold, "true");
@@ -207,7 +223,8 @@ void configureEasyLogger() {
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToFile, "true");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToStandardOutput, "true");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::Format, "true");
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Filename, 
+        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Warning)->string());
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::SubsecondPrecision, "true");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::MaxLogFileSize, "true");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::LogFlushThreshold, "true");
@@ -217,12 +234,13 @@ void configureEasyLogger() {
     logConfigurator.set(el::Level::Info, el::ConfigurationType::ToFile, "true");
     logConfigurator.set(el::Level::Info, el::ConfigurationType::ToStandardOutput, "true");
     logConfigurator.set(el::Level::Info, el::ConfigurationType::Format, "true");
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::Filename, 
+        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Info)->string());
     logConfigurator.set(el::Level::Info, el::ConfigurationType::SubsecondPrecision, "true");
     logConfigurator.set(el::Level::Info, el::ConfigurationType::MaxLogFileSize, "true");
     logConfigurator.set(el::Level::Info, el::ConfigurationType::LogFlushThreshold, "true");
 
-    //Configure Verbose
+    //Configure Verbose  [Verbose is Disabled]
     logConfigurator.set(el::Level::Verbose, el::ConfigurationType::Enabled, "false");
 
     //Configure Unknown
@@ -230,7 +248,8 @@ void configureEasyLogger() {
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToFile, "true");
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToStandardOutput, "true");
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Format, "true");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Filename, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Filename, 
+        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Unknown)->string());
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::SubsecondPrecision, "true");
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::MaxLogFileSize, "true");
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::LogFlushThreshold, "true");
@@ -252,10 +271,17 @@ void configureEasyLogger() {
 
 
 
-
-
-
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {       
+    bool checkIfAlreadyConfigured() {
+        static bool hasBeenConfigured = false;
+        if (hasBeenConfigured) {
+            return true;
+        }
+        else {
+            hasBeenConfigured = true;
+            return false;
+        }
+    }
 
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level level) {
         auto possiblyTheLogFileDirectory = getLogFileDirectory(); //This gives us a std::optional which may 
@@ -302,7 +328,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
 
     //I apologize in advance for how confusing this function's implementation is
     std::optional<std::filesystem::path> getLogFileDirectory() {
-        static std::filesystem::path logDirectory; //Static filepath will be initialized first time this function is called.
+        static std::filesystem::path logDirectory {}; //Static filepath will be initialized first time this function is called.
         //                                         //This filepath will then remain constant throughout the lifetime of the program
 
         if (!(logDirectory.empty())) { //If there is already a directory for log files created
@@ -331,7 +357,9 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 time_t timetag2 = (std::chrono::system_clock::to_time_t(timetag)); //we have to do some crazy conversions from all these different time representations.
                                                                    
                 /////////////////////
-                //HACK
+                //
+                //    HACK   Use of deprecated function
+                //
                 //MSVC considers the C function 'localtime' to be deprecated since it is not thread safe and (i think) can cause buffer overflow. It is intended to be 
                 //replaced with 'localtime_s()' on windows or localtime_r() on POSIX-compliant. To use localtime_s though there needs to be some macros defined, which
                 //are:
@@ -347,6 +375,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 auto timetagC = std::localtime(&timetag2); //I'm not really sure what is going on but it works
 #pragma warning ( pop )
                 //End of hack
+                /////////////////////
 
                 //  Reference: https://en.cppreference.com/w/cpp/io/manip/put_time
                 //Now we can extract the information we need

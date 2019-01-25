@@ -1,6 +1,33 @@
 
 
 
+
+// References and notes on build systems:
+//
+//
+//                                            MSVC uses MSBuild     
+//
+//          MSBuild References:
+//                      (official)  https://docs.microsoft.com/en-us/cpp/build/msbuild-visual-cpp?view=vs-2017
+//                      (wikipedia) https://en.wikipedia.org/wiki/MSBuild
+//        
+//             Quote from wikipedia explaining 'Target':       
+//                               "A Target contains a set of tasks for MSBuild to execute. The focus of MSBuild is the
+//                                result Target specified when invoking MSBuild with the project file. This is because a
+//                                Project may contain several Target entries, each executed sequentially (and
+//                                conditionally). Subsequent dependent Targets are executed before the requested Target.
+//                                The execution flow of the current Target can be directed using the following attributes: 
+//                                     Condition,
+//                                     BeforeTargets,
+//                                     AfterTargets, & 
+//                                     DependsOnTargets. 
+//                                Each Target may be self-contained with the necessary Tasks to complete itself. A Target is
+//                                typically an action executed on a file, set of files or directory. "
+// 
+//
+//
+
+
   Notes and information pertaining to potential Project Configuation, Properties and Settings 
 
   /////////////////////////////////
