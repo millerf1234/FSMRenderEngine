@@ -69,24 +69,24 @@ Either make sure the setting ENABLE_GLFUNCTION_PROFILING_ is undefined or switch
     "  {issue}:       The logging of OpenGL Pre-Function-Call Callback events is enabled while glad is configured to operate under its RELEASE configuration!\n" \
     "  {cause}:         Unfortunately, this is a feature that is available only when using glad in its DEBUG configuration.\n" \
     "  {consequences}:  Logging of OpenGL Function calls will be disabled for this current build!\n\n" \
-    "  {how to fix}:       [To disable this warning, either:\n" \
+    "  {how to fix}:       [ To disable this warning, either:\n" \
     "                             (i) disable Pre-Function-Call Callback logging; or\n" \
-    "                            (ii) set glad to build in its DEBUG configuration to use this feature]\n" \
+    "                            (ii) set glad to build in its DEBUG configuration to use this feature ]\n" \
     "                      (both of these settings are located in the header \"BuildSettings.h\")\n" \
     "---------------------------------------------------------------------------------------------------------------\n" )
     #undef ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_
   #endif
   
   #ifdef ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_
-    #pragma message ("--------------------------------------------WARNING!-----------------------------------------------------------\n" \
-    "There was a non-fatal conflict detected within the current build configuration for this project: \n" \
-    "     The logging of OpenGL Post-Function-Call Callback events is enabled while glad is configured to operate under its RELEASE configuration!\n" \
-    "         Unfortunately, this is a feature that is available only when using the DEBUG configuration of glad.\n" \
-    "         No logging of OpenGL Function calls will be performed!\n\n" \
-    "               [To disable this warning, either:\n" \
-    "                     (i) disable Post-Function-Call Callback logging [by not defining the macro 'ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_'] ; or\n" \
-    "                    (ii) set glad to build in its DEBUG configuration to use this feature]\n" \
-    "   (both of these settings are found in \"BuildSettings.h\")\n" \
+     #pragma message ("--------------------------------------------WARNING!-----------------------------------------------------------\n" \
+    "There was a non-fatal conflict detected within the current build configuration: \n" \
+    "  {issue}:       The logging of OpenGL Post-Function-Call Callback events is enabled while glad is configured to operate under its RELEASE configuration!\n" \
+    "  {cause}:         Unfortunately, this is a feature that is available only when using glad in its DEBUG configuration.\n" \
+    "  {consequences}:  Logging of OpenGL Function calls will be disabled for this current build!\n\n" \
+    "  {how to fix}:       [ To disable this warning, either:\n" \
+    "                             (i) disable Pre-Function-Call Callback logging; or\n" \
+    "                            (ii) set glad to build in its DEBUG configuration to use this feature ]\n" \
+    "                      (both of these settings are located in the header \"BuildSettings.h\")\n" \
     "---------------------------------------------------------------------------------------------------------------\n" )
     /*#pragma message ("WARNING! The logging of OpenGL Post-Function-Call Callback events is enabled while glad is configured to operate under its RELEASE configuration!\n" \
 "         The logging of OpenGL function call events is a feature that only is available when using the DEBUG configuration of glad.\n" \
