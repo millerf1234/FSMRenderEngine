@@ -27,10 +27,6 @@
     <Filter Include="ThirdParty\glad\release">
       <UniqueIdentifier>{3300dc7d-7272-4732-8faa-198b4d5438f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="ThirdParty\glfw">
       <UniqueIdentifier>{7cf2abe4-fa2a-40b7-bbd4-edde694d094c}</UniqueIdentifier>
     </Filter>
@@ -40,20 +36,11 @@
     <Filter Include="Notes">
       <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utility">
-      <UniqueIdentifier>{14cbad73-a6a3-42dc-943b-1c6f691322cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{c3961245-a422-4a22-b27a-ea2f150e3f56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utility\Filepath">
-      <UniqueIdentifier>{a5aab355-8a84-4eff-a482-bbe5b23db19e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Common">
       <UniqueIdentifier>{800e60c4-aca0-494c-9941-b5062a7522e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utility\Debug">
-      <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Engine\CallbackFunctions">
       <UniqueIdentifier>{f1c5edef-8ff1-4497-9b8c-f9af9e1981bd}</UniqueIdentifier>
@@ -72,6 +59,19 @@
     </Filter>
     <Filter Include="Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly">
       <UniqueIdentifier>{eb442a31-e3f1-431d-9ebe-39d62cc78229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{14cbad73-a6a3-42dc-943b-1c6f691322cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Filepath">
+      <UniqueIdentifier>{a5aab355-8a84-4eff-a482-bbe5b23db19e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Debug">
+      <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,8 @@
 
 #include "FilepathWrapper.h"
 
-#include "UniversalIncludes.h"  //Provides access to the logging system
+//#include "UniversalIncludes.h"  //Provides access to the logging system
+#include "EasyLogConfiguration.h"
 
 void FilepathWrapper::initialize() {
 	mPath_ = "";

@@ -43,6 +43,9 @@
 
 #define ELPP_FEATURE_PERFORMANCE_TRACKING  //Enable performance-tracking logging
 
+
+#include "ThirdParty\easyloggingpp\include\easylogging++.h"
+
 ///////////////////////////////////////////////////////////////
 //////    End of FSMEngine settings configuration
 ///////////////////////////////////////////////////////////////

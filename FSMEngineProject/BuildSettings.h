@@ -88,7 +88,6 @@
 //  - PROJECT MUST BE BUILT IN ENVIRONMENT WHICH SUPPORTS SSE2        (This is implied by requiring 'x64' though since 'x64' has SSE2 as part of its standard)
 //  - Expected Runtime Environment of Windows 8.1 or newer            (Project currently has not been tested on platforms which aren't Windows 10, but 8.1 should work fine in theory)
 //  - 
-//  - TODO  (add more  {expect windows 10, expect intel, expect ___ SSE extensions available}
 // 
 // ------------------------------------------------------------------------------------------------------------
 //  ( END SECTION 0 )
@@ -166,7 +165,7 @@
   //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
   //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |                                             
   //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
-#define FORCE_GLAD_VERSION_RELEASE_ 1
+//#define FORCE_GLAD_VERSION_RELEASE_ 1
 /*+-------------------------------------------------------------------------------------------------------------------------------------+   */
 
 

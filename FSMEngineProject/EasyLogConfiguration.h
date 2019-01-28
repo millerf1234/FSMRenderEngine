@@ -31,10 +31,13 @@
 #include <iomanip>
 #include <optional>
 
-#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
+//#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
+#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
 
+#ifndef HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP
+#define HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP
 INITIALIZE_EASYLOGGINGPP
-
+#endif
 
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for some implementation functions
     bool checkIfAlreadyConfigured();

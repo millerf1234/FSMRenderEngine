@@ -446,3 +446,21 @@ Will This print?
  
 2019-01-25 16:02:57,762 INFO [MsgLog] Application Launched! 
 2019-01-25 16:02:58,309 INFO [MsgLog] Application is closing 
+2019-01-25 16:09:34,519 INFO [MsgLog] Application is launching...
+ 
+2019-01-25 16:09:34,524 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] 
+Will This print?
+
+ 
+2019-01-25 16:09:34,530 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Will This print?
+ 
+2019-01-25 16:09:34,535 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-01-25 16:09:34,537 INFO [MsgLog] Application Launched! 
+2019-01-25 16:09:36,038 INFO [MsgLog] Application is closing 
+2019-01-25 16:15:32,130 DEBUG [default] [Forrest@FMPC] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:26] Logger [MsgLog] is not registered yet!
+2019-01-25 16:15:32,138 DEBUG [default] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:164] Logger [MsgLog] is not registered yet!
+2019-01-25 16:15:32,142 DEBUG [default] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:165] Logger [MsgLog] is not registered yet!
+2019-01-25 16:15:32,147 DEBUG [default] [Forrest@FMPC] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:30] Logger [MsgLog] is not registered yet!
+2019-01-25 16:15:32,152 DEBUG [default] [Forrest@FMPC] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:56] Logger [MsgLog] is not registered yet!
+2019-01-25 16:15:34,143 DEBUG [default] [Forrest@FMPC] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:50] Logger [MsgLog] is not registered yet!

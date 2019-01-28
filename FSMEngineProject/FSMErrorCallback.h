@@ -22,7 +22,8 @@
 #ifndef FSM_ERROR_CALLBACK_H_
 #define FSM_ERROR_CALLBACK_H_
 
-#include "UniversalIncludes.h" 
+//#include "UniversalIncludes.h" 
+#include "EasyLogConfiguration.h"
 #include <sstream>
 
 //Callback function for GLFW error reporting. Unlike [almost*] every other GLFW callback function,             

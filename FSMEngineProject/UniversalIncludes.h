@@ -9,8 +9,8 @@
 #include "BuildSettings.h"
 
 //The header for the logging library is necessary to allow messages to be logged throughout the code base
-#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
-
+//#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
+//#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
 
 
 

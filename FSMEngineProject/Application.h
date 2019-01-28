@@ -30,8 +30,6 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-
-
 #include "GLIncludes.h"
 
 //#define GLFW_INCLUDE_GLCOREARB

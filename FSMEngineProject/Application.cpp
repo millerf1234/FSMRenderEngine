@@ -18,6 +18,7 @@
 
 
 #include "EasyLogConfiguration.h"
+//#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
 
 Application::Application(int argc, char ** argv) {
     
