@@ -1,9 +1,12 @@
-
-#ifndef EASY_LOG_CONFIGURATION_H_
-#define EASY_LOG_CONFIGURATION_H_
-
 //
 //  File:            EasyLogConfiguration.h
+//
+//  Please Notice:  Due to the special nature and requirements of this file within how it 
+//                     fits in with the rest of the project, it is essential that all of the 
+//                     following documentation is understood before use. Failure to do so 
+//                     will slow development of project down and probably lead to many errors
+//                     during compilation.
+//
 //
 //  Description:    The purpose of the code contained within this file is to provide an implementaion
 //                     for the Application to initialize and set up a priliminary interface with the
@@ -30,7 +33,7 @@
 //                                             for an internal header titled "elcc_includer.h" which should be burried somewhere 
 //                                             within this project's files. This other header is meant to be the internal header                                    
 //                                             that imports all of the logging functions ]  
-//    ALSO
+//   Remember
 //  IMPORTANT:       This file must only be included in one location within the rest of the entire codebase. 
 //
 //    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -41,21 +44,23 @@
 //
 //
 //
+//
 //                  +====================================================================================+
 //                  |                                      USAGE                                         |
 //                  +====================================================================================+
-//
+// Guidelines for
 //  Including In
 //     Project:     Because of the strict rules limiting the number of times this file is allowed to
 //                     be included by any of the other code in a project, as a safety feature it is 
 //                     required of the file designated for including this file to define the 
 //                     the macro "ALLOW_ELCC_CONFIGURATION" (minus the quotes).
-//                     This file will undefine this macro once it reads it or will force a compilation error.
-
+//                     This file will undefine this macro once it has successfully detected it or if  
+//                     it fails to find a definition for said macro will force a halt to compilation 
+//                     and report an error.
 #ifdef ALLOW_ELCC_CONFIGURATION
 #pragma message("\n\t\t\tEasyLogConfiguration has detected proper usage of the macro ensuring \n\t\t\t" \
-"it is being included into the project in a manner which meets its strict requirements.\n" \
-"\n\t\t\t\t\t\tAllowing the compilation to proceed without hinderance\n")
+ "it is being included into the project in a manner which meets its strict requirements.\n" \
+ "\n\t\t\t\t\t\tAllowing the compilation to proceed without hinderance\n")
 #undef ALLOW_ELCC_CONFIURATION
 #else 
 #error ERROR! Unable to continue with compilation due to the possibly unsafe multiple-inclusions of the file EasyLogConfiguration.h\
@@ -63,7 +68,6 @@
  a place has been selected that meets these strict criteria, then define the macro listed in the documentation to disable this\
  compiler error message from preventing compilation.
 #endif
-
 //
 //  How-to Invoke:  
 //                  The proper usage of the code implemented in this file is accomplished through 
@@ -99,26 +103,33 @@
 //                      futher with this file for the rest of the processes lifetime.
 //
 //
-//               [I suppose that error reporting by this file leavse something to be desired]
-//
-//
-//
-//
-//
-//
 //
 //   There is some additional important information regarding the implementation and interfacing with the here that     
 //
+//
+//                  
+//  +=================================================================================================================================+
+//  |                                   Some Additional Details for Future Maintainers                                                |
+//  +=================================================================================================================================+
+//
+//                                        Please read the below message 
 // FINAL MATTER OF
 //  IMPORTANCE      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-//  Please Note:   (|)  !!!!!  NOT ALL OF THE CONFIGURATION FOR EasyLogging++ IS DONE WITHIN THIS FILE  !!!!!  (|)      
+//  Please Note:   (|   !!!!!  NOT ALL OF THE CONFIGURATION FOR EasyLogging++ IS DONE WITHIN THIS FILE  !!!!!   |)      
 //                  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+  
 //                  | EasyLogging++ was built to be used within a wide range of projects and thus has a very    |
-//                  |    high degree of customizability and flexability to its design. Easylogging++ is able    |
-//                  |    to allow for this flexability by having the option to have certain features enabled    |
-//                  |    or disabled during the compilation step of a project it is included with. \
-//                  | 
-//
+//                  |    high degree of customizability and flexability to its available functionality.         |
+//                  |    Easylogging++ is able to allow for this flexability by having the option to have       |
+//                  |    certain features enabled or disabled based off the presence or abscence of some        |
+//                  |    various macros during the compilation step.                                            |
+//                  | This file here is only in charge of providing configuration to the EasyLogging++ library  |
+//                  |    as a part of this programs run process. If there is a need to make changes to what     |
+//                  |    settings are used when building the EasyLogging++ library, constult with the a file    |
+//                  |    known as 'EasyloggingConfig.h'. To make sure the macros are actually having their      |
+//                  |    desired impact, be sure to look into the 'easylogging++.h' header file and make sure   |
+//                  |    there has been added a line which consists on an include statement for this settings   |
+//                  |    file.                                                                                  |
+//                  +-------------------------------------------------------------------------------------------+
 //
 //  easylogging++ reference page:       https://github.com/zuhd-org/easyloggingpp/blob/master/README.md#quick-start
 //
@@ -126,10 +137,14 @@
 //  Date:            January 10, 2019
 //                   February 27, 2019  --  Came back and tried to finish implemtation
 
-//#pragma once
 
-///#ifndef EASY_LOG_CONFIGURATION_H_
-///#define EASY_LOG_CONFIGURATION_H_
+//I am disabling the 'pragma once' statement just in case it would prevent
+//an illegal inclusion of this file in more than a single location within 
+//the codebase from not quickly triggering a warning
+
+//#pragma once
+#ifndef EASY_LOG_CONFIGURATION_H_
+#define EASY_LOG_CONFIGURATION_H_
 
 #include <filesystem>
 #include <chrono>
@@ -137,7 +152,7 @@
 #include <iomanip>
 #include <optional>
 
-//#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
+#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
 //#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
 
 #ifndef HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP
@@ -523,6 +538,7 @@ Detected that "EasyLogConfiguration.h" has been included in more than one place 
 Please be aware "EasyLogConfiguration.h" is not meant to be included more than once. To gain access to the the logging \
 functionality please make sure to include the header "UniversalIncludes.h", which has no restrictions on how many \
 places it is allowed to appear within the codebase.
+
 
 #endif //EASY_LOG_CONFIGURATION_H_
 
