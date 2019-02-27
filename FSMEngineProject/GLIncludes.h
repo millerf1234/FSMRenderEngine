@@ -99,6 +99,9 @@
 #define GLM_FORCE_ALIGNED
 #endif //GLM_FORCE_ALIGNED
 
+///Look Into  "#include "glm\gtx\spline.hpp"    (It's experimental though, so requires GLM_ENABLE_EXPERIMENTAL
+///                                              to be defined before the include statement) 
+
 //Include the main GLM library
 #include "ThirdParty\glm\glm.hpp" 
 

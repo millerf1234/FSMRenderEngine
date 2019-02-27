@@ -131,7 +131,7 @@
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FilepathWrapper.h" />
     <ClInclude Include="FSMCallbackInitializer.h" />
-    <ClInclude Include="FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h" />
+    <ClInclude Include="EasyloggingConfig.h" />
     <ClInclude Include="FSMErrorCallback.h" />
     <ClInclude Include="FSMMonitorEventCallback.h" />
     <ClInclude Include="GLIncludes.h" />

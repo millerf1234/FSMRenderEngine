@@ -41,6 +41,8 @@ public:
     ~Application();
 
     void launch();
+private:
+
 };
 
 #endif //APPLICATION_H_

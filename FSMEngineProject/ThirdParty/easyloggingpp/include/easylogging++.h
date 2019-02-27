@@ -15,20 +15,7 @@
 //  http://muflihun.com
 //
 
-//#include "..\..\..\FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
-
-
-/////////////////////////////////
-//  Just a quick test 
-
-#if defined ELPP_FEATURE_PERFORMANCE_TRACKING
-#pragma message (" ELPP_FEATURE_P_TRACK IS ENABLED!\n")
-#else 
-#pragma message (" ELPP_FEATURE_P_TRACK IS DISABLED!!\n")
-#endif
-// end test
-///////////////////////////////////////////
-
+#include "..\..\..\EasyloggingConfig.h"
 
 #ifndef EASYLOGGINGPP_H
 #define EASYLOGGINGPP_H

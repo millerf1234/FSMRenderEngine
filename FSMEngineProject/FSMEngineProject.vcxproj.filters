@@ -111,9 +111,6 @@
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h">
       <Filter>ThirdParty\easylogging++</Filter>
     </ClInclude>
-    <ClInclude Include="FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h">
-      <Filter>ThirdParty\easylogging++</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
       <Filter>ThirdParty\glad\debug</Filter>
     </ClInclude>
@@ -134,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="BuildSettings.h">
       <Filter>Header Files\ConfigurationAndSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="EasyloggingConfig.h">
+      <Filter>ThirdParty\easylogging++</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

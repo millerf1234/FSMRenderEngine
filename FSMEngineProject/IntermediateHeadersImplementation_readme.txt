@@ -10,6 +10,7 @@ The design essentially should look something like this:                         
 
 
           [TOP] 
+
    [Build-Configuation header]                                                            ___  [BuildSettings.h]  ________________________________________________________________________                     
 	       (intended for editing)                                                   _____/    /         |        \____                                            \                       \
 	    			                                     	   		          _____/       __/          |             \____                                        |                       \
@@ -27,7 +28,7 @@ The design essentially should look something like this:                         
                                                               V                       V  V                           V         V       V       V            V       V       V                |       |       |
                                                  +---------------------------+     +------------------+          +---------------------------------+     +-----+-----+--------+         +----------------------------+
 [Headers for inclusion                           |GraphicsLanguageFramework.h| <-- |GraphicsLanguage.h|          |       UniversalIncludes.h       |     |image|model|resource|         |   Audio Library Headers    |
-            with Application code]               |      [glfw, glm, glad]    |     |    [glm, glad]   |          |  [Logging, other useful stuff]  |     |   [Asset loading]  | (x N)   |     [openal, decoders]     | (x M)
+            with Application code]               |      [glfw, glm, glad]    |     |    [glm, glad]   |          |  [Logging, other useful stuff]  |     |   [Asset Loading]  | (x N)   |     [OpenAL, Decoders]     | (x M)
 			                                     +---------------------------+     +------------------+          +---------------------------------+     +-----+-----+--------+         +----------------------------+
                                                               |                             |                                     |                         |     |       |                     |      |      |
                                                               |                             |                                     |                         |     |       |                     |      |      |
@@ -36,7 +37,7 @@ The design essentially should look something like this:                         
                                                               |                             |                                     |                         |     |       |                     |      |      |
                                                               |                             |                                     |                         |     |       |                     |      |      |
                                                               |                             |                                     |                         |     |       |                     |      |      |
-	[Bottom]												  V                             V                                     V                         V     V       V                     V      V      V
+	       [Bottom]											  V                             V                                     V                         V     V       V                     V      V      V
 												+=========================================================================================================================================================================+
 												                                                                       Application Code
 

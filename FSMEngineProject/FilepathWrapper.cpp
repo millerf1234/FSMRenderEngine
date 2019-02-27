@@ -16,8 +16,24 @@
 
 #include "FilepathWrapper.h"
 
-//#include "UniversalIncludes.h"  //Provides access to the logging system
-#include "EasyLogConfiguration.h"
+#include "UniversalIncludes.h"  //Provides access to the logging system
+
+
+
+//These next 2 macros allow project to compile by filling in not-yet-finished functionality
+#ifndef ERROR
+#define ERROR 
+#define FPWRAPPER_ERR
+#endif 
+
+#ifndef LOG
+#define LOG 
+#define FPWRAPPER_LOG
+#endif
+//Also be aware that these above 2 macros are undef at the end of this file
+
+
+
 
 void FilepathWrapper::initialize() {
 	mPath_ = "";
@@ -174,7 +190,9 @@ bool FilepathWrapper::getTimeOfFilesMostRecentUpdate(const std::string& fp, std:
         ss << "\nApplication has encountered an error while attempting to retrieve the\n"
             "time and date the file " << fp << "\nwas last modified.\nThis error's origin is from the Operating System.\n";
         ss << "The operating system returned the error:\n\t" << errorCodeFromOS << std::endl;
+#ifndef FPWRAPPER_LOG
         LOG(ERROR) << ss.str();
+#endif
 		return false;
 	}
 }
@@ -194,3 +212,15 @@ int FilepathWrapper::getIndexOfLastPeriodInString(const std::string& fp) {
 		return static_cast<int>(std::distance(fp.begin(), lastPeriod));
 	}
 }
+
+
+
+#if (defined ERROR) && (defined FPWRAPPER_ERR)
+#undef ERROR
+#undef FPWRAPPER_ERR
+#endif 
+
+#if (defined LOG) && (defined FPWRAPPER_LOG)
+#undef LOG
+#undef FPWRAPPER_LOG
+#endif

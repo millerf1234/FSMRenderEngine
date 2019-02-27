@@ -1,14 +1,19 @@
 // File:                 BuildSettings.h
 //
+//
+//  NOTE TO SELF:         STOP WRITING DOCUMENTATION. Most of this will be wrong anyways.
+//                        Wait until things have been proven to work and aren't in mid development
+//
+//
 // Quick Description:    Defines macros that can either be set manually (recommended) or rigged to be
 //                           set automatically based off configuration that was set using a build-tool
 //                           (Not-Recommended). 
 //                       
 // Background:   
-//                 TODO  Rewrite Background to explain what build settings are, what impact they have on the
-//                           code, and the various options for setting them (i.e. MSBuild in MSVC, cmake for cross-platform,
 //                           or really any build tool). Also explain why just setting this stuff manually is better for now...
 //
+//                 TODO  Rewrite Background to explain what build settings are, what impact they have on the
+//                           code, and the various options for setting them (i.e. MSBuild in MSVC, cmake for cross-platform,
 // (Old Background section):
 //                This file is an attempt at getting some level of guaranteed control over how the 
 //                     project gets built* rather than relying upon IDE-specific settings and compiler
@@ -80,6 +85,8 @@
 #ifndef BUILD_SETTINGS_H_
 #define BUILD_SETTINGS_H_
 
+
+
 // ------------------------------------------------------------------------------------------------------------
 //  ( SECTION 0 )   PROJECT BUILD INVARIANTS                  
 // ------------------------------------------------------------------------------------------------------------
@@ -87,7 +94,7 @@
 //  - PROJECT MUST TARGET SAME OPENGL VERSION AS GLAD                 (Will be OpenGL 4.6 most likely)
 //  - PROJECT MUST BE BUILT IN ENVIRONMENT WHICH SUPPORTS SSE2        (This is implied by requiring 'x64' though since 'x64' has SSE2 as part of its standard)
 //  - Expected Runtime Environment of Windows 8.1 or newer            (Project currently has not been tested on platforms which aren't Windows 10, but 8.1 should work fine in theory)
-//  - 
+//  -   ...  [More to be added as development progresses]
 // 
 // ------------------------------------------------------------------------------------------------------------
 //  ( END SECTION 0 )
@@ -116,7 +123,7 @@
 //For some of the third party libraries, there are both debug and release versions available. By
 //defining this macro, the debug versions of these libraries will be selected if available. Having
 //this macro be undefined will cause the release version of these libraries to be linked instead.
-#define USE_DEBUG_
+#define USE_DEBUG_ 1
 
 
 
@@ -131,7 +138,7 @@
 //    could cause a dramatic performance boost but could also result in context messages to be reported 
 //    long after the Application event that triggered them. It is recommended to leave this enabled while
 //    debugging unless absolutely necessary. 
-#define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_
+#define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 1
 
 // ============================================================================================================
 //  ( END SECTION 1 )
@@ -155,8 +162,8 @@
   //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
   //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |
   //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
-//#define FORCE_GLAD_VERSION_DEBUG_ 1                                                                                     
-/*^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^^^V^^V^^|
+  //#define FORCE_GLAD_VERSION_DEBUG_ 1                                                                                     
+
   //                                                                                                                                    |
   // MACRO:   FORCE_GLAD_VERSION_RELEASE_                                                                                               |                                          
   // Dependencies:                                                                                                                      |
@@ -165,7 +172,7 @@
   //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
   //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |                                             
   //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
-//#define FORCE_GLAD_VERSION_RELEASE_ 1
+  //#define FORCE_GLAD_VERSION_RELEASE_ 1
 /*+-------------------------------------------------------------------------------------------------------------------------------------+   */
 
 
@@ -208,8 +215,8 @@
 //
 // Enables profiling for each OpenGL function call. The profiling will be performed using the profiler that 
 // comes built into the EasyLogging++ 3rd-party library. The profiler is supposed to be thread-safe, but 
-// this has not currently be extensively tested.
-//#define ENABLE_GLFUNCTION_PROFILING_
+// this has not been yet tested by me.
+#define ENABLE_GLFUNCTION_PROFILING_ 1
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  ( END SECTION 2 )   

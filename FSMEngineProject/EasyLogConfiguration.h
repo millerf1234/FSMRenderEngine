@@ -1,29 +1,135 @@
-//  File:            EasyLogConfiguration.h
-//
-//  Description:     Set's up the EasyLogging++ third party logging utility.
-//                   This file should be included only once in the entire project,
-//                   preferably early in the program's launch.
-//
-//  IMPORTANT:       This file should only be included once in the entire solution.
-//                   TO be safe, only include this file in a single '.cpp' file in the rest of the project.
-//                   Having multiple instances of this file will be bad.
-//
-//
-//  See also:        EasyLogging++ has additional settings that are specified using macros which
-//                   must be defined inside the header file "easylogging++.h". There should
-//                   be a section near the top of that file where these are set.
-//
-//
-//  Reference:       https://github.com/zuhd-org/easyloggingpp/blob/master/README.md#quick-start
-//
-//  Programmer:      Forrest Miller
-//  Date:            January 10, 2019
-//
-
-#pragma once
 
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
+
+//
+//  File:            EasyLogConfiguration.h
+//
+//  Description:    The purpose of the code contained within this file is to provide an implementaion
+//                     for the Application to initialize and set up a priliminary interface with the
+//                     EasyLogging++ library. This file provides to the EasyLogging++ library all the 
+//                     necessary configuration details for every one of the necessary logs up and 
+//                     running. The intent is for these tasks to be performed as part of the startup
+//                     and this should be one of the first thing that happens as part of the launch and 
+//                     initialization of this application.
+//
+//  
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//     !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//      
+//           IMPORTANT:    THIS FILE DOES NOT PROVIDE ACCESS TO ANY LOGGING FUNCTIONALITY AND MUST NOT BE INCLUDED IN OTHER FILES!
+//                           INSTEAD TO GAIN ACCESS TO THE FUNCTION NEEDED FOR WRITING TO THE LOGS, SEE:
+//          +--------------------+                    
+//    HOW   | Enabling Logging   |   The project should be set up so that any file can gain access to all of 
+//     TO   | Functionality For  |      the logging functionality for code in the other source/header files, the functionality should be 
+//          |Use In Another File:|     enabled as part of the commonly used header file "UniversalIncludes.h" 
+//          +--------------------+         
+//                                 
+//                       [ TROUBLESHOOTING: If logging functionality is not found within "UniversalIncludes.h", try searching
+//                                             for an internal header titled "elcc_includer.h" which should be burried somewhere 
+//                                             within this project's files. This other header is meant to be the internal header                                    
+//                                             that imports all of the logging functions ]  
+//    ALSO
+//  IMPORTANT:       This file must only be included in one location within the rest of the entire codebase. 
+//
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//     !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//      
+//
+//
+//
+//
+//                  +====================================================================================+
+//                  |                                      USAGE                                         |
+//                  +====================================================================================+
+//
+//  Including In
+//     Project:     Because of the strict rules limiting the number of times this file is allowed to
+//                     be included by any of the other code in a project, as a safety feature it is 
+//                     required of the file designated for including this file to define the 
+//                     the macro "ALLOW_ELCC_CONFIGURATION" (minus the quotes).
+//                     This file will undefine this macro once it reads it or will force a compilation error.
+
+#ifdef ALLOW_ELCC_CONFIGURATION
+#pragma message("\n\t\t\tEasyLogConfiguration has detected proper usage of the macro ensuring \n\t\t\t" \
+"it is being included into the project in a manner which meets its strict requirements.\n" \
+"\n\t\t\t\t\t\tAllowing the compilation to proceed without hinderance\n")
+#undef ALLOW_ELCC_CONFIURATION
+#else 
+#error ERROR! Unable to continue with compilation due to the possibly unsafe multiple-inclusions of the file EasyLogConfiguration.h\
+ This configuration file MUST only be included at one isolated place within each easylog++-assocaited project. If it is known that\
+ a place has been selected that meets these strict criteria, then define the macro listed in the documentation to disable this\
+ compiler error message from preventing compilation.
+#endif
+
+//
+//  How-to Invoke:  
+//                  The proper usage of the code implemented in this file is accomplished through 
+//                     placing two function calls in a specific order. The first function will
+//                     start the initial processes associated with running the EasyLogging++ library and 
+//                     has the following signature:
+//
+//                    (1)           void initializeEasyLogger(int argc, char ** argv);
+//
+//                  Please observe that this function is meant to be invoked with two parameters
+//                     which match the signatures of the commandline arguments provided by the OS to 
+//                     this Application's main() at launch. If this applications main() is expecting 
+//                     to find some of its own specical instructions from amongst these command line
+//                     arguments, it may choose to filter them out before calling this function. I may be
+//                     wrong but I believe all that really is needed here is the first argument recieved,
+//                     but to ensure proper initialization of EasyLogger++ it is recommended to all args 
+//                     recieved. I suspect it needs these so it may recieve the filepath containing the 
+//                     executable so that it is able to properly determine an appropriate relative directory
+//                     for it to populate with its log files.
+//                     
+//
+//                  After the first function has been called, all that remains is to call the configuration function:
+//                      This function will make sure each log file is assigned its proper name and is set with accurate 
+//                      date and time synchronized to the rest of the application so that each message is reported as 
+//                      accuratly as possible. 
+//                      
+//                    (2)           void configureEasyLogger();
+//
+//                  Be advised that after this second function has returned it shall be expected that all the necessary steps
+//                      have been performed with interfacing with EasyLogger++ and any logging-related function calls made anywhere
+//                      by this applcaitions code will be logged appropriatly. 
+//                  Seeing as the code found within this class is meant entirely for setup, there should not be any need to do anything
+//                      futher with this file for the rest of the processes lifetime.
+//
+//
+//               [I suppose that error reporting by this file leavse something to be desired]
+//
+//
+//
+//
+//
+//
+//
+//   There is some additional important information regarding the implementation and interfacing with the here that     
+//
+// FINAL MATTER OF
+//  IMPORTANCE      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
+//  Please Note:   (|)  !!!!!  NOT ALL OF THE CONFIGURATION FOR EasyLogging++ IS DONE WITHIN THIS FILE  !!!!!  (|)      
+//                  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+  
+//                  | EasyLogging++ was built to be used within a wide range of projects and thus has a very    |
+//                  |    high degree of customizability and flexability to its design. Easylogging++ is able    |
+//                  |    to allow for this flexability by having the option to have certain features enabled    |
+//                  |    or disabled during the compilation step of a project it is included with. \
+//                  | 
+//
+//
+//  easylogging++ reference page:       https://github.com/zuhd-org/easyloggingpp/blob/master/README.md#quick-start
+//
+//  Programmer:      Forrest Miller
+//  Date:            January 10, 2019
+//                   February 27, 2019  --  Came back and tried to finish implemtation
+
+//#pragma once
+
+///#ifndef EASY_LOG_CONFIGURATION_H_
+///#define EASY_LOG_CONFIGURATION_H_
 
 #include <filesystem>
 #include <chrono>
@@ -32,11 +138,10 @@
 #include <optional>
 
 //#include "ThirdParty/easyloggingpp/include/easylogging++.h" 
-#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
+//#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
 
 #ifndef HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP
-#define HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP
-INITIALIZE_EASYLOGGINGPP
+#define HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP INITIALIZE_EASYLOGGINGPP
 #endif
 
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for some implementation functions
@@ -58,7 +163,7 @@ void configureEasyLogger() {
     
     
     //This is a bit complicated, so I first wrote out a bunch of notes on how it all works
-   
+  
     //  +==========================================================================================+
     //  |    When the logging library is first set up, we are provided with 2 'logger' objects     |
     //  +==========================================================================================+
@@ -409,8 +514,15 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
 
 
 
+#else 
+//else the Header Guard test failed so this file was included multiple times within the project
+//which isn't allowed because it makes use of the macro INITIALIZE_EASYLOGGINGPP 
 
-
+#error Compilation Error! \
+Detected that "EasyLogConfiguration.h" has been included in more than one place within the project. \
+Please be aware "EasyLogConfiguration.h" is not meant to be included more than once. To gain access to the the logging \
+functionality please make sure to include the header "UniversalIncludes.h", which has no restrictions on how many \
+places it is allowed to appear within the codebase.
 
 #endif //EASY_LOG_CONFIGURATION_H_
 

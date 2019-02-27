@@ -16,8 +16,9 @@
 //#endif
 
 
-
+#define ALLOW_ELCC_CONFIGURATION  
 #include "EasyLogConfiguration.h"
+
 //#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
 
 Application::Application(int argc, char ** argv) {
@@ -50,6 +51,8 @@ Application::~Application() {
     //Flush all the remaining events stored in all loggers
     LOG(INFO) << "Application is closing";
     el::Loggers::flushAll();
+    
+    //close down GLFW?
 
 }
 
