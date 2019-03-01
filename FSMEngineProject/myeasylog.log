@@ -464,3 +464,27 @@ Will This print?
 2019-01-25 16:15:32,147 DEBUG [default] [Forrest@FMPC] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:30] Logger [MsgLog] is not registered yet!
 2019-01-25 16:15:32,152 DEBUG [default] [Forrest@FMPC] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:56] Logger [MsgLog] is not registered yet!
 2019-01-25 16:15:34,143 DEBUG [default] [Forrest@FMPC] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:50] Logger [MsgLog] is not registered yet!
+2019-03-01 05:15:11,170 INFO [MsgLog] Application is launching...
+ 
+2019-03-01 05:15:11,180 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:357] 
+Will This print?
+
+ 
+2019-03-01 05:15:11,181 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:358] Will This print?
+ 
+2019-03-01 05:15:11,182 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-03-01 05:15:11,182 INFO [MsgLog] Application Launched! 
+2019-03-01 05:15:20,242 INFO [MsgLog] Application is closing 
+2019-03-01 05:26:24,685 INFO [MsgLog] Application is launching...
+ 
+2019-03-01 05:26:24,691 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:357] 
+Will This print?
+
+ 
+2019-03-01 05:26:24,691 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:358] Will This print?
+ 
+2019-03-01 05:26:24,692 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-03-01 05:26:24,693 INFO [MsgLog] Application Launched! 
+2019-03-01 05:26:25,853 INFO [MsgLog] Application is closing 

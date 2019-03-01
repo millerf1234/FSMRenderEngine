@@ -21,15 +21,15 @@
 
 
 //These next 2 macros allow project to compile by filling in not-yet-finished functionality
-#ifndef ERROR
-#define ERROR 
-#define FPWRAPPER_ERR
-#endif 
-
-#ifndef LOG
-#define LOG 
-#define FPWRAPPER_LOG
-#endif
+//#ifndef ERROR
+//#define ERROR 
+//#define FPWRAPPER_ERR
+//#endif 
+//
+//#ifndef LOG
+//#define LOG 
+//#define FPWRAPPER_LOG
+//#endif
 //Also be aware that these above 2 macros are undef at the end of this file
 
 

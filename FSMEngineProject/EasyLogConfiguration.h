@@ -1,6 +1,34 @@
 //
 //  File:            EasyLogConfiguration.h
 //
+//  Warning Notice:
+//
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//     !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//      
+//           IMPORTANT:    THIS FILE DOES NOT PROVIDE ACCESS TO ANY LOGGING FUNCTIONALITY AND MUST NOT BE INCLUDED IN OTHER FILES!
+//                          TO GAIN ACCESS TO THE LOGGING FUNCTIONS, PLEASE INCLUDE THE SHARED HEADER "UniversalIncludes.h"  
+//          +--------------------+ 
+//          |      How To        |   The FSMEngine project's expected configuration is for there to be a set of common headers which
+//          | Enabling Logging   |      are responsible for implementing specific sets of related functionality. Due to the universally
+//          | Functionality For  |      anticipated need for writing log messages, all of the logging message functionality can be integrated 
+//          |Use In Another File:|      by simply including the header file "UniversalIncludes.h".
+//          +--------------------+         
+//                                 
+//                       [ TROUBLESHOOTING: If for some reason it appears as though "UniversalIncludes.h" is not providing the logging
+//                                            functionality, chances are that the relative filepaths between the FSMEngine's internal                                
+//                                            components has been modified. A possible backup to regain logging support would be to find
+//                                            out the relative filepath between the "easylogging++.h" (which is the header of the
+//                                            actual library) and "UniversalInclude.h" and '#inlcude' this relative path in "UniversalInclude.h" ]
+//
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//     !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!
+//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+//
+//
+//
 //  Please Notice:   This file contains several specific macro-function calls which are required by the library Easylogging++
 //                         as part of its initalization which MUST appear only in one single location within a project. 
 //
@@ -11,6 +39,15 @@
 //                         designed to automatically block compilation if their prerequisites fail to be satisfied. 
 //                         These security features include:
 //
+//                                  -) MUST DEFINE THE SPECIAL MACRO AT INTENDED LOCATION OF INCLUSION
+//                                        To include this file at the proper location within the codebase, there must first be defined 
+//                                        the necessary pre-processor macro ' ALLOW_ELCC_CONFIGURATION ' (no quotes) to serve as a 
+//                                        clear indication that this header is being included in a properly-conforming place. This
+//                                        pre-processor command once recognized will be undefined by this header. 
+//                                      
+//                                  -) MULTIPLE PRE-PROCESSOR STATEMENTS DESIGNED TO DETECT MULTIPLE INCLUSIONS
+//                                        There are several pre-processor instructions featured throughout the document designed to
+//                                        detect multiple copies of this file appearing during compilation. 
 //
 //                   This header contains highly specialized code which consists largely of many distinct calls made into the
 //                         EasyLogging++ API that are linked together by their mutually shared responsibility for exactifying both 
@@ -50,44 +87,7 @@
 //                                                                                     that handles specifing compile-time settings.
 //
 //
-//
-//meet all the necessary run-time requirements  provide  implementaion
-//                     for an Application built with the FSMEngine to initialize and configure all of 
-//                     its specific requirements and specifications for usage of the EasyLogging++ library. The functions defined witin this 
-//                     file provides to the EasyLogging++ library all the necessary configuration details for every one of the logs up and 
-//                     running. The intent is for these tasks to be performed as part of the startup
-//                     and this should be one of the first thing that happens as part of the launch and 
-//                     initialization of this application.
-//
 //  
-//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//     !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!
-//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//      
-//           IMPORTANT:    THIS FILE DOES NOT PROVIDE ACCESS TO ANY LOGGING FUNCTIONALITY AND MUST NOT BE INCLUDED IN OTHER FILES!
-//                    ------>  TO GAIN ACCESS TO THE LOGGING FUNCTIONS, PLEASE INCLUDE THE SHARED HEADER "UniversalIncludes.h"  <--------
-//          +--------------------+                    
-//    HOW   | Enabling Logging   |   The project should be set up so that any file can gain access to all of 
-//     TO   | Functionality For  |      the logging functionality for code in the other source/header files, the functionality should be 
-//          |Use In Another File:|     enabled as part of the commonly used header file "UniversalIncludes.h" 
-//          +--------------------+         
-//                                 
-//                       [ TROUBLESHOOTING: If logging functionality is not found within "UniversalIncludes.h", try searching
-//                                             for an internal header titled "elcc_includer.h" which should be burried somewhere 
-//                                             within this project's files. This other header is meant to be the internal header                                    
-//                                             that imports all of the logging functions ]  
-//   Remember
-//  IMPORTANT:       This file must only be included in one location within the rest of the entire codebase. 
-//
-//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//     !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!
-//    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//      
-//
-//
-//
-//
-//
 //                  +====================================================================================+
 //                  |                                      USAGE                                         |
 //                  +====================================================================================+
@@ -100,18 +100,6 @@
 //                     This file will undefine this macro once it has successfully detected it or if  
 //                     it fails to find a definition for said macro will force a halt to compilation 
 //                     and report an error.
-#ifdef ALLOW_ELCC_CONFIGURATION
-#pragma message("\n\t\t\tEasyLogConfiguration has detected proper usage of the macro ensuring \n\t\t\t" \
- "it is being included into the project in a manner which meets its strict requirements.\n" \
- "\n\t\t\t\t\t\tAllowing the compilation to proceed without hinderance\n")
-#undef ALLOW_ELCC_CONFIURATION
-#else 
-#pragma message("ERROR! Unable to continue with compilation due to the possibly unsafe multiple-inclusions of the file EasyLogConfiguration.h \n \
- This configuration file MUST only be included at one isolated place within each easylog++-assocaited project. If it is known that\n \
- a place has been selected that meets these strict criteria, then define the macro listed in the documentation to disable this\n \
- compiler error message from preventing compilation.")
-#error Illegal Multiple Inclusions of EasyLogg++ Configuration Header
-#endif
 //
 //  How-to Invoke:  
 //                  The proper usage of the code implemented in this file is accomplished through 
@@ -156,6 +144,19 @@
 //  |                                   Some Additional Details for Future Maintainers                                                |
 //  +=================================================================================================================================+
 //
+//  [Description of Implementation]
+//      The methods available for configuring EasyLogging++ exist in several different forms, from loading configuration from a file to 
+//          performing individual inline configuration function calls. It should be noted that the way this code performs all of the 
+//          configuration is through the usage of the provided configuration object, which contains internal variables representing the
+//          state of each log 'level' (target) able to recieve a configuation. To use this object, we first construct it [see
+//          step 1], then we provide to this object a specific configuration for each 'level' (target) [see step 2]. Finally we must
+//          tell the default collection of logs that we wish to have each of its 'levels' (targets) to follow our set configuration 
+//          by passing the configuration object to it with a function call [step 3]. As a bonus option before we lose this  
+//          configuration object by returning from our current function scope, we can tell EasyLogging++ that we wish for this 
+//          configuration object to serve as the default settings to use for any future logging objects created (these new defaults
+//          will be in place for the rest of the processes runtime) [step 4]
+//
+//
 //                                        Please read the below message 
 // FINAL MATTER OF
 //  IMPORTANCE      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
@@ -179,12 +180,38 @@
 //  easylogging++ reference page:       https://github.com/zuhd-org/easyloggingpp/blob/master/README.md#quick-start
 //
 //  Programmer:      Forrest Miller
-//  Date:            January 10, 2019
-//                   February 27, 2019  --  Came back and tried to finish implementation
+//  Date:            January 10, 2019 --    Started implementing file, got outline and file creation in place but left configuration unfinished
+//                   February 27, 2019  --  Resumed work towards finishing implementation
 
 
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
+
+#pragma message("  Testing Requirement:\n\t\tA request has been made to include the header \"EasyLogCongiuration.h\" within compilation.\n" \
+"\t\t  Testing preconditions for determining if requested spot of inclusion has met the necessary requirements...")
+#ifdef ALLOW_ELCC_CONFIGURATION
+#pragma message("  Testing Completed:\n\t\t\"EasyLogConfiguration.h\" has detected that all proper requirements have been successfully satisfied by this location." \
+/* "\n\t\t  which help ensure that this point-of-inclusion is indeed the proper place to do so. \n" */ \
+ "\n\t\t  As a result, the compilation will now be resumed without hinderance...\n")
+#undef ALLOW_ELCC_CONFIGURATION
+#else 
+#pragma message("\n  Testing Failed! [See Error Report] \n\n" \
+"\n \t\t\t\t[ERROR REPORT!]\n\t\t The compiler was forced to cease progress with the current compilation due to one or more detected violations against restrictions \n" \
+"         in place from integrated security measures for the header file \"EasyLogConfiguration.h\" which exist to prevent inadvertant access to it.\n" \
+"       Please be aware that this file contains several macro statements which necessitate a very specific location and manner in which this header file\n" \
+"         can safely and legally be included in a project." \
+"\n  Suggested Solutions:\n" \
+"   [RECOMMENDED]   (i) To resolve this error, simply remove each of the include statements for \"EasyLogConfiguration.h\" that caused this error to trigger\n" \
+"                  (ii) If you are looking to add logging-message functions to a source file, be aware that \"EasyLogConfiguration.h\" isn't the one you want. Try instead including \"UniversalIncludes.h\"\n" \
+"                 (iii) Otherwise, if you actually believe you have a proper place in your codebase that you wish to use for \"EasyLogConfiguration.h\", consult its internal comments \n"\
+"                        to get an understanding of which necessary requirements and steps your code can take to deactivate the triggering of this sudden-death automatic compilation error\n\n" )
+
+//This configuration file MUST only be included at one isolated place within each easylog++-assocaited project. If it is known that\n \
+// a place has been selected that meets these strict criteria, then define the macro listed in the documentation to disable this\n \
+// compiler error message from preventing compilation.")
+#error Illegal Multiple Inclusions of EasyLogg++ Configuration Header
+#endif //ALLOW_ELCC_CONFIGURATION 
+
 
 #include <filesystem>
 #include <chrono>
@@ -194,10 +221,12 @@
 #include <ctime>
 
 #include "ThirdParty/easyloggingpp/include/easylogging++.h" 
-//#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
 
 #ifndef HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP
-#define HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP INITIALIZE_EASYLOGGINGPP
+#define HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP 1
+//The following macro is what most of the fuss about only having this header included once is all about... 
+//It is required to appear once exactly in order for EasyLogging++ to function properly
+INITIALIZE_EASYLOGGINGPP
 #endif
 
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for some implementation functions

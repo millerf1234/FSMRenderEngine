@@ -28,6 +28,11 @@
 #define ELPP_LOG_STD_ARRAY 1  //Must have ELPP_STL_LOGGING defined
 
 
+//Try out experimental Asynchronous Logging. Documentation claims this should work for any envirnment already
+//supporting std::thread and std::this_thread::sleep_for. This feature is still under testing and may change 
+//in the future. It may also be buggy.
+//#define ELPP_EXPERIMENTAL_ASYNC 1
+
 //#define ELPP_SYSLOG  //Not supported on Windows, requires header file <syslog.h>
 
 //Logging flag values (This does not list all of them):
@@ -44,7 +49,7 @@
 #define ELPP_FEATURE_PERFORMANCE_TRACKING  //Enable performance-tracking logging
 
 
-#include "ThirdParty\easyloggingpp\include\easylogging++.h"
+//#include "ThirdParty\easyloggingpp\include\easylogging++.h" //Instead the 'easylogging++.h' header should include this file
 
 ///////////////////////////////////////////////////////////////
 //////    End of FSMEngine settings configuration
