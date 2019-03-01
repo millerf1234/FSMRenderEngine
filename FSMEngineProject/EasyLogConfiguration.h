@@ -1,26 +1,57 @@
 //
 //  File:            EasyLogConfiguration.h
 //
-//  Please Notice:   This file contains several specific macro-function calls required by the library Easylogging++
-//                       as part of its initalization which MUST only appear in one single location within a project. 
+//  Please Notice:   This file contains several specific macro-function calls which are required by the library Easylogging++
+//                         as part of its initalization which MUST appear only in one single location within a project. 
 //
-//                   Due to the restrictions these specialized macros place on the possible locations this header may  
-//                         be incorperated into an Application, several additional preventative safety-measures have been
-//                         implemented throughout this file in order to detect unintended/improper inclusion of this header 
-//                         within the build system which will automatically block compilation as soon as a requirement is broken 
-//                         or fails to be satisfied. 
+//                   Due to the restrictions this usage of specialized macros places on the manner under which this header may 
+//                         be incorperated into a project, several additional preventative safety-measures have been
+//                         implemented throughout this file with the intent to detect any unintended/improper inclusions
+//                         of this header within the project build system. These additional preventative measures have been
+//                         designed to automatically block compilation if their prerequisites fail to be satisfied. 
 //                         These security features include:
 //
-//                   As a result of the specialized requirements imposed upon this file with regard to its unique
-//                         restrictions which accompany its manner of integration into a project, it is 
-//                         recommended as essential by the author that all of the following documentation be  
-//                         read and understood before attempting to perform any refactoring or changes to the 
-//                         code.     
-//                                    [ I intend to do my part in this bargin by not getting too rambly, but know that 
-//                                      currently this has not been known as an area of strength for me... ]
+//
+//                   This header contains highly specialized code which consists largely of many distinct calls made into the
+//                         EasyLogging++ API that are linked together by their mutually shared responsibility for exactifying both 
+//                         a highly-specific-in-behavior underlying message-logging feature-set in addition to each of the [6-7] supported
+//                         message logging targets used throughout the rest of the app.
+//                      
+//
+//                   As a result of the both the uniquely-specialized requirements imposed upon this file's usage that must restrict
+//                         the permissible ways in which it may be integrated into a project on top of the both highly-specific tasks 
+//                         and highly-fundamental position it occupies within the codebase, the author 'recommends as essential' that
+//                         changes/modifications/updates be avoided or kept to a minimun. No changes should be made until all of the
+//                         documentation for this file be read and understood and the impact of those changes fully understood. This
+//                         includes performing even the smallest of changes that might occur within typical every-day refactoring.
+//
+//                   It is given that chances are high that any necessary changes when performed after having undergone the proper due 
+//                         diligence and made under thoughtful care can be safely made to this code. However, keep in mind when 
+//                         contemplating a change the ease with which it could very well impact an expected behavior or lead to major
+//                         outcomes in program behavior due to the fundamental positioning and wide-spread reliance the entire codebase
+//                         expects from this code.
+//                                                                                           
+//
+//  Background:      One of the initial features built into the FSMEngine project was a robust multi-leveled series of message logs, 
+//                         each which is made available for every source file to use. It was decided very early on that this feature 
+//                         could best be provided through the use of a third party library called "EasyLogging++" which was built to
+//                         provide this exact feature while having the bonus of allowing for a high degree of configurability.
+//
+//  Description:     The purpose of the code contained within this file serves one of these two related purposes:
+//                           i) To provide all of the necessary information and perform all of the necessary actions necessary to
+//                                 fully initialize and launch the EasyLogging++ library; and
+//                          ii) To perform all the necessary configuratory requests* plus API calls which are required in conforming the 
+//                                 highly-configurable EasyLogging++ library to meet the expected specifications of the rest of the 
+//                                 Application. This includes both setting up the fundamental state in addition to configuring each 
+//                                 of the available LOG targets individually. 
+//
+//                                                                                  *This file is responsible for only configuring the available run-time settings. 
+//                                                                                     There is a seperate EasyLogging++ configuration file called "EasyLogging_BuildConfig.h"
+//                                                                                     that handles specifing compile-time settings.
 //
 //
-//  Description:    The purpose of the code contained within this file is to provide the implementaion
+//
+//meet all the necessary run-time requirements  provide  implementaion
 //                     for an Application built with the FSMEngine to initialize and configure all of 
 //                     its specific requirements and specifications for usage of the EasyLogging++ library. The functions defined witin this 
 //                     file provides to the EasyLogging++ library all the necessary configuration details for every one of the logs up and 
