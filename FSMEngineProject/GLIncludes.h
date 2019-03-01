@@ -103,7 +103,7 @@
 ///                                              to be defined before the include statement) 
 
 //Include the main GLM library
-#include "ThirdParty\glm\glm.hpp" 
+//#include "ThirdParty\glm\glm.hpp" 
 
 //After including the main GLM header, it is still necessary to include
 //some additional GLM extensions that are used in this project:

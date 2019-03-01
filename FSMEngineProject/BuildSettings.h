@@ -74,10 +74,57 @@
 //                    quick identification.
 //
 // Programmer:    Forrest Miller
-// Date:          January 25, 2019
 //
 //
 //               TODO   Add more settings
+//
+//                
+//
+//
+//
+//
+//
+//
+//
+//  
+//      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//      ~~~~~~~~~~~~~~~~~~~~~~~~~~                         Table of Contents For AVAILABLE SETTINGS                         ~~~~~~~~~~~~~~~~~~~~~~~~~~          
+//      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//        
+//  +=================================================================================================================================================================================+ 
+//  | Section Number |        Section Title        |     Section Description                                                                                                          |          
+//  +================+=============================+==================================================================================================================================+ 
+//  |                |                             |                                                                                                                                  |
+//  |  Section 0)    | "Project Invariants"        |  These aren't really you usual type of settings that you get to 'customize' but then again its                                   |
+//  |                |                             |    settings like this that necessitated the existance of a section 'Zero' in the first place...                                  |
+//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
+//  |                |                             | This section known affectionately to the French as "un" rightfully contains the two far most impactful and important settings    |
+//  |                |                             |   available across the entire project. The first is the all-knowing and all-powerful master-univeral-debug on-off switch which   |
+//  |                |  "Global Project DEBUG      |   is what is really in charge of controlling the behavior of how the code is built, regardless of what-ever misinformed nonsense |
+//  |  Section 1)    |            Behavior"        |   the compiler thinks the build settings are. The second setting, while only able to have an effect when allowed by the first,   |
+//  |                |                             |   gets final (and first) say over how much the underlying OpenGL context is left alone to do its thing by enabling forced        |
+//  |                |                             |   synchronization between it and the application.                                                                                |
+//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+ 
+//  |                |                             |                                                                                                                                  |
+//  |  Section 2)    |      "GLAD Behavior"        | Basically provides manual overrides for building the GLAD OpenGL function loader library in a DEBUG or RELEASE configuration     |
+//  |                |                             |   plus some additional options which affect how verbose GLAD should be when using its DEBUG configuration.                       |
+//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
+//  |                |                             |                                                                                                                                  |
+//  |  Section 3)    | "GLM Specifications         |   All of the settings here are used to control the GL Mathematics library. Probably not too much of interest here outside of     |
+//  |                |    and Behavior Settings"   |       forcefully disabling several options for testing performance profiling comparisons.                                        |
+//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
+//  |                |                             |                                                                                                                                  |
+//  |  Section 4)    |  "EasyLogging++ Behavior"   |                                                                                                                                  |
+//  |                |                             |                                                                                                                                  |
+//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
+//  |                |                             |                                                                                                                                  |
+//  |                |                             |                                                                                                                                  |
+//  |                |                             |                                                                                                                                  |
+//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
+//  |                |                             |                                                                                                                                  |
+//  |                |                             |                                                                                                                                  |
+//  |                |                             |                                                                                                                                  |
+//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
 //
 
 #pragma once
@@ -86,14 +133,14 @@
 #define BUILD_SETTINGS_H_
 
 
-
 // ------------------------------------------------------------------------------------------------------------
 //  ( SECTION 0 )   PROJECT BUILD INVARIANTS                  
 // ------------------------------------------------------------------------------------------------------------
 //  - PROJECT MUST TARGET x64
-//  - PROJECT MUST TARGET SAME OPENGL VERSION AS GLAD                 (Will be OpenGL 4.6 most likely)
-//  - PROJECT MUST BE BUILT IN ENVIRONMENT WHICH SUPPORTS SSE2        (This is implied by requiring 'x64' though since 'x64' has SSE2 as part of its standard)
-//  - Expected Runtime Environment of Windows 8.1 or newer            (Project currently has not been tested on platforms which aren't Windows 10, but 8.1 should work fine in theory)
+//  - PROJECT MUST TARGET SAME OPENGL VERSION AS GLAD                    (Will be OpenGL 4.6 most likely)
+//  - PROJECT MUST BE BUILT IN ENVIRONMENT WHICH SUPPORTS SSE2           (This is implied by requiring 'x64' though since 'x64' hardware by definition has support for SSE2 written into its standard)
+//  - Expected Runtime Environment of Windows 8.1 or newer               (Project currently has not been tested on platforms which aren't Windows 10, but 8.1 should work fine in theory)
+//  - Support For the C++17 header <filesystem> is essentially expected  (It may be possible to completely disable and remove all parts of this project that depend of it within a few hours)
 //  -   ...  [More to be added as development progresses]
 // 
 // ------------------------------------------------------------------------------------------------------------
@@ -150,11 +197,12 @@
 
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//  ( SECTION 2 )   Specific Behavior Overrides 
+//  ( SECTION 2 )  GLAD Behavior Overrides 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 /*                                              Choose at most one of the following two 
   +-------------------------------------------------------------------------------------------------------------------------------------+  
+
   // MACRO:   FORCE_GLAD_VERSION_DEBUG_                                                                                                 |
   // Dependencies:                                                                                                                      |
   //    - Must not also have defined FORCE_GLAD_VERSION_RELEASE_                                                                        |
@@ -162,6 +210,7 @@
   //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
   //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |
   //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
+  //                                                                                                                                    
   //#define FORCE_GLAD_VERSION_DEBUG_ 1                                                                                     
 
   //                                                                                                                                    |
@@ -172,10 +221,10 @@
   //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
   //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |                                             
   //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
+  //
   //#define FORCE_GLAD_VERSION_RELEASE_ 1
+
 /*+-------------------------------------------------------------------------------------------------------------------------------------+   */
-
-
 
 
 
@@ -210,8 +259,8 @@
 // Dependencies:
 //    -  GLAD must also be the DEBUG version. Turning on this setting while GLAD is not 
 //            being built for debug will result in a compilation error.
-//    -  The EasyLogging++ utility must be configured to support profiling. Turning on this setting
-//            with profiling deactivated in EasyLogging++ will result in a compilation error.
+//    -  The EasyLogging++ utility must be configured to support profiling [see section 4]. Turning on 
+//            this setting with profiling deactivated in EasyLogging++ will result in a compilation error.
 //
 // Enables profiling for each OpenGL function call. The profiling will be performed using the profiler that 
 // comes built into the EasyLogging++ 3rd-party library. The profiler is supposed to be thread-safe, but 
@@ -225,15 +274,206 @@
 
 
 
-
-
-// MACRO:   GL_MATHEMATICS_FORCE_ALIGNED (WRONG! Check which GLM version is being used...)
-// Dependencies:
-//    - None
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  ( SECTION 3 )  GLM SETTINGS
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  /*
+//   +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
+//   /                                                                                                                          \  
+//   \  FIRST A QUICK AND GENERAL SIDENOTE REGARDING GLM AND ITS CONFIGURATION MACROS:                                          /  
+//   /     GLM has a tendency to change the names of its configuration macros between releases. I have                          \  
+//   \     fallen into the trap in the past of thinking I was activating a cool GLM feature when in reality I was               / 
+//   /     simply defining a macro that was never checked for by GLM and basically served no purpose whatsoever.                \ 
+//   \     An excellent way to avoid having this happen if a cool 'new' GLM macro is listed out in the wild is                  / 
+//   /     to first consult with current GLM manual to see if the macro is listed. Chances are pretty good that if              \  
+//   \     the macro is not listed anywhere in the GLM manual, this macro is not something that will have any effect            / 
+//   /     on this Application or its underlying GLM library.                                                                   \ 
+//   \                                                                                                                          / 
+//   /   For reference:                                                                                                         \    
+//   \         GLM version is 0.9.9.3   [Last Updated Oct 31 2018]                                                              / 
+//   /         GLM Manual:            https://github.com/g-truc/glm/blob/0.9.9.2/doc/manual.pdf                                 \    
+//   \                                                                                                                          / 
+//   /                                                                                                                          \   
+//   +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+ 
+// */
 //
-// https://github.com/g-truc/glm/blob/master/manual.md#section2_9
-// https://gamedev.stackexchange.com/questions/132549/how-to-use-glm-simd-using-glm-version-0-9-8-2
+
+//                                              NOW ON TO THE GLM MACROS!
+
+// MACRO:  GLM_FORCE_MESSAGES
+// Dependencies: 
+//     - none
+//
+// This macro will toggle the level of verbosity displayed by GLM during the compilation process. If GLM undergoes
+// compilation with this macro defined, the effect will be to have GLM provide a detailed summary of everything it knows
+// through the compilation log. To briefly summarize what to expect from GLM's summary, first it will begin its output with
+// announcing information related to itself that basically is just the verison number of the library. This will be followed
+// by all of the various specifics GLM detects about the compiler and build envirnment, which will include what C++ standard
+// it detects is in use and possibly what advanced CPU instuction set it detects it can use to provide a fast SIMD-implementation.
+// Note that it is possible to use macros to prevent GLM from detecting any of these settings.  After getting past the current
+// platform and envirnment settings, it will announce each of its configuration options. Finally it will annnounce each additional
+// extension that has been requested for inclusion with the library. 
+#define GLM_FORCE_MESSAGES 1
 
 
+// MACROS: GLM_FORCE_PLATFORM_UNKNOWN
+//         GLM_FORCE_COMPILER_UNKNOWN
+//         GLM_FORCE_ARCH_UNKNOWN
+//         GLM_FORCE_CXX_UNKNOWN
+// Dependencies: 
+//       - It appears as though defining both one of these settings combined with a specific 
+//         GLM override specifing a specific version for that setting will cause the other macro
+//         to win out. In other words, to actually disable GLM detection of one of these envirnment 
+//         variables, it can't be told to use a specific one automatically as well. 
+//
+// These four macros can be used individually or in any combination together to force GLM to fail at detecting the 
+// envirnment setting corrosponding to each of their names, respectivly (arch means architecture). I am not sure 
+// why you would ever want to do this but I suppose it was nice of GLM's implementers to provide us with these option...
+//#define GLM_FORCE_PLATFORM_UNKNOWN 1
+//#define GLM_FORCE_COMPILER_UNKNOWN 1
+//#define GLM_FORCE_ARCH_UNKNOWN 1
+//#define GLM_FORCE_CXX_UNKNOWN 1
+
+
+//MACRO: GLM_FORCE_CSS_UNKOWN
+// Dependencies:
+//     - none  (probably)      [I haven't tested for any dependencies/exclusions with this and the previous 4 commands]
+//
+// Similar to the four above macros in that it prevents GLM from detecting a part of the build envirnment during 
+// compilation. The documentation states that this macro is able to prevent GLM from detecting the "C++ Compiler
+// Standard Support" (see GLM Manual section 2.5). I am not sure what exactly this means or what impact is has,
+// but feel free to play around with it if you like disabling features for fun and profit.
+//#define GLM_FORCE_CSS_UNKNOWN 1
+
+
+// MACRO:  GLM_FORCE_EXPLICIT_CTOR
+// Dependencies: 
+//     - none
+//
+// Prevents implicit conversions between GLM types. Essentially there are coversions allowed by the GLSL
+// that are probably not the desired behavior we want to be allowing in out application, such as  
+// implicit conversions between vector and matrix types, or even worse implicit conversions from 
+// integer vectors to float vectors. (My Opinion: Typically conversions such as these are always best done explicitly
+// rather than allowing them to happen implcitly. This mostly is to always have in place as many options as possible 
+// so as to avoid unexpected bugs plus to a much lesser extent to prevent unnecessary type conversions which may in theory
+// impact performance). To understand why this macro is even needed at all is due to the guiding philosophy which determines
+// the nature of GLM's implementation. For GLM, the main goal is to mimic the GLSL standard as closly as possible, so thus by
+// default since GLSL allows implicit type conversions such as the ones mentioned above to happen in a perfectly legal statement,
+// it is by default usable in GLM unless the macro "GLM_FORCE_EXPLICIT_CTOR" is defined here in order for explicitly disabling them.
+//   (My Opinion: You should leave this macro defined to disable implicit conversions)
+#define GLM_FORCE_EXPLICIT_CTOR 1
+
+
+//MACROS: GLM_FORCE_CXX17
+//        GLM_FORCE_CXX14
+//        GLM_FORCE_CXX11
+//        GLM_FORCE_CXX98
+//
+// Dependencies:
+//    - Defining Any One of the following while also defining GLM_FORCE_CXX_UNKOWN will result in the 
+//        specified macro from this set winning out. 
+//    - Defining a newer C++ version from amongst these macros will always cancel out any effect 
+//        a macro requesting an older version might have. This means using all at once will lead to
+//        C++17 being selected. Or as another example, using both GLM_FORCE_CXX98 and GLM_FORCE_CXX14
+//        will always result in C++14 being used.
+//
+// These macros allow for specific versions of the C++ language standard to be used for building GLM. While in
+// theory this would be very handy if the rest of the code were being written to conform to one of the older
+// standards, it turns out that the project is pretty firmly entrenched in C++17 land. Perhaps these macros 
+// may come into play at a later date once C++20 and beyond come into being.
+//#define GLM_FORCE_CXX98 1
+//#define GLM_FORCE_CXX11 1
+//#define GLM_FORCE_CXX14 1
+#define GLM_FORCE_CXX17 1
+
+
+//Macro: GLM_FORCE_INLINE
+// Dependencies: 
+//     - none
+//
+//Forces GLM to inline its functions as much as possible. This should probably 
+//result in faster executuing code. It might as well be done. Can't think right 
+//now of any downsides.
+#define GLM_FORCE_INLINE 1
+
+
+//Macro: GLM_FORCE_DEFAULT_ALIGNED_GENTYPES 
+// Dependencies:
+//      -None     [But any use of processor intrinsics / 
+//                  specialized instruction sets will require this macro]
+//
+//
+// Blah Blah Blah Data Alignment Blah Blah instrinsics Blah Blah SIMD is king blah blah
+//
+#define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES 1     
+
+
+//ADDITIONAL GLM MACROs awaiting completed documentation
+//
+//  Intrinsics
+//#define GLM_FORCE_PURE 0
+//define GLM_FORCE_SSE2 1
+//#define GLM_FORCE_SSE3 1
+//#define GLM_FORCE_SSSE3 1
+//#define GLM_FORCE_SSE41 1
+//#define GLM_FORCE_SSE42 1
+//#define GLM_FORCE_AVX 1
+//#define GLM_FORCE_AVX2 1
+//#define GLM_FORCE_AVX512 1
+//
+//
+//  [There are 9 data-type-precision specified macros I haven't included]
+//
+//
+//#define GLM_FORCE_SINGLE_ONLY 1    //Prevent GLM from ever using 64-bit types 
+//
+//#define GLM_FORCE_SWIZZLE 1
+//
+//#define GLM_FORCE_SIZE_T_LENGTH 1 
+//
+//
+#define GLM_FORCE_UNRESTRICTED_GENTYPE 1
+/*
+//After including the main GLM header, it is still necessary to include
+//some additional GLM extensions that are used in this project:
+
+//'type_ptr' is a conversion function that allows GLM vector and GLM 
+// matrix types to be accessed as though they are just arrays through
+// a GLfloat* to their first element. This is necessary for sending them
+// as uniforms to shader programs.
+#include "ThirdParty\glm\gtc\type_ptr.hpp"   
+
+//'Quaternion' is a special data type used to efficiently and cleanly express
+// rotations in 3D. They are both cheaper and more robust than relying on Euler angles, 
+// which suffer from pitfalls such as gimbal lock.
+#include "ThirdParty\glm\gtc\quaternion.hpp" 
+
+//'matrix_transform' provides functions for creating several useful matrices that 
+// are used within the course of rendering. 
+#include "ThirdParty\glm\gtc\matrix_transform.hpp"
+*/
+
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  ( END SECTION 3 )   
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  ( SECTION 4 )  EasyLogging++ SETTINGS
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//Make sure if #define ENABLE_GLFUNCTION_PROFILING_ from section 2 is enabled while 
+//profiling is not enabled in this section a compilation error is triggered
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  ( END SECTION 4 )   
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #endif //BUILD_SETTINGS_H_

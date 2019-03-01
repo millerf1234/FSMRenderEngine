@@ -32,8 +32,8 @@
 
 #include "GLIncludes.h"
 
-//#define GLFW_INCLUDE_GLCOREARB
-//#include "ThirdParty/GLFW/glfw3.h"
+
+
 
 class Application final {
 public:
@@ -41,7 +41,12 @@ public:
     ~Application();
 
     void launch();
+
+    //There should at (99.9% of) all times be only one Application object. Copying is not allowed...
+    Application(const Application& that) = delete;
+    Application& operator=(const Application& that) = delete;
 private:
+    static short applicationsInExistance; //Prevents multiple applications from being created
 
 };
 

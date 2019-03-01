@@ -19,6 +19,31 @@
 //
 //
 //
+// This header's position amongst the various Graphics-Language itermediate header include-chain structure:
+//
+//            Top                    "BuildSettings.h" ---------------------+
+//                                            |                             |
+//                                            V                             |
+//                 +------------------------------------+                   |
+//                 |  THIS FILE      "glad_includer.h"  | ------------------)-------------------+
+//                 +------------------------------------+                   |                   |
+//                                            |                             V                   |
+//                                            V                     "glm_includer.h"            |
+//                                   "glfw_includer.h"                      |                   |
+//                                            |                             V                   |
+//                                            |                    "GraphicsLanuage.h" <--------+
+//                                            |                             |
+//                                            V                             |
+//                              "GraphicsLanguageFramework.h"  <------------+
+//                                            |                             |
+//                                            V                             |
+//           Bottom                    Rest of the Codebase  <--------------+    [Both "GraphicsLanguage.h" and "GraphicsLanguageFramework.h" are intended 
+//                                                                                          to be included whereever they are needed]
+//
+//
+//
+//
+//
 //  Programmer:   Forrest Miller
 //  Date:         January 25, 2019
 //

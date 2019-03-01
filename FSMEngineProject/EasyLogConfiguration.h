@@ -229,6 +229,14 @@
 INITIALIZE_EASYLOGGINGPP
 #endif
 
+//                  +====================================================================================+
+//                  |         Functions to Call From Application to Run Setup and Configuration          |
+//                  +====================================================================================+
+//Please see the comments describing these two functions above under the section titled 'USAGE'
+void initializeEasyLogger(int argc, char ** argv);  //Gets EasyLogger up and running. Parameters 'argc' and 'argv' should be forwarded from command line parameters passed at launch 
+
+
+
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for some implementation functions
     bool checkIfAlreadyConfigured();
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level); //Call with 'Global' level to just set up a directory for logs
@@ -247,8 +255,10 @@ void configureEasyLogger() {
     }
     
     
-    //This is a bit complicated, so I first wrote out a bunch of notes on how it all works
-  
+    // The features and options available in EasyLogging++ are quite extensive and as a result providing the 
+    //   proper configuration gets a bit complicated. To help guide the way for the implementation I first wrote
+    //   out a bunch of notes outlining a few of the various sets of options and an overview of how it all works:
+    //
     //  +==========================================================================================+
     //  |    When the logging library is first set up, we are provided with 2 'logger' objects     |
     //  +==========================================================================================+
@@ -326,10 +336,10 @@ void configureEasyLogger() {
     std::error_code ec {}; 
     auto fp = std::filesystem::current_path(ec);
     if (ec) { 
-        LOG(WARNING) << "\nSomething went wrong!\n"
+        LOG(WARNING) << "\nOh Dear! Something went wrong!\n"
                      << "Unable to communicate with Filesystem to set up proper LOG file locations!\n"
                      << "Filesystem reported error:\n\t\"" << ec.message() << "\"\n\n";
-        LOG(WARNING) << "All logging messages will be redirected to a single default LOG file with default formatting...\n\n";
+        LOG(WARNING) << "All logging messages will be redirected to a single default LOG file with default formatting...\n\n"; 
         return;
     } 
     
@@ -603,12 +613,11 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
 //else the Header Guard test failed so this file was included multiple times within the project
 //which isn't allowed because it makes use of the macro INITIALIZE_EASYLOGGINGPP 
 
-#error Compilation Error! \
-Detected that "EasyLogConfiguration.h" has been included in more than one place within the project. \
-Please be aware "EasyLogConfiguration.h" is not meant to be included more than once. To gain access to the the logging \
-functionality please make sure to include the header "UniversalIncludes.h", which has no restrictions on how many \
-places it is allowed to appear within the codebase.
-
+#pragma message("Detected that "EasyLogConfiguration.h" has been included in more than one place within the project. \n" \
+"Please be aware \"EasyLogConfiguration.h\" is not meant to be included more than once. To gain access to the the logging \n" \
+"functionality please make sure to include the header \"UniversalIncludes.h\", which has no restrictions on how many \n" \
+"places it is allowed to appear within the codebase.\n" )
+#error Compilation Error! 
 
 #endif //EASY_LOG_CONFIGURATION_H_
 

@@ -19,10 +19,14 @@
 #define ALLOW_ELCC_CONFIGURATION  
 #include "EasyLogConfiguration.h"
 
-//#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
+short Application::applicationsInExistance = 0;
 
 Application::Application(int argc, char ** argv) {
-    
+    applicationsInExistance++;
+    if (applicationsInExistance > 1) {
+        printf("Too Many Applications In Existance!\n");
+        std::terminate();
+    }
     initializeEasyLogger(argc, argv);
 
     LOG(INFO) << "Application is launching...\n";
