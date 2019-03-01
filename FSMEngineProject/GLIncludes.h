@@ -112,16 +112,16 @@
 // matrix types to be accessed as though they are just arrays through
 // a GLfloat* to their first element. This is necessary for sending them
 // as uniforms to shader programs.
-#include "ThirdParty\glm\gtc\type_ptr.hpp"   
+//#include "ThirdParty\glm\gtc\type_ptr.hpp"   
 
 //'Quaternion' is a special data type used to efficiently and cleanly express
 // rotations in 3D. They are both cheaper and more robust than relying on Euler angles, 
 // which suffer from pitfalls such as gimbal lock.
-#include "ThirdParty\glm\gtc\quaternion.hpp" 
+//#include "ThirdParty\glm\gtc\quaternion.hpp" 
 
 //'matrix_transform' provides functions for creating several useful matrices that 
 // are used within the course of rendering. 
-#include "ThirdParty\glm\gtc\matrix_transform.hpp"
+//#include "ThirdParty\glm\gtc\matrix_transform.hpp"
 
 
 
