@@ -51,7 +51,7 @@
 
 static inline constexpr int NOT_FOUND = -1;
 
-class FilepathWrapper {
+class FilepathWrapper final {
 public:
 	FilepathWrapper() = delete;
 	FilepathWrapper(const char * fp);

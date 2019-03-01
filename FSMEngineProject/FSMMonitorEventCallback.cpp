@@ -25,8 +25,8 @@
 
 #include "FSMMonitorEventCallback.h"
 
-#include "EasyLogConfiguration.h"
-//#include "UniversalIncludes.h"
+
+#include "UniversalIncludes.h"
 
 namespace FSMEngineInternal {
 

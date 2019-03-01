@@ -15,7 +15,7 @@
 //  http://muflihun.com
 //
 
-#include "..\..\..\EasyloggingConfig.h"
+#include "..\..\..\EasyLogging_BuildConfig.h" //This header has been added to this file to provide config macros to configure elpp for FSMEngine project
 
 #ifndef EASYLOGGINGPP_H
 #define EASYLOGGINGPP_H

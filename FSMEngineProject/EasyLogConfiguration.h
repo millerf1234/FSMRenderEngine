@@ -1,17 +1,29 @@
 //
 //  File:            EasyLogConfiguration.h
 //
-//  Please Notice:  Due to the special nature and requirements of this file within how it 
-//                     fits in with the rest of the project, it is essential that all of the 
-//                     following documentation is understood before use. Failure to do so 
-//                     will slow development of project down and probably lead to many errors
-//                     during compilation.
+//  Please Notice:   This file contains several specific macro-function calls required by the library Easylogging++
+//                       as part of its initalization which MUST only appear in one single location within a project. 
+//
+//                   Due to the restrictions these specialized macros place on the possible locations this header may  
+//                         be incorperated into an Application, several additional preventative safety-measures have been
+//                         implemented throughout this file in order to detect unintended/improper inclusion of this header 
+//                         within the build system which will automatically block compilation as soon as a requirement is broken 
+//                         or fails to be satisfied. 
+//                         These security features include:
+//
+//                   As a result of the specialized requirements imposed upon this file with regard to its unique
+//                         restrictions which accompany its manner of integration into a project, it is 
+//                         recommended as essential by the author that all of the following documentation be  
+//                         read and understood before attempting to perform any refactoring or changes to the 
+//                         code.     
+//                                    [ I intend to do my part in this bargin by not getting too rambly, but know that 
+//                                      currently this has not been known as an area of strength for me... ]
 //
 //
-//  Description:    The purpose of the code contained within this file is to provide an implementaion
-//                     for the Application to initialize and set up a priliminary interface with the
-//                     EasyLogging++ library. This file provides to the EasyLogging++ library all the 
-//                     necessary configuration details for every one of the necessary logs up and 
+//  Description:    The purpose of the code contained within this file is to provide the implementaion
+//                     for an Application built with the FSMEngine to initialize and configure all of 
+//                     its specific requirements and specifications for usage of the EasyLogging++ library. The functions defined witin this 
+//                     file provides to the EasyLogging++ library all the necessary configuration details for every one of the logs up and 
 //                     running. The intent is for these tasks to be performed as part of the startup
 //                     and this should be one of the first thing that happens as part of the launch and 
 //                     initialization of this application.
@@ -22,7 +34,7 @@
 //    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //      
 //           IMPORTANT:    THIS FILE DOES NOT PROVIDE ACCESS TO ANY LOGGING FUNCTIONALITY AND MUST NOT BE INCLUDED IN OTHER FILES!
-//                           INSTEAD TO GAIN ACCESS TO THE FUNCTION NEEDED FOR WRITING TO THE LOGS, SEE:
+//                    ------>  TO GAIN ACCESS TO THE LOGGING FUNCTIONS, PLEASE INCLUDE THE SHARED HEADER "UniversalIncludes.h"  <--------
 //          +--------------------+                    
 //    HOW   | Enabling Logging   |   The project should be set up so that any file can gain access to all of 
 //     TO   | Functionality For  |      the logging functionality for code in the other source/header files, the functionality should be 
@@ -63,10 +75,11 @@
  "\n\t\t\t\t\t\tAllowing the compilation to proceed without hinderance\n")
 #undef ALLOW_ELCC_CONFIURATION
 #else 
-#error ERROR! Unable to continue with compilation due to the possibly unsafe multiple-inclusions of the file EasyLogConfiguration.h\
- This configuration file MUST only be included at one isolated place within each easylog++-assocaited project. If it is known that\
- a place has been selected that meets these strict criteria, then define the macro listed in the documentation to disable this\
- compiler error message from preventing compilation.
+#pragma message("ERROR! Unable to continue with compilation due to the possibly unsafe multiple-inclusions of the file EasyLogConfiguration.h \n \
+ This configuration file MUST only be included at one isolated place within each easylog++-assocaited project. If it is known that\n \
+ a place has been selected that meets these strict criteria, then define the macro listed in the documentation to disable this\n \
+ compiler error message from preventing compilation.")
+#error Illegal Multiple Inclusions of EasyLogg++ Configuration Header
 #endif
 //
 //  How-to Invoke:  
@@ -119,30 +132,26 @@
 //                  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+  
 //                  | EasyLogging++ was built to be used within a wide range of projects and thus has a very    |
 //                  |    high degree of customizability and flexability to its available functionality.         |
-//                  |    Easylogging++ is able to allow for this flexability by having the option to have       |
+//                  |    Easylogging++ is able to allow for this flexability by both having the option to have  |
 //                  |    certain features enabled or disabled based off the presence or abscence of some        |
-//                  |    various macros during the compilation step.                                            |
+//                  |    various macros during the compilation step while also through the settings available   |
+//                  |    to be tweaked during run-time (this latter part being what the code in this file does).|
 //                  | This file here is only in charge of providing configuration to the EasyLogging++ library  |
 //                  |    as a part of this programs run process. If there is a need to make changes to what     |
-//                  |    settings are used when building the EasyLogging++ library, constult with the a file    |
-//                  |    known as 'EasyloggingConfig.h'. To make sure the macros are actually having their      |
-//                  |    desired impact, be sure to look into the 'easylogging++.h' header file and make sure   |
-//                  |    there has been added a line which consists on an include statement for this settings   |
-//                  |    file.                                                                                  |
+//                  |    settings are being built into the EasyLogging++ library,  with the a file              | 
+//                  |    known as 'EasyLogging_BuildConfig.h'. To make sure the macros are actually having      |
+//                  |    their desired impact be sure to look into the 'easylogging++.h' header file and make   |
+//                  |    sure there has been added a line which consists on an include statement for this       |
+//                  |    settings file.                                                                         |
 //                  +-------------------------------------------------------------------------------------------+
 //
 //  easylogging++ reference page:       https://github.com/zuhd-org/easyloggingpp/blob/master/README.md#quick-start
 //
 //  Programmer:      Forrest Miller
 //  Date:            January 10, 2019
-//                   February 27, 2019  --  Came back and tried to finish implemtation
+//                   February 27, 2019  --  Came back and tried to finish implementation
 
 
-//I am disabling the 'pragma once' statement just in case it would prevent
-//an illegal inclusion of this file in more than a single location within 
-//the codebase from not quickly triggering a warning
-
-//#pragma once
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
 
@@ -151,6 +160,7 @@
 #include <sstream>
 #include <iomanip>
 #include <optional>
+#include <ctime>
 
 #include "ThirdParty/easyloggingpp/include/easylogging++.h" 
 //#include "FSMEngine_GlobalConfigurationMacrosForEasyLoggingPP.h"
@@ -194,9 +204,9 @@ void configureEasyLogger() {
     // Logging messages can be sent to the following 'Level's  (I would call them 'Targets' in my previous projects)
     // +====================+==========================================================================================================================================================================+
     // |       Level        |     Description                                                                                                                                                          |
-    // +====================+==========================================================================================================================================================================+                                                      |
+    // +====================+==========================================================================================================================================================================+                                                      
     // |       Trace        |   Information that can be useful to back - trace certain events - mostly useful than debug logs.                                                                         |
-    // |       Debug        |   Informational events most useful for developers to debug application. Only applicable if NDEBUG is not defined(for non - VC++) or _DEBUG is defined(for VC++).          |
+    // |       Debug        |   Informational events most useful for developers to debug application. Only applicable if NDEBUG is not defined(for non - VC++) or _DEBUG is defined(for VC++).         |
     // |       Fatal        |   Very severe error event that will presumably lead the application to abort.                                                                                            |
     // |       Error        |   Error information but will continue application to keep running.                                                                                                       |
     // |      Warning       |   Information representing errors in application but application will keep running.                                                                                      |
@@ -214,7 +224,7 @@ void configureEasyLogger() {
     //Please be aware that this entire project is using hierarchical logging, which will cause the Verbose 'Level' to be disabled
 
 
-    //Loggers have their behavior determined by state-representing objects called el::Configurations.
+    //Loggers have their behavior determined by state-representitive objects called el::Configurations.
     //el:Configurations can have the following configuration values specified to determine logging behavior:
     //       
     //      ++-----------------------------------------------------------------------------------++
@@ -259,7 +269,7 @@ void configureEasyLogger() {
         LOG(WARNING) << "\nSomething went wrong!\n"
                      << "Unable to communicate with Filesystem to set up proper LOG file locations!\n"
                      << "Filesystem reported error:\n\t\"" << ec.message() << "\"\n\n";
-        LOG(WARNING) << "All logging messages will be redirected to default LOG file with default formatting...\n\n";
+        LOG(WARNING) << "All logging messages will be redirected to a single default LOG file with default formatting...\n\n";
         return;
     } 
     

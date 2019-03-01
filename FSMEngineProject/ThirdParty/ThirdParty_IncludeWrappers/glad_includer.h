@@ -33,7 +33,7 @@
 #if defined FORCE_GLAD_VERSION_DEBUG_
   #if defined FORCE_GLAD_VERSION_RELEASE_
     #error "Error: Unable to have both FORCE_GLAD_VERSION_DEBUG_ and FORCE_GLAD_VERSION_RELEASE_ defined at\
-the same time! Check header file "BuildSettings.h" "
+ the same time! Check header file "BuildSettings.h" "
   #endif //FORCE_GLAD_VERSION_RELEASE_
   #define _FSM_ENGINE_BUILD_SETTING___GLAD_USE_DEBUG___
 

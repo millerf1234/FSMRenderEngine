@@ -1,0 +1,30 @@
+Example outline of how to safely implement a classes constructor so that the class is a complete
+type before any operations that could throw (such as memory allocation) are performed within it.
+
+//SafeConstructable.h
+class SafeConstructable {
+public:
+    SafeConstructable();
+	SafeConstructable(int data);
+	SafeConstructable(std::vector lotOfData);
+
+protected:
+    enum class foo { safe }; //needed to set up a special constructor
+	SafeConstructable(dummy d);
+private:
+    int mX_;
+	std::vector mData_;
+
+	std::unique_ptr<LargeArray> mClassMemberThatRequiresMemoryAllocation_;
+}
+
+
+
+//SafeConstructable.cpp
+
+SafeConstructable() {
+    foo temp = foo::safe;
+	SafeConstructable(temp); //This calls the protected constructor, which one this returns will make the current object a complete type.
+	//etc...
+	//Can now do memory allocations and expect destructor to be called because this current object is complete type.
+}

@@ -22,9 +22,9 @@
 #ifndef FSM_ERROR_CALLBACK_H_
 #define FSM_ERROR_CALLBACK_H_
 
-//#include "UniversalIncludes.h" 
-#include "EasyLogConfiguration.h"
+
 #include <sstream>
+#include "UniversalIncludes.h" 
 
 //Callback function for GLFW error reporting. Unlike [almost*] every other GLFW callback function,             
 //this function is set globally for the entire library as opposed to on a per-window basis.                               *Joystick and Monitor callbacks are exceptions

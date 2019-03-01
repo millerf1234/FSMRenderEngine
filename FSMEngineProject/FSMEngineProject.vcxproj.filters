@@ -73,6 +73,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Engine\Initialization">
+      <UniqueIdentifier>{339b20fa-2f8b-4ebb-8d3c-8f365a313220}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -102,9 +105,6 @@
     <ClInclude Include="FSMCallbackInitializer.h">
       <Filter>Source Files\Engine\CallbackFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="FSMErrorCallback.h">
-      <Filter>Source Files\Engine\CallbackFunctions\ErrorCallback</Filter>
-    </ClInclude>
     <ClInclude Include="FSMMonitorEventCallback.h">
       <Filter>Source Files\Engine\CallbackFunctions\MonitorEventCallback</Filter>
     </ClInclude>
@@ -126,14 +126,17 @@
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\glm_includer.h">
       <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
     </ClInclude>
-    <ClInclude Include="EasyLogConfiguration.h">
-      <Filter>Header Files\ConfigurationAndSetup</Filter>
-    </ClInclude>
     <ClInclude Include="BuildSettings.h">
       <Filter>Header Files\ConfigurationAndSetup</Filter>
     </ClInclude>
-    <ClInclude Include="EasyloggingConfig.h">
+    <ClInclude Include="EasyLogConfiguration.h">
+      <Filter>Source Files\Engine\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="EasyLogging_BuildConfig.h">
       <Filter>ThirdParty\easylogging++</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMErrorCallback.h">
+      <Filter>Source Files\Engine\CallbackFunctions\ErrorCallback</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +199,9 @@
     </Text>
     <Text Include="IntermediateHeadersImplementation_readme.txt">
       <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly</Filter>
+    </Text>
+    <Text Include="SafeConstructableExample.txt">
+      <Filter>Notes</Filter>
     </Text>
   </ItemGroup>
 </Project>

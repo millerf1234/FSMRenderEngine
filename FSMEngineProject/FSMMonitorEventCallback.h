@@ -84,8 +84,8 @@ namespace FSMEngineInternal {
 	//////   Implementation Details, Can Ignore   ////
 	//////////////////////////////////////////////////
 	namespace MonitorEventCallbackInternal {
-		//Declaration of callback function to assign to GLFW and prototypes the two queue 'functions,' 
-		//don't call these functions 
+		//Declaration of callback function to assign to GLFW and prototypes for the two queue functions.
+		//Don't call these functions outside of the implementation
 		void graphicsLanguageFrameworkMonitorEventCallbackFunction(GLFWmonitor*, int);
 		std::queue<GLFWmonitor*>& recentMonitorConnections();
 		std::queue<GLFWmonitor*>& recentMonitorDisconnections();

@@ -30,7 +30,7 @@
 
 //#define ELPP_SYSLOG  //Not supported on Windows, requires header file <syslog.h>
 
-//Logging flag values (I only wrote down a few of them):
+//Logging flag values (This does not list all of them):
 //   NewLineForContainer -------------------------->      1
 //   ImmediateFlush ------------------------------->     16
 //   ColoredTerminalOutput ------------------------>     64      (only has effect if OS supports color terminal [Windows does not support])
