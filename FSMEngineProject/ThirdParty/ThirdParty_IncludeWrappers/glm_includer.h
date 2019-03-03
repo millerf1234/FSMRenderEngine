@@ -55,8 +55,8 @@
 //As promised in section 3 of "BuildSettings.h", if the special macro is defined requesting a 
 //complete rundown of every specified GLM macro, then it shall be done.
 #ifdef FSM_ENGINE_REPORT_GLM_REQUESTED_CONFIGURATION
-#pragma message ( "\n\n"                                                        \
-"                       +-----------------------------------------------+\n"  \
+#pragma message ( ""                                                            \
+"                       +-----------------------------------------------+\n"    \
 "                       |     Reporting Complete GLM Configuration      |\n"    \
 "                       +-----------------------------------------------+\n"    )
 
@@ -95,108 +95,121 @@
 //output (I even was nice and included c-style comments to give it a small indentation to make it 
 //slightly less unreadable):
 
-#define msgL "\tGLM_FORCE_MESSAGES:           "
-#define msgR "        GLM_FORCE_CXX98:              "
+#define L_MSG "\tGLM_FORCE_MESSAGES:           "
+#define R_MSG "            GLM_FORCE_CXX98:              "
 #ifdef GLM_FORCE_MESSAGES 
 /* */#ifdef GLM_FORCE_CXX98 
-/*   */#pragma message("" msgL "Defined  " msgR "Defined")
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Defined")
 /* */#else  
-/*   */#pragma message("" msgL "Defined  " msgR "Undefined")
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Undefined")
 /* */#endif 
 #else 
 /* */#ifdef GLM_FORCE_CXX98 
-/*   */#pragma message("" msgL "Undefined" msgR "Defined")
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Defined")
 /* */#else  
-/*   */#pragma message("" msgL "Undefined" msgR "Undefined")
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Undefined")
 /* */#endif 
 #endif 
-#undef msgR
-#undef msgL
+#undef L_MSG
+#undef R_MSG
 
 
-#define msg "\tGLM_FORCE_PLATFORM_UNKNOWN:   "
-#ifdef GLM_FORCE_PLATFORM_UNKNOWN 
-#pragma message("" msg "Defined")
+#define L_MSG "\tGLM_FORCE_PLATFORM_UNKNOWN:   "
+#define R_MSG "            GLM_FORCE_CXX11:              "
+#ifdef GLM_FORCE_PLATFORM_UNKNOWN
+/* */#ifdef GLM_FORCE_CXX11 
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Undefined")
+/* */#endif 
 #else 
-#pragma message("" msg "Undefined")
+/* */#ifdef GLM_FORCE_CXX11 
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Undefined")
+/* */#endif 
 #endif 
-#undef msg
+#undef L_MSG
+#undef R_MSG
 
-#define msg "\tGLM_FORCE_COMPILER_UNKNOWN:   "
-#ifdef GLM_FORCE_COMPILER_UNKNOWN 
-#pragma message("" msg "Defined")
+
+#define L_MSG "\tGLM_FORCE_COMPILER_UNKNOWN:   "
+#define R_MSG "            GLM_FORCE_CXX14:              "
+#ifdef GLM_FORCE_COMPILER_UNKNOWN
+/* */#ifdef GLM_FORCE_CXX14 
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Undefined")
+/* */#endif 
 #else 
-#pragma message("" msg "Undefined")
+/* */#ifdef GLM_FORCE_CXX14 
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Undefined")
+/* */#endif 
 #endif 
-#undef msg
+#undef L_MSG
+#undef R_MSG
 
-#define msg "\tGLM_FORCE_ARCH_UNKNOWN:       "
-#ifdef GLM_FORCE_ARCH_UNKNOWN 
-#pragma message("" msg "Defined")
+
+#define L_MSG "\tGLM_FORCE_ARCH_UNKNOWN:       "
+#define R_MSG "            GLM_FORCE_CXX17:              "
+#ifdef GLM_FORCE_ARCH_UNKNOWN       
+/* */#ifdef GLM_FORCE_CXX17 
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Undefined")
+/* */#endif 
 #else 
-#pragma message("" msg "Undefined")
+/* */#ifdef GLM_FORCE_CXX17 
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Undefined")
+/* */#endif 
 #endif 
-#undef msg
+#undef L_MSG
+#undef R_MSG
 
-#define msg "\tGLM_FORCE_CXX_UNKNOWN:        "
-#ifdef GLM_FORCE_CXX_UNKNOWN 
-#pragma message("" msg "Defined")
+
+#define L_MSG "\tGLM_FORCE_CXX_UNKNOWN:        "
+#define R_MSG "            GLM_FORCE_CSS_UNKNOWN:        "
+#ifdef GLM_FORCE_CXX_UNKNOWN       
+/* */#ifdef GLM_FORCE_CSS_UNKNOWN 
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Undefined")
+/* */#endif 
 #else 
-#pragma message("" msg "Undefined")
+/* */#ifdef GLM_FORCE_CSS_UNKNOWN 
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Undefined")
+/* */#endif 
 #endif 
-#undef msg
+#undef L_MSG
+#undef R_MSG
 
-//NOTE DIFFERENCE BETWEEN 'CXX' AND 'CSS'
-#define msg "\tGLM_FORCE_CSS_UNKNOWN:        "
-#ifdef GLM_FORCE_CSS_UNKNOWN 
-#pragma message("" msg "Defined")
+
+#define L_MSG "\tGLM_FORCE_EXPLICIT_CTOR:      "
+#define R_MSG "            GLM_FORCE_INLINE:             "
+#ifdef GLM_FORCE_EXPLICIT_CTOR       
+/* */#ifdef GLM_FORCE_INLINE 
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Defined  " R_MSG "Undefined")
+/* */#endif 
 #else 
-#pragma message("" msg "Undefined")
+/* */#ifdef GLM_FORCE_INLINE 
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Defined")
+/* */#else  
+/*   */#pragma message("" L_MSG "Undefined" R_MSG "Undefined")
+/* */#endif 
 #endif 
-#undef msg
+#undef L_MSG
+#undef R_MSG
 
 
-#define msg "\tGLM_FORCE_EXPLICIT_CTOR:      "
-#ifdef GLM_FORCE_EXPLICIT_CTOR 
-#pragma message("" msg "Defined\n")
-#else 
-#pragma message("" msg "Undefined\n")
-#endif 
-#undef msg
-
-#define msg "\tGLM_FORCE_CXX11:              "
-#ifdef GLM_FORCE_CXX11 
-#pragma message("" msg "Defined")
-#else 
-#pragma message("" msg "Undefined")
-#endif 
-#undef msg
-
-#define msg "\tGLM_FORCE_CXX14:              "
-#ifdef GLM_FORCE_CXX14 
-#pragma message("" msg "Defined")
-#else 
-#pragma message("" msg "Undefined")
-#endif 
-#undef msg
-
-#define msg "\tGLM_FORCE_CXX17:              "
-#ifdef GLM_FORCE_CXX17 
-#pragma message("" msg "Defined")
-#else 
-#pragma message("" msg "Undefined")
-#endif 
-#undef msg
-
-#define msg "\tGLM_FORCE_INLINE:             "
-#ifdef GLM_FORCE_INLINE 
-#pragma message("" msg "Defined")
-#else 
-#pragma message("" msg "Undefined")
-#endif 
-#undef msg
-
-#define msg "\tGLM_FORCE_DEFAULT_ALIGNED_GENTYPES: "
+#define msg "                                           GLM_FORCE_DEFAULT_ALIGNED_GENTYPES:     "
 #ifdef GLM_FORCE_DEFAULT_ALIGNED_GENTYPES 
 #pragma message("" msg "Defined")
 #else 
@@ -204,7 +217,7 @@
 #endif 
 #undef msg
 
-#define IntrinsicsMsg "\n\t\t\tGLM Intrinsics\n"
+#define IntrinsicsMsg "              GLM Intrinsics\n"
 #define msg "\tGLM_FORCE_PURE:               "
 #ifdef GLM_FORCE_PURE 
 #pragma message("" InstrinsicsMsg  "" msg "Defined")
@@ -322,6 +335,7 @@
 #else 
 #pragma message("" msg "HIGH [BY DEFAULT]")
 #endif
+#undef msg
 
 #define msg "  [Unsigned] Integer Precision: "
 #ifdef GLM_FORCE_PRECISION_LOWP_UINT

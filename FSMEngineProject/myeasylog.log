@@ -596,3 +596,157 @@ Will This print?
  
 2019-03-01 09:46:32,346 INFO [MsgLog] Application Launched! 
 2019-03-01 09:46:33,412 INFO [MsgLog] Application is closing 
+2019-03-01 11:36:05,760 INFO [MsgLog] Application is launching...
+ 
+2019-03-01 11:36:05,765 DEBUG [MsgLog] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:367] 
+Will This print?
+
+ 
+2019-03-01 11:36:05,766 TRACE [MsgLog] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:368] Will This print?
+ 
+2019-03-01 11:36:05,767 INFO [MsgLog] Logging Utility Configured!
+ 
+2019-03-01 11:36:05,767 INFO [MsgLog] Application Launched! 
+2019-03-01 11:36:06,910 INFO [MsgLog] Application is closing 
+2019-03-01 11:48:25,726 INFO [FSM_Log] Application is launching...
+ 
+2019-03-01 11:48:25,730 DEBUG [FSM_Log] [Forrest@FMPC] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:369] 
+Will This print?
+
+ 
+2019-03-01 11:48:25,730 TRACE [FSM_Log] [void __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:370] Will This print?
+ 
+2019-03-01 11:48:25,731 INFO [FSM_Log] Logging Utility Configured!
+ 
+2019-03-01 11:48:25,731 INFO [FSM_Log] Application Launched! 
+2019-03-01 11:48:31,269 INFO [FSM_Log] Application is closing 
+2019-03-01 12:11:30,862 INFO [FSM_Log] Application is launching...
+ 
+2019-03-01 12:11:30,916 INFO [FSM_Log] Here is some info for yo face dawg!
+ 
+2019-03-01 12:11:30,918 INFO [FSM_Log] Logging Utility Configured!
+ 
+2019-03-01 12:11:30,919 INFO [FSM_Log] Application Launched! 
+2019-03-01 12:11:55,492 INFO [FSM_Log] Application is closing 
+2019-03-01 12:14:06,579 INFO [FSM_Log] Application is launching...
+ 
+2019-03-01 12:14:06,616 INFO [FSM_Log] Here is some info for yo face dawg!
+ 
+2019-03-01 12:14:06,617 INFO [FSM_Log] Logging Utility Configured!
+ 
+2019-03-01 12:14:06,618 INFO [FSM_Log] Application Launched! 
+2019-03-01 12:14:18,657 INFO [FSM_Log] Application is closing 
+2019-03-01 12:46:34,805 INFO [FSM_Log] Application is launching...
+ 
+2019-03-01 12:46:34,821 INFO [FSM_Log] Here is some info for yo face dawg!
+ 
+2019-03-01 12:46:34,822 INFO [FSM_Log] Logging Utility Configured!
+ 
+2019-03-01 12:46:34,822 INFO [FSM_Log] Application Launched! 
+2019-03-01 12:47:56,540 INFO [FSM_Log] Application is closing 
+2019-03-01 12:50:56,330 INFO [default] Application is launching...
+ 
+2019-03-01 12:59:06,076 INFO [FSM_LOG] Application is launching...
+ 
+2019-03-01 12:59:06,102 INFO [FSM_LOG] Here is some info for yo face dawg!
+ 
+2019-03-01 12:59:06,103 INFO [FSM_LOG] Logging Utility Configured!
+ 
+2019-03-01 12:59:06,104 INFO [FSM_LOG] Application Launched! 
+2019-03-01 12:59:10,012 INFO [FSM_LOG] Application is closing 
+2019-03-01 14:10:03,473 INFO [FSM_LOG] Application is launching...
+ 
+2019-03-01 14:10:03,487 INFO [FSM_LOG] Here is some info for yo face dawg!
+ 
+2019-03-01 14:10:03,488 INFO [FSM_LOG] Logging Utility Configured!
+ 
+2019-03-01 14:10:03,488 INFO [FSM_LOG] Application Launched! 
+2019-03-01 14:10:07,978 INFO [FSM_LOG] Application is closing 
+2019-03-01 14:11:14,875 INFO [FSM_LOG] Application is launching...
+ 
+2019-03-01 14:11:14,890 INFO [FSM_LOG] Here is some info for yo face dawg!
+ 
+2019-03-01 14:11:14,890 INFO [FSM_LOG] Logging Utility Configured!
+ 
+2019-03-01 14:11:14,890 INFO [FSM_LOG] Application Launched! 
+2019-03-01 14:11:16,953 INFO [FSM_LOG] Application is closing 
+2019-03-01 14:15:39,338 INFO [FSM_LOG] Application is launching...
+ 
+2019-03-01 14:15:39,357 INFO [FSM_LOG] Here is some info for yo face dawg!
+ 
+2019-03-01 14:15:39,358 INFO [FSM_LOG] Logging Utility Configured!
+ 
+2019-03-01 14:15:39,359 INFO [FSM_LOG] Application Launched! 
+2019-03-01 14:15:41,616 INFO [FSM_LOG] Application is closing 
+2019-03-01 14:18:26,035 INFO [FSM_LOG] Application is launching...
+ 
+2019-03-01 14:18:26,053 INFO [FSM_LOG] Here is some info for yo face dawg!
+ 
+2019-03-01 14:18:26,054 INFO [FSM_LOG] Logging Utility Configured!
+ 
+2019-03-01 14:18:26,054 INFO [FSM_LOG] Application Launched! 
+2019-03-01 14:18:28,948 INFO [FSM_LOG] Application is closing 
+2019-03-01 14:19:36,234 INFO [FSM_LOG] Application is launching...
+ 
+2019-03-01 14:19:36,250 INFO [FSM_LOG] Here is some info for yo face dawg!
+ 
+2019-03-01 14:19:36,250 INFO [FSM_LOG] Logging Utility Configured!
+ 
+2019-03-01 14:19:36,251 INFO [FSM_LOG] Application Launched! 
+2019-03-01 14:19:37,232 INFO [FSM_LOG] Application is closing 
+2019-03-01 16:28:30,798 INFO [default] Application is launching...
+ 
+2019-03-01 16:33:40,533 INFO [default] Application is launching...
+ 
+2019-03-02 11:55:09,797 INFO [default] Application is launching...
+ 
+2019-03-02 11:57:11,481 INFO [default] Application is launching...
+ 
+2019-03-02 18:31:23,281 INFO [default] Application is launching...
+ 
+2019-03-02 18:53:09,291 INFO [default] Application is launching...
+ 
+2019-03-02 22:00:09,097 INFO [default] Application is launching...
+ 
+2019-03-02 22:02:23,087 INFO [default] Application is launching...
+ 
+2019-03-02 22:45:46,685 INFO [default] Application is launching...
+ 
+2019-03-02 22:52:16,869 INFO [default] Application is launching...
+ 
+2019-03-02 22:56:12,506 INFO [default] Application is launching...
+ 
+2019-03-02 23:02:20,888 INFO [default] Application is launching...
+ 
+2019-03-02 23:05:07,713 INFO [default] Application is launching...
+ 
+2019-03-02 23:11:33,194 INFO [default] Application is launching...
+ 
+2019-03-02 23:23:30,337 INFO [default] Application is launching...
+ 
+2019-03-02 23:25:59,523 INFO [default] Application is launching...
+ 
+2019-03-02 23:29:17,149 INFO [default] Application is launching...
+ 
+2019-03-02 23:34:48,114 INFO [default] Application is launching...
+ 
+2019-03-02 23:41:46,781 INFO [default] Application is launching...
+ 
+2019-03-02 23:44:45,742 INFO [default] Application is launching...
+ 
+2019-03-02 23:47:11,792 INFO [default] Application is launching...
+ 
+2019-03-02 23:50:12,457 INFO [default] Application is launching...
+ 
+2019-03-02 23:54:42,672 INFO [default] Application is launching...
+ 
+2019-03-03 00:00:52,767 INFO [default] Application is launching...
+ 
+2019-03-03 00:09:21,886 INFO [default] Application is launching...
+ 
+2019-03-03 00:10:42,657 INFO [default] Application is launching...
+ 
+2019-03-03 00:21:59,782 INFO [default] Application is launching...
+ 
+2019-03-03 00:25:36,268 INFO [default] Application is launching...
+ 

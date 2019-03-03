@@ -25,8 +25,8 @@
 #include <sstream>
 #include <algorithm>
 
-#include "GLIncludes.h"  //This should be included before glfw3.h 
-#include "ThirdParty\GLFW\glfw3.h"
+#include "GraphicsLanguageFramework.h"
+
 
 #define WRNLOG MSGLOG
 #define MSGLOG stdout

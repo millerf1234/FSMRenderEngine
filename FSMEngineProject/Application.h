@@ -30,10 +30,7 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-#include "GLIncludes.h"
-
-
-
+#include "GraphicsLanguage.h"
 
 class Application final {
 public:

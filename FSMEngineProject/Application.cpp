@@ -8,16 +8,9 @@
 #include "Application.h"
 
 
-#ifndef ELPP_DEFAULT_LOGGER
-  #define ELPP_DEFAULT_LOGGER "MsgLog"
-#endif
-//#ifndef ELPP_DEFAULT_PERFORMANCE_LOGGER
-//  #define ELPP_DEFAULT_PERFORMANCE_LOGGER "PerfLog"
-//#endif
-
-
 #define ALLOW_ELCC_CONFIGURATION  
 #include "EasyLogConfiguration.h"
+
 
 short Application::applicationsInExistance = 0;
 
@@ -45,9 +38,6 @@ Application::Application(int argc, char ** argv) {
 
     //// Escaping
     //defaultLogger->info("My first ultimate log message %% %%v %v %v", 123, 222);
-
-    
-   
 
 }
 

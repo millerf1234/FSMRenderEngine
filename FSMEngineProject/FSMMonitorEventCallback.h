@@ -33,7 +33,7 @@
 #include <sstream>
 #include <optional>
 
-#include "GLIncludes.h"
+#include "GraphicsLanguage.h"
 #include "ThirdParty\GLFW\glfw3.h"
 
 namespace FSMEngineInternal {

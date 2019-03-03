@@ -220,6 +220,8 @@
 #include <optional>
 #include <ctime>
 
+#include "BuildSettings.h"  //Needed to check for DEBUG log feature level
+
 #include "ThirdParty/easyloggingpp/include/easylogging++.h" 
 
 #ifndef HAVE_ALREADY_INITIALIZED_EASYLOGGINGPP
@@ -242,6 +244,8 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for s
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level); //Call with 'Global' level to just set up a directory for logs
     std::optional<std::filesystem::path> getLogFileDirectory(); 
 } 
+
+
 
 void initializeEasyLogger(int argc, char ** argv) {
     START_EASYLOGGINGPP(argc, argv);
@@ -363,99 +367,182 @@ void configureEasyLogger() {
     el::Configurations logConfigurator;
     logConfigurator.setToDefault();  //First we set everything to default  
     
-    /// /////////////TEST DELETE ME LATER AT SOME POINT. TEST DEBUG LOG BEHAVIOR WHEN BUILDING FOR RELEASE////////
-    LOG(DEBUG) << "\nWill This print?\n\n";
-    LOG(TRACE) << "Will This print?\n";
-        return;
-    /// .................................................................................................////////////////
-        
 
-    ///NOTE on how to specify datetime format:   FORMAT               = "%datetime{%d/%M} %func %msg"
+    //                                              +------------------+   
+    //                                              | Additional NOTES |
+    //                                              +------------------+
+    
+    
+    //  -----------------------       REPORTING DATETIME FORMAT SPECIFICATION       -----------------------
+    //   How to specifiy what information and format to include in message for reporting DATETIME information
+    //
+    //           The format of the DATETIME string to report goes inside the curly-braces 
+    //           following the %datetime format specifier.
+    //           To set a DATETIME format to be used within the output format specification string,
+    //           the following syntax is used (with 'modifiers' being replaced with the actual DATETIME
+    //           modifiers):
+    //                         %datetime{modifiers}
+    //
+    //           The total length of the modifiers used shall not exceed 30 characters.
+    //           Here are the available modifiers:
+    //
+    //                 %d       Day of month (zero-padded)
+    //                 %a       Day of the week - short(Mon, Tue, Wed, Thu, Fri, Sat, Sun)
+    //                 %A       Day of the week - long(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
+    //                 %M       Month(zero - padded)
+    //                 %b       Month - short(Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)
+    //                 %B       Month - Long(January, February, March, April, May, June, July, August, September,
+    //                                          October, November, December)
+    //                 %y       Year - Two digit(13, 14 etc)
+    //                 %Y       Year - Four digit(2013, 2014 etc)
+    //                 %h       Hour(12 - hour format)
+    //                 %H       Hour(24 - hour format)
+    //                 %m       Minute(zero - padded)
+    //                 %s       Second(zero - padded)
+    //                 %g       Subsecond part(precision is configured by ConfigurationType::SubsecondPrecision)
+    //                 %F       AM / PM designation
+    //                 %        Escape character
+    //   
+    //            For reference, here is a basic example showing a DATETIME format being specified within
+    //            a complete format string:
+    //
+    //                                       "[%level] %datetime{%d/%M} %func %msg"
+    //           
+    
+
+
+    // -----------------------   REPORTING THREAD ID FROM WITHIN A LOG MESSAGE   -----------------------
+    // Within the format string which can be assigned to each level, it is possible to use the specifier
+    // '%thread' to get the current thread ID. However, when called from the main thread, this value will
+    //  be empty. Thus it is recommended to have a seperate logger for use when logging from threads while 
+    //  the default logger will not use this specifier
+ 
+    
+    
+    //  -----------------------       FILE SIZE BYTE CONVERSION REFERENCE       -----------------------
+    //  Quick cheat-sheet conversion table on MegaByte sizes to equivalent number of bytes 
+    //    (handy when setting a maximum log file size such as is required for each LOG below)
+    //                       [Rule: Assume 1 KiloByte is 1024 Bytes]
+    //   +----------------------------------------+----------------------------------------+
+    //   |     1 MB    is      1048576 Bytes      |    12 MB    is     12582912 Bytes      |
+    //   |     2 MB    is      2097152 Bytes      |    16 MB    is     16777216 Bytes      |
+    //   |     4 MB    is      4194304 Bytes      |    32 MB    is     33554432 Bytes      |
+    //   |     5 MB    is      5242880 Bytes      |    64 MB    is     67108864 Bytes      |
+    //   |     8 MB    is      8388608 Bytes      |   256 MB    is    268435456 Bytes      | 
+    //   |    10 MB    is     10485760 Bytes      |     1 GB    is   1073741824 Bytes      |
+    //   +----------------------------------------+----------------------------------------+
+
+
 
     ////////////////////
     ////        Step 2      SET CONFIGURATION FOR EACH LEVEL 
     /////////////////             
 
     //Configure Trace
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Enabled, "true");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "true");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "false");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Enabled, "1");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "1");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "0");
+    //logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "[%level] %datetime{%h:%m:%s,%g} [Thread=%thread] {%loc} msg=%msg");
+    //logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s.%g} [%level] '%func'\n%fbase line %line  %msg");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
+        "\n< < < < < < < < < < < < < < < <[%level]> > > > > > > > > > > > > > > >\n"//"\n          <TRACE>              <TRACE>              <%level>\n"
+        "+~~~~~~~~~~~~~~~~~~~~~~~~~+   file: '%fbase' line %line\n"
+        "| %datetime{%Y-%M-%d %H:%m:%s.%g} |   func: %func\n"
+        "+~~~~~~~~~~~~~~~~~~~~~~~~~+    msg: \"%msg\"");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace)->string());
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "true");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "true");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "true");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "6");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "5242880");  //expects input type as size_t  //5 MB
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "16"); //expects input type as size_t
   
-    //Configure Debug  
-    //TODO check to see if NDEBUG or _DEBUG is defined or else this log won't exist
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "true");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "true");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "true");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "true");
+    //Configure Debug  (The macro 'USE_DEBUG_' would be defined in the header "BuildSettings.h")
+#ifndef USE_DEBUG_     
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "0");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "0");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "0");
+#else 
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "1");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "1");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "1");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "\n"
+        "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n"
+        "  [FSMEngine %level]\n"
+        "  Location: '%fbase':%line\n  Message: %msg\n"
+        "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename,
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Debug)->string());
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "true");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::MaxLogFileSize, "true");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::LogFlushThreshold, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "1");
 
-    //Configure Fatal
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Enabled, "true");
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToFile, "true");
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToStandardOutput, "true");
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::MaxLogFileSize, "5242880");  //5 MB
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::LogFlushThreshold, "1");
+#endif 
+
+    //Configure Fatal  [Be warned that logging to FATAL will trigger the executable to abort (i.e. crash)]
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Enabled, "1");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToFile, "1");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToStandardOutput, "1");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Format, "\n\n\n[%level] at (line %line '%fbase') <encountered %datetime{%b %d, %Y %F %g:%m:%s}> in '%func'\nMSG=%msg");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Filename,
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Fatal)->string());
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::SubsecondPrecision, "true");
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::MaxLogFileSize, "true");
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::LogFlushThreshold, "true");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::SubsecondPrecision, "6");
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::MaxLogFileSize, "2048"); //There probably won't be that many fatal messages... I hope
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::LogFlushThreshold, "1");  //Try 0?
 
     //Configure Error
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::Enabled, "true");
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::ToFile, "true");
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::ToStandardOutput, "true");
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Enabled, "1");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::ToFile, "1");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::ToStandardOutput, "1");
+    //logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "[%level Time=%datetime{%h:%m:%s}]  %func\n(line %line '%fbase') %msg");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "\n"
+        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+        "~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERRO\n"
+        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+        "  [FSMEngine %level]\n"
+        "  Location: '%fbase':%line\n  Message: %msg\n"
+        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+        "ROR!~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~\n"
+        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Error)->string());
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::SubsecondPrecision, "true");
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::MaxLogFileSize, "true");
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::LogFlushThreshold, "true");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::SubsecondPrecision, "3");
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::MaxLogFileSize, "1048576"); //1048576 Bytes = 1 MB
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::LogFlushThreshold, "1"); 
 
     //Configure Warning
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Enabled, "true");
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToFile, "true");
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToStandardOutput, "true");
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Enabled, "1");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToFile, "1");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToStandardOutput, "1");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Format, "\n[%level Time = %datetime{%h:%m:%s}]  '%func'\n{line %line '%fbase'}\nMSG: %msg");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Warning)->string());
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::SubsecondPrecision, "true");
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::MaxLogFileSize, "true");
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::LogFlushThreshold, "true");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::SubsecondPrecision, "3");
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::MaxLogFileSize, "1048576"); //1048576 Bytes = 1 MB
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::LogFlushThreshold, "1");
 
     //Configure Info
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::Enabled, "true");
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::ToFile, "true");
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::ToStandardOutput, "true");
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::Format, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::Enabled, "1");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::ToFile, "1");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::ToStandardOutput, "1");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::Format, "%msg");
     logConfigurator.set(el::Level::Info, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Info)->string());
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::SubsecondPrecision, "true");
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::MaxLogFileSize, "true");
-    logConfigurator.set(el::Level::Info, el::ConfigurationType::LogFlushThreshold, "true");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::SubsecondPrecision, "1");
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::MaxLogFileSize, "5242880");  //5242880 Bytes = 5 MB
+    logConfigurator.set(el::Level::Info, el::ConfigurationType::LogFlushThreshold, "8"); //Flush after every 8 logs
 
     //Configure Verbose  [Verbose is Disabled]
-    logConfigurator.set(el::Level::Verbose, el::ConfigurationType::Enabled, "false");
+    logConfigurator.set(el::Level::Verbose, el::ConfigurationType::Enabled, "0");
 
     //Configure Unknown
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Enabled, "true");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToFile, "true");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToStandardOutput, "true");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Format, "true");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Filename, 
-        EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Unknown)->string());
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::SubsecondPrecision, "true");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::MaxLogFileSize, "true");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::LogFlushThreshold, "true");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Enabled, "1");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToFile, "0");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToStandardOutput, "1");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Format, "[UNKNOWN] %msg");
+    //logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Filename, 
+    //    EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Unknown)->string());
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::SubsecondPrecision, "3");
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::MaxLogFileSize, "1048576"); //1048576 Bytes = 1 MB
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::LogFlushThreshold, "1");
 
 
 
@@ -470,20 +557,57 @@ void configureEasyLogger() {
     el::Loggers::setDefaultConfigurations(logConfigurator);
 
 
+    //Test the loggers... 
+
+    LOG(TRACE) << "BEFORE INFO THO!";
+
+    LOG(INFO) << "\nThe 'info' log will probably get the most usage!";
+    LOG(INFO) << "Thus when multiple messages such as these appear!";
+    LOG(INFO) << "They should feel natural.";
+    LOG(INFO) << "And not present too much clutter to render them difficult to read in bulk...";
+    LOG(INFO) << "It also should be possible to encounter messages";
+    LOG(INFO) << "                         formatted to be written over multiple lines ";
+    LOG(INFO) << "                                                               to be extra fancy.";
+    LOG(INFO) << "And possibly end with new lines [or not...]\n";
+    LOG(INFO) << "And now for a test of the other available logs...\n\n";
+    
+    LOG(TRACE);
+    
+    LOG(TRACE) //<< "\n\n------------------------------------------------------------------------\n"
+        << "Testing the Trace Log!!! WOOT!";
+        //<< "\n------------------------------------------------------------------------\n\n";
+    
+    LOG(DEBUG) << "Testing the DEBUG Log!!! WOOT! [DEBUG Test!]";
+
+
+    LOG(INFO) << "And now for some of the more serious logs...\n\n";
+
+
+    LOG(WARNING) << "A message of importance from the warning log is this!\n";
+
+    LOG(ERROR) << "An even more important message notifying of an error this one is!";
+
+
+    //Be aware that logging to FATAL will call abort which basically records the log message and then on-purpose crashes the program
+    //LOG(FATAL) << "The following major issue has been encountered resulting in a Fatality!\n";
+
 }
 
 
 
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {       
+
     bool checkIfAlreadyConfigured() {
+
         static bool hasBeenConfigured = false;
-        if (hasBeenConfigured) {
+        if (hasBeenConfigured)
             return true;
-        }
+        
         else {
             hasBeenConfigured = true;
             return false;
         }
+
     }
 
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level level) {
@@ -497,7 +621,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             }
             else {
                 std::filesystem::path logFilepath = (*possiblyTheLogFileDirectory).string() + "/";
-                logFilepath = logFilepath.make_preferred(); //Sets all of the '\' and '/' to the OS-preferred style
+                logFilepath = logFilepath.make_preferred(); //Sets all of the '\' and '/' to the OS-preferred style (Windows is '\')
                 switch (level) {
                 case el::Level::Info:
                     logFilepath += "Info.log";
@@ -518,7 +642,9 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                     logFilepath += "Warnings.log";
                     break;
                 case el::Level::Unknown:
-                    [[fallthrough]];
+                    logFilepath += "Unkown.log";
+                    break;
+                    //[[fallthrough]];
                 default:
                     logFilepath += "Default.log";
                     break;
@@ -528,7 +654,55 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
         }
     }
 
+    //I am still searching for a more modern algorithm to do this... Had a few false positives for
+    //things to try that made me start rewriting the function only to discover that the new techniques
+    //flat out didn't work or they secretly relied on what I was doing in the old implementation anyways. 
+#if defined USE_MORE_MODERN_ALGORITHM_TO_GET_DATE_TIME
+    std::optional<std::filesystem::path> getLogFileDirectory() {
+        //Static filepath will be initialized first time this function is called.
+        //After returning it will remain initialized throughout the remaining lifetime
+        //of the program, thus allowing us to access is again simply by calling this function
+        static std::filesystem::path logDirectory{}; 
 
+        //We can tell if there is already a path to our directory for holding out logs by just seeing it 
+        //the filepath is empty (i.e. just created)
+        if (!(logDirectory.empty())) { //If filepath is not empty, we already have created one and can return it
+            return std::make_optional<std::filesystem::path>(logDirectory);
+        }
+        else { //no filepath yet exists 
+            //Thus we must create one
+            std::error_code ec;
+            ec.clear(); 
+            //This sets logDirectory to the same filepath as from where we launched our '.exe' 
+            logDirectory = std::filesystem::current_path(ec); 
+            if (ec) {
+                LOG(ERROR) << "Unable to communicate with filesystem to set up directory for log files!\n"
+                    << "The OS reports error: " << ec.message() << "\n\n";
+                return std::nullopt;
+            }
+            else { //we're in business
+                logDirectory = logDirectory.lexically_normal(); //Do this step just in case anything is weird about our filepath
+                logDirectory = logDirectory.string() + "\\LOGS\\"; //We are going to want to move into a subdirectory titled 'LOGS'
+                logDirectory = logDirectory.make_preferred(); //Ensures each '/' and '\' in filepath are all set to OS-preferred separator 
+
+
+                //Now it is time to append a unique identifier onto the end of it. Date and time 
+                //will pretty reliably be unique enough for our purposes.
+                //An example tag could look like: 2019_060_09_46_32      [year_dayOfYear_Hour_Min_Sec]
+                std::stringstream tag; //Tag is to be built into stringstream
+               
+
+                //OOps it turns out that the 'modern' implementation I thought didn't rely upon std::localtime,
+                //but I was wrong. It just was really good at hiding the fact that it used it. 
+    
+            
+            
+            }
+        }
+    
+    }
+
+#else 
     //I apologize in advance for how confusing this function's implementation is
     std::optional<std::filesystem::path> getLogFileDirectory() {
         static std::filesystem::path logDirectory {}; //Static filepath will be initialized first time this function is called.
@@ -551,10 +725,9 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 logDirectory = logDirectory.lexically_normal();
                 logDirectory = logDirectory.string() + "/LOGS/";
                 logDirectory = logDirectory.make_preferred(); //Ensures each '/' and '\' in filepath are all set to OS-preferred separator 
-                //LOG(INFO) << "\nCurrent working directory is: " << logDirectory.string() << "\n"; //Print it out to ensure sanity
+                
 
                 //Now it is time to append a unique identifier onto the end of it. Date and time will be unique (hopefully)
-             
                 std::stringstream tag; //Tag is to be built into stringstream
                 auto timetag = std::chrono::system_clock::now(); //This is the system clock. However to get it into a format that will make a nice filepath tag,
                 time_t timetag2 = (std::chrono::system_clock::to_time_t(timetag)); //we have to do some crazy conversions from all these different time representations.
@@ -571,7 +744,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 //https://en.cppreference.com/w/c/chrono/localtime
                 //https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
                 //
-                // OR  just do this hack until C++20 provides a much easier way to do this
+                // OR  just do this hack until C++20 provides a much easier way to do this 
                 //
 #pragma warning( push )
 #pragma warning( disable : 4996 ) 
@@ -605,8 +778,10 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             }
         }
     }
-}
+#endif // USE_MORE_MODERN_ALGORITHM_TO_GET_DATE_TIME
 
+
+}  //namespace EASYLOGPP_CONFIGURATION_INTERNAL
 
 
 #else 

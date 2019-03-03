@@ -275,9 +275,10 @@
 
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//  ( SECTION 3 )  GLM SETTINGS
+//  ( SECTION 3 )  GLM CONFIGURATION AND SETTINGS
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//  /*
+//
+/* //
 //   +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
 //   /                                                                                                                          \  
 //   \  FIRST A QUICK AND GENERAL SIDENOTE REGARDING GLM AND ITS CONFIGURATION MACROS:                                          /  
@@ -290,15 +291,35 @@
 //   /     on this Application or its underlying GLM library.                                                                   \ 
 //   \                                                                                                                          / 
 //   /   For reference:                                                                                                         \    
-//   \         GLM version is 0.9.9.3   [Last Updated Oct 31 2018]                                                              / 
-//   /         GLM Manual:            https://github.com/g-truc/glm/blob/0.9.9.2/doc/manual.pdf                                 \    
+//   \         GLM Version in Use During Development:        0.9.9.3   [Last Updated Oct 31 2018]                               /   
+//   /         GLM Manual:                                   https://github.com/g-truc/glm/blob/0.9.9.2/doc/manual.pdf          \    
 //   \                                                                                                                          / 
 //   /                                                                                                                          \   
 //   +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+ 
-// */
+*/ //
 //
 
 //                                              NOW ON TO THE GLM MACROS!
+
+// MACRO:  FSM_ENGINE_REPORT_GLM_REQUESTED_CONFIGURATION
+// Dependencies:  
+//     - none
+//
+// This macro is not actually an offical GLM macro, but instead a special macro which has been introduced into this project with
+// the intent of providing a handy straight forward method for comparing what inputs are going into GLM regarding how it should
+// configure itself versus its own self-message reporting process (though neither macro is in anyway dependent on the other being
+// defined). Basically the implementation for this macro is the inclusion of an extra preprocessor directive which appears  
+// immediately before the line where the instruction to include GLM's main header exists. This preprocessor directive basically
+// will look to see if the macro 'FSM_ENGINE_REPORT_GLM_REQUESTED_CONFIGURATION' has been defined. If it hasn't been defined, then
+// the preprocessor just keeps moving right along begin including GLM.  However, if this macro has been defined, there is a simple
+// implementation for the preprocessor to simply go down the list of each macro and report it as either defined or undefined (with 
+// a few expections made to save space*). Be advised that this still will form a fair amount of information being reported, with
+// every setting being reported no matter if it is off or on. 
+//  (*The space saving comes from only reporting which of the 3 active possible options [4 if counting 'off'] is active when
+//      reporting on 'GLM_FORCE_PRECISION_***')
+//  (Double precision is skipped if GLM set to be forced to only use single-precision)
+#define FSM_ENGINE_REPORT_GLM_REQUESTED_CONFIGURATION 1
+
 
 // MACRO:  GLM_FORCE_MESSAGES
 // Dependencies: 
@@ -389,11 +410,14 @@
 
 //Macro: GLM_FORCE_INLINE
 // Dependencies: 
-//     - none
+//       - none
 //
-//Forces GLM to inline its functions as much as possible. This should probably 
-//result in faster executuing code. It might as well be done. Can't think right 
-//now of any downsides.
+//Forces GLM to inline its functions as much as possible. This should (probably) 
+//result in faster executuing code, aassuming the compiler isn't already inlining 
+//each function call to its fullest extent possible. Unless the code is displaying
+//odd behavior that ceases if disabled (in which case should warrent further 
+//investigation beyond just disabling this macro and moving on), this macro is
+//recommended to be always be in use.
 #define GLM_FORCE_INLINE 1
 
 
@@ -408,7 +432,7 @@
 #define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES 1     
 
 
-//ADDITIONAL GLM MACROs awaiting completed documentation
+//ADDITIONAL GLM MACROs which I have yet to write any documentation
 //
 //  Intrinsics
 //#define GLM_FORCE_PURE 0
@@ -422,7 +446,7 @@
 //#define GLM_FORCE_AVX512 1
 //
 //
-//  [There are 9 data-type-precision specified macros I haven't included]
+//  [There are 12 data-type-precision specified macros I haven't included]
 //
 //
 //#define GLM_FORCE_SINGLE_ONLY 1    //Prevent GLM from ever using 64-bit types 
@@ -468,6 +492,21 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  ( SECTION 4 )  EasyLogging++ SETTINGS
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+//     Note that the following 2 macros are used by EasyLogging++ during it's initialization
+//     to determine what names it will assign to the 2 default logging targets. I highly
+//      recommend that these do NOT get changed because that would just be bad...
+#ifndef ELPP_DEFAULT_LOGGER
+//#define ELPP_DEFAULT_LOGGER "FSM_LOG"
+//#define FSM_LOG ELPP_DEFAULT_LOGGER
+#endif
+
+#ifndef ELPP_DEFAULT_PERFORMANCE_LOGGER
+//#define ELPP_DEFAULT_PERFORMANCE_LOGGER "FSM_PERFLOG"
+//#define FSM_PERFLOG ELPP_DEFAULT_PERFORMANCE_LOGGER
+#endif
+
 
 //Make sure if #define ENABLE_GLFUNCTION_PROFILING_ from section 2 is enabled while 
 //profiling is not enabled in this section a compilation error is triggered
