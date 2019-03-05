@@ -404,6 +404,7 @@
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
     <ClInclude Include="UniversalIncludes.h" />
+    <ClInclude Include="FSMVideoMode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -422,6 +423,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ThirdParty\glm\detail\glm.cpp" />
+    <ClCompile Include="FSMVideoMode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glfw3.dll" />

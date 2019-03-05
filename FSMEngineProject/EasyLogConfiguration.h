@@ -187,7 +187,7 @@
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
 
-#pragma message("  Testing Requirement:\n\t\tA request has been made to include the header \"EasyLogCongiuration.h\" within compilation.\n" \
+#pragma message("\n\n  Testing Requirement:\n\t\tA request has been made to include the header \"EasyLogCongiuration.h\" within compilation.\n" \
 "\t\t  Testing preconditions for determining if requested spot of inclusion has met the necessary requirements...")
 #ifdef ALLOW_ELCC_CONFIGURATION
 #pragma message("  Testing Completed:\n\t\t\"EasyLogConfiguration.h\" has detected that all proper requirements have been successfully satisfied by this location." \
@@ -441,7 +441,7 @@ void configureEasyLogger() {
     //Configure Trace
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "1");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "0");
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "1");
     //logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "[%level] %datetime{%h:%m:%s,%g} [Thread=%thread] {%loc} msg=%msg");
     //logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s.%g} [%level] '%func'\n%fbase line %line  %msg");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""

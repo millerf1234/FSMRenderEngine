@@ -451,10 +451,15 @@
 //
 //#define GLM_FORCE_SINGLE_ONLY 1    //Prevent GLM from ever using 64-bit types 
 //
-//#define GLM_FORCE_SWIZZLE 1
+//#define GLM_FORCE_SWIZZLE 1  //Enables Swizzling
 //
-//#define GLM_FORCE_SIZE_T_LENGTH 1 
+#define GLM_FORCE_SIZE_T_LENGTH 1 
 //
+//#define GLM_FORCE_SILENT_WARNINGS
+//
+//#define GLM_FORCE_DEPTH_ZERO_TO_ONE 1
+//
+//#define GLM_FORCE_LEFT_HANDED 1
 //
 #define GLM_FORCE_UNRESTRICTED_GENTYPE 1
 /*
@@ -493,6 +498,7 @@
 //  ( SECTION 4 )  EasyLogging++ SETTINGS
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+#define ENABLE_TRACE_LOG 1
 
 //     Note that the following 2 macros are used by EasyLogging++ during it's initialization
 //     to determine what names it will assign to the 2 default logging targets. I highly

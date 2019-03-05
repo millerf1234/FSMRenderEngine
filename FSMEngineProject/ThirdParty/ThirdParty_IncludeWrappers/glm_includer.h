@@ -61,7 +61,8 @@
 "                       +-----------------------------------------------+\n"    )
 
 //So the syntax here is a little weird because it turns out every call to '#pragma message()'
-//automatically ends with a new line. Thus to keep the resonses on the same line as their 
+//automatically is appended with a new line by the compiler. Thus to keep the resonses on the same
+//line as their
 //prompt, there is some macro trickery at play that produces the desired output. The key behind
 //the syntax is that there can be any number of string within the parathensis of a 'message' 
 //call. Finally, to understand why there always needs to be an empty string at the start of each
@@ -90,10 +91,10 @@
 */
 //etc...
 
-//And now as an update I have decided the output was too ugly when printed single-line by single-line
-//so I have come up with the following masterpiece of pre-processor abuse to get my well-formatted 
-//output (I even was nice and included c-style comments to give it a small indentation to make it 
-//slightly less unreadable):
+//And now as an update I have decided the output was still too ugly when printed single-line by single-line
+//so I have come up with the following masterpiece of joyful pre-processor abuse to get my well-formatted 
+//output (I even was nice and included some c-style inline comments to give the nested statements a small
+//indentation, hopefully slightly improving readability):
 
 #define L_MSG "\tGLM_FORCE_MESSAGES:           "
 #define R_MSG "            GLM_FORCE_CXX98:              "

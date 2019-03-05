@@ -22,11 +22,13 @@ Application::Application(int argc, char ** argv) {
     }
     initializeEasyLogger(argc, argv);
 
-    LOG(INFO) << "Application is launching...\n";
+    //LOG(INFO) << "Application is launching...\n";
 
     configureEasyLogger();
 
     LOG(INFO) << "Logging Utility Configured!\n";
+
+    LOG(TRACE);
 
     //// Use default logger
     //el::Logger* defaultLogger = el::Loggers::getLogger("default");
@@ -44,6 +46,7 @@ Application::Application(int argc, char ** argv) {
 Application::~Application() {
     //Flush all the remaining events stored in all loggers
     LOG(INFO) << "Application is closing";
+    LOG(TRACE);
     el::Loggers::flushAll();
     
     //close down GLFW?
@@ -52,6 +55,6 @@ Application::~Application() {
 
 void Application::launch() {
     LOG(INFO) << "Application Launched!";
-
+    LOG(TRACE);
     std::cin.get();
 }

@@ -100,6 +100,9 @@
     <Filter Include="Source Files\Engine\Initialization\Logging Init">
       <UniqueIdentifier>{0944decd-e772-40fd-8b18-6374f65d9ac7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Components">
+      <UniqueIdentifier>{487ed7c0-2c3e-4e35-a8d9-71eb85ba2187}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -888,6 +891,9 @@
     <ClInclude Include="EasyLogConfiguration.h">
       <Filter>Source Files\Engine\Initialization\Logging Init</Filter>
     </ClInclude>
+    <ClInclude Include="FSMVideoMode.h">
+      <Filter>Source Files\Engine\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -919,6 +925,9 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\glm\detail\glm.cpp">
       <Filter>ThirdParty\glm\glm\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMVideoMode.cpp">
+      <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
