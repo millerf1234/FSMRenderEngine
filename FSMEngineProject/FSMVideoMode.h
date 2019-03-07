@@ -46,9 +46,7 @@ struct GLFWvidmode;
 
 class FSMVideoMode final {
 public:
-    FSMVideoMode() = delete;
-    FSMVideoMode(const GLFWvidmode& vid) = delete;
-
+   
     //Construct a VideoMode from a GLFWvideomode and the display's width and height in millimeters. [The
     //width and height are queryable through the GLFW function 'glfwGetMonitorPhysicalSize()']
     FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
@@ -151,6 +149,8 @@ public:
     //Returns the red bit depth for this videomode
     int getBlueBitDepth() const;
 
+    FSMVideoMode() = delete;
+    FSMVideoMode(const GLFWvidmode& vid) = delete;
 
 private:
     class VidModeImpl;

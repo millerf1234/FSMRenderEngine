@@ -1,4 +1,43 @@
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     Notes And Weblinks On Assorted (Some Potentially Catastrophic) Optimizations
+
+  -- [Force Intrinsic Function Calls]
+		DESCRIPTION:   Explicitly force an intrinsic implementation for a function to be used in place of the typical C/C++ runtime library's
+		                   implementation*. Will limit the number of available platforms/architectures the code will execute properly                       *Note that some cstdlib or 
+						   under (unless both pragmas to enabled/disable intrinsic are ignored) at the benefit of having a most-likely
+						   several-orders-of-magnitude faster implementation [depending of size/nature of operation performed with function
+						   call].					   
+		DETAILS:       Must be enabled using a call to 
+		                   '#pragma incrinsic( intrinsic_func )'
+		               After its use is  a call to 
+		     '#pragma function( intrinsic func )' 
+		    to reset implementation to non-intrinsic default]
+				
+		 
+				// use intrinsic forms of memset and strlen
+                #pragma intrinsic(memset, strlen)
+
+
+		 
+		 See: [Example Usage] https://docs.microsoft.com/en-us/cpp/preprocessor/function-c-cpp?view=vs-2017
+		      [Available Intrinsics] https://docs.microsoft.com/en-us/cpp/preprocessor/intrinsic?view=vs-2017
+
+
+ -- Can tell MSVC compiler that it can assume a certain condition to always be met which
+             can lead to better optimized code. However, telling the compiler a lie will be very very very
+             catastrophic.
+                See:   https://docs.microsoft.com/en-us/cpp/intrinsics/assume?view=vs-2017
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   End Section on Optimizations   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 
 

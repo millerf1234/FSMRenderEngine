@@ -1,9 +1,0 @@
-
-More to come eventually?
-
-
-//Can tell MSVC compiler that it can assume a certain condition to always be met which
-//can lead to better optimized code. However, telling the compiler a lie will be very very very
-//catastrophic
-https://docs.microsoft.com/en-us/cpp/intrinsics/assume?view=vs-2017
-

@@ -8,17 +8,17 @@
 // Dependencies:             GLFW 3.0 or newer -- This class is dependent upon the GLFW type
 //                                                'GLFWvideomode' which is defined as follows:
 //                                                          struct GLFWvidmode {
-//                                                             //The width, in screen coordinates, of the video mode.
+//                                                           //The width, in screen coordinates, of the video mode.
 //                                                             int width;
-//                                                             //The height, in screen coordinates, of the video mode.
+//                                                           //The height, in screen coordinates, of the video mode.
 //                                                             int height;
-//                                                             //The bit depth of the red channel of the video mode.
+//                                                           //The bit depth of the red channel of the video mode.
 //                                                             int redBits;
-//                                                             //The bit depth of the green channel of the video mode.
+//                                                           //The bit depth of the green channel of the video mode.
 //                                                             int greenBits;
-//                                                             //The bit depth of the blue channel of the video mode.
+//                                                           //The bit depth of the blue channel of the video mode.
 //                                                             int blueBits;
-//                                                             //The refresh rate, in Hz, of the video mode.
+//                                                           //The refresh rate, in Hz, of the video mode.
 //                                                             int refreshRate;
 //                                                         };
 //                                                   GLFW also provides a seperate function which queries a monitors 
@@ -51,10 +51,10 @@ FSMVideoMode::FSMVideoMode(const FSMVideoMode&) {
 FSMVideoMode::FSMVideoMode(FSMVideoMode&&) noexcept {
 
 }
-FSMVideoMode::FSMVideoMode& operator=(const FSMVideoMode&) {
+FSMVideoMode& FSMVideoMode::operator=(const FSMVideoMode&) {
 
 }
-FSMVideoMode::FSMVideoMode& operator=(FSMVideoMode&&) noexcept {
+FSMVideoMode& FSMVideoMode::operator=(FSMVideoMode&&) noexcept {
 
 }
 

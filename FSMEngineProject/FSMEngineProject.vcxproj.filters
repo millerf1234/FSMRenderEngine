@@ -1364,8 +1364,5 @@
     <Text Include="SafeConstructableExample.txt">
       <Filter>Notes</Filter>
     </Text>
-    <Text Include="NotesAndWeblinksOnAssortedPotentiallyCatastrophicOptimizations.txt">
-      <Filter>Notes</Filter>
-    </Text>
   </ItemGroup>
 </Project>

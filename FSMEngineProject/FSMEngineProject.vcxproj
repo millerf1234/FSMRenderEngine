@@ -571,7 +571,6 @@
   <ItemGroup>
     <Text Include="IntermediateHeadersImplementation_readme.txt" />
     <Text Include="MovingTo64Bit.txt" />
-    <Text Include="NotesAndWeblinksOnAssortedPotentiallyCatastrophicOptimizations.txt" />
     <Text Include="Notes\NotesOnMSVC.txt" />
     <Text Include="SafeConstructableExample.txt" />
   </ItemGroup>
