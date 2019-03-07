@@ -431,6 +431,7 @@
     <None Include="glfw3.pdb" />
     <None Include="glfw3dll.exp" />
     <None Include="Notes\WINDOWS2000_tips_windows_graphics_programming_win32_gdi_and_directd.pdf" />
+    <None Include="Shaders\Basic.vert" />
     <None Include="ThirdParty\glm\detail\func_common.inl" />
     <None Include="ThirdParty\glm\detail\func_common_simd.inl" />
     <None Include="ThirdParty\glm\detail\func_exponential.inl" />
@@ -569,6 +570,7 @@
     <Library Include="glfw3dll.lib" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="GLSL_References.txt" />
     <Text Include="IntermediateHeadersImplementation_readme.txt" />
     <Text Include="MovingTo64Bit.txt" />
     <Text Include="Notes\NotesOnMSVC.txt" />

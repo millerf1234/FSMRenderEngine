@@ -103,6 +103,9 @@
     <Filter Include="Source Files\Engine\Components">
       <UniqueIdentifier>{487ed7c0-2c3e-4e35-a8d9-71eb85ba2187}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{710d3603-afd1-4bc8-81dd-6b514564d55e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -1345,6 +1348,9 @@
     <None Include="ThirdParty\glm\readme.md">
       <Filter>ThirdParty\glm</Filter>
     </None>
+    <None Include="Shaders\Basic.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3dll.lib">
@@ -1363,6 +1369,9 @@
     </Text>
     <Text Include="SafeConstructableExample.txt">
       <Filter>Notes</Filter>
+    </Text>
+    <Text Include="GLSL_References.txt">
+      <Filter>Resource Files\Shaders</Filter>
     </Text>
   </ItemGroup>
 </Project>

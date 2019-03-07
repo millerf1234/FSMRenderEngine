@@ -36,40 +36,142 @@
 #include "UniversalIncludes.h"
 #include <sstream>
 
+using VMInternal::VidModeImpl;
 
 FSMVideoMode::FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM) {
-    LOG(TRACE);
+    pVidModeImpl_ = std::make_unique<VidModeImpl>(vid, physicalWidthMM, physicalHeightMM);
+}
+FSMVideoMode::~FSMVideoMode() = default;
+FSMVideoMode::FSMVideoMode(const FSMVideoMode& that) {
+    pVidModeImpl_ = std::make_unique<VidModeImpl>(*(that.pVidModeImpl_));
+}
+FSMVideoMode::FSMVideoMode(FSMVideoMode&& that) noexcept {
+    *this = std::move(that);
+}
+FSMVideoMode& FSMVideoMode::operator=(const FSMVideoMode& that) {
+    if (this != &that) {
+        pVidModeImpl_ = std::make_unique<VidModeImpl>(*(that.pVidModeImpl_));
+    }
+    return *this;
+}
+FSMVideoMode& FSMVideoMode::operator=(FSMVideoMode&& that) noexcept {
+    if (this != &that) {
+        pVidModeImpl_ = std::move(that.pVidModeImpl_);
+    }
+    return *this;
 }
 
-FSMVideoMode::~FSMVideoMode() {
-    LOG(TRACE);
-}
-
-FSMVideoMode::FSMVideoMode(const FSMVideoMode&) {
-
-}
-FSMVideoMode::FSMVideoMode(FSMVideoMode&&) noexcept {
-
-}
-FSMVideoMode& FSMVideoMode::operator=(const FSMVideoMode&) {
-
-}
-FSMVideoMode& FSMVideoMode::operator=(FSMVideoMode&&) noexcept {
-
+std::string FSMVideoMode::toString() const {
+    return pVidModeImpl_->toString();
 }
 
 
 
 
+////////////////////////////////////////////////////////////////////////////////
+/////////////////    It is all VidModeImpl below this point    /////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-class FSMVideoMode::VidModeImpl final {
-public:
-    VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
-private:
-    static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 
-    static constexpr const double INCHES_PER_MILLIMETER = 0.0393701;
 
-};
+
+namespace VMInternal {
+    
+    //All public functionality in this class will match function signatures and behaviors as 
+    //listed in the FSMVideomode class
+    class VidModeImpl final {
+    public:
+        VidModeImpl() = delete;
+        VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
+        ~VidModeImpl() = default;
+
+        VidModeImpl(const VidModeImpl&);
+        VidModeImpl(VidModeImpl&&) noexcept;
+        VidModeImpl& operator=(const VidModeImpl&);
+        VidModeImpl& operator=(VidModeImpl&&) noexcept;
+
+        std::string toString() const;
+        bool operator<(const VidModeImpl&) const;
+        bool operator>(const VidModeImpl&) const;
+        bool operator==(const VidModeImpl&) const;
+        bool operator==(const GLFWvidmode&) const;
+        bool operator!=(const VidModeImpl&&) const;
+        bool operator!=(const GLFWvidmode&) const;
+
+        int getWidth() const { return mWidth_; }
+        int getHeight() const { return mHeight_; }
+        int getPhysicalHeightMilliMeters() const;
+        int getPhysicalWidthMilliMeters() const;
+        double getPhysicalHeightInches() const;
+        double getPhysicalWidthInches() const;
+        double getPhysicalDisplaySizeMillimeters() const;
+        double getPhysicalDisplaySizeInches() const;
+        double getDPI_Height() const;
+        double getDPI_Width() const;
+        double getDPI_WidthHeightAverage() const;
+
+        int getRefreshRate() const { return mRefreshRate_; }
+        int getRedBitDepth() const { return mRedBits_; }
+        int getGreenBitDepth() const { return mGreenBits_; }
+        int getBlueBitDepth() const { return mBlueBits_; }
+
+    private:
+        static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 
+        static constexpr const double INCHES_PER_MILLIMETER = 0.0393701;
+
+        int mWidth_, mHeight_; //Measured in screen coordinates
+        int mPhysicalWidthMM_, mPhysicalHeightMM_; //measured in millimeters, not guaranteed to be accurate.
+        int mRefreshRate_;
+        int mRedBits_, mGreenBits_, mBlueBits_;
+    };
+
+
+    //Constructor
+    VidModeImpl::VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM,
+        int physicalHeightMM) : mPhysicalWidthMM_(physicalWidthMM),
+        mPhysicalHeightMM_(physicalHeightMM) {
+
+        //Set this object's remaining private fields based off the values of the passed in GLFWvidmode.
+        mWidth_ = vid.width;
+        mHeight_ = vid.height;
+        mRefreshRate_ = vid.refreshRate;
+        mRedBits_ = vid.redBits;
+        mGreenBits_ = vid.greenBits;
+        mBlueBits_ = vid.blueBits;
+    }
+
+    VidModeImpl::VidModeImpl(const VidModeImpl& that) {
+
+    }
+
+    VidModeImpl::VidModeImpl(VidModeImpl&& that) noexcept {
+
+    }
+
+    VidModeImpl& VidModeImpl::operator=(const VidModeImpl& that) {
+
+    }
+
+    VidModeImpl& VidModeImpl::operator=(VidModeImpl&& that) noexcept {
+
+    }
+
+    std::string VidModeImpl::toString() const {
+        std::stringstream vidMode;
+        vidMode << "DPI(height)=" << getDPI_Height() << ", DPI(width)=" << getDPI_Width() << ", DPI(avg)=" << getDPI_WidthHeightAverage();
+        vidMode << "  Refresh Rate: " << mRefreshRate_ << " hz,\t  [in screen coord] h: " << mHeight_ << ", w: ";
+        vidMode << mWidth_ << "\n\tColor Bit Depth:  R=" << mRedBits_ << " bits, G=" << mGreenBits_ << " bits, B=";
+        vidMode << mBlueBits_ << " bits";
+        return vidMode.str();
+    }
+
+
+
+
+
+
+} //namespace VMInternal
+
+
 
 
 

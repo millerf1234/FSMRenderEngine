@@ -1,0 +1,10 @@
+
+
+  OVERVIEW
+https://www.khronos.org/opengl/wiki/Built-in_Variable_(GLSL)
+
+https://people.eecs.ku.edu/~jrmiller/Courses/OpenGL/DeveloperNotes/GLSL_Overview.html
+
+
+  VERTEX NORMALS
+https://en.wikipedia.org/wiki/Vertex_normal

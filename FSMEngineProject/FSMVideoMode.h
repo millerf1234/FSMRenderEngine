@@ -39,16 +39,22 @@
 #define FSM_VIDEO_MODE_H_
 
 #include <memory>
-#include <string_view>
+#include <string>
+//#include <string_view>
+
 
 //Forward declaration of GLFWVidmode
 struct GLFWvidmode;
+
+namespace VMInternal {
+    class VidModeImpl;
+}
 
 class FSMVideoMode final {
 public:
    
     //Construct a VideoMode from a GLFWvideomode and the display's width and height in millimeters. [The
-    //width and height are queryable through the GLFW function 'glfwGetMonitorPhysicalSize()']
+    //width and height are able to be queried through the GLFW function 'glfwGetMonitorPhysicalSize()']
     FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
 
     ~FSMVideoMode();
@@ -60,7 +66,7 @@ public:
 
     //Formats this object's data into a 2-line string meant for printing to a console or log screen.
     //This object owns the underlying string data and 
-    std::string_view toString() const;
+    std::string toString() const;
 
 
     //////////////////////////////////////////
@@ -153,8 +159,7 @@ public:
     FSMVideoMode(const GLFWvidmode& vid) = delete;
 
 private:
-    class VidModeImpl;
-    std::unique_ptr<VidModeImpl> pVidModeImpl_;
+    std::unique_ptr<VMInternal::VidModeImpl> pVidModeImpl_;
 };
 
 #endif //FSM_VIDEO_MODE_H_
