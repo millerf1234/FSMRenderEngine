@@ -12,6 +12,9 @@
 #include "EasyLogConfiguration.h"
 
 
+#include "FSMVideoMode.h"
+#include "GraphicsLanguageFramework.h" 
+
 short Application::applicationsInExistance = 0;
 
 Application::Application(int argc, char ** argv) {
@@ -56,5 +59,17 @@ Application::~Application() {
 void Application::launch() {
     LOG(INFO) << "Application Launched!";
     LOG(TRACE);
+
+    LOG(INFO) << "\n\n\nIt is VideoMode testing time now tho!\n";
+    struct GLFWvidmode temp;
+    temp.redBits = temp.greenBits = temp.blueBits = 8;
+    temp.height = 16;
+    temp.width = 25;
+    temp.refreshRate = 60;
+    
+    FSMVideoMode tester(temp, 30, 33);
+
+    LOG(INFO) << tester.toString() << std::endl;
+
     std::cin.get();
 }

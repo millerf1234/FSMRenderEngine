@@ -36,6 +36,56 @@
 #include "UniversalIncludes.h"
 #include <sstream>
 
+namespace VMInternal {
+    //All public functionality in this class will match function signatures and behaviors as 
+//listed in the FSMVideomode class
+    class VidModeImpl final {
+    public:
+        VidModeImpl() = delete;
+        VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
+        ~VidModeImpl() = default;
+
+        VidModeImpl(const VidModeImpl&);
+        VidModeImpl(VidModeImpl&&) noexcept;
+        VidModeImpl& operator=(const VidModeImpl&);
+        VidModeImpl& operator=(VidModeImpl&&) noexcept;
+
+        std::string toString() const;
+        bool operator<(const VidModeImpl&) const noexcept;
+        bool operator>(const VidModeImpl&) const noexcept;
+        bool operator==(const VidModeImpl&) const noexcept;
+        bool operator==(const GLFWvidmode&) const noexcept;
+        bool operator!=(const VidModeImpl&) const noexcept;
+        bool operator!=(const GLFWvidmode&) const noexcept;
+
+        int getWidth() const noexcept { return mWidth_; }
+        int getHeight() const noexcept { return mHeight_; }
+        int getPhysicalHeightMilliMeters() const noexcept { return mPhysicalHeightMM_; }
+        int getPhysicalWidthMilliMeters() const noexcept { return mPhysicalWidthMM_; }
+        double getPhysicalHeightInches() const noexcept;
+        double getPhysicalWidthInches() const noexcept;
+        double getPhysicalDisplaySizeMillimeters() const noexcept;
+        double getPhysicalDisplaySizeInches() const noexcept;
+        double getDPI_Height() const noexcept;
+        double getDPI_Width() const noexcept;
+        double getDPI_WidthHeightAverage() const noexcept;
+
+        int getRefreshRate() const noexcept { return mRefreshRate_; }
+        int getRedBitDepth() const noexcept { return mRedBits_; }
+        int getGreenBitDepth() const noexcept { return mGreenBits_; }
+        int getBlueBitDepth() const noexcept { return mBlueBits_; }
+
+    private:
+        static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 
+        static constexpr const double INCHES_PER_MILLIMETER = 0.0393701;
+
+        int mWidth_, mHeight_; //Measured in screen coordinates
+        int mPhysicalWidthMM_, mPhysicalHeightMM_; //measured in millimeters, not guaranteed to be accurate.
+        int mRefreshRate_;
+        int mRedBits_, mGreenBits_, mBlueBits_;
+    };
+}
+
 using VMInternal::VidModeImpl;
 
 //Implement all of the FSMVideoMode functions by just having them call the 
@@ -158,53 +208,53 @@ int FSMVideoMode::getBlueBitDepth() const noexcept {
 
 namespace VMInternal {
     
-    //All public functionality in this class will match function signatures and behaviors as 
-    //listed in the FSMVideomode class
-    class VidModeImpl final {
-    public:
-        VidModeImpl() = delete;
-        VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
-        ~VidModeImpl() = default;
+    ////All public functionality in this class will match function signatures and behaviors as 
+    ////listed in the FSMVideomode class
+    //class VidModeImpl final {
+    //public:
+    //    VidModeImpl() = delete;
+    //    VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
+    //    ~VidModeImpl() = default;
 
-        VidModeImpl(const VidModeImpl&);
-        VidModeImpl(VidModeImpl&&) noexcept;
-        VidModeImpl& operator=(const VidModeImpl&);
-        VidModeImpl& operator=(VidModeImpl&&) noexcept;
+    //    VidModeImpl(const VidModeImpl&);
+    //    VidModeImpl(VidModeImpl&&) noexcept;
+    //    VidModeImpl& operator=(const VidModeImpl&);
+    //    VidModeImpl& operator=(VidModeImpl&&) noexcept;
 
-        std::string toString() const;
-        bool operator<(const VidModeImpl&) const noexcept;
-        bool operator>(const VidModeImpl&) const noexcept;
-        bool operator==(const VidModeImpl&) const noexcept;
-        bool operator==(const GLFWvidmode&) const noexcept;
-        bool operator!=(const VidModeImpl&) const noexcept;
-        bool operator!=(const GLFWvidmode&) const noexcept;
+    //    std::string toString() const;
+    //    bool operator<(const VidModeImpl&) const noexcept;
+    //    bool operator>(const VidModeImpl&) const noexcept;
+    //    bool operator==(const VidModeImpl&) const noexcept;
+    //    bool operator==(const GLFWvidmode&) const noexcept;
+    //    bool operator!=(const VidModeImpl&) const noexcept;
+    //    bool operator!=(const GLFWvidmode&) const noexcept;
 
-        int getWidth() const noexcept { return mWidth_; }
-        int getHeight() const noexcept { return mHeight_; }
-        int getPhysicalHeightMilliMeters() const noexcept { return mPhysicalHeightMM_; }
-        int getPhysicalWidthMilliMeters() const noexcept { return mPhysicalWidthMM_; }
-        double getPhysicalHeightInches() const noexcept;
-        double getPhysicalWidthInches() const noexcept;
-        double getPhysicalDisplaySizeMillimeters() const noexcept;
-        double getPhysicalDisplaySizeInches() const noexcept;
-        double getDPI_Height() const noexcept;
-        double getDPI_Width() const noexcept;
-        double getDPI_WidthHeightAverage() const noexcept;
+    //    int getWidth() const noexcept { return mWidth_; }
+    //    int getHeight() const noexcept { return mHeight_; }
+    //    int getPhysicalHeightMilliMeters() const noexcept { return mPhysicalHeightMM_; }
+    //    int getPhysicalWidthMilliMeters() const noexcept { return mPhysicalWidthMM_; }
+    //    double getPhysicalHeightInches() const noexcept;
+    //    double getPhysicalWidthInches() const noexcept;
+    //    double getPhysicalDisplaySizeMillimeters() const noexcept;
+    //    double getPhysicalDisplaySizeInches() const noexcept;
+    //    double getDPI_Height() const noexcept;
+    //    double getDPI_Width() const noexcept;
+    //    double getDPI_WidthHeightAverage() const noexcept;
 
-        int getRefreshRate() const noexcept { return mRefreshRate_; }
-        int getRedBitDepth() const noexcept { return mRedBits_; }
-        int getGreenBitDepth() const noexcept { return mGreenBits_; }
-        int getBlueBitDepth() const noexcept { return mBlueBits_; }
+    //    int getRefreshRate() const noexcept { return mRefreshRate_; }
+    //    int getRedBitDepth() const noexcept { return mRedBits_; }
+    //    int getGreenBitDepth() const noexcept { return mGreenBits_; }
+    //    int getBlueBitDepth() const noexcept { return mBlueBits_; }
 
-    private:
-        static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 
-        static constexpr const double INCHES_PER_MILLIMETER = 0.0393701;
+    //private:
+    //    static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 
+    //    static constexpr const double INCHES_PER_MILLIMETER = 0.0393701;
 
-        int mWidth_, mHeight_; //Measured in screen coordinates
-        int mPhysicalWidthMM_, mPhysicalHeightMM_; //measured in millimeters, not guaranteed to be accurate.
-        int mRefreshRate_;
-        int mRedBits_, mGreenBits_, mBlueBits_;
-    };
+    //    int mWidth_, mHeight_; //Measured in screen coordinates
+    //    int mPhysicalWidthMM_, mPhysicalHeightMM_; //measured in millimeters, not guaranteed to be accurate.
+    //    int mRefreshRate_;
+    //    int mRedBits_, mGreenBits_, mBlueBits_;
+    //};
 
 
     //Constructor
@@ -230,9 +280,10 @@ namespace VMInternal {
 
     std::string VidModeImpl::toString() const {
         std::stringstream vidMode;
-        vidMode << "DPI(height)=" << getDPI_Height() << ", DPI(width)=" << getDPI_Width() << ", DPI(avg)=" << getDPI_WidthHeightAverage();
-        vidMode << "  Refresh Rate: " << mRefreshRate_ << " hz,\t  [in screen coord] h: " << mHeight_ << ", w: ";
-        vidMode << mWidth_ << "\n\tColor Bit Depth:  R=" << mRedBits_ << " bits, G=" << mGreenBits_ << " bits, B=";
+        vidMode << "   Video Mode Details:\n";
+        vidMode << "\t  DPI(height)=" << getDPI_Height() << ", DPI(width)=" << getDPI_Width() << ", DPI(avg)=" << getDPI_WidthHeightAverage();
+        vidMode << "\n\t  Refresh Rate: " << mRefreshRate_ << " hz,\t  [in screen coord] height: " << mHeight_ << ", width: ";
+        vidMode << mWidth_ << "\n\t  Color Bit Depth:  R=" << mRedBits_ << " bits, G=" << mGreenBits_ << " bits, B=";
         vidMode << mBlueBits_ << " bits";
         return vidMode.str();
     }
@@ -414,17 +465,18 @@ namespace VMInternal {
         return (static_cast<double>(mPhysicalWidthMM_) / MILLIMETERS_PER_INCH);
     }
 
-    double VidModeImpl::getPhysicalDisplaySizeMillimeters() const {
+    double VidModeImpl::getPhysicalDisplaySizeMillimeters() const noexcept {
         double heightSquared = pow(static_cast<double>(mHeight_), 2.0);
         double widthSquared = pow(static_cast<double>(mWidth_), 2.0);
         return sqrt(heightSquared + widthSquared);
     }
-    double VidModeImpl::getPhysicalDisplaySizeInches() const {
+
+    double VidModeImpl::getPhysicalDisplaySizeInches() const noexcept {
         double heightSquared = pow(getPhysicalHeightInches(), 2.0);
         double widthSquared = pow(getPhysicalWidthInches(), 2.0);
         return sqrt(heightSquared + widthSquared);
     }
-    double VidModeImpl::getDPI_Height() const {
+    double VidModeImpl::getDPI_Height() const noexcept {
         double heightInches = getPhysicalHeightInches();
         if (heightInches == 0) {
             return 0;
@@ -433,7 +485,7 @@ namespace VMInternal {
             return (static_cast<double>(mHeight_) / getPhysicalHeightInches());
         }
     }
-    double VidModeImpl::getDPI_Width() const {
+    double VidModeImpl::getDPI_Width() const noexcept {
         double widthInches = getPhysicalWidthInches();
         if (widthInches == 0) {
             return 0;
@@ -442,7 +494,7 @@ namespace VMInternal {
             return (static_cast<double>(mWidth_) / getPhysicalWidthInches());
         }
     }
-    double VidModeImpl::getDPI_WidthHeightAverage() const {
+    double VidModeImpl::getDPI_WidthHeightAverage() const noexcept {
         return ((getDPI_Height() + getDPI_Width()) / 2.0);
     }
 
