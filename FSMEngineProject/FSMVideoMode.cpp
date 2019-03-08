@@ -32,78 +32,24 @@
 //
 
 #include "FSMVideoMode.h"
-#include "GraphicsLanguageFramework.h"
-#include "UniversalIncludes.h"
-#include <sstream>
-
-namespace VMInternal {
-    //All public functionality in this class will match function signatures and behaviors as 
-//listed in the FSMVideomode class
-    class VidModeImpl final {
-    public:
-        VidModeImpl() = delete;
-        VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
-        ~VidModeImpl() = default;
-
-        VidModeImpl(const VidModeImpl&);
-        VidModeImpl(VidModeImpl&&) noexcept;
-        VidModeImpl& operator=(const VidModeImpl&);
-        VidModeImpl& operator=(VidModeImpl&&) noexcept;
-
-        std::string toString() const;
-        bool operator<(const VidModeImpl&) const noexcept;
-        bool operator>(const VidModeImpl&) const noexcept;
-        bool operator==(const VidModeImpl&) const noexcept;
-        bool operator==(const GLFWvidmode&) const noexcept;
-        bool operator!=(const VidModeImpl&) const noexcept;
-        bool operator!=(const GLFWvidmode&) const noexcept;
-
-        int getWidth() const noexcept { return mWidth_; }
-        int getHeight() const noexcept { return mHeight_; }
-        int getPhysicalHeightMilliMeters() const noexcept { return mPhysicalHeightMM_; }
-        int getPhysicalWidthMilliMeters() const noexcept { return mPhysicalWidthMM_; }
-        double getPhysicalHeightInches() const noexcept;
-        double getPhysicalWidthInches() const noexcept;
-        double getPhysicalDisplaySizeMillimeters() const noexcept;
-        double getPhysicalDisplaySizeInches() const noexcept;
-        double getDPI_Height() const noexcept;
-        double getDPI_Width() const noexcept;
-        double getDPI_WidthHeightAverage() const noexcept;
-
-        int getRefreshRate() const noexcept { return mRefreshRate_; }
-        int getRedBitDepth() const noexcept { return mRedBits_; }
-        int getGreenBitDepth() const noexcept { return mGreenBits_; }
-        int getBlueBitDepth() const noexcept { return mBlueBits_; }
-
-    private:
-        static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 
-        static constexpr const double INCHES_PER_MILLIMETER = 0.0393701;
-
-        int mWidth_, mHeight_; //Measured in screen coordinates
-        int mPhysicalWidthMM_, mPhysicalHeightMM_; //measured in millimeters, not guaranteed to be accurate.
-        int mRefreshRate_;
-        int mRedBits_, mGreenBits_, mBlueBits_;
-    };
-}
-
-using VMInternal::VidModeImpl;
+#include "VidModeImpl.h"
 
 //Implement all of the FSMVideoMode functions by just having them call the 
 //corresponding VidModeImpl versions
 
-FSMVideoMode::FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM) {
-    pVidModeImpl_ = std::make_unique<VidModeImpl>(vid, physicalWidthMM, physicalHeightMM);
+FSMVideoMode::FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM) noexcept {
+    pVidModeImpl_ = std::make_unique< FSMVideoMode::VidModeImpl>(vid, physicalWidthMM, physicalHeightMM);
 }
 FSMVideoMode::~FSMVideoMode() = default;
 FSMVideoMode::FSMVideoMode(const FSMVideoMode& that) {
-    pVidModeImpl_ = std::make_unique<VidModeImpl>(*(that.pVidModeImpl_));
+    pVidModeImpl_ = std::make_unique< FSMVideoMode::VidModeImpl>(*(that.pVidModeImpl_));
 }
 FSMVideoMode::FSMVideoMode(FSMVideoMode&& that) noexcept {
     *this = std::move(that);
 }
 FSMVideoMode& FSMVideoMode::operator=(const FSMVideoMode& that) {
     if (this != &that) {
-        pVidModeImpl_ = std::make_unique<VidModeImpl>(*(that.pVidModeImpl_));
+        pVidModeImpl_ = std::make_unique< FSMVideoMode::VidModeImpl>(*(that.pVidModeImpl_));
     }
     return *this;
 }
@@ -198,313 +144,20 @@ int FSMVideoMode::getBlueBitDepth() const noexcept {
     return pVidModeImpl_->getBlueBitDepth();
 }
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-/////////////////    It is all VidModeImpl below this point    /////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-namespace VMInternal {
-    
-    ////All public functionality in this class will match function signatures and behaviors as 
-    ////listed in the FSMVideomode class
-    //class VidModeImpl final {
-    //public:
-    //    VidModeImpl() = delete;
-    //    VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
-    //    ~VidModeImpl() = default;
-
-    //    VidModeImpl(const VidModeImpl&);
-    //    VidModeImpl(VidModeImpl&&) noexcept;
-    //    VidModeImpl& operator=(const VidModeImpl&);
-    //    VidModeImpl& operator=(VidModeImpl&&) noexcept;
-
-    //    std::string toString() const;
-    //    bool operator<(const VidModeImpl&) const noexcept;
-    //    bool operator>(const VidModeImpl&) const noexcept;
-    //    bool operator==(const VidModeImpl&) const noexcept;
-    //    bool operator==(const GLFWvidmode&) const noexcept;
-    //    bool operator!=(const VidModeImpl&) const noexcept;
-    //    bool operator!=(const GLFWvidmode&) const noexcept;
-
-    //    int getWidth() const noexcept { return mWidth_; }
-    //    int getHeight() const noexcept { return mHeight_; }
-    //    int getPhysicalHeightMilliMeters() const noexcept { return mPhysicalHeightMM_; }
-    //    int getPhysicalWidthMilliMeters() const noexcept { return mPhysicalWidthMM_; }
-    //    double getPhysicalHeightInches() const noexcept;
-    //    double getPhysicalWidthInches() const noexcept;
-    //    double getPhysicalDisplaySizeMillimeters() const noexcept;
-    //    double getPhysicalDisplaySizeInches() const noexcept;
-    //    double getDPI_Height() const noexcept;
-    //    double getDPI_Width() const noexcept;
-    //    double getDPI_WidthHeightAverage() const noexcept;
-
-    //    int getRefreshRate() const noexcept { return mRefreshRate_; }
-    //    int getRedBitDepth() const noexcept { return mRedBits_; }
-    //    int getGreenBitDepth() const noexcept { return mGreenBits_; }
-    //    int getBlueBitDepth() const noexcept { return mBlueBits_; }
-
-    //private:
-    //    static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 
-    //    static constexpr const double INCHES_PER_MILLIMETER = 0.0393701;
-
-    //    int mWidth_, mHeight_; //Measured in screen coordinates
-    //    int mPhysicalWidthMM_, mPhysicalHeightMM_; //measured in millimeters, not guaranteed to be accurate.
-    //    int mRefreshRate_;
-    //    int mRedBits_, mGreenBits_, mBlueBits_;
-    //};
-
-
-    //Constructor
-    VidModeImpl::VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM,
-        int physicalHeightMM) : mPhysicalWidthMM_(physicalWidthMM),
-        mPhysicalHeightMM_(physicalHeightMM) {
-
-        //Set this object's remaining private fields based off the values of the passed in GLFWvidmode.
-        mWidth_ = vid.width;
-        mHeight_ = vid.height;
-        mRefreshRate_ = vid.refreshRate;
-        mRedBits_ = vid.redBits;
-        mGreenBits_ = vid.greenBits;
-        mBlueBits_ = vid.blueBits;
-    }
-
-    //These should be fine just being their default version since the internal
-    //data is all just POD types
-    VidModeImpl::VidModeImpl(const VidModeImpl& that) = default;
-    VidModeImpl::VidModeImpl(VidModeImpl&& that) noexcept = default;
-    VidModeImpl& VidModeImpl::operator=(const VidModeImpl& that) = default;
-    VidModeImpl& VidModeImpl::operator=(VidModeImpl&& that) noexcept = default;
-
-    std::string VidModeImpl::toString() const {
-        std::stringstream vidMode;
-        vidMode << "   Video Mode Details:\n";
-        vidMode << "\t  DPI(height)=" << getDPI_Height() << ", DPI(width)=" << getDPI_Width() << ", DPI(avg)=" << getDPI_WidthHeightAverage();
-        vidMode << "\n\t  Refresh Rate: " << mRefreshRate_ << " hz,\t  [in screen coord] height: " << mHeight_ << ", width: ";
-        vidMode << mWidth_ << "\n\t  Color Bit Depth:  R=" << mRedBits_ << " bits, G=" << mGreenBits_ << " bits, B=";
-        vidMode << mBlueBits_ << " bits";
-        return vidMode.str();
-    }
-
-    bool VidModeImpl::operator<(const VidModeImpl& that) const noexcept {
-
-        //Perform comparison steps as outlined in header
-        if (mWidth_ < that.mWidth_)
-            return true;
-        else if (mWidth_ > that.mWidth_)
-            return false;
-        else {
-            if (mHeight_ < that.mHeight_)
-                return true;
-            else if (mHeight_ > that.mHeight_)
-                return false;
-            else {
-                if (mRefreshRate_ < that.mRefreshRate_)
-                    return true;
-                else if (mRefreshRate_ > that.mRefreshRate_)
-                    return false;
-                else {
-                    //Compute sum of bit depths
-                    int bitDepthThis = mRedBits_ + mGreenBits_ + mBlueBits_;
-                    int bitDepthThat = that.mRedBits_ + that.mGreenBits_ + that.mBlueBits_;
-                    if (bitDepthThis < bitDepthThat)
-                        return true;
-                    else if (bitDepthThis > bitDepthThat)
-                        return false;
-                    else {
-                        //At this point chances are quite likely that both VideoModes are equal.
-                        //Let's save time by ruling out this case:
-                        if (*this == that)
-                            return false;
-                        else { //Hmm else there actually is a difference. Let's find it
-                            if (mGreenBits_ < that.mGreenBits_)
-                                return true;
-                            else if (mGreenBits_ > that.mGreenBits_)
-                                return false;
-                            else {
-                                if (mBlueBits_ < that.mBlueBits_)
-                                    return true;
-                                else if (mBlueBits_ > that.mBlueBits_)
-                                    return false;
-                                else {
-                                    if (mRedBits_ < that.mRedBits_)
-                                        return true;
-                                    else if (mRedBits_ > that.mRedBits_)
-                                        return false;
-                                    else
-                                        return false;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    bool VidModeImpl::operator>(const VidModeImpl& that) const noexcept {
-        //Perform comparison steps as outlined in header
-        if (mWidth_ < that.mWidth_)
-            return false;
-        else if (mWidth_ > that.mWidth_)
-            return true;
-        else {
-            if (mHeight_ < that.mHeight_)
-                return false;
-            else if (mHeight_ > that.mHeight_)
-                return true;
-            else {
-                if (mRefreshRate_ < that.mRefreshRate_)
-                    return false;
-                else if (mRefreshRate_ > that.mRefreshRate_)
-                    return true;
-                else {
-                    //Compute sum of bit depths
-                    int bitDepthThis = mRedBits_ + mGreenBits_ + mBlueBits_;
-                    int bitDepthThat = that.mRedBits_ + that.mGreenBits_ + that.mBlueBits_;
-                    if (bitDepthThis < bitDepthThat)
-                        return false;
-                    else if (bitDepthThis > bitDepthThat)
-                        return true;
-                    else {
-                        //At this point chances are quite likely that both VideoModes are equal.
-                        //Let's save time by ruling out this case:
-                        if (*this == that)
-                            return false;
-                        else { //Hmm else there actually is a difference. Let's find it
-                            if (mGreenBits_ < that.mGreenBits_)
-                                return false;
-                            else if (mGreenBits_ > that.mGreenBits_)
-                                return true;
-                            else {
-                                if (mBlueBits_ < that.mBlueBits_)
-                                    return false;
-                                else if (mBlueBits_ > that.mBlueBits_)
-                                    return true;
-                                else {
-                                    if (mRedBits_ < that.mRedBits_)
-                                        return false;
-                                    else if (mRedBits_ > that.mRedBits_)
-                                        return true;
-                                    else
-                                        return false;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    bool VidModeImpl::operator==(const VidModeImpl& that) const noexcept {
-        if (this == &that) { return true; }
-        //else
-        if (mRefreshRate_ == that.mRefreshRate_) {
-            if (mWidth_ == that.mWidth_) {
-                if (mHeight_ == that.mHeight_) {
-                    if ((mRedBits_ == that.mRedBits_) && (mGreenBits_ == that.mGreenBits_) && (mBlueBits_ == that.mBlueBits_)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    bool VidModeImpl::operator==(const GLFWvidmode& that) const noexcept {
-        if (mWidth_ == that.width) {
-            if (mHeight_ == that.height) {
-                if (mRefreshRate_ == that.refreshRate) {
-                    if ((mRedBits_ == that.redBits) && (mGreenBits_ == that.greenBits) && (mBlueBits_ == that.blueBits)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-
-    bool VidModeImpl::operator!=(const VidModeImpl& that) const noexcept {
-        if (this == &that) { return false; }
-        //else
-        if (mRefreshRate_ == that.mRefreshRate_) {
-            if (mWidth_ == that.mWidth_) {
-                if (mHeight_ == that.mHeight_) {
-                    if ((mRedBits_ == that.mRedBits_) && (mGreenBits_ == that.mGreenBits_) && (mBlueBits_ == that.mBlueBits_)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-    bool VidModeImpl::operator!=(const GLFWvidmode& that) const noexcept {
-        if (mWidth_ == that.width) {
-            if (mHeight_ == that.height) {
-                if (mRefreshRate_ == that.refreshRate) {
-                    if ((mRedBits_ == that.redBits) && (mGreenBits_ == that.greenBits) && (mBlueBits_ == that.blueBits)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    //int VidModeImpl::getWidth() const { return mWidth_; }
-    //int VidModeImpl::getHeight() const { return mHeight_; }
-  
-    double VidModeImpl::getPhysicalHeightInches() const noexcept {
-        return (static_cast<double>(mPhysicalHeightMM_) / MILLIMETERS_PER_INCH);
-    }
-
-    double VidModeImpl::getPhysicalWidthInches() const noexcept {
-        return (static_cast<double>(mPhysicalWidthMM_) / MILLIMETERS_PER_INCH);
-    }
-
-    double VidModeImpl::getPhysicalDisplaySizeMillimeters() const noexcept {
-        double heightSquared = pow(static_cast<double>(mHeight_), 2.0);
-        double widthSquared = pow(static_cast<double>(mWidth_), 2.0);
-        return sqrt(heightSquared + widthSquared);
-    }
-
-    double VidModeImpl::getPhysicalDisplaySizeInches() const noexcept {
-        double heightSquared = pow(getPhysicalHeightInches(), 2.0);
-        double widthSquared = pow(getPhysicalWidthInches(), 2.0);
-        return sqrt(heightSquared + widthSquared);
-    }
-    double VidModeImpl::getDPI_Height() const noexcept {
-        double heightInches = getPhysicalHeightInches();
-        if (heightInches == 0) {
-            return 0;
-        }
-        else {
-            return (static_cast<double>(mHeight_) / getPhysicalHeightInches());
-        }
-    }
-    double VidModeImpl::getDPI_Width() const noexcept {
-        double widthInches = getPhysicalWidthInches();
-        if (widthInches == 0) {
-            return 0;
-        }
-        else {
-            return (static_cast<double>(mWidth_) / getPhysicalWidthInches());
-        }
-    }
-    double VidModeImpl::getDPI_WidthHeightAverage() const noexcept {
-        return ((getDPI_Height() + getDPI_Width()) / 2.0);
-    }
-
-
-} //namespace VMInternal
+//And that is all there is to implementing the VideoMode interface!
 
 
 
 
 
+
+
+//This is the old original implementation for the VideoMode wrapper type, from back before 
+//any of these classes had ever begun to think of hiding their implementation. It has been left
+//here to serve as a reference in case there are issues with the newer VideoMode type's implementation.
+//
+//In fact, if you are reading this, chances are enough time has passed that you can delete
+//everything remaining in the file below this point without issue.
 
 #ifdef USE_OLD_VIDEOMODE_CODE
 
@@ -517,10 +170,9 @@ namespace VMInternal {
 //Date:                        December 14, 2018
 
 #include "VideoMode.h"
-
 #include <sstream>
 
-//namespace FSMEngineInternal {
+
 
 	VideoMode::VideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM) {
 		mPhysicalHeightMM_ = physicalHeightMM;
@@ -799,6 +451,5 @@ namespace VMInternal {
 
 
 //} //namespace FSMEngineInternal
-
 
 #endif //USE_OLD_VIDEOMODE_CODE

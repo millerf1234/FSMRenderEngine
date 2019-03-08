@@ -141,6 +141,7 @@
     <ClInclude Include="FSMCallbackInitializer.h" />
     <ClInclude Include="EasyLogging_BuildConfig.h" />
     <ClInclude Include="FSMErrorCallback.h" />
+    <ClInclude Include="FSMMonitor.h" />
     <ClInclude Include="FSMMonitorEventCallback.h" />
     <ClInclude Include="GraphicsLanguage.h" />
     <ClInclude Include="GraphicsLanguageFramework.h" />
@@ -405,11 +406,13 @@
     </ClInclude>
     <ClInclude Include="UniversalIncludes.h" />
     <ClInclude Include="FSMVideoMode.h" />
+    <ClInclude Include="VidModeImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FilepathWrapper.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
+    <ClCompile Include="FSMMonitor.cpp" />
     <ClCompile Include="FSMMonitorEventCallback.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
     <ClCompile Include="main.cpp" />
@@ -424,6 +427,7 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\glm\detail\glm.cpp" />
     <ClCompile Include="FSMVideoMode.cpp" />
+    <ClCompile Include="VidModeImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glfw3.dll" />

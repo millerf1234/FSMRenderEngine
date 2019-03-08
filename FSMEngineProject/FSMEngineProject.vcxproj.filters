@@ -106,6 +106,12 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{710d3603-afd1-4bc8-81dd-6b514564d55e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Components\Monitor">
+      <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Components\Monitor\VideoMode">
+      <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -895,7 +901,13 @@
       <Filter>Source Files\Engine\Initialization\Logging Init</Filter>
     </ClInclude>
     <ClInclude Include="FSMVideoMode.h">
-      <Filter>Source Files\Engine\Components</Filter>
+      <Filter>Source Files\Engine\Components\Monitor\VideoMode</Filter>
+    </ClInclude>
+    <ClInclude Include="VidModeImpl.h">
+      <Filter>Source Files\Engine\Components\Monitor\VideoMode</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMMonitor.h">
+      <Filter>Source Files\Engine\Components\Monitor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -930,7 +942,13 @@
       <Filter>ThirdParty\glm\glm\detail</Filter>
     </ClCompile>
     <ClCompile Include="FSMVideoMode.cpp">
-      <Filter>Source Files\Engine\Components</Filter>
+      <Filter>Source Files\Engine\Components\Monitor\VideoMode</Filter>
+    </ClCompile>
+    <ClCompile Include="VidModeImpl.cpp">
+      <Filter>Source Files\Engine\Components\Monitor\VideoMode</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMonitor.cpp">
+      <Filter>Source Files\Engine\Components\Monitor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

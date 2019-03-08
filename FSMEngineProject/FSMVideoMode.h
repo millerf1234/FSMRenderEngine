@@ -33,9 +33,7 @@
 //
 // Fun Fact:                      This class was the first class rewritten to demonstrate this new style that [should] be 
 //                                 commonly used to implement most of the FSMEngine components.
-// Less Fun Fact:                 After having spent some time writing this class under the new style, I have come to the realization that 
-//                                 perhaps this class wasn't the best candidate for this new style. Oh well, it was good
-//                                 practice. 
+
 
 
 #ifndef FSM_VIDEO_MODE_H_
@@ -44,22 +42,17 @@
 #include <memory>
 #include <string>
 
-
 //Forward declaration of GLFWVidmode
 struct GLFWvidmode;
-
-namespace VMInternal {
-    class VidModeImpl;
-}
 
 class FSMVideoMode final {
 public:
    
     //Construct a VideoMode from a GLFWvideomode and the display's width and height in millimeters. [The
     //width and height are able to be queried through the GLFW function 'glfwGetMonitorPhysicalSize()']
-    FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
+    FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM) noexcept;
 
-    ~FSMVideoMode();
+    ~FSMVideoMode() noexcept;
 
     FSMVideoMode(const FSMVideoMode&);
     FSMVideoMode(FSMVideoMode&&) noexcept;
@@ -161,7 +154,8 @@ public:
     FSMVideoMode(const GLFWvidmode& vid) = delete;
 
 private:
-    std::unique_ptr<VMInternal::VidModeImpl> pVidModeImpl_;
+    class VidModeImpl;
+    std::unique_ptr<VidModeImpl> pVidModeImpl_;
 };
 
 #endif //FSM_VIDEO_MODE_H_
