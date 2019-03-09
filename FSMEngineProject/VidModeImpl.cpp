@@ -28,7 +28,7 @@ FSMVideoMode::VidModeImpl::VidModeImpl(FSMVideoMode::VidModeImpl&& that) noexcep
 FSMVideoMode::VidModeImpl&  FSMVideoMode::VidModeImpl::operator=(const  FSMVideoMode::VidModeImpl& that) = default;
 FSMVideoMode::VidModeImpl&  FSMVideoMode::VidModeImpl::operator=(FSMVideoMode::VidModeImpl&& that) noexcept = default;
 
-std::string  FSMVideoMode::VidModeImpl::toString() const {
+std::string  FSMVideoMode::VidModeImpl::toString() const noexcept {
     std::stringstream vidMode;
     vidMode << "   Video Mode Details:\n";
     vidMode << "\t  DPI(height)=" << getDPI_Height() << ", DPI(width)=" << getDPI_Width() << ", DPI(avg)=" << getDPI_WidthHeightAverage();
@@ -94,7 +94,7 @@ bool  FSMVideoMode::VidModeImpl::operator<(const  FSMVideoMode::VidModeImpl& tha
     }
 }
 
-bool  FSMVideoMode::VidModeImpl::operator>(const VidModeImpl& that) const noexcept {
+bool  FSMVideoMode::VidModeImpl::operator>(const  FSMVideoMode::VidModeImpl& that) const noexcept {
     //Perform comparison steps as outlined in header
     if (mWidth_ < that.mWidth_)
         return false;
@@ -149,7 +149,7 @@ bool  FSMVideoMode::VidModeImpl::operator>(const VidModeImpl& that) const noexce
     }
 }
 
-bool  FSMVideoMode::VidModeImpl::operator==(const VidModeImpl& that) const noexcept {
+bool  FSMVideoMode::VidModeImpl::operator==(const  FSMVideoMode::VidModeImpl& that) const noexcept {
     if (this == &that) { return true; }
     //else
     if (mRefreshRate_ == that.mRefreshRate_) {
@@ -177,7 +177,7 @@ bool  FSMVideoMode::VidModeImpl::operator==(const GLFWvidmode& that) const noexc
 }
 
 
-bool  FSMVideoMode::VidModeImpl::operator!=(const VidModeImpl& that) const noexcept {
+bool  FSMVideoMode::VidModeImpl::operator!=(const  FSMVideoMode::VidModeImpl& that) const noexcept {
     if (this == &that) { return false; }
     //else
     if (mRefreshRate_ == that.mRefreshRate_) {
@@ -244,6 +244,5 @@ double  FSMVideoMode::VidModeImpl::getDPI_Width() const noexcept {
 double  FSMVideoMode::VidModeImpl::getDPI_WidthHeightAverage() const noexcept {
     return ((getDPI_Height() + getDPI_Width()) / 2.0);
 }
-
 
 

@@ -61,7 +61,7 @@ FSMVideoMode& FSMVideoMode::operator=(FSMVideoMode&& that) noexcept {
 }
 
 
-std::string FSMVideoMode::toString() const {
+std::string FSMVideoMode::toString() const noexcept {
     return pVidModeImpl_->toString();
 }
 

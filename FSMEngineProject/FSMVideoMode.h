@@ -61,7 +61,7 @@ public:
 
     //Formats this object's data into a 2-line string meant for printing to a console or log screen.
     //This object owns the underlying string data and 
-    std::string toString() const;
+    std::string toString() const noexcept;
 
 
     //////////////////////////////////////////

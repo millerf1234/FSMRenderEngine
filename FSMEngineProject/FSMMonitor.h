@@ -28,12 +28,151 @@
 
 //#include <vector>
 #include <forward_list>
+#include <optional>
 #include <memory>
 #include "FSMVideoMode.h"
 
 //Forward declare all the necessary underlying GLFW types
 struct GLFWmonitor; 
 struct GLFWgammaramp;
+
+
+class FSMMonitor final {
+public:
+    FSMMonitor() = delete;
+    //Only construct objects of this type with values that were returned from glfwGetMonitors(). 
+    //Once assigned it's GLFWmonitor* from the provided parameter, this value can not be changed.
+    //Failure to assign a valid GLFWmonitor* will cause undefined behavior from this class.
+    FSMMonitor(GLFWmonitor * handle);
+
+    ~FSMMonitor() noexcept; 
+
+    //Monitors are to be uniquely acquired from the OS through GLFW, so 
+    //it doesn't make sense to copy them 
+    FSMMonitor(const FSMMonitor&) = delete;
+    //Moving a Monitor is acceptable though since the uniqueness of the monitor
+    //is preserved
+    FSMMonitor(FSMMonitor&&) noexcept;
+    //Monitors are to be uniquely acquired from the OS through GLFW, so 
+    //it does not make sense to copy them, thus creating multiple copies of 
+    //what is supposed to be a unique resource.
+    FSMMonitor& operator=(const FSMMonitor&) = delete;
+    //Moving a Monitor object is perfectly acceptable since the uniqueness of this types'
+    //underlying monitor handle is preserved
+    FSMMonitor& operator=(FSMMonitor&&) noexcept;
+
+    //Returns a const pointer to const GLFWmonitor representing this monitor's handle. 
+    //There is a chance this function could throw if this monitor has been disconnected but
+    //for some reason the instance of the class still exists. [See the member function 
+    //'getMonitorHandleSafe()' for the guaranteed 'noexcept' version of this function]
+    const GLFWmonitor* const getMonitorHandle() const noexcept(false);// { return mHandle_; }
+
+
+    //Returns a std::optional wrapping a const pointer to const GLFWmonitor representing this
+    //monitor's handle, unless for some reason this monitor's handle is no longer valid or has 
+    //lost its uniqueness, in which case an empty optional will he returned. By allowing for 
+    //the returning of empty optionals, this function provides increased safety and is able to 
+    //provide a 'noexcept' guarantee.
+    std::optional< const GLFWmonitor* const> getMonitorHandleSafe() const noexcept;
+
+    //Marks this monitor as disconnected
+    void disconnect() noexcept; // { mIsConnected_ = false; }
+    
+    //Returns the connection status of this monitor. 
+    bool getIsConnected() const noexcept;
+
+
+    //After a monitor-disconnection event by a monitor other than this one, there is a chance
+    //the virtual position of this monitor object will be updated. Thus, this function can be
+    //used to update this monitor's virtual screen position.
+    void updateVirtualPosition() /*noexcept*/;
+
+    //Returns the Virtual Desktop screen X coordinate used for this monitor's viewport. 
+    //Measured from the top left corner of monitor. Coordinate will be unique for each monitor.
+    int getVirtualPositionX() const noexcept;
+
+
+    //Returns the Virtual Desktop screen Y coordinate used for this monitor's viewport. 
+    //Measured from the top left corner of monitor. Coordinate will be unique for each monitor.
+    int getVirtualPositionY() const noexcept;
+
+
+    //In case the videoMode of this monitor is changed, it is recommended that the content scale
+    //values stored be updated. This function is how those values get updated.
+    void updateContentScale() noexcept;
+
+    //Returns the currently stored content scale for this monitor. 
+    // [ Note that modifications made to this monitor's video mode will not
+    //   automatically update this object's stored content 
+    //   scale, so any changes to a monitor's videomode should
+    //   always be followed with a call to member function
+    //   'updateContentScale()' to ensure this function returns 
+    //   accurate results... ]
+    float getContentScaleX() const noexcept;
+        
+    
+ //Returns the currently stored content scale for this monitor. 
+ // [ Note that modifications made to this monitor's video mode will not
+ //   automatically update this object's stored content 
+ //   scale, so any changes to a monitor's videomode should
+ //   always be followed with a call to member function
+ //   'updateContentScale()' to ensure this function returns 
+ //   accurate results... ]
+    float getContentScaleY() const noexcept;
+
+    //Returns the number of video modes available for this monitor
+    size_t getNumberOfAvailableVideoModes() const noexcept;
+    //Returns the primary video mode for this monitor
+    FSMVideoMode getPrimaryVideoMode() const noexcept;
+
+
+    //Returns the videomode located at the specified index from
+    //this monitors detected available videomodes. Indexing beyond
+    //the end of the array will return the highest-indexed video mode. 
+    FSMVideoMode getSpecificVideoMode(size_t index) const;
+
+    /* //Returns a vector containing all available video modes.
+    std::vector<FSMVideoMode> getAvailableVideoModes() const; */
+    //
+    /*
+    //Returns false if this monitor's handle is nullptr and true otherwise
+    bool handleNotNull() const { return (mHandle_ == nullptr); }
+
+    //Should always return false in well-formed code
+    bool wasMoved() const { return mWasMoved_; }
+
+    //Compares GLFWmonitor* handles for equality. Note that if both monitors have nullptr as a handle, they will
+    //compare as equal. However, if there are monitors with null handles, then something wrong already has happened.
+    bool operator==(const FSMMonitor& that) const { return (mHandle_ == that.mHandle_); }
+    //Compares GLFWmonitor* handles for inequality. Note that if both monitors have nullptr as a handle, they will
+    //compare as equal. However, if there are monitors with null handles, then something wrong already has happened.
+    bool operator!=(const FSMMonitor& that) const { return (mHandle_ != that.mHandle_); }
+
+    //Compares this object's monitor handle with the provided monitor handle for equality. If this object's 
+    //handle is nullptr and second parameter is nullptr, then equality comparison will return true.
+    //However, if there are monitors with null handles, then something wrong already has happened.
+    bool operator==(const GLFWmonitor* that) const { return (mHandle_ == that); }
+    //Compares this object's monitor handle with the provided monitor handle for equality. If this object's 
+    //handle is nullptr and second parameter is nullptr, then inequality comparison will return false.
+    //However, if there are monitors with NULL handles, then something wrong already has happened.
+    bool operator!=(const GLFWmonitor* that) const { return (mHandle_ != that); }
+
+    //Returns the gamma ramp for this monitor. 
+    ///GLFWgammaramp getGammaRamp() const {
+       ///return mGammaRamp_;
+    ///}
+    //Has GLFW generate a new 256-element gamma-ramp from the specified exponent parameter. Please
+    //ensure that gamma is a positive finite value. Note that the parameter 'gamma' is used as an
+    //exponent when calculating the new ramp. The example code for this uses a value of 1.0f when
+    //setting a gamma ramp.
+    void setCustomGamma(float gamma);
+
+    */
+
+};
+
+
+#ifdef USE_OLD_FSMMONITOR_CODE_
 
 	class FSMMonitor final {
 	public:
@@ -183,8 +322,6 @@ struct GLFWgammaramp;
 
 	};
 
-
-//} //namespace FSMEngineInternal
-
+#endif //USE_OLD_FSMMONITOR_
 
 #endif //FSM_MONITOR_H_

@@ -20,7 +20,7 @@
     //listed in the FSMVideomode class
 class FSMVideoMode::VidModeImpl final {
 public:
-    FSMVideoMode::FSMVideoMode::VidModeImpl() = delete;
+    FSMVideoMode::VidModeImpl() = delete;
     VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
     ~VidModeImpl() noexcept = default;
 
@@ -29,7 +29,7 @@ public:
     FSMVideoMode::VidModeImpl& operator=(const  FSMVideoMode::VidModeImpl&);
     FSMVideoMode::VidModeImpl& operator=(FSMVideoMode::VidModeImpl&&) noexcept;
 
-    std::string toString() const;
+    std::string toString() const noexcept;
     bool operator<(const VidModeImpl&) const noexcept;
     bool operator>(const VidModeImpl&) const noexcept;
     bool operator==(const VidModeImpl&) const noexcept;
