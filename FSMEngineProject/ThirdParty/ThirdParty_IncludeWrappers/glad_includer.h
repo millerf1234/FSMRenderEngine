@@ -19,7 +19,7 @@
 //
 //
 //
-// This header's position amongst the various Graphics-Language itermediate header include-chain structure:
+// This header's position amongst the various Graphics-Language intermediate header include-chain structure:
 //
 //            Top                    "BuildSettings.h" ---------------------+
 //                                            |                             |

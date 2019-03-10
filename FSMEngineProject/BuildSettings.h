@@ -227,6 +227,8 @@
 /*+-------------------------------------------------------------------------------------------------------------------------------------+   */
 
 
+/*   todo     
+   None of these next 3 settings have been implemented.*/
 
 // MACRO:    ENABLE_BASIC_PRE_GLFUNCTION_CALLBACK_MESSAGE_
 // Dependencies: 
@@ -281,14 +283,14 @@
 /* //
 //   +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
 //   /                                                                                                                          \  
-//   \  FIRST A QUICK AND GENERAL SIDENOTE REGARDING GLM AND ITS CONFIGURATION MACROS:                                          /  
+//   \  FIRST A QUICK AND GENERAL SIDE-NOTE REGARDING GLM AND ITS CONFIGURATION MACROS:                                         /  
 //   /     GLM has a tendency to change the names of its configuration macros between releases. I have                          \  
 //   \     fallen into the trap in the past of thinking I was activating a cool GLM feature when in reality I was               / 
 //   /     simply defining a macro that was never checked for by GLM and basically served no purpose whatsoever.                \ 
-//   \     An excellent way to avoid having this happen if a cool 'new' GLM macro is listed out in the wild is                  / 
-//   /     to first consult with current GLM manual to see if the macro is listed. Chances are pretty good that if              \  
-//   \     the macro is not listed anywhere in the GLM manual, this macro is not something that will have any effect            / 
-//   /     on this Application or its underlying GLM library.                                                                   \ 
+//   \     An excellent way to avoid having this happen [if a cool 'new' GLM macro is listed out in the wild] is                / 
+//   /     to first consult with the GLM manual to see if the macro is listed. Chances are pretty good that if                  \  
+//   \     the macro is not listed anywhere in the GLM manual, then that macro is not something which is relevant               / 
+//   /     in regards to this Application's underlying GLM library.                                                             \ 
 //   \                                                                                                                          / 
 //   /   For reference:                                                                                                         \    
 //   \         GLM Version in Use During Development:        0.9.9.3   [Last Updated Oct 31 2018]                               /   
@@ -313,7 +315,7 @@
 // will look to see if the macro 'FSM_ENGINE_REPORT_GLM_REQUESTED_CONFIGURATION' has been defined. If it hasn't been defined, then
 // the preprocessor just keeps moving right along begin including GLM.  However, if this macro has been defined, there is a simple
 // implementation for the preprocessor to simply go down the list of each macro and report it as either defined or undefined (with 
-// a few expections made to save space*). Be advised that this still will form a fair amount of information being reported, with
+// a few exceptions made to save space*). Be advised that this still will form a fair amount of information being reported, with
 // every setting being reported no matter if it is off or on. 
 //  (*The space saving comes from only reporting which of the 3 active possible options [4 if counting 'off'] is active when
 //      reporting on 'GLM_FORCE_PRECISION_***')
@@ -328,13 +330,13 @@
 // This macro will toggle the level of verbosity displayed by GLM during the compilation process. If GLM undergoes
 // compilation with this macro defined, the effect will be to have GLM provide a detailed summary of everything it knows
 // through the compilation log. To briefly summarize what to expect from GLM's summary, first it will begin its output with
-// announcing information related to itself that basically is just the verison number of the library. This will be followed
-// by all of the various specifics GLM detects about the compiler and build envirnment, which will include what C++ standard
-// it detects is in use and possibly what advanced CPU instuction set it detects it can use to provide a fast SIMD-implementation.
+// announcing information related to itself that basically is just the version number of the library. This will be followed
+// by all of the various specifics GLM detects about the compiler and build environment, which will include what C++ standard
+// it detects is in use and possibly what advanced CPU instruction set it detects it can use to provide a fast SIMD-implementation.
 // Note that it is possible to use macros to prevent GLM from detecting any of these settings.  After getting past the current
-// platform and envirnment settings, it will announce each of its configuration options. Finally it will annnounce each additional
+// platform and environment settings, it will announce each of its configuration options. Finally it will announce each additional
 // extension that has been requested for inclusion with the library. 
-#define GLM_FORCE_MESSAGES 1
+//#define GLM_FORCE_MESSAGES 1
 
 
 // MACROS: GLM_FORCE_PLATFORM_UNKNOWN
@@ -343,12 +345,12 @@
 //         GLM_FORCE_CXX_UNKNOWN
 // Dependencies: 
 //       - It appears as though defining both one of these settings combined with a specific 
-//         GLM override specifing a specific version for that setting will cause the other macro
-//         to win out. In other words, to actually disable GLM detection of one of these envirnment 
+//         GLM override specifying a specific version for that setting will cause the other macro
+//         to win out. In other words, to actually disable GLM detection of one of these environment 
 //         variables, it can't be told to use a specific one automatically as well. 
 //
 // These four macros can be used individually or in any combination together to force GLM to fail at detecting the 
-// envirnment setting corrosponding to each of their names, respectivly (arch means architecture). I am not sure 
+// environment setting corresponding to each of their names, respectively (arch means architecture). I am not sure 
 // why you would ever want to do this but I suppose it was nice of GLM's implementers to provide us with these option...
 //#define GLM_FORCE_PLATFORM_UNKNOWN 1
 //#define GLM_FORCE_COMPILER_UNKNOWN 1
@@ -413,9 +415,9 @@
 //       - none
 //
 //Forces GLM to inline its functions as much as possible. This should (probably) 
-//result in faster executuing code, aassuming the compiler isn't already inlining 
+//result in faster executing code, assuming the compiler isn't already inlining 
 //each function call to its fullest extent possible. Unless the code is displaying
-//odd behavior that ceases if disabled (in which case should warrent further 
+//odd behavior that ceases if disabled (in which case should warrant further 
 //investigation beyond just disabling this macro and moving on), this macro is
 //recommended to be always be in use.
 #define GLM_FORCE_INLINE 1
@@ -427,7 +429,8 @@
 //                  specialized instruction sets will require this macro]
 //
 //
-// Blah Blah Blah Data Alignment Blah Blah instrinsics Blah Blah SIMD is king blah blah
+// Blah Blah Blah Data Alignment Blah Blah Required for CPU intrinsics Blah Blah SIMD
+// is great blah blah
 //
 #define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES 1     
 

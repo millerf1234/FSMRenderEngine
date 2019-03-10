@@ -25,7 +25,7 @@
 #include "glad_debug.h"  //FSMEngine changed the name of this header
 
 ////////////////  FSMEngine project adds the following header guard to this file ////////////////////
-//  Not that this macro should be defined in header "glad_debug.h"
+//  Note that this macro should be defined in header "glad_debug.h"
 #ifdef _FSM_ENGINE__GLAD_SAFE_TO_BUILD_DEBUG__
 ////////////////  End FSMEngine modifications to glad  //////////////////////////////////////////////
 

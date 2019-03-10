@@ -26,7 +26,6 @@
 #ifndef FSM_MONITOR_H_
 #define FSM_MONITOR_H_
 
-//#include <vector>
 #include <forward_list>
 #include <optional>
 #include <memory>
@@ -39,6 +38,8 @@ struct GLFWgammaramp;
 
 class FSMMonitor final {
 public:
+    //Must have a GLFWmonitor* handle provided for construction seeing as this handle is
+    //a primary intrinsic to this class.
     FSMMonitor() = delete;
     //Only construct objects of this type with values that were returned from glfwGetMonitors(). 
     //Once assigned it's GLFWmonitor* from the provided parameter, this value can not be changed.

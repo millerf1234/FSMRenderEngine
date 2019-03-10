@@ -10,19 +10,64 @@
 //
 
 #include "FSMCallbackInitializer.h"
-
+#include "FSMErrorCallback.h"
+#include "FSMMonitorEventCallback.h"
+#include "FSMJoystickEventCallback.h"
 
 
 namespace FSMEngineInternal {
 
 
-	FSMCallbackInitializer::FSMCallbackInitializer() {
+    class FSMCallbackInitializer::GlobalStateOfGLFWCallbacks {
+    public:
+        bool errorCBSet_; //GLFW's error callback
+        bool joystickCBSet_; //Joystick connect/disconnect event callback
+        bool monitorCBSet_; //Monitor connect/disconnect event callback
+        GlobalStateOfGLFWCallbacks() {
+            errorCBSet_ = false;
+            joystickCBSet_ = false;
+            monitorCBSet_ = false;
+        }
+        ~GlobalStateOfGLFWCallbacks() = default;
+    };
 
-	}
+    FSMCallbackInitializer::FSMCallbackInitializer() : mGlobalCBState_(nullptr) {
+        mGlobalCBState_ = std::make_unique<FSMCallbackInitializer::GlobalStateOfGLFWCallbacks>();
+        if (!mGlobalCBState_)
+            throw ("Error Initializing Callback Functions!\n");
+    }
 
-	struct FSMCallbackInitializer::Callback_State {
-		bool test;
-	};
+    FSMCallbackInitializer::~FSMCallbackInitializer() = default;
+
+    void FSMCallbackInitializer::setGLFWErrorCallback() noexcept {
+        LOG(INFO) << "\n           Setting GLFW Error Callback Function!   \n";
+        glfwSetErrorCallback(FSMErrorCallbackFunction);
+        mGlobalCBState_->errorCBSet_ = true;
+    }
+
+    void FSMCallbackInitializer::setJoystickEventCallback() noexcept {
+        LOG(INFO) << "\n           Setting GLFW Joystick event Callback Function!   \n";
+        glfwSetJoystickCallback(JoystickEventCallbackInternal::graphicsLanguageFrameworkJoystickEventCallbackFunction);
+    }
+
+    void FSMCallbackInitializer::setMonitorEventCallback() noexcept {
+        LOG(INFO) << "\n           Setting GLFW Monitor Event Callback Function!   \n";
+        glfwSetMonitorCallback(MonitorEventCallbackInternal::graphicsLanguageFrameworkMonitorEventCallbackFunction);
+        mGlobalCBState_->monitorCBSet_ = true;
+    }
+
+	
+    bool FSMCallbackInitializer::errorCBWasSet() const noexcept {
+        return mGlobalCBState_->errorCBSet_;
+    }
+
+    bool FSMCallbackInitializer::joystickEventCBWasSet() const noexcept {
+        return mGlobalCBState_->joystickCBSet_;
+    }
+
+    bool FSMCallbackInitializer::monitorEventCBWasSet() const noexcept {
+        return mGlobalCBState_->monitorCBSet_;
+    }
 
 /*
 

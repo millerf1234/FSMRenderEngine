@@ -252,10 +252,10 @@ void initializeEasyLogger(int argc, char ** argv) {
 }
 
 //Not recommended (or expected) for this function to be called more than once
-void configureEasyLogger() {
+bool configureEasyLogger() {
     if (EASYLOGPP_CONFIGURATION_INTERNAL::checkIfAlreadyConfigured()) {
         LOG(WARNING) << "Unable to configure logs! Logs have already been configured!\n";
-        return;
+        return false;
     }
     
     
@@ -344,7 +344,7 @@ void configureEasyLogger() {
                      << "Unable to communicate with Filesystem to set up proper LOG file locations!\n"
                      << "Filesystem reported error:\n\t\"" << ec.message() << "\"\n\n";
         LOG(WARNING) << "All logging messages will be redirected to a single default LOG file with default formatting...\n\n"; 
-        return;
+        return false;
     } 
     
     auto possibleFileForLog = EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Global);
@@ -352,7 +352,7 @@ void configureEasyLogger() {
     if (possibleFileForLog->empty()) {
         LOG(WARNING) << "\nAn issue was encountered setting up a directory for LOG files.\n"
                      << "All LOG output will be directed to the default file!\n\n";
-        return;
+        return false;
     }
 
 
@@ -557,39 +557,7 @@ void configureEasyLogger() {
     el::Loggers::setDefaultConfigurations(logConfigurator);
 
 
-    //Test the loggers... 
-
-    LOG(TRACE) << "BEFORE INFO THO!";
-
-    LOG(INFO) << "\nThe 'info' log will probably get the most usage!";
-    LOG(INFO) << "Thus when multiple messages such as these appear!";
-    LOG(INFO) << "They should feel natural.";
-    LOG(INFO) << "And not present too much clutter to render them difficult to read in bulk...";
-    LOG(INFO) << "It also should be possible to encounter messages";
-    LOG(INFO) << "                         formatted to be written over multiple lines ";
-    LOG(INFO) << "                                                               to be extra fancy.";
-    LOG(INFO) << "And possibly end with new lines [or not...]\n";
-    LOG(INFO) << "And now for a test of the other available logs...\n\n";
-    
-    LOG(TRACE);
-    
-    LOG(TRACE) //<< "\n\n------------------------------------------------------------------------\n"
-        << "Testing the Trace Log!!! WOOT!";
-        //<< "\n------------------------------------------------------------------------\n\n";
-    
-    LOG(DEBUG) << "Testing the DEBUG Log!!! WOOT! [DEBUG Test!]";
-
-
-    LOG(INFO) << "And now for some of the more serious logs...\n\n";
-
-
-    LOG(WARNING) << "A message of importance from the warning log is this!\n";
-
-    LOG(ERROR) << "An even more important message notifying of an error this one is!";
-
-
-    //Be aware that logging to FATAL will call abort which basically records the log message and then on-purpose crashes the program
-    //LOG(FATAL) << "The following major issue has been encountered resulting in a Fatality!\n";
+    return true;
 
 }
 
@@ -694,7 +662,6 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
 
                 //OOps it turns out that the 'modern' implementation I thought didn't rely upon std::localtime,
                 //but I was wrong. It just was really good at hiding the fact that it used it. 
-    
             
             
             }

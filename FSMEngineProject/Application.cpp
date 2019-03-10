@@ -7,55 +7,64 @@
 #include <istream>  //For std::cin.get()   to keep console open
 #include "Application.h"
 
+#include "GraphicsLanguage.h"
+#include "FSMException.h"
 
 #define ALLOW_ELCC_CONFIGURATION  
 #include "EasyLogConfiguration.h"
 
 
-short Application::applicationsInExistance = 0;
-
-Application::Application(int argc, char ** argv) {
-    applicationsInExistance++;
-    if (applicationsInExistance > 1) {
-        printf("Too Many Applications In Existance!\n");
-        std::terminate();
+Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) {
+    
+    //Set up EasyLogger++ library
+    try {
+        initializeEasyLogger(argc, argv);
+        if (!configureEasyLogger()) {
+            printf("\n\nAn error occurred while attempting to set up Log files for this App!\n\n");
+            throw ( FSMException{ "Unable to properly set up message logging!" } );
+        }
+        LOG(INFO) << "\n\nInitializing Application...\n";
+        LOG(INFO) << "    Creating directory for LOG files...DONE\n";
+        LOG(INFO) << "    Loading Application Render Environment...";
     }
-    initializeEasyLogger(argc, argv);
+    catch (const FSMException& e) { //Catch 
+        printf("\nApplication encountered the following exception during runtime:\n%s", e.what());
+        printf("\nSeeing as how this is an integral feature to this Application, the most\n"
+            "logical thing to do here is to abort.\nPerhaps try a different operating system?\n");
+        std::exit(EXIT_FAILURE);//std::terminate();
+    }
+    catch (...) {
+        printf("\nSome odd unexpected exception was thrown!\n");
+        printf("\nThere is no clear way to respond to this issue. Application will close!\n");
+        std::exit(EXIT_FAILURE);
+    }
 
-    //LOG(INFO) << "Application is launching...\n";
+    //Once we make it beyond this point, all messaging will be done though the Easylogger++
+    //logging library. 
 
-    configureEasyLogger();
+    try {
+        //Create the Render Environment
+        mRenderEnvironment_ = std::make_unique<FSMRenderEnvironment>();
+    }
+    catch (const FSMException& e) {
+        LOG(FATAL) << "The following exception was encountered: \n" << e.what()
+            << "\nProgram is unable to continue running!\n";
+    }
+    catch (...) {
+        LOG(FATAL) << "\nAn Unexpected exception has been thrown!\n"
+            << "Application is not sure how to respond...\n";
+    }
 
-    LOG(INFO) << "Logging Utility Configured!\n";
 
-    LOG(TRACE);
-
-    //// Use default logger
-    //el::Logger* defaultLogger = el::Loggers::getLogger("default");
-
-    //// STL logging (`ELPP_STL_LOGGING` should be defined)
-    //std::vector<int> i;
-    //i.push_back(1);
-    //defaultLogger->warn("My first ultimate log message %v %v %v", 123, 222, i);
-
-    //// Escaping
-    //defaultLogger->info("My first ultimate log message %% %%v %v %v", 123, 222);
+    mRenderEnvironment_->doMonitorSelectionLoop();
 
 }
 
-Application::~Application() {
-    //Flush all the remaining events stored in all loggers
-    LOG(INFO) << "Application is closing...\n\n";
-    LOG(TRACE);
-    el::Loggers::flushAll();
-    
-    //close down GLFW if it's still open?
 
+Application::~Application() {
+    el::Loggers::flushAll();
 }
 
 void Application::launch() {
-    LOG(INFO) << "Application Launched!";
-    LOG(TRACE);
 
-    std::cin.get();
 }

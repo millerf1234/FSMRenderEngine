@@ -1,3 +1,15 @@
+
+
+
+------------------------------------------------------------------------------
+------------------  READ ME FIRST --------------------------------------------
+   I AM NOT SURE THIS IS CORRECT. I DON'T LIST A SOURCE. THIS FEELS 
+   UNFINISHED... FOLLOW THIS ADVICE AT YOUR OWN RISK
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+
+
 Example outline of how to safely implement a classes constructor so that the class is a complete
 type before any operations that could throw (such as memory allocation) are performed within it.
 

@@ -150,8 +150,12 @@ public:
     //Returns the red bit depth for this videomode
     int getBlueBitDepth() const noexcept;
 
+    //No default constructor
     FSMVideoMode() = delete;
-    FSMVideoMode(const GLFWvidmode& vid) = delete;
+    //This type requires both of the display's physical height and width in order 
+    //to be a complete type. Thus a constructor which does not require physical 
+    //dimensions is not able to produce a complete object, hence why it is disabled.
+    FSMVideoMode(const GLFWvidmode& vid) = delete; 
 
 private:
     class VidModeImpl;

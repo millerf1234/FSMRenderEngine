@@ -7,15 +7,16 @@
 //
 //
 //  Description:               Sets up callback functions 
-//
+//                             Built to be implemented as a singleton. 
 //  
 //
-// Defines several functions which manage ensuring that all of
+//                             Defines several functions which manage ensuring that all of
 //                             the necessary callback functions have each of their requirements
 //                             initialized and that each callback gets assigned to GLFW. 
 //
 //  Programmer:                Forrest Miller
 //  Date:                      January 8, 2019
+//  Date:                      March 9, 2019  --  Completed  CallbackInitializer's integration into FSMEngine
 
 
 
@@ -25,21 +26,21 @@
 // |                Event                  |  Function Used For Setting Callback   |                  Callback Function Signature               | \\ 
 // |                                       |        'glfwSet______Callback()'      |                                                            | \\ 
 // +=======================================+=======================================+============================================================+ \\ 
-// |                                                                                                                                            | \\ 
-// |                                                                                                                                            | \\ 
-// |           +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                     | \\ 
-// |           |  CATEGORY: PRE-INITIALIZATION CALLBACKS  |       (These callbacks should be set before the GLFW library is initialized)        | \\ 
-// |           +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                     | \\
+//                                                                                                                                                \\ 
+//                                                                                                                                                \\ 
+//             +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                       \\ 
+//             |  CATEGORY: PRE-INITIALIZATION CALLBACKS  |       (These callbacks should be set before the GLFW library is initialized)          \\ 
+//             +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                       \\
 // +---------------------------------------+---------------------------------------+------------------------------------------------------------+ \\    
 // |                                       |                                       |                                                            | \\ 
 // |             GLFW_ERROR                |         glfwSetErrorCallback()        |     error_callback(int error, const char * description)    | \\ 
 // |                                       |                                       |                                                            | \\ 
 // +---------------------------------------+---------------------------------------+------------------------------------------------------------+ \\ 
-// |                                                                                                                                            | \\ 
-// |                                                                                                                                            | \\ 
-// |           +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                    | \\ 
-// |           |  CATEGORY: POST-INITIALIZATION CALLBACKS  |     (These callback functions require the GLFW library to have been initialized)   | \\ 
-// |           +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                    | \\ 
+//                                                                                                                                                \\ 
+//                                                                                                                                                \\ 
+//             +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                      \\ 
+//             |  CATEGORY: POST-INITIALIZATION CALLBACKS  |     (These callback functions require the GLFW library to have been initialized)     \\ 
+//             +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                      \\ 
 // +---------------------------------------+---------------------------------------+------------------------------------------------------------+ \\ 
 // |                                       |                                       |                                                            | \\ 
 // |   JOYSTICK_CONNECTION_STATUS_UPDATE   |        glfwSetJoystickCallback()      |             joystick_callback(int joy, int event)          | \\ 'event' will be either GLFW_CONNECTED or GLFW_DISCONNECTED
@@ -47,11 +48,11 @@
 // |      MONITOR_CONNECTION_EVENT         |        glfwSetMonitorCallback()       |                                                            | \\ 
 // |                                       |                                       |                                                            | \\  
 // +---------------------------------------+---------------------------------------+------------------------------------------------------------+ \\ 
-//
-//
-//            +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-//            |    CATEGORY: PER-WINDOW CALLBACKS    |     (These callback functions are set on a per-window basis)
-//            +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
+//                                                                                                                                                \\  
+//                                                                                                                                                \\
+//            +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                            \\
+//            |    CATEGORY: PER-WINDOW CALLBACKS    |     (These callback functions are set on a per-window basis)                               \\
+//            +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+                                                                                            \\
 // +---------------------------------------+---------------------------------------+------------------------------------------------------------+ \\
 // |                                       |                                       |                                                            | \\ 
 // |           KEYBOARD_PRESS              |                                       |                                                            | \\
@@ -95,10 +96,90 @@
 #ifndef FSM_CALLBACK_INITIALIZER_H_
 #define FSM_CALLBACK_INITIALIZER_H_
 
-#include "FSMErrorCallback.h"
-#include "FSMMonitorEventCallback.h"
+#include <memory>
 
 namespace FSMEngineInternal {
+
+    class FSMCallbackInitializer final {
+    public: 
+
+        //       //////////////////////////////////////////////////////////////////////////
+        //       /////////////          THIS OBJECT IS A SINGLETON          ///////////////
+        //       ////////   TO ACCESS THIS OBJECT, CALL THE FOLLOWING FUNCTION   //////////
+        //       //////////////////////////////////////////////////////////////////////////
+
+        static FSMCallbackInitializer& callbackInitializer() {
+            static FSMCallbackInitializer cbiInstance;
+            return cbiInstance;
+        }
+
+
+
+
+        //+------------------------------------------------------------------------------+
+        //|                                                                              |
+        //|  ==========================================================================  |
+        //|    ===========          PUBLIC INTERFACE FUNCTIONS          =============    |
+        //|  ==========================================================================  |
+        //|                                                                              |
+        //+------------------------------------------------------------------------------+
+        
+        //            ////////////////////////////////////////////////////
+        //             ///////////   Set Global Callbacks    ////////////
+        //              ////////////////////////////////////////////////
+
+        //-------------------------
+        //  PRE-GLFW Init callback
+        //-------------------------
+        
+        //Call this function before initializing GLFW
+        void setGLFWErrorCallback() noexcept;
+
+
+        //-------------------------
+        //  POST-GLFW Init callback
+        //-------------------------
+
+        //Call this function after GLFW has been initialized
+        void setJoystickEventCallback() noexcept;
+        void setMonitorEventCallback() noexcept;
+
+
+
+        //              ///////////////////////////////////////////////////
+        //               /////////   Set Per-Window Callbacks   //////////
+        //                ///////////////////////////////////////////////
+
+
+
+
+
+        //              ////////////////////////////////////////////////
+		//               ///////   Query the callback states    ///////
+		//                ////////////////////////////////////////////
+
+        //Global callbacks
+        bool errorCBWasSet() const noexcept;
+        bool joystickEventCBWasSet() const noexcept;
+        bool monitorEventCBWasSet() const noexcept;
+
+        //Per-window callbacks
+        //  [Figure this one out once I get closer to implementing a Window object type...]
+       //  bool get___CB(FSMWindow window) const noexcept;
+
+
+    private:
+        FSMCallbackInitializer();
+        ~FSMCallbackInitializer();
+
+
+
+        class GlobalStateOfGLFWCallbacks; //
+        std::unique_ptr<GlobalStateOfGLFWCallbacks> mGlobalCBState_;
+    };
+
+
+#ifdef OLD
 
 	class FSMCallbackInitializer final {
 	public:
@@ -148,7 +229,7 @@ namespace FSMEngineInternal {
 
 
 
-	
+#endif 
 
 
 

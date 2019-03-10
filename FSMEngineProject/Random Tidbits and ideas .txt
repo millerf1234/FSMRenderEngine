@@ -1,0 +1,77 @@
+
+I have come across a whole bunch of cool ideas/tips/tricks while working on this project.
+ Unfortunately one thing they typically have in common is each being very specific to
+ one area of the project I haven't gotten close yet to implementing or they relate to 
+ something I have already implemented and would require breaking into several layers of 
+ code to change.
+Thus the idea here is just to have a collection of small tidbits and ideas and whatnot 
+that maybe one day will prove useful...
+
+That, and I just can't handle my previous 'system' for this sort of thing which was a 
+combination of open browser tabs and bookmarks.
+
+//----------------------------------------------------------------
+   MSCV Compiler Intrinsics 
+      CPUID
+        https://docs.microsoft.com/en-us/cpp/intrinsics/cpuid-cpuidex?view=vs-2017
+
+
+//----------------------------------------------------------------
+  Windows Create a child process
+  https://docs.microsoft.com/en-us/windows/desktop/procthread/creating-a-child-process-with-redirected-input-and-output
+
+// ---------------------------------------------------------------
+    constexpr unions  ( and how they fit in with c++17's std::optional )
+	https://akrzemi1.wordpress.com/2012/12/13/constexpr-unions/
+
+
+//-------------------------------------------------------------------
+   Smart Pointer uses
+
+   Use a std::shared_ptr and std::weak_ptr to cache data:
+   https://stackoverflow.com/questions/106508/what-is-a-smart-pointer-and-when-should-i-use-one/106614#106614
+
+
+//-------------------------------------------------------------------
+     PIMPL notes:
+
+   PIMPL with std::unique_ptr
+   https://www.fluentcpp.com/2017/09/22/make-pimpl-using-unique_ptr/
+
+
+// ---------------------------------------------------------------
+   Strong type system
+   https://www.fluentcpp.com/2016/12/08/strong-types-for-strong-interfaces/
+
+
+//----------------------------------------------------------------------------
+   Exception Handling
+
+   https://www.codeproject.com/Articles/207464/Exception-Handling-in-Visual-Cplusplus
+
+      [Windows C exception handling]
+    https://www.codeproject.com/Articles/2126/How-a-C-compiler-implements-exception-handling
+
+
+	Function Try-Catch block
+		 example:
+				 //in .h
+                 class TestClass {
+				 public:
+				     TestClass(int, int, int);
+			     private:
+				     int x_,y_,z_;
+				 };     
+
+				 //in .cpp
+				 TestClass::TestClass(int x, int y, int z) 
+				 try : x_(x), y_(y), z_(z) { }
+				 catch (...) { }
+
+	http://cpptrivia.blogspot.com/2010/11/function-try-catch-blocks.html
+
+
+	//===================================
+	//===================================
+	Multi-Threaded exception handling
+	  https://stackoverflow.com/questions/233127/how-can-i-propagate-exceptions-between-threads

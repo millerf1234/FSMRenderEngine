@@ -30,11 +30,10 @@
 #define FSM_MONITOR_EVENT_CALLBACK_H_
 
 #include <queue>
-#include <sstream>
 #include <optional>
 
-#include "GraphicsLanguage.h"
-#include "ThirdParty\GLFW\glfw3.h"
+#include "GraphicsLanguageFramework.h"
+
 
 namespace FSMEngineInternal {
 

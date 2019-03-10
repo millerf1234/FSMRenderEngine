@@ -141,8 +141,11 @@
     <ClInclude Include="FSMCallbackInitializer.h" />
     <ClInclude Include="EasyLogging_BuildConfig.h" />
     <ClInclude Include="FSMErrorCallback.h" />
+    <ClInclude Include="FSMException.h" />
+    <ClInclude Include="FSMJoystickEventCallback.h" />
     <ClInclude Include="FSMMonitor.h" />
     <ClInclude Include="FSMMonitorEventCallback.h" />
+    <ClInclude Include="FSMRenderEnvironment.h" />
     <ClInclude Include="GraphicsLanguage.h" />
     <ClInclude Include="GraphicsLanguageFramework.h" />
     <ClInclude Include="JoystickStatePrinter.h" />
@@ -412,8 +415,10 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FilepathWrapper.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
+    <ClCompile Include="FSMJoystickEventCallback.cpp" />
     <ClCompile Include="FSMMonitor.cpp" />
     <ClCompile Include="FSMMonitorEventCallback.cpp" />
+    <ClCompile Include="FSMRenderEnvironment.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc" />
@@ -578,6 +583,7 @@
     <Text Include="IntermediateHeadersImplementation_readme.txt" />
     <Text Include="MovingTo64Bit.txt" />
     <Text Include="Notes\NotesOnMSVC.txt" />
+    <Text Include="Random Tidbits and ideas .txt" />
     <Text Include="SafeConstructableExample.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

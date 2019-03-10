@@ -23,9 +23,8 @@
 //Date:          January 2, 2019
 
 
+
 #include "FSMMonitorEventCallback.h"
-
-
 #include "UniversalIncludes.h"
 
 namespace FSMEngineInternal {
@@ -115,6 +114,7 @@ namespace FSMEngineInternal {
 		//-------------------------------------------------------
 	
 		void graphicsLanguageFrameworkMonitorEventCallbackFunction(GLFWmonitor* handle, int event) {
+            LOG(INFO) << "\n\n\tA Monitor Event was detected! Event code " << event << std::endl;
 			if (event == GLFW_CONNECTED) {
 				recentMonitorConnections().push(handle);
 			}
@@ -125,7 +125,6 @@ namespace FSMEngineInternal {
                 LOG(WARNING) << "GLFW monitor event callback was called with invalid event code!\n";
 			}
 		}
-
 
 	} //namespace MonitorEventCallbackInternal
 
