@@ -13,7 +13,11 @@
 #define FSM_RENDER_ENGINE_H_
 
 #include <string>
+#include <string_view>
 #include <exception>
+#include <system_error>                 //std::error_code
+//#include <optional>
+#include <filesystem>
 #include "FSMException.h"
 #include "FSMMonitor.h"
 
@@ -142,28 +146,41 @@ private:
     //                          //throw/fail are performed.
         
     
-    //STEP 1
-    bool initializeGLFW(); 
-    void setGlobalGLFWInvariants() noexcept;  //step 1.1
-    void setPreGLFWInitCallbacks();           //step 1.2
-    bool callTheGLFWInitFunc();               //step 1.3
-    void setPostGLFWInitCallbacks();          //step 1.4
+    //STEP 1 
+    bool loadSettings(); 
+
+    //Returns true if settings file is found.
+    //Returns false if no initialization file is found or if OS reports error ec
+    bool locateSettingsFile(std::error_code& ec);          //step 1.1
+    bool generateSettingsFile(std::error_code& ec);        //step 1.1b [Only if needed] 
+    void parseSettingsFile();                              //step 1.2 
+   
+   
+
 
     //STEP 2
-    bool createContext();
-    void specifyContextHints() noexcept;      //step 2.1
-    bool createContextAndWindow();            //step 2.2
-    void setContextWindowCallbacks();         //step 2.3
-
+    bool initializeGLFW(); 
+    void setGlobalGLFWInvariants() noexcept;  //step 2.1
+    void setPreGLFWInitCallbacks();           //step 2.2
+    bool callTheGLFWInitFunc();               //step 2.3
+    void setPostGLFWInitCallbacks();          //step 2.4
 
     //STEP 3
+    bool createContext();
+    void specifyContextHints() noexcept;      //step 3.1
+    void retrieveConnectedMonitors();         //step 3.2
+    bool createContextAndWindow();            //step 3.3
+    void setContextWindowCallbacks();         //step 3.4
+
+
+    //STEP 4
     bool setupGLAD();
-    void specifyDebugCallbacksWithGLAD();     //step 3.1
-    bool loadOpenGLFunctions();                   //step 3.2
+    void specifyDebugCallbacksWithGLAD();     //step 4.1
+    bool loadOpenGLFunctions();               //step 4.2
 
     
-    //STEP 4
-    void retrieveConnectedMonitors();
+    //STEP 5
+    //void retrieveConnectedMonitors();
 
 };
 

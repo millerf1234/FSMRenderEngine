@@ -1,0 +1,74 @@
+#   Welcome to the settings file. This is where the configuration for the 
+# FSMEngineProject is set. The format for this file is loosely based off  
+# the '.ini' file format which is commonly seen in other programs.        
+#                                                                         
+#                                                                         
+#   Below this header you can find a collection of all of the various     
+# configuration settings which affect the runtime behavior of this        
+# program. Before editing settings, it is suggested you read the          
+# following formatting rules:                                             
+#                                                                         
+#   (-) Any line beginning with a '#' is a comment and will be            
+#         ignored during parsing.                                         
+#                                                                         
+#   (-) Names for each setting are caps sensitive, so it is suggested     
+#         to not edit any settings names as they already appear.          
+#                                                                         
+#   (-) Each Setting has a unique name identifier, which starts with      
+#         a letter which identifies what type of variable that setting    
+#         is expecting to parse. Here are the rules for each:             
+#              'b' stands for boolean and should be only 0 or 1           
+#              's' stands for string and should be restricted to          
+#                     ASCII characters only. Spaces are allowed. Please   
+#                     enclose the string in double quotes, and to add a   
+#                     double quote to the string, use the escape sequence 
+#                     ' \" '. To add a backslash, double it up like       
+#                     ' \\ '.                                             
+#              'i' stands for integer and thus can be any positive        
+#                     or negative whole number (without being too         
+#                     ridiculously large). No commas please!              
+#              'u' stands for unsigned. This means any non-negative       
+#                     integer (again without making it excessively        
+#                     large).                                             
+#              'f' stands for floating point. This is a number that can   
+#                     be either positive or negative, and is allowed to   
+#                     contain a single decimal point (aka 'period') to    
+#                     have it be a non-whole number. Please note that     
+#                     this program uses 32-bit precision for this type,   
+#                     so no need to provide excessive precision when      
+#                     setting these values.                               
+#              'c' stands for character. This should be restricted to a   
+#                     single ASCII character surrounded by single quotes. 
+#                                                                         
+#                                                                         
+#   (-) Certain settings may be more restrictive than settings of their   
+#         type allow. These should be commented where they apply.         
+#                                                                         
+#                                                                         
+#   (-) Settings are organized by category. Any line starting with a '['  
+#          character represents the start of a new category. These exist  
+#          solely to help human readers and will be ignored by this       
+#          programs parser as if they were a comment.                     
+#                                                                         
+#                                                                         
+#   (-) Typically spaces will be ignored throughout the document where-   
+#          ever they might appear, but then again this parser isn't going 
+#          to be winning any "Worlds-Greatest-Parser awards anytime soon 
+#          so don't be surprised if confusing or ambiguous syntax causes  
+#          it to choke.                                                   
+#                                                                         
+#                                                                         
+#   (-) One last thing, one of the primary design rules for this format   
+#          that anything that fails to parse will be replaced with a new  
+#          defaulted value for that setting. Thus don't worry if you mess 
+#          up, because the worst that will happen is that your setting    
+#          will be ignored and replaced with a properly-formated setting. 
+#          This goes for anything this parser doesn't agree with reading. 
+#          So if something seems off, just check this settings file and   
+#          you should be able to get a pretty clear sense of if you are   
+#          obeying these syntax rules properly or not.                    
+
+
+
+
+  [General]                                                               

@@ -750,3 +750,7 @@ Will This print?
  
 2019-03-03 00:25:36,268 INFO [default] Application is launching...
  
+2019-03-12 04:47:22,715 DEBUG [default] [Forrest@FMPC] [class std::optional<class std::filesystem::path> __cdecl EASYLOGPP_CONFIGURATION_INTERNAL::getLogFileDirectory(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:729] 
+Timetag string is:  2019_071_04_47_22 
+2019-03-12 04:47:22,716 DEBUG [default] [Forrest@FMPC] [class std::optional<class std::filesystem::path> __cdecl EASYLOGPP_CONFIGURATION_INTERNAL::getLogFileDirectory(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:732] 
+Timetag string after removing spaces is:  2019_071_04_47_22 

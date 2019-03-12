@@ -709,6 +709,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 //    check to make sure ' __STDC_LIB_EXT1__ ' is defined be the implementation
                 //    define ' __STDC_WANT_LIB_EXT1__ '  before the header 'time.h' is included.
                 //https://en.cppreference.com/w/c/chrono/localtime
+                //https://en.cppreference.com/w/cpp/chrono/c/localtime
                 //https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
                 //
                 // OR  just do this hack until C++20 provides a much easier way to do this 
@@ -725,10 +726,10 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 tag << std::put_time(timetagC, "%Y_%j_%H_%M_%S"); //Puts the 'day of the year', 'year', 'hour', 'minute', and 'second' into a stringstream
                 
                 std::string timetagString = tag.str();
-                ///LOG(INFO) << "\nTimetag string is: " << timetagString;
+               // LOG(DEBUG) << "\nTimetag string is: " << timetagString;
                 //Remove any spaces that may have sneaked their way into the path
-                timetagString.erase(remove(timetagString.begin(), timetagString.end(), ' '), timetagString.end());
-                ///LOG(INFO) << "\nTimetag string after removing spaces is: " << timetagString;
+               // timetagString.erase(remove(timetagString.begin(), timetagString.end(), ' '), timetagString.end());
+               // LOG(DEBUG) << "\nTimetag string after removing spaces is: " << timetagString;
 
                 //Finally we can build the filepath
                 logDirectory = logDirectory.string() + timetagString;

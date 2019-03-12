@@ -27,12 +27,6 @@
     <Filter Include="ThirdParty\glad\release">
       <UniqueIdentifier>{3300dc7d-7272-4732-8faa-198b4d5438f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ThirdParty\glfw">
-      <UniqueIdentifier>{7cf2abe4-fa2a-40b7-bbd4-edde694d094c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ThirdParty\glfw\include">
-      <UniqueIdentifier>{e7818402-4794-4b01-bb7b-edd694fe5a30}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Notes">
       <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
     </Filter>
@@ -121,6 +115,15 @@
     <Filter Include="Source Files\RenderEnvironment\CallbackFunctions\JoystickCallback">
       <UniqueIdentifier>{c1af8cdc-787a-4f2b-a176-090730f4446d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\glm\glfw">
+      <UniqueIdentifier>{7cf2abe4-fa2a-40b7-bbd4-edde694d094c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glm\glfw\include">
+      <UniqueIdentifier>{e7818402-4794-4b01-bb7b-edd694fe5a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RenderEnvironment\Initialization">
+      <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -133,7 +136,7 @@
       <Filter>ThirdParty\glad\release</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\GLFW\glfw3.h">
-      <Filter>ThirdParty\glfw\include</Filter>
+      <Filter>ThirdParty\glm\glfw\include</Filter>
     </ClInclude>
     <ClInclude Include="UniversalIncludes.h">
       <Filter>Header Files\Common</Filter>
@@ -927,6 +930,9 @@
     <ClInclude Include="FSMJoystickEventCallback.h">
       <Filter>Source Files\RenderEnvironment\CallbackFunctions\JoystickCallback</Filter>
     </ClInclude>
+    <ClInclude Include="FIniSetting.h">
+      <Filter>Source Files\RenderEnvironment\Initialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -977,16 +983,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="glfw3.dll">
-      <Filter>ThirdParty\glfw</Filter>
+      <Filter>ThirdParty\glm\glfw</Filter>
     </None>
     <None Include="glfw3.ilk">
-      <Filter>ThirdParty\glfw</Filter>
+      <Filter>ThirdParty\glm\glfw</Filter>
     </None>
     <None Include="glfw3.pdb">
-      <Filter>ThirdParty\glfw</Filter>
+      <Filter>ThirdParty\glm\glfw</Filter>
     </None>
     <None Include="glfw3dll.exp">
-      <Filter>ThirdParty\glfw</Filter>
+      <Filter>ThirdParty\glm\glfw</Filter>
     </None>
     <None Include="Notes\WINDOWS2000_tips_windows_graphics_programming_win32_gdi_and_directd.pdf">
       <Filter>Notes</Filter>
@@ -1396,7 +1402,7 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3dll.lib">
-      <Filter>ThirdParty\glfw</Filter>
+      <Filter>ThirdParty\glm\glfw</Filter>
     </Library>
   </ItemGroup>
   <ItemGroup>
