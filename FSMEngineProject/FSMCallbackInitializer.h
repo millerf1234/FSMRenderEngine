@@ -16,7 +16,8 @@
 //
 //  Programmer:                Forrest Miller
 //  Date:                      January 8, 2019
-//  Date:                      March 9, 2019  --  Completed  CallbackInitializer's integration into FSMEngine
+//  Date:                      March 9, 2019  --  Completed  CallbackInitializer's integration into FSMEngine  [PSYCH]
+//  Date:                      March 20, 2019 --  Still working on getting all of the Callback Functions in order and then implementing their initialization here
 
 
 
@@ -109,8 +110,8 @@ namespace FSMEngineInternal {
         //       //////////////////////////////////////////////////////////////////////////
 
         static FSMCallbackInitializer& callbackInitializer() {
-            static FSMCallbackInitializer cbiInstance;
-            return cbiInstance;
+            static FSMCallbackInitializer callbackInitializerInstance;
+            return callbackInitializerInstance;
         }
 
 
@@ -155,7 +156,7 @@ namespace FSMEngineInternal {
 
 
         //              ////////////////////////////////////////////////
-		//               ///////   Query the callback states    ///////
+		//               ///////   Query the Callback States    ///////
 		//                ////////////////////////////////////////////
 
         //Global callbacks
@@ -177,6 +178,9 @@ namespace FSMEngineInternal {
         class GlobalStateOfGLFWCallbacks; //
         std::unique_ptr<GlobalStateOfGLFWCallbacks> mGlobalCBState_;
     };
+
+
+
 
 
 #ifdef OLD
@@ -229,7 +233,7 @@ namespace FSMEngineInternal {
 
 
 
-#endif 
+#endif //old
 
 
 

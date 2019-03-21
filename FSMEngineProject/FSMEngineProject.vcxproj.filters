@@ -156,9 +156,6 @@
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h">
       <Filter>ThirdParty\easylogging++</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
-      <Filter>ThirdParty\glad\debug</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\elcc_includer.h">
       <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
     </ClInclude>
@@ -930,15 +927,15 @@
     <ClInclude Include="FSMJoystickEventCallback.h">
       <Filter>Source Files\RenderEnvironment\CallbackFunctions\JoystickCallback</Filter>
     </ClInclude>
-    <ClInclude Include="FIniSetting.h">
+    <ClInclude Include="FInitSetting.h">
       <Filter>Source Files\RenderEnvironment\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
+      <Filter>ThirdParty\glad\debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
@@ -979,6 +976,9 @@
     </ClCompile>
     <ClCompile Include="FSMJoystickEventCallback.cpp">
       <Filter>Source Files\RenderEnvironment\CallbackFunctions\JoystickCallback</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

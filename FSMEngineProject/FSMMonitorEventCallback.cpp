@@ -75,8 +75,8 @@ namespace FSMEngineInternal {
 			return std::nullopt;
 		}
 		else {
-			std::optional<GLFWmonitor*> monitorHandle = 
-				std::make_optional<GLFWmonitor*>(MonitorEventCallbackInternal::recentMonitorDisconnections().front());
+            std::optional<GLFWmonitor*> monitorHandle =
+                std::make_optional<GLFWmonitor*>(MonitorEventCallbackInternal::recentMonitorDisconnections().front());
 			MonitorEventCallbackInternal::recentMonitorDisconnections().pop(); //Remove monitor from queue
 			return monitorHandle;
 		}
@@ -95,13 +95,13 @@ namespace FSMEngineInternal {
 		//storing the handles provided by GLFW to the monitorEventCallback function until they 
 		//can be processed by the application.
 
-		std::queue<GLFWmonitor*>& recentMonitorConnections() {
-			static std::queue<GLFWmonitor*> awaitingConnection;
+		std::queue<GLFWmonitor*, std::vector<GLFWmonitor*>>& recentMonitorConnections() {
+			static std::queue<GLFWmonitor*,std::vector<GLFWmonitor*>> awaitingConnection;
 			return awaitingConnection;
 		}
 
-		std::queue<GLFWmonitor*>& recentMonitorDisconnections() {
-			static std::queue<GLFWmonitor*> awaitingDisconnection;
+		std::queue<GLFWmonitor*, std::vector<GLFWmonitor*>>& recentMonitorDisconnections() {
+			static std::queue<GLFWmonitor*, std::vector<GLFWmonitor*>> awaitingDisconnection;
 			return awaitingDisconnection;
 		}
 

@@ -87,44 +87,46 @@
 //
 //
 //  
-//      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//      ~~~~~~~~~~~~~~~~~~~~~~~~~~                         Table of Contents For AVAILABLE SETTINGS                         ~~~~~~~~~~~~~~~~~~~~~~~~~~          
-//      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//       ~~~~~~~~~~~~~~~~~~~~~~~~~~                         Table of Contents For AVAILABLE SETTINGS                         ~~~~~~~~~~~~~~~~~~~~~~~~~~          
+//       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //        
-//  +=================================================================================================================================================================================+ 
-//  | Section Number |        Section Title        |     Section Description                                                                                                          |          
-//  +================+=============================+==================================================================================================================================+ 
-//  |                |                             |                                                                                                                                  |
-//  |  Section 0)    | "Project Invariants"        |  These aren't really you usual type of settings that you get to 'customize' but then again its                                   |
-//  |                |                             |    settings like this that necessitated the existance of a section 'Zero' in the first place...                                  |
-//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-//  |                |                             | This section known affectionately to the French as "un" rightfully contains the two far most impactful and important settings    |
-//  |                |                             |   available across the entire project. The first is the all-knowing and all-powerful master-univeral-debug on-off switch which   |
-//  |                |  "Global Project DEBUG      |   is what is really in charge of controlling the behavior of how the code is built, regardless of what-ever misinformed nonsense |
-//  |  Section 1)    |            Behavior"        |   the compiler thinks the build settings are. The second setting, while only able to have an effect when allowed by the first,   |
-//  |                |                             |   gets final (and first) say over how much the underlying OpenGL context is left alone to do its thing by enabling forced        |
-//  |                |                             |   synchronization between it and the application.                                                                                |
-//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+ 
-//  |                |                             |                                                                                                                                  |
-//  |  Section 2)    |      "GLAD Behavior"        | Basically provides manual overrides for building the GLAD OpenGL function loader library in a DEBUG or RELEASE configuration     |
-//  |                |                             |   plus some additional options which affect how verbose GLAD should be when using its DEBUG configuration.                       |
-//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-//  |                |                             |                                                                                                                                  |
-//  |  Section 3)    | "GLM Specifications         |   All of the settings here are used to control the GL Mathematics library. Probably not too much of interest here outside of     |
-//  |                |    and Behavior Settings"   |       forcefully disabling several options for testing performance profiling comparisons.                                        |
-//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-//  |                |                             |                                                                                                                                  |
-//  |  Section 4)    |  "EasyLogging++ Behavior"   |                                                                                                                                  |
-//  |                |                             |                                                                                                                                  |
-//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-//  |                |                             |                                                                                                                                  |
-//  |                |                             |                                                                                                                                  |
-//  |                |                             |                                                                                                                                  |
-//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-//  |                |                             |                                                                                                                                  |
-//  |                |                             |                                                                                                                                  |
-//  |                |                             |                                                                                                                                  |
-//  +----------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------+
+//  +==================================================================================================================================================================================+                
+//  | Section Number |        Section Title        |     Section Description                                                                                                           |          
+//  +================+=============================+===================================================================================================================================+          
+//  |                |                             |                                                                                                                                   |        
+//  |  Section 0)    | "Project Invariants"        |  These aren't really you usual type of settings that you get to 'customize' but then again its                                    |                                                      
+//  |                |                             |    settings like this that necessitated the existence of a section 'Zero' in the first place...                                   |                                                                     
+//  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                    
+//  |                |                             | This section (known affectionately to the French as "section un") rightfully contains the two far most influential build macros   |                                     
+//  |                |                             |   available across this entire project. The first is the all-knowing and all-powerful master-universal-debug on-off control, which|                                                                  
+//  |                |  "Global Project DEBUG      |   is what is really in charge of controlling the behavior of how the code is built, regardless of what-ever misinformed nonsense  |                                           
+//  |  Section 1)    |            Behavior"        |   the compiler thinks the build settings are*. The second setting, while only able to have an effect when allowed by the first,   |    *I spent some time down the rabbit hole of trying to determine how best to take advantage of                                             
+//  |                |                             |   gets final (and first) say over how much the underlying OpenGL context is left alone to do its thing by enabling forced         |       common DEBUG macros most compilers provide. Luckily I was early in my design process when                                                         
+//  |                |                             |   synchronization between it and the application.                                                                                 |       I decided to just rely on my own. See: https://stackoverflow.com/questions/2290509/debug-vs-ndebug                                                          
+//  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                                        
+//  |                |                             |                                                                                                                                   |                                                     
+//  |  Section 2)    |      "GLAD Behavior"        | Basically provides manual overrides for building the GLAD OpenGL function loader library in a DEBUG or RELEASE configuration      |                                                              
+//  |                |                             |   plus some additional options which affect how verbose GLAD should be when using its DEBUG configuration.                        |                                                                            
+//  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                                         
+//  |                |                             |                                                                                                                                   |                                                                                   
+//  |  Section 3)    | "GLM Specifications         |   All of the settings here are used to control the GL Mathematics library. Probably not too much of interest here outside of      |                                                                                       
+//  |                |    and Behavior Settings"   |       forcefully disabling several options for testing performance profiling comparisons.                                         |                                                                
+//  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                                   
+//  |                |                             | The most important setting among this group is what I have decided to call "FECLPINAE", which is an acronym for "Failure to       |                                                                                                                              
+//  |                |                             |    Establish Custom Logging Protocols Is Not An Error". This macro will come into play very early in the Applications runtime,    |                                                                          
+//  |  Section 4)    |  "EasyLogging++ Behavior"   |    and failure to establish proper logging without this defined will result in a very fast crash.                                 |     
+//  |                |                             | There is also Logging-specific settings, such as the ability to enable/disable some of the various logging outputs.               |            
+//  |                |                             |                                                                                                                                   |         
+//  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                        
+//  |                |                             |                                                                                                                                   |                                          
+//  |                |                             |                                                                                                                                   |                                                                     
+//  |                |                             |                                                                                                                                   |                             
+//  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                             
+//  |                |                             |                                                                                                                                   |                                                                                       
+//  |                |                             |                                                                                                                                   |                                                                
+//  |                |                             |                                                                                                                                   |                                               
+//  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 //
 
 #pragma once
@@ -307,7 +309,7 @@
 // Dependencies:  
 //     - none
 //
-// This macro is not actually an offical GLM macro, but instead a special macro which has been introduced into this project with
+// This macro is not actually an official GLM macro, but instead a special macro which has been introduced into this project with
 // the intent of providing a handy straight forward method for comparing what inputs are going into GLM regarding how it should
 // configure itself versus its own self-message reporting process (though neither macro is in anyway dependent on the other being
 // defined). Basically the implementation for this macro is the inclusion of an extra preprocessor directive which appears  
@@ -501,8 +503,56 @@
 //  ( SECTION 4 )  EasyLogging++ SETTINGS
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+//Macro: FECLPINAE
+// Dependencies: 
+//       - none
+//
+//By defining this macro one can dictate the Application's appropriate response to the event that any one of 
+//   several Logging-utility-configuration function calls (which get made very early on during initialization)
+//   fail. This macro goes by the very appropriately named and easy-to-remember acronym 'FECLPINAE', which 
+//   clearly, cleanly and concisely expands to produce the statement "Failure to Establish Custom Logging 
+//   Protocols Is Not An Error". 
+//Essentially this macro boils down to whether the Application should crash on the spot if it can't get what
+//   it wants for writing to it's many LOGS, or if it should just suck it up and continue onwards relying 
+//   upon the default behavior of the Easylogger++ logging utility. It should be noted that the default behavior
+//   will not result in anything being written to LOG files, so if this feature is determined to be important, then
+//   there is no shame in not defining this macro.
+#define FECLFINAE "Failure to Establish Custom Logging Protocols Is Not An Error"
+
+
+//Macro: ENABLE_TRACE_LOG
+// Dependencies: 
+//       - none
+//
+//By defining this macro, the use of the trace log will be enabled. The trace log is an odd beast for me currently
+//during development in that I feel I know exactly what it should be doing but I have not for the life of me been 
+//able to get it to behave in the way I want. It's like in order for it to be verbose enough to actually 
+//log all of the information that I would expect to have from a trace, it requires 3-4 lines at minimum to squeeze 
+//everything in. Ideally the trace log should be short, concise, while yet also announcing important information that
+//composes a 'trace', namely the name of the current file, function and line number. And adding in the current time 
+//is preferable. I have yet to find a way to report all of these details in a concise enough manner to make me actually
+//want to use the trace log... Actually wait I have an idea... See the macro after this one.
 #define ENABLE_TRACE_LOG 1
 
+
+//Macro:  TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES                                     
+// Dependencies: 
+// -  The Trace Log must be enabled for this macro to have any effect
+//
+// Basically by enabling this macro the trace log will be signaled to know that it's job of
+//   simply reporting the trace information is tough enough and that it should ignore any 
+//   incoming data passed to it. This is risky since something important may be missed, but
+//   then again sending important messages to the trace log in-and-of-itself seems fairly 
+//   inadvisable. Having this available might also make the Trace log usable for reporting 
+//   the trace!
+#define TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES "YouUsedToCallMeOnYourTraceLog_LateNightWhenYouNeedMyStackTrace"
+
+
+
+
+
+/* //The following section is a work in progress and is currently not supported 
+//
 //     Note that the following 2 macros are used by EasyLogging++ during it's initialization
 //     to determine what names it will assign to the 2 default logging targets. I highly
 //      recommend that these do NOT get changed because that would just be bad...
@@ -515,6 +565,7 @@
 //#define ELPP_DEFAULT_PERFORMANCE_LOGGER "FSM_PERFLOG"
 //#define FSM_PERFLOG ELPP_DEFAULT_PERFORMANCE_LOGGER
 #endif
+//                                                                  */
 
 
 //Make sure if #define ENABLE_GLFUNCTION_PROFILING_ from section 2 is enabled while 

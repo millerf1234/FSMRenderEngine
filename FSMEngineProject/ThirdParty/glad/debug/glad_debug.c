@@ -24,10 +24,6 @@
 #include <string.h>
 #include "glad_debug.h"  //FSMEngine changed the name of this header
 
-////////////////  FSMEngine project adds the following header guard to this file ////////////////////
-//  Note that this macro should be defined in header "glad_debug.h"
-#ifdef _FSM_ENGINE__GLAD_SAFE_TO_BUILD_DEBUG__
-////////////////  End FSMEngine modifications to glad  //////////////////////////////////////////////
 
 void _pre_call_callback_default(const char *name, void *funcptr, int len_args, ...) {
     (void) name;
@@ -6801,7 +6797,3 @@ int gladLoadGLLoader(GLADloadproc load) {
 }
 
 
-/////////////// The following 2 lines were added as part of FSMEngine project ////////
-#undef _FSM_ENGINE__GLAD_SAFE_TO_BUILD_DEBUG__
-#endif // #ifdef _FSM_ENGINE__GLAD_SAFE_TO_BUILD_DEBUG__
-//////////////////////////////////////////////////////////////////////////////////////

@@ -96,13 +96,13 @@ namespace FSMEngineInternal {
         //storing the handles provided by GLFW to the JoystickEventCallback function until they 
         //can be processed by the application.
 
-        std::queue<int>& recentJoystickConnections() {
-            static std::queue<int> awaitingConnection;
+        std::queue<int, std::vector<int>>& recentJoystickConnections() {
+            static std::queue<int, std::vector<int>> awaitingConnection;
             return awaitingConnection;
         }
 
-        std::queue<int>& recentJoystickDisconnections() {
-            static std::queue<int> awaitingDisconnection;
+        std::queue<int, std::vector<int>>& recentJoystickDisconnections() {
+            static std::queue<int, std::vector<int>> awaitingDisconnection;
             return awaitingDisconnection;
         }
 

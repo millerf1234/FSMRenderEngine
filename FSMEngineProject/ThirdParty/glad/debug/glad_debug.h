@@ -21,10 +21,6 @@
 
 //////////////////////////////////////// The Following was added to this file by Forrest Miller //////////////
 #pragma once 
-#define _FSM_ENGINE_BUILD_SETTING___GLAD_USE_DEBUG___//#include "..\..\ThirdParty_IncludeWrappers\glad_includer.h"
-//This header-guard is needed to prevent both debug and release versions from compiling, which would cause duplicate symbols
-#ifdef _FSM_ENGINE_BUILD_SETTING___GLAD_USE_DEBUG___       //There is a matching '#endif' at end of this file      
-#define _FSM_ENGINE__GLAD_SAFE_TO_BUILD_DEBUG__  
 #pragma message ("\nProject will build with glad configured to use version: DEBUG\n")
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4400,9 +4396,3 @@ GLAPI PFNGLPOLYGONOFFSETCLAMPPROC glad_debug_glPolygonOffsetClamp;
 
 #endif
 
-
-
-
-////////////////////  The following line was added as part of FSMEngine project ///////////////
-#endif //#ifdef _FSM_ENGINE_BUILD_SETTING___GLAD_USE_DEBUG___
-///////////////////////////////////////////////////////////////////////////////////////////////

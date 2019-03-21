@@ -47,6 +47,11 @@ public:
 
 private:
     std::unique_ptr<FSMRenderEnvironment> mRenderEnvironment_ = nullptr;
+
+
+
+    bool setupMessageLogs(int argc, char ** argv);
+    bool createRenderEnvironment();
 };
 
 #endif //APPLICATION_H_

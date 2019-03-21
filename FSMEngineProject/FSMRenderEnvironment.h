@@ -16,10 +16,12 @@
 #include <string_view>
 #include <exception>
 #include <system_error>                 //std::error_code
-//#include <optional>
+#include <vector>
+//#include <optional>  //Turns out including <optional> is optional
 #include <filesystem>
 #include "FSMException.h"
 #include "FSMMonitor.h"
+#include "FInitSetting.h"
 
 constexpr const int width = 1240;
 constexpr const int height = 980;
@@ -148,6 +150,7 @@ private:
     
     //STEP 1 
     bool loadSettings(); 
+
 
     //Returns true if settings file is found.
     //Returns false if no initialization file is found or if OS reports error ec

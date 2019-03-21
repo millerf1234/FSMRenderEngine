@@ -138,7 +138,7 @@
     <ClInclude Include="BuildSettings.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FilepathWrapper.h" />
-    <ClInclude Include="FIniSetting.h" />
+    <ClInclude Include="FInitSetting.h" />
     <ClInclude Include="FSMCallbackInitializer.h" />
     <ClInclude Include="EasyLogging_BuildConfig.h" />
     <ClInclude Include="FSMErrorCallback.h" />
@@ -153,12 +153,16 @@
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h" />
     <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ThirdParty\glad\KHR\khrplatform.h" />
     <ClInclude Include="ThirdParty\glad\release\glad.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ThirdParty\GLFW\glfw3.h" />
     <ClInclude Include="ThirdParty\glm\common.hpp" />
@@ -424,12 +428,16 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc" />
     <ClCompile Include="ThirdParty\glad\debug\glad_debug.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ThirdParty\glad\release\glad.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ThirdParty\glm\detail\glm.cpp" />
     <ClCompile Include="FSMVideoMode.cpp" />

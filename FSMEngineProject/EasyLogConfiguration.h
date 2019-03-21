@@ -436,26 +436,23 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "1");
 #ifndef TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES
-    //If the MSVC macro __FUNCTION__ is defined, then use it, otherwise use the ELCC equivalent macro as back-up 
 #ifdef __FUNCTION__
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-        "\n< < < < < < < < < < < < < < < <[%level]> > > > > > > > > > > > > > > >\n"
-        "+~~~~~~~~~~~~~~~~~~~~~~~~~+   file: '%fbase' line %line\n"
-        "| %datetime{%Y-%M-%d %H:%m:%s.%g} |   func: " __FUNCTION__ "()\n"
-        "+~~~~~~~~~~~~~~~~~~~~~~~~~+    msg: \"%msg\"");
-#else
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-        "\n< < < < < < < < < < < < < < < <[%level]> > > > > > > > > > > > > > > >\n"//"\n          <TRACE>              <TRACE>              <%level>\n"
-        "+~~~~~~~~~~~~~~~~~~~~~~~~~+   file: '%fbase' line %line\n"
-        "| %datetime{%Y-%M-%d %H:%m:%s.%g} |   func: %func\n"
-        "+~~~~~~~~~~~~~~~~~~~~~~~~~+    msg: \"%msg\"");   
-#endif //ifdef __FUNCTION__
-    
+        "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line " __FUNCTION__ "()\nMSG=%msg");
 #else 
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-        "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line " __FUNCTION__ "()");
-
+        "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line %func()\nMSG=%msg");
 #endif 
+#else 
+#ifdef __FUNCTION__
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
+        "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line " __FUNCTION__ "()");
+#else 
+    __FUNCTION__
+        logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
+            "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line %func()");
+#endif //__FUNCTION__
+#endif //TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace)->string());
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "6");
