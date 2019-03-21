@@ -10,7 +10,7 @@
 //           IMPORTANT:    THIS FILE DOES NOT PROVIDE ACCESS TO ANY LOGGING FUNCTIONALITY AND MUST NOT BE INCLUDED IN OTHER FILES!
 //                          TO GAIN ACCESS TO THE LOGGING FUNCTIONS, PLEASE INCLUDE THE SHARED HEADER "UniversalIncludes.h"  
 //          +--------------------+ 
-//          |      How To        |   The FSMEngine project's expected configuration is for there to be a set of common headers which
+//          |      How To        |   The FSMEngine's expected configuration is for there to be a set of common headers which
 //          | Enabling Logging   |      are responsible for implementing specific sets of related functionality. Due to the universally
 //          | Functionality For  |      anticipated need for writing log messages, all of the logging message functionality can be integrated 
 //          |Use In Another File:|      by simply including the header file "UniversalIncludes.h".
@@ -20,7 +20,7 @@
 //                                            functionality, chances are that the relative filepaths between the FSMEngine's internal                                
 //                                            components has been modified. A possible backup to regain logging support would be to find
 //                                            out the relative filepath between the "easylogging++.h" (which is the header of the
-//                                            actual library) and "UniversalInclude.h" and '#inlcude' this relative path in "UniversalInclude.h" ]
+//                                            actual library) and "UniversalInclude.h" and '#include' this relative path in "UniversalInclude.h" ]
 //
 //    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //     !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!               !WARNING!
@@ -30,10 +30,10 @@
 //
 //
 //  Please Notice:   This file contains several specific macro-function calls which are required by the library Easylogging++
-//                         as part of its initalization which MUST appear only in one single location within a project. 
+//                         as part of its initialization which MUST appear only in one single location within a project. 
 //
 //                   Due to the restrictions this usage of specialized macros places on the manner under which this header may 
-//                         be incorperated into a project, several additional preventative safety-measures have been
+//                         be incorporated into a project, several additional preventative safety-measures have been
 //                         implemented throughout this file with the intent to detect any unintended/improper inclusions
 //                         of this header within the project build system. These additional preventative measures have been
 //                         designed to automatically block compilation if their prerequisites fail to be satisfied. 
@@ -52,39 +52,20 @@
 //                   This header contains highly specialized code which consists largely of many distinct calls made into the
 //                         EasyLogging++ API that are linked together by their mutually shared responsibility for exactifying both 
 //                         a highly-specific-in-behavior underlying message-logging feature-set in addition to each of the [6-7] supported
-//                         message logging targets used throughout the rest of the app.
+//                         message logging targets used throughout the rest of the code.
 //                      
-//
-//                   As a result of the both the uniquely-specialized requirements imposed upon this file's usage that must restrict
-//                         the permissible ways in which it may be integrated into a project on top of the both highly-specific tasks 
-//                         and highly-fundamental position it occupies within the codebase, the author 'recommends as essential' that
-//                         changes/modifications/updates be avoided or kept to a minimun. No changes should be made until all of the
-//                         documentation for this file be read and understood and the impact of those changes fully understood. This
-//                         includes performing even the smallest of changes that might occur within typical every-day refactoring.
-//
-//                   It is given that chances are high that any necessary changes when performed after having undergone the proper due 
-//                         diligence and made under thoughtful care can be safely made to this code. However, keep in mind when 
-//                         contemplating a change the ease with which it could very well impact an expected behavior or lead to major
-//                         outcomes in program behavior due to the fundamental positioning and wide-spread reliance the entire codebase
-//                         expects from this code.
-//                                                                                           
-//
-//  Background:      One of the initial features built into the FSMEngine project was a robust multi-leveled series of message logs, 
-//                         each which is made available for every source file to use. It was decided very early on that this feature 
-//                         could best be provided through the use of a third party library called "EasyLogging++" which was built to
-//                         provide this exact feature while having the bonus of allowing for a high degree of configurability.
 //
 //  Description:     The purpose of the code contained within this file serves one of these two related purposes:
 //                           i) To provide all of the necessary information and perform all of the necessary actions necessary to
 //                                 fully initialize and launch the EasyLogging++ library; and
-//                          ii) To perform all the necessary configuratory requests* plus API calls which are required in conforming the 
+//                          ii) To perform all the necessary configuration requests* plus API calls which are required in conforming the 
 //                                 highly-configurable EasyLogging++ library to meet the expected specifications of the rest of the 
 //                                 Application. This includes both setting up the fundamental state in addition to configuring each 
 //                                 of the available LOG targets individually. 
 //
 //                                                                                  *This file is responsible for only configuring the available run-time settings. 
-//                                                                                     There is a seperate EasyLogging++ configuration file called "EasyLogging_BuildConfig.h"
-//                                                                                     that handles specifing compile-time settings.
+//                                                                                     There is a separate EasyLogging++ configuration file called "EasyLogging_BuildConfig.h"
+//                                                                                     that handles specifying compile-time settings.
 //
 //
 //  
@@ -110,13 +91,13 @@
 //                    (1)           void initializeEasyLogger(int argc, char ** argv);
 //
 //                  Please observe that this function is meant to be invoked with two parameters
-//                     which match the signatures of the commandline arguments provided by the OS to 
+//                     which match the signatures of the command line arguments provided by the OS to 
 //                     this Application's main() at launch. If this applications main() is expecting 
-//                     to find some of its own specical instructions from amongst these command line
+//                     to find some of its own special instructions from amongst these command line
 //                     arguments, it may choose to filter them out before calling this function. I may be
-//                     wrong but I believe all that really is needed here is the first argument recieved,
+//                     wrong but I believe all that really is needed here is the first argument received,
 //                     but to ensure proper initialization of EasyLogger++ it is recommended to all args 
-//                     recieved. I suspect it needs these so it may recieve the filepath containing the 
+//                     received. I suspect it needs these so it may receive the filepath containing the 
 //                     executable so that it is able to properly determine an appropriate relative directory
 //                     for it to populate with its log files.
 //                     
@@ -124,15 +105,15 @@
 //                  After the first function has been called, all that remains is to call the configuration function:
 //                      This function will make sure each log file is assigned its proper name and is set with accurate 
 //                      date and time synchronized to the rest of the application so that each message is reported as 
-//                      accuratly as possible. 
+//                      accurately as possible. 
 //                      
 //                    (2)           void configureEasyLogger();
 //
 //                  Be advised that after this second function has returned it shall be expected that all the necessary steps
 //                      have been performed with interfacing with EasyLogger++ and any logging-related function calls made anywhere
-//                      by this applcaitions code will be logged appropriatly. 
+//                      by this applications code will be logged appropriately. 
 //                  Seeing as the code found within this class is meant entirely for setup, there should not be any need to do anything
-//                      futher with this file for the rest of the processes lifetime.
+//                      further with this file for the rest of the processes lifetime.
 //
 //
 //
@@ -148,7 +129,7 @@
 //      The methods available for configuring EasyLogging++ exist in several different forms, from loading configuration from a file to 
 //          performing individual inline configuration function calls. It should be noted that the way this code performs all of the 
 //          configuration is through the usage of the provided configuration object, which contains internal variables representing the
-//          state of each log 'level' (target) able to recieve a configuation. To use this object, we first construct it [see
+//          state of each log 'level' (target) able to receive a configuration. To use this object, we first construct it [see
 //          step 1], then we provide to this object a specific configuration for each 'level' (target) [see step 2]. Finally we must
 //          tell the default collection of logs that we wish to have each of its 'levels' (targets) to follow our set configuration 
 //          by passing the configuration object to it with a function call [step 3]. As a bonus option before we lose this  
@@ -163,7 +144,7 @@
 //  Please Note:   (|   !!!!!  NOT ALL OF THE CONFIGURATION FOR EasyLogging++ IS DONE WITHIN THIS FILE  !!!!!   |)      
 //                  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+  
 //                  | EasyLogging++ was built to be used within a wide range of projects and thus has a very    |
-//                  |    high degree of customizability and flexability to its available functionality.         |
+//                  |    high degree of flexibility to its available functionality.                             |
 //                  |    Easylogging++ is able to allow for this flexability by both having the option to have  |
 //                  |    certain features enabled or disabled based off the presence or abscence of some        |
 //                  |    various macros during the compilation step while also through the settings available   |
@@ -187,31 +168,42 @@
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
 
+//                            //I DON"T THINK THIS IS GOING TO WORK THE WAY I HOPED
+//#if defined __FUNCTION__
+//#define FUNCTION_NAME_STRING_MACRO  "   func: " __FUNCTION__ "()" 
+//#else 
+////If this is getting ported to another compiler that provides its own function macro,
+////then try it out here. It might be better than the built in function macro that EasyLogger++
+////uses.
+//#define FUNCTION_NAME_STRING_MACRO  "   func: %func"
+//#endif //__FUNCTION__
+
+
+
 #pragma message("\n\n  Testing Requirement:\n\t\tA request has been made to include the header \"EasyLogCongiuration.h\" within compilation.\n" \
 "\t\t  Testing preconditions for determining if requested spot of inclusion has met the necessary requirements...")
 #ifdef ALLOW_ELCC_CONFIGURATION
 #pragma message("  Testing Completed:\n\t\t\"EasyLogConfiguration.h\" has detected that all proper requirements have been successfully satisfied by this location." \
 /* "\n\t\t  which help ensure that this point-of-inclusion is indeed the proper place to do so. \n" */ \
- "\n\t\t  As a result, the compilation will now be resumed without hinderance...\n")
+ "\n\t\t  As a result, the compilation will now be resumed without hindrance...\n")
 #undef ALLOW_ELCC_CONFIGURATION
 #else 
 #pragma message("\n  Testing Failed! [See Error Report] \n\n" \
-"\n \t\t\t\t[ERROR REPORT!]\n\t\t The compiler was forced to cease progress with the current compilation due to one or more detected violations against restrictions \n" \
-"         in place from integrated security measures for the header file \"EasyLogConfiguration.h\" which exist to prevent inadvertant access to it.\n" \
-"       Please be aware that this file contains several macro statements which necessitate a very specific location and manner in which this header file\n" \
-"         can safely and legally be included in a project." \
-"\n  Suggested Solutions:\n" \
+"\n \t\t\t\t[ERROR REPORT!]\n\t\t The compiler was forced to cease progress with the current compilation due to one or more detected violations against restrictions \n"                            \
+"         in place from integrated security measures for the header file \"EasyLogConfiguration.h\" which exist to prevent inadvertant access to it.\n"                                             \
+"       Please be aware that this file contains several macro statements which necessitate a very specific location and manner in which this header file\n"                                         \
+"         can safely and legally be included in a project."                                                                                                                                         \
+"\n  Suggested Solutions:\n"                                                                                                                                                                        \
 "   [RECOMMENDED]   (i) To resolve this error, simply remove each of the include statements for \"EasyLogConfiguration.h\" that caused this error to trigger\n" \
 "                  (ii) If you are looking to add logging-message functions to a source file, be aware that \"EasyLogConfiguration.h\" isn't the one you want. Try instead including \"UniversalIncludes.h\"\n" \
 "                 (iii) Otherwise, if you actually believe you have a proper place in your codebase that you wish to use for \"EasyLogConfiguration.h\", consult its internal comments \n"\
 "                        to get an understanding of which necessary requirements and steps your code can take to deactivate the triggering of this sudden-death automatic compilation error\n\n" )
 
-//This configuration file MUST only be included at one isolated place within each easylog++-assocaited project. If it is known that\n \
+//This configuration file MUST only be included at one isolated place within each easylog++-associated project. If it is known that\n \
 // a place has been selected that meets these strict criteria, then define the macro listed in the documentation to disable this\n \
 // compiler error message from preventing compilation.")
 #error Illegal Multiple Inclusions of EasyLogg++ Configuration Header
 #endif //ALLOW_ELCC_CONFIGURATION 
-
 
 #include <filesystem>
 #include <chrono>
@@ -230,6 +222,7 @@
 //It is required to appear once exactly in order for EasyLogging++ to function properly
 INITIALIZE_EASYLOGGINGPP
 #endif
+
 
 //                  +====================================================================================+
 //                  |         Functions to Call From Application to Run Setup and Configuration          |
@@ -298,7 +291,7 @@ bool configureEasyLogger() {
     //Please be aware that this entire project is using hierarchical logging, which will cause the Verbose 'Level' to be disabled
 
 
-    //Loggers have their behavior determined by state-representitive objects called el::Configurations.
+    //Loggers have their behavior determined by state-representation objects called el::Configurations.
     //el:Configurations can have the following configuration values specified to determine logging behavior:
     //       
     //      ++-----------------------------------------------------------------------------------++
@@ -374,7 +367,7 @@ bool configureEasyLogger() {
     
     
     //  -----------------------       REPORTING DATETIME FORMAT SPECIFICATION       -----------------------
-    //   How to specifiy what information and format to include in message for reporting DATETIME information
+    //   How to specify what information and format to include in message for reporting DATETIME information
     //
     //           The format of the DATETIME string to report goes inside the curly-braces 
     //           following the %datetime format specifier.
@@ -414,7 +407,7 @@ bool configureEasyLogger() {
     // -----------------------   REPORTING THREAD ID FROM WITHIN A LOG MESSAGE   -----------------------
     // Within the format string which can be assigned to each level, it is possible to use the specifier
     // '%thread' to get the current thread ID. However, when called from the main thread, this value will
-    //  be empty. Thus it is recommended to have a seperate logger for use when logging from threads while 
+    //  be empty. Thus it is recommended to have a separate logger for use when logging from threads while 
     //  the default logger will not use this specifier
  
     
@@ -442,19 +435,35 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "1");
-    //logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "[%level] %datetime{%h:%m:%s,%g} [Thread=%thread] {%loc} msg=%msg");
-    //logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m:%s.%g} [%level] '%func'\n%fbase line %line  %msg");
+#ifndef TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES
+    //If the MSVC macro __FUNCTION__ is defined, then use it, otherwise use the ELCC equivalent macro as back-up 
+#ifdef __FUNCTION__
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
+        "\n< < < < < < < < < < < < < < < <[%level]> > > > > > > > > > > > > > > >\n"
+        "+~~~~~~~~~~~~~~~~~~~~~~~~~+   file: '%fbase' line %line\n"
+        "| %datetime{%Y-%M-%d %H:%m:%s.%g} |   func: " __FUNCTION__ "()\n"
+        "+~~~~~~~~~~~~~~~~~~~~~~~~~+    msg: \"%msg\"");
+#else
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
         "\n< < < < < < < < < < < < < < < <[%level]> > > > > > > > > > > > > > > >\n"//"\n          <TRACE>              <TRACE>              <%level>\n"
         "+~~~~~~~~~~~~~~~~~~~~~~~~~+   file: '%fbase' line %line\n"
         "| %datetime{%Y-%M-%d %H:%m:%s.%g} |   func: %func\n"
-        "+~~~~~~~~~~~~~~~~~~~~~~~~~+    msg: \"%msg\"");
+        "+~~~~~~~~~~~~~~~~~~~~~~~~~+    msg: \"%msg\"");   
+#endif //ifdef __FUNCTION__
+    
+#else 
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
+        "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line " __FUNCTION__ "()");
+
+#endif 
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace)->string());
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "6");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "5242880");  //expects input type as size_t  //5 MB
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "16"); //expects input type as size_t
   
+
+
     //Configure Debug  (The macro 'USE_DEBUG_' would be defined in the header "BuildSettings.h")
 #ifndef USE_DEBUG_     
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "0");
@@ -464,18 +473,26 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "1");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "\n"
+   /*logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "\n"
         "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n"
         "  [FSMEngine %level]\n"
         "  Location: '%fbase':%line\n  Message: %msg\n"
-        "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n");
+        "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n"); */
+#ifdef __FUNCTION__
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "[%level %datetime{%H:%m:%s.%g}] in " __FUNCTION__ "()  %msg");
+#else
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "[%level %datetime{%H:%m:%s.%g}] "
+        /*PUT_COMPILER'S SPECIFIC STRING MACRO EQUIVALENT FOR '__FUNCTION__' HERE*/ " %msg");
+#endif //ifdef __FUNCTION__
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename,
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Debug)->string());
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "1");
 
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::MaxLogFileSize, "5242880");  //5 MB
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::LogFlushThreshold, "1");
-#endif 
+#endif  //#ifndef USE_DEBUG_
+
+
 
     //Configure Fatal  [Be warned that logging to FATAL will trigger the executable to abort (i.e. crash)]
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Enabled, "1");
@@ -487,6 +504,8 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::SubsecondPrecision, "6");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::MaxLogFileSize, "2048"); //There probably won't be that many fatal messages... I hope
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::LogFlushThreshold, "1");  //Try 0?
+
+
 
     //Configure Error
     logConfigurator.set(el::Level::Error, el::ConfigurationType::Enabled, "1");
@@ -508,6 +527,8 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Error, el::ConfigurationType::MaxLogFileSize, "1048576"); //1048576 Bytes = 1 MB
     logConfigurator.set(el::Level::Error, el::ConfigurationType::LogFlushThreshold, "1"); 
 
+
+
     //Configure Warning
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToFile, "1");
@@ -518,6 +539,8 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::SubsecondPrecision, "3");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::MaxLogFileSize, "1048576"); //1048576 Bytes = 1 MB
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::LogFlushThreshold, "1");
+
+
 
     //Configure Info
     logConfigurator.set(el::Level::Info, el::ConfigurationType::Enabled, "1");
@@ -530,8 +553,11 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Info, el::ConfigurationType::MaxLogFileSize, "5242880");  //5242880 Bytes = 5 MB
     logConfigurator.set(el::Level::Info, el::ConfigurationType::LogFlushThreshold, "8"); //Flush after every 8 logs
 
-    //Configure Verbose  [Verbose is Disabled]
+
+    //Configure Verbose             [Verbose Logging is Disabled]
     logConfigurator.set(el::Level::Verbose, el::ConfigurationType::Enabled, "0");
+
+
 
     //Configure Unknown
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Enabled, "1");
