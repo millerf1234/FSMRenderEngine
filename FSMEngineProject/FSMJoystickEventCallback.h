@@ -87,8 +87,8 @@ namespace FSMEngineInternal {
         //Declaration of callback function to assign to GLFW and prototypes for the two queue functions.
         //Don't call these functions outside of the implementation
         void graphicsLanguageFrameworkJoystickEventCallbackFunction(int, int);
-        std::queue<int, std::vector<int>>& recentJoystickConnections();
-        std::queue<int, std::vector<int>>& recentJoystickDisconnections();
+        std::queue<int>& recentJoystickConnections();
+        std::queue<int>& recentJoystickDisconnections();
     } //namespace JoystickEventCallbackInternal
 
 } //namespace FSMEngineInternal

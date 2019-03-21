@@ -12,6 +12,8 @@
 //            January 10, 2019  --   Ported file over from a previous project. Switched out 
 //                                   previous logging behavior of using 'fprintf' to now using 
 //                                   this projects logging system.
+//            March 20, 2019    --   Ported source code over from a different project into the 
+//                                   FSMEngine project.
 //Programmer: Forrest Miller
 
 #include "FilepathWrapper.h"
@@ -20,28 +22,13 @@
 
 
 
-//These next 2 macros allow project to compile by filling in not-yet-finished functionality
-//#ifndef ERROR
-//#define ERROR 
-//#define FPWRAPPER_ERR
-//#endif 
-//
-//#ifndef LOG
-//#define LOG 
-//#define FPWRAPPER_LOG
-//#endif
-//Also be aware that these above 2 macros are undef at the end of this file
-
-
-
-
-void FilepathWrapper::initialize() {
-	mPath_ = "";
-	mFileExists_ = false;
-	mExtension_ = ""; //= "UNKNOWN";
-	mExtensionExists_ = false;
-	mLastWriteTime_ = std::nullopt;
-}
+//void FilepathWrapper::initialize() {
+//	mPath_ = "";
+//	mFileExists_ = false;
+//	mExtension_ = ""; //= "UNKNOWN";
+//	mExtensionExists_ = false;
+//	mLastWriteTime_ = std::nullopt;
+//}
 
 FilepathWrapper::FilepathWrapper(const char * fp) {
 	//Record filepath
@@ -54,6 +41,7 @@ FilepathWrapper::FilepathWrapper(const char * fp) {
 		if (mExtension_.length() == 0u) {
 			mExtensionExists_ = false;
 		}
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 		//Attempt to record the time that the file was most recently updated
 		std::filesystem::file_time_type timeOfMostRecentModification;
 		if (getTimeOfFilesMostRecentUpdate(mPath_, timeOfMostRecentModification)) {
@@ -62,15 +50,20 @@ FilepathWrapper::FilepathWrapper(const char * fp) {
 		else {
 			mLastWriteTime_ = std::nullopt;
 		}
+#endif //FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 	}
 	else {
 		mExtensionExists_ = false;
 		mExtension_ = "";
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 		mLastWriteTime_ = std::nullopt;
+#endif //FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 	}
 }
 
-FilepathWrapper::FilepathWrapper(const std::string& fp) {
+FilepathWrapper::FilepathWrapper(const std::string& fp) : FilepathWrapper{fp.c_str()} {
+    //Use delegating constructor
+    /*
 	//Record filepath
 	mPath_ = fp;
 	//Check if file exists
@@ -95,6 +88,7 @@ FilepathWrapper::FilepathWrapper(const std::string& fp) {
 		mExtension_ = "";
 		mLastWriteTime_ = std::nullopt;
 	}
+    */
 }
 
 FilepathWrapper::FilepathWrapper(const FilepathWrapper& that) {
@@ -102,15 +96,19 @@ FilepathWrapper::FilepathWrapper(const FilepathWrapper& that) {
 	this->mFileExists_ = that.mFileExists_;
 	this->mExtension_ = that.mExtension_;
 	this->mExtensionExists_ = that.mExtensionExists_;
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 	this->mLastWriteTime_ = that.mLastWriteTime_;
+#endif
 }
 
 FilepathWrapper::FilepathWrapper(FilepathWrapper&& that) noexcept {
-	this->mPath_ = std::move(that.mPath_); 
+    this->mPath_ = that.mPath_; //std::move(that.mPath_); 
 	this->mFileExists_ = that.mFileExists_;
-	this->mExtension_ = std::move(that.mExtension_);
+    this->mExtension_ = that.mExtension_;//std::move(that.mExtension_);
 	this->mExtensionExists_ = that.mExtensionExists_;
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 	this->mLastWriteTime_ = that.mLastWriteTime_;
+#endif
 }
 
 //Changed destructor to just be '= default'
@@ -124,19 +122,23 @@ FilepathWrapper& FilepathWrapper::operator=(const FilepathWrapper& that) {
 		this->mFileExists_ = that.mFileExists_;
 		this->mExtension_ = that.mExtension_;
 		this->mExtensionExists_ = that.mExtensionExists_;
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 		this->mLastWriteTime_ = that.mLastWriteTime_;
+#endif
 	}
 	return *this;
 }
 
 FilepathWrapper& FilepathWrapper::operator=(FilepathWrapper&& that) noexcept {
 	if (this != &that) {
-		this->mPath_ = std::move(that.mPath_);
+		this->mPath_ = that.mPath_;
 		this->mFileExists_ = that.mFileExists_;
-		this->mExtension_ = std::move(that.mExtension_);
+		this->mExtension_ = that.mExtension_;
 		this->mExtensionExists_ = that.mExtensionExists_;
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 		this->mLastWriteTime_ = that.mLastWriteTime_;
-	}
+#endif
+    }
 	return *this;
 }
 
@@ -144,7 +146,9 @@ std::string FilepathWrapper::extension() const {
 	return mExtension_;
 }
 
+
 bool FilepathWrapper::hasUpdatedFileAvailable() noexcept {
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 	//If the file exists and a last-modified time for the file has been previously stored by this object
 	if ( (!mFileExists_) || (!mLastWriteTime_) ) { 
 		return false;
@@ -162,6 +166,9 @@ bool FilepathWrapper::hasUpdatedFileAvailable() noexcept {
 			return false;
 		}
 	}
+#else 
+    return false;
+#endif
 }
 
 std::string FilepathWrapper::findAndExtractFileExtension(const std::string& fp) {
@@ -175,6 +182,7 @@ std::string FilepathWrapper::findAndExtractFileExtension(const std::string& fp) 
 	}
 }
 
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 bool FilepathWrapper::getTimeOfFilesMostRecentUpdate(const std::string& fp, std::filesystem::file_time_type& lastUpdateTime) {
 	if (!file_exists(fp.c_str())) {
 		return false;
@@ -190,15 +198,19 @@ bool FilepathWrapper::getTimeOfFilesMostRecentUpdate(const std::string& fp, std:
         ss << "\nApplication has encountered an error while attempting to retrieve the\n"
             "time and date the file " << fp << "\nwas last modified.\nThis error's origin is from the Operating System.\n";
         ss << "The operating system returned the error:\n\t" << errorCodeFromOS << std::endl;
-#ifndef FPWRAPPER_LOG
-        LOG(ERROR) << ss.str();
-#endif
 		return false;
 	}
 }
+#endif //FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+
 
 bool FilepathWrapper::file_exists(const char * fp) {
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
 	return std::filesystem::exists(fp);
+#else 
+    std::ifstream f(fp);
+    return f.good();
+#endif 
 }
 
 
@@ -213,14 +225,3 @@ int FilepathWrapper::getIndexOfLastPeriodInString(const std::string& fp) {
 	}
 }
 
-
-
-#if (defined ERROR) && (defined FPWRAPPER_ERR)
-#undef ERROR
-#undef FPWRAPPER_ERR
-#endif 
-
-#if (defined LOG) && (defined FPWRAPPER_LOG)
-#undef LOG
-#undef FPWRAPPER_LOG
-#endif

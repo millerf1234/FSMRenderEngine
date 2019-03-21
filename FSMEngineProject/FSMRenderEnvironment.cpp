@@ -17,6 +17,7 @@
 #include "FSMCallbackInitializer.h"
 
 using namespace FSMEngineInternal;
+using namespace FSMEngineDefaultInitializationConstants;
 
 //This is the private internal delegating constructor that exists simply to 
 //give each member of this class an initial value. By making use of this 
@@ -103,7 +104,7 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
         glfwPollEvents();
 
         // Render
-        // Clear the colorbuffer
+        // Clear the color-buffer
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -173,8 +174,6 @@ std::string FSMRenderEnvironment::getGLFWRuntimeVersionString() const noexcept {
 ////////////////////////////     IMPLEMENTATION FUNCTIONS     /////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-static constexpr const char* SETTINGS_DIRECTORY_NAME = "Settings";
-static constexpr const char* SETTINGS_FILE_NAME = "settings.fini";
 
 //-----------------------------------------------------------------------------------------
 //                                     STEP 1 
@@ -269,7 +268,7 @@ bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
     else {
         //Find out if the 'settings.fini' file exists in this directory
         LOG(DEBUG) << "Looking for '" << SETTINGS_FILE_NAME << "' file in directory " << currentPath.string() << std::endl;
-        std::filesystem::path settingsFile{ currentPath.string() + "\\" + SETTINGS_DIRECTORY_NAME + "\\" + SETTINGS_FILE_NAME };
+        std::filesystem::path settingsFile{ currentPath.string() + "\\" + DEFAULT_SETTINGS_DIRECTORY_NAME + "\\" + SETTINGS_FILE_NAME };
         settingsFile.make_preferred();
         LOG(DEBUG) << "The full path that is being verified for existence is: " << settingsFile.string() << std::endl;
         bool fileExists = std::filesystem::exists(settingsFile, ec);
@@ -295,11 +294,12 @@ void FSMRenderEnvironment::parseSettingsFile() {
 //  STEP 1.2  [OPTION B: FILE DOES NOT EXIST]  (yet)
 //--------------
 bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
+    /*
     LOG(INFO) << "\nUnable to find an existing settings file. Generating a settings file...\n";
     auto currentPath = std::filesystem::current_path(ec);
     if (ec)
         return false;
-    std::filesystem::path settingsDirectoryPath{ currentPath.string() + "\\" + SETTINGS_DIRECTORY_NAME };
+    std::filesystem::path settingsDirectoryPath{ currentPath.string() + "\\" + DEFAULT_SETTINGS_DIRECTORY_NAME };
 
     std::filesystem::create_directory(settingsDirectoryPath, ec); //Has no effect if the directory already exists
     if (ec)
@@ -383,6 +383,7 @@ bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
         << "  [General]                                                               \n";
 
     return true;
+    */
 }
 
 

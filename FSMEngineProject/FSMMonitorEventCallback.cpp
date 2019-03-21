@@ -95,13 +95,13 @@ namespace FSMEngineInternal {
 		//storing the handles provided by GLFW to the monitorEventCallback function until they 
 		//can be processed by the application.
 
-		std::queue<GLFWmonitor*, std::vector<GLFWmonitor*>>& recentMonitorConnections() {
-			static std::queue<GLFWmonitor*,std::vector<GLFWmonitor*>> awaitingConnection;
+		std::queue<GLFWmonitor*>& recentMonitorConnections() {
+			static std::queue<GLFWmonitor*> awaitingConnection;
 			return awaitingConnection;
 		}
 
-		std::queue<GLFWmonitor*, std::vector<GLFWmonitor*>>& recentMonitorDisconnections() {
-			static std::queue<GLFWmonitor*, std::vector<GLFWmonitor*>> awaitingDisconnection;
+		std::queue<GLFWmonitor*>& recentMonitorDisconnections() {
+			static std::queue<GLFWmonitor*> awaitingDisconnection;
 			return awaitingDisconnection;
 		}
 

@@ -8,6 +8,7 @@
 #include <memory>
 #include "Application.h"
 
+#include <filesystem>
 
 int main(int argc, char ** argv) {
     std::unique_ptr<Application> app = std::make_unique<Application>(argc, argv);

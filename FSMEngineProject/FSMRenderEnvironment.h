@@ -22,6 +22,7 @@
 #include "FSMException.h"
 #include "FSMMonitor.h"
 #include "FInitSetting.h"
+#include "DefaultValuesForFSMEngine.h"
 
 constexpr const int width = 1240;
 constexpr const int height = 980;
@@ -55,6 +56,8 @@ public:
     //created through this class, instead of using the GLFW function to create a whole
     //new window, this 
     FSMRenderEnvironment();
+
+    //FSMRenderEnvironment(/* Take in a collection of Settings/data/assets to load */);
 
     //Handles the proper release of resources used by this engine  
     ~FSMRenderEnvironment();
@@ -143,7 +146,7 @@ private:
     //-------------------------------------
 
     //DELEGATING CONSTRUCTOR
-    FSMRenderEnvironment(bool); //Use this delegating constructor to ensure a complete type
+    explicit FSMRenderEnvironment(bool); //Use this delegating constructor to ensure a complete type
     //                          //exists before any initialization operations which might
     //                          //throw/fail are performed.
         

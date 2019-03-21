@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="BuildSettings.h" />
+    <ClInclude Include="DefaultValuesForFSMEngine.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FilepathWrapper.h" />
     <ClInclude Include="FInitSetting.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="GraphicsLanguage.h" />
     <ClInclude Include="GraphicsLanguageFramework.h" />
     <ClInclude Include="JoystickStatePrinter.h" />
+    <ClInclude Include="LoadableAssetCollection.h" />
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h" />
     <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -414,6 +416,7 @@
     </ClInclude>
     <ClInclude Include="UniversalIncludes.h" />
     <ClInclude Include="FSMVideoMode.h" />
+    <ClInclude Include="AsciiAsset.h" />
     <ClInclude Include="VidModeImpl.h" />
   </ItemGroup>
   <ItemGroup>
@@ -441,6 +444,7 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\glm\detail\glm.cpp" />
     <ClCompile Include="FSMVideoMode.cpp" />
+    <ClCompile Include="AsciiAsset.cpp" />
     <ClCompile Include="VidModeImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -449,7 +453,6 @@
     <None Include="glfw3.pdb" />
     <None Include="glfw3dll.exp" />
     <None Include="Notes\WINDOWS2000_tips_windows_graphics_programming_win32_gdi_and_directd.pdf" />
-    <None Include="Shaders\Basic.vert" />
     <None Include="ThirdParty\glm\detail\func_common.inl" />
     <None Include="ThirdParty\glm\detail\func_common_simd.inl" />
     <None Include="ThirdParty\glm\detail\func_exponential.inl" />

@@ -83,25 +83,31 @@
 #          obeying these syntax rules properly or not.
 
 
-
-
-  [General]
-
-
 */
 
 #include <string_view>
 #include <string>
 
-//class Setting {
-//public:
-//    Setting(std::string& name);
-//    virtual Setting();
-//
-//
-//protected:
-//
-//};
+class Setting {
+public:
+    Setting() = delete;
+    Setting(const Setting&) = delete;
+    Setting& operator=(const Setting&) = delete;
+
+
+    explicit Setting(std::string_view name);
+    explicit Setting(char * name);
+    explicit Setting(const char * name)
+    explicit Setting(const std::string& name);
+    
+    virtual ~Setting() = 0;
+
+
+private:
+    bool mFound_;
+    const std::string mName_;
+
+};
 
 
 

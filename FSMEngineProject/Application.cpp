@@ -11,7 +11,7 @@
 #include "FSMException.h"
 
 //The macro 'ALLOW_ELCC_CONFIGURATION' must be defined before this header can be included
-#define ALLOW_ELCC_CONFIGURATION  "CONFIGURE_ME_AWAY_SCOTTY!"
+#define ALLOW_ELCC_CONFIGURATION  1
 #include "EasyLogConfiguration.h"
 
 
@@ -19,10 +19,17 @@
 
 Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) {
 
-    //WAIT! Don't move the 'Initializing Application' message up here!!!
-    //How the heck is that message going to get logged if the message
-    //logging hasn't been set up yet? Instead just fake it and print it
-    //once logs get set up.
+    //WAIT! Don't move the 'Initializing Application' message up here*!!!                 *Times I have tried to
+    //How the heck is that message going to get logged if the message                          do so counter:  3
+    //logging hasn't been set up yet? Instead just pretend logging isn't ready
+    //yet and print it.
+    
+    //
+    //BUG (of sorts)
+    //   The intro message 'Initializing Application..." is printed twice if logging fails to 
+    //   properly configure yet the application is set to keep running 
+    //
+
     if (!setupMessageLogs(argc, argv)) {
         std::exit(EXIT_FAILURE);
     }
@@ -33,12 +40,16 @@ Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) 
     LOG(INFO) << "Initializing Application...";
     LOG(INFO) << "Creating directory for LOG files...DONE";
    
-    LOG(INFO) << "Inchoating A Render Environment...";
 
+    LOG(INFO) << "Inchoating A Render Environment...";
     if (!createRenderEnvironment()) {
         std::exit(EXIT_FAILURE);
     }
    
+
+
+    //The rest of the constructor code below here is just testing some functions
+
 
 
     //Test GLFW compile version reporting

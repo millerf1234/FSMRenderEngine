@@ -4,17 +4,19 @@
 // Date:           October 11, 2018    
 // Programmer:     Forrest Miller
 //
-// Description:    This class wraps a filepath to keep track of a FilePaths 
+// Description:    This class wraps a file-path to keep track of a FilePaths 
 //                 state (file exists, file extension) and provides a basic interface.
 //				   
-// NOTES:          I am adding this class after I have already created several
-//				   other classes that handle managing filepaths on their own. 
-//				   I am not sure yet if I will get around to changing their
-//                 implementations to use this class.
+// Backstory:      So this isn't the first Filepath wrapper class I have written and used, 
+//                 though this one does happen to be the first one to take some advantage of
+//                 C++17's <filesystem> library features. 
+//                 Actually since the <filesystem> library released, much of this class's purpose 
+//                 has left, since it's really just serving as a (probably much slower) alternative
+//                 to all the functionality provided by the built-in std::filesystem::path.  
 //
 //
 //
-// Windows Filesystem/SystemClock Note: 
+// Windows File-system/System-Clock Note: 
 //              I copied the following post by Billy Robert O'Neal III found at
 //   https://developercommunity.visualstudio.com/content/problem/251213/stdfilesystemfile-time-type-does-not-allow-easy-co.html
 //
@@ -40,97 +42,138 @@
 #ifndef FILEPATH_WRAPPER_H_
 #define FILEPATH_WRAPPER_H_
 
+//If <string_view> is not available, then simply uncomment the following macro
+#define FILEPATH_WRAPPER_NO_STRING_VIEW_USEAGE 1
+
+//If <filesystem> is not available, then simple uncomment the following macro 
+#define FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE 1
+
+//Must have <optional> to use this type.
+
 #include <fstream>
 #include <sstream>
 #include <algorithm>
 #include <chrono>     //for tracking  'last_write_time'
-#include <filesystem> 
 #include <optional>  //To protect against uninitialized FileWriteTime
-
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+#include <filesystem> 
+#endif //FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+#ifndef FILEPATH_WRAPPER_NO_STRING_VIEW_USEAGE 
+#include <string_view>
+#endif //FILEPATH_WRAPPER_NO_STRING_VIEW_USEAGE
 
 
 static inline constexpr int NOT_FOUND = -1;
 
 class FilepathWrapper final {
 public:
-	FilepathWrapper() = delete;
-	FilepathWrapper(const char * fp);
-	FilepathWrapper(const std::string& fp);
+    FilepathWrapper() = delete;
+    explicit FilepathWrapper(const char * fp);
+    explicit FilepathWrapper(const std::string& fp);
 
-	FilepathWrapper(const FilepathWrapper&);
-	FilepathWrapper(FilepathWrapper&&) noexcept;
-	~FilepathWrapper() = default;
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+    explicit FilepathWrapper(std::filesystem::path fp) : FilepathWrapper((fp.make_preferred()).string()) { ; }
+#endif //FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+#ifndef FILEPATH_WRAPPER_NO_STRING_VIEW_USEAGE
+    explicit FilepathWrapper(const std::string_view fp) : FilepathWrapper(fp.data()) { ; }
+#endif //FILEPATH_WRAPPER_NO_STRING_VIEW_USEAGE
 
-	FilepathWrapper& operator=(const FilepathWrapper&);
-	FilepathWrapper& operator=(FilepathWrapper&&) noexcept;
+    FilepathWrapper(const FilepathWrapper&);
+    FilepathWrapper(FilepathWrapper&&) noexcept;
+    ~FilepathWrapper() = default;
 
-	//Returns the filepath as a std::string
-	std::string filepath() const { return mPath_; }
+    FilepathWrapper& operator=(const FilepathWrapper&);
+    FilepathWrapper& operator=(FilepathWrapper&&) noexcept;
 
-	//Checks to see if the file at the filepath exists
-	bool exists() const { return mFileExists_; }
+    //Returns the file path as a std::string
+    std::string filepath() const { return mPath_; }
 
-	//Checks to see if a file extension was detected in the filepath
-	bool extensionExists() const { return mExtensionExists_; }
+    //Checks to see if the file at the file-path exists
+    bool exists() const { return mFileExists_; }
 
-	//Returns the extension of the stored filepath. The extension is defined as 
-	//all of the characters occurring after the last '.' character in the 
-	//string, not including the '.' itself. If no '.' character is present,
-	//an empty string will be returned
-	std::string extension() const;
+    //Checks to see if a file extension was detected in the file path
+    bool extensionExists() const { return mExtensionExists_; }
 
-	//Queries this object to determine if it was able to record the time of last modification
-	//to its wrapped file. This is necessary because it is not guaranteed that all operating systems
-	//will play nicely with having the age of all of their files queried and may fail to return a valid
-	//value. The function hasUpdatedFileAvailable() will always return false if this function returns false.
-	inline bool isAbleToDiscoverUpdatesToFile() const { return bool(mLastWriteTime_); } //Explicitly call operator bool on std::optional mLastWriteTime_
+    //Returns the extension of the stored file path. The extension is defined as 
+    //all of the characters occurring after the last '.' character in the 
+    //string, not including the '.' itself. If no '.' character is present,
+    //an empty string will be returned
+    std::string extension() const;
 
-	//Attempts to query the file located at this object's stored filepath to see if there 
-	//is an updated version of the file available. Will only return true if a newer version
-	//of the file is detected, otherwise will always return false. This function will update 
-	//this object's local copy of the file's most recent time of modification, so calling this
-	//function more than once will result in it returning false for all calls past the first call
-	//until the file gets modified again.
-	bool hasUpdatedFileAvailable() noexcept;
+    //Queries this object to determine if it was able to record the time of last modification
+    //to its wrapped file. This is necessary because it is not guaranteed that all operating systems
+    //will play nicely with having the age of all of their files queried and may fail to return a valid
+    //value. The function hasUpdatedFileAvailable() will always return false if this function returns false.
+    inline bool isAbleToDiscoverUpdatesToFile() const { return bool(mLastWriteTime_); } //Explicitly call operator bool on std::optional mLastWriteTime_
 
-	/////////////////////////////////
-	//   Static Utility Functions  //
-	/////////////////////////////////
+    //Attempts to query the file located at this object's stored file-path to see if there 
+    //is an updated version of the file available. Will only return true if a newer version
+    //of the file is detected, otherwise will always return false. This function will update 
+    //this object's local copy of the file's most recent time of modification, so calling this
+    //function more than once will result in it returning false for all calls past the first call
+    //until the file gets modified again.
+    bool hasUpdatedFileAvailable() noexcept;
 
-	//Returns empty string if no file extension is found
-	static std::string findAndExtractFileExtension(const std::string& fp);
+    /////////////////////////////////
+    //   Static Utility Functions  //
+    /////////////////////////////////
 
-	//Checks with the operating system to determine the system time when a file was most 
-	//recently updated. Will print out an error message if the OS encounters a problem 
-	//querying the file and return false, in which case DO NOT USE THE file_time_type variable!
-	static bool getTimeOfFilesMostRecentUpdate(const std::string& fp, std::filesystem::file_time_type& lastUpdateTime);
+    //Returns empty string if no file extension is found
+    static std::string findAndExtractFileExtension(const std::string& fp);
 
-	//Checks to see if the file string corresponds to an actual file on the system
-	static bool file_exists(const char * fp);
-	
-	
+    //Checks to see if the file string corresponds to an actual file on the system
+    static bool file_exists(const char * fp);
+
+
+    /////////////////////////////////
+    //   C++17 Functions  //
+    /////////////////////////////////
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+    //Does not check to see if this object's path is valid, simple converts this object's
+    //internal path into a std::filesystem::path
+    explicit operator std::filesystem::path() const {
+        std::filesystem::path thePath{ mPath_ };
+        return thePath;
+    }
+    //Checks with the operating system to determine the system time when a file was most 
+    //recently updated. Will print out an error message if the OS encounters a problem 
+    //querying the file and return false, in which case DO NOT USE THE file_time_type variable!
+    static bool getTimeOfFilesMostRecentUpdate(const std::string& fp, std::filesystem::file_time_type& lastUpdateTime);
+#else 
+    inline explicit operator void() const { ; }
+    //No support for the <filesystem> library on this platform. Function will always return 
+    //false
+    static bool constexpr getTimeOfFilesMostRecentUpdate(const std::string& fp, void */*std::filesystem::file_time_type&*/ lastUpdateTime) {
+        return false;
+    }
+#endif  //FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+
+
+
+
 
 private:
-	std::string mPath_;
-	bool mFileExists_;
-	std::string mExtension_; //The ".xxxx" at the end of a filepath (does not necessarily exist for all filepaths)
-	bool mExtensionExists_;  
+    std::string mPath_;
+    bool mFileExists_;
+    std::string mExtension_; //The ".xxxx" at the end of a filepath (does not necessarily exist for all filepaths)
+    bool mExtensionExists_;
 
-	//bool mHasLastWriteTimeAvailableForComparison_; //boolean flag to ensure that mLastWriteTime_ has an accurate value.
-	std::optional<std::filesystem::file_time_type> mLastWriteTime_; //Records the system time when the file was last updated. Can be used to 
-	//                                               //tell if a file has an updated version compared with the currently loaded version.
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+    //bool mHasLastWriteTimeAvailableForComparison_; //boolean flag to ensure that mLastWriteTime_ has an accurate value.
+    std::optional<std::filesystem::file_time_type> mLastWriteTime_; //Records the system time when the file was last updated. Can be used to 
+    //                                               //tell if a file has an updated version compared with the currently loaded version.
+#endif //FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+
+    /////////////////////////////////
+    //   Private Helper Functions  //
+    /////////////////////////////////
+    //void initialize();  //Delegating constructors are now used instead
 
 
-	/////////////////////////////////
-	//   Private Helper Functions  //
-	/////////////////////////////////
-	void initialize();
-	
+    //Returns -1 if no period is found in the path
+    static int getIndexOfLastPeriodInString(const std::string&);
 
-	//Returns -1 if no period is found in the path
-	static int getIndexOfLastPeriodInString(const std::string& );
-
-};
+    };
 
 
 #endif //FILEPATH_WRAPPER_H_
