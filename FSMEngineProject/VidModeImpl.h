@@ -26,7 +26,7 @@ public:
 
     FSMVideoMode::VidModeImpl(const FSMVideoMode::VidModeImpl&);
     FSMVideoMode::VidModeImpl(FSMVideoMode::VidModeImpl&&) noexcept;
-    FSMVideoMode::VidModeImpl& operator=(const  FSMVideoMode::VidModeImpl&);
+    FSMVideoMode::VidModeImpl& operator=(const FSMVideoMode::VidModeImpl&);
     FSMVideoMode::VidModeImpl& operator=(FSMVideoMode::VidModeImpl&&) noexcept;
 
     std::string toString() const noexcept;

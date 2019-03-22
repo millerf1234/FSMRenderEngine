@@ -948,6 +948,9 @@
     <ClInclude Include="LoadableAssetCollection.h">
       <Filter>Source Files\RenderEnvironment\Initialization</Filter>
     </ClInclude>
+    <ClInclude Include="AsciiTextFile.h">
+      <Filter>Source Files\Utility\Asset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -996,6 +999,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AsciiAsset.cpp">
+      <Filter>Source Files\Utility\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="AsciiTextFile.cpp">
       <Filter>Source Files\Utility\Asset</Filter>
     </ClCompile>
   </ItemGroup>

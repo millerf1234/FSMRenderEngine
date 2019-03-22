@@ -4,15 +4,16 @@
 //See header file for more detail
 //
 // Important Implementation Notes: A lot of the logic in this class is dependent upon this object's member vector
-//								  'mLineOffsets_' being completly accurate based on the stored filetext string. If any
+//								  'mLineOffsets_' being completely accurate based on the stored filetext string. If any
 //                                modifications are to be made to stored filetext, the private member function
-//                                'parseFileText()' must be called afterwords to recreate this vector, which will ensure 
+//                                'parseFileText()' must be called afterwards to recreate this vector, which will ensure 
 //                                that all of the additional public functions keep working properly. 
 //
 //              Todo:         This class was written before the "FilepathWrapper" existed. This class could/should be refactored to 
 //                            use FilepathWrapper to provide filepath management. 
 
 #include "AsciiAsset.h"
+#if 0
 
 namespace AssetLoadingInternal {
 
@@ -266,7 +267,7 @@ namespace AssetLoadingInternal {
                 "retrieve line number %d from the file %s\n"
                 "This file consists of %d lines in total.\n"
                 "Note that the first line of text is treated as line 0, which makes the\n"
-                "range of lines eligible for retrival as [0, %d].\n\n", line,
+                "range of lines eligible for retrieval as [0, %d].\n\n", line,
                 mFilepath_.c_str(), mFileTextLineCount_, (mFileTextLineCount_ - 1));
             return std::move("");
         }
@@ -283,7 +284,7 @@ namespace AssetLoadingInternal {
         }
         else if (mHasLocalCopyOfFileText_) {
             fprintf(WRNLOG, "\nWARNING! aquireLocalCopyOfFileText() was called from this AsciiAsset\n"
-                "object but this object already has aquired a local copy.\nThis may be a bug.\n\n");
+                "object but this object already has acquired a local copy.\nThis may be a bug.\n\n");
             return;
         }
         else {
@@ -302,7 +303,7 @@ namespace AssetLoadingInternal {
     //Implementation Overview: 
     //			To avoid unnecessary string creations/deletions, this functions' implementation
     //			works by first going through the entire stored filetext string and marking each 
-    //			line that is eligable for deletion by storing its corresponding line number in 
+    //			line that is eligible for deletion by storing its corresponding line number in 
     //          a vector. Then after confirming that there are indeed lines that should be removed,                    
     //          this function copies the original filetext line by line into a new filetext string,
     //          skipping over lines that are to be deleted. Finally the contents of the new string
@@ -360,14 +361,14 @@ namespace AssetLoadingInternal {
             textLineIter++;
         }
 
-        //If we detected the filetext contains lines that are eligable for deletion
+        //If we detected the filetext contains lines that are eligible for deletion
         if (linesToDelete.size() > 0u) {
 
             //Implementation note: The way the deleting works is a little unconventional. Basically, once
             //it has been determined that there are lines that need deleting, the filetext is copied 
             //line by line to a new string. However if it is determined a line should be deleted, instead 
             //that line is skipped over without being copied. After the copying is finished, the new filetext
-            //is parsed just as if it were a freshly aquired file. 
+            //is parsed just as if it were a freshly acquired file. 
 
             //Now we can use substrings to create the updated filetext
             std::string updatedFileText;
@@ -388,7 +389,7 @@ namespace AssetLoadingInternal {
             }
 
             mFileText_.swap(updatedFileText);
-            parseFileText(); //Reparse the new fileText
+            parseFileText(); //Re-parse the new fileText
         }
 
     }
@@ -474,3 +475,5 @@ namespace AssetLoadingInternal {
 
 
 } //namespace AssetLoadingInternal
+
+#endif //0

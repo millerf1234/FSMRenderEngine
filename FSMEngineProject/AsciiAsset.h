@@ -2,22 +2,19 @@
 //               (for instance '.obj' and '.mtl' assets are ASCII-based) which provides
 //               provides a simple interface for dealing with the data.
 //               This class has no notion of what type of file it is wrapping, its only job is
-//               to manage filetext aquisition and management. It is the responsibility of code
-//               using this class to make sure that the aquired filetext is not an empty string.
+//               to perform filetext acquisition and management. It is the responsibility of code
+//               using this class to make sure that the acquired filetext is not an empty string.
 //
-// (NOTE ON HOW THIS FITS INTO OVERALL PROJECT): This class is designed to be held by other classes
-//                                               which manage parsing and storing the loaded data. 
-//                                               Thus this class is seperate from the whole 'AssetInterface'
-//                                               inheritance structure.
 //
 // Programmer:   Forrest Miller
-// Date:         October 9-23, 2018  
+// Date:         October 9-23, 2018    -- Wrote Class
+//               March 21, 2019        -- Refactored for FSMEngine project 
 //
 //
 //
 // POSSIBLE ISSUES/PITFALLS/INCONSISTENCIES:
 //
-//      Carriage Returns:       Right now this class's implementation detects a new line of text by
+//       Carriage Returns:       Right now this class's implementation detects a new line of text by
 //                              looking for newline characters (or the '/0' end-of-c-string character)
 //                              and as such has no notion of carriage returns. Asset files which include
 //                              carriage returns will thus run into problems when using this class.
@@ -32,7 +29,7 @@
 //                                treat the first line of text of the filetext string as line 0. 
 //                                However this might not match up properly with both general 
 //                                intuition and the member variable 'mFileTextLineCount_'.
-//                                Basically just be carful when using these functions to ensure
+//                                Basically just be careful when using these functions to ensure
 //                                the correct line of text is being accessed.
 //                             
 //     
@@ -41,29 +38,28 @@
 //                         its implementation more coherent and make more sense. For example, 
 //                         this class manages its filepath itself instead of relying on the FilepathWrapper
 //                         object type, but still uses the static functionality of the FilepathWrapper 
-//                         class to verify a files existance. 
+//                         class to verify a files existence. 
 //                         Basically this class is functional as is but it's implementation could 
-//                         desperatly use an overhaul and some refactoring. 
+//                         desperately use an overhaul and some refactoring. 
 
 #pragma once
 
 #ifndef ASCII_ASSET_H_
 #define ASCII_ASSET_H_
 
+#if 0
+
 #include <iostream>   //std::string, fprintf, etc...
 #include <fstream>    //provides file i/o
 #include <sstream>    //for stringstream functionality (might not need this explicitly)
 #include <algorithm>  //for std::find
 #include <vector>	  //for std::vector
+//#include <string_view>
 
 #include "FilepathWrapper.h"  //Really this class should use the object defined in this header for filepath 
 //                            //management, but right now this class does it's own filepath management and just
 //                            //uses a few static functions from this file. 
 
-//#include "LoggingMessageTargets.h" 
-
-#define fprintf LOG 
-#define MSGLOG INFO) <<
 
 #include "UniversalIncludes.h"
 
@@ -216,7 +212,7 @@ namespace AssetLoadingInternal {
 
         //Loads a string copy of the filetext into this object's memory. Intended to 
         //allow finer control over if/when this class acquires filetext. Has no effect if
-        //a copy of the FileText has already been aquired.
+        //a copy of the FileText has already been acquired.
         void aquireLocalCopyOfFileText();
 
 
@@ -273,5 +269,7 @@ namespace AssetLoadingInternal {
     };
 
 } //namespace AssetLoadingInternal 
+
+#endif //0
 
 #endif ASCII_ASSET_H_

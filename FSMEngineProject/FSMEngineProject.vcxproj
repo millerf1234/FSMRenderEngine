@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AsciiTextFile.h" />
     <ClInclude Include="BuildSettings.h" />
     <ClInclude Include="DefaultValuesForFSMEngine.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
@@ -421,6 +422,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AsciiTextFile.cpp" />
     <ClCompile Include="FilepathWrapper.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
     <ClCompile Include="FSMJoystickEventCallback.cpp" />

@@ -104,7 +104,13 @@ public:
     //to its wrapped file. This is necessary because it is not guaranteed that all operating systems
     //will play nicely with having the age of all of their files queried and may fail to return a valid
     //value. The function hasUpdatedFileAvailable() will always return false if this function returns false.
-    inline bool isAbleToDiscoverUpdatesToFile() const { return bool(mLastWriteTime_); } //Explicitly call operator bool on std::optional mLastWriteTime_
+    inline bool isAbleToDiscoverUpdatesToFile() const { 
+#ifndef FILEPATH_WRAPPER_NO_STD_FILESYSTEM_USAGE
+        return bool(mLastWriteTime_); //Explicitly call operator bool on std::optional mLastWriteTime_
+#else
+        return false;
+#endif
+    }
 
     //Attempts to query the file located at this object's stored file-path to see if there 
     //is an updated version of the file available. Will only return true if a newer version
@@ -141,8 +147,7 @@ public:
     static bool getTimeOfFilesMostRecentUpdate(const std::string& fp, std::filesystem::file_time_type& lastUpdateTime);
 #else 
     inline explicit operator void() const { ; }
-    //No support for the <filesystem> library on this platform. Function will always return 
-    //false
+    //No support for the <filesystem> library on this platform. Function will always return false.
     static bool constexpr getTimeOfFilesMostRecentUpdate(const std::string& fp, void */*std::filesystem::file_time_type&*/ lastUpdateTime) {
         return false;
     }
