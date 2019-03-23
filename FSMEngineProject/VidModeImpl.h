@@ -21,7 +21,7 @@
 class FSMVideoMode::VidModeImpl final {
 public:
     FSMVideoMode::VidModeImpl() = delete;
-    VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
+    FSMVideoMode::VidModeImpl(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM);
     ~VidModeImpl() noexcept = default;
 
     FSMVideoMode::VidModeImpl(const FSMVideoMode::VidModeImpl&);

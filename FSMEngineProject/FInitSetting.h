@@ -88,6 +88,8 @@
 #include <string_view>
 #include <string>
 
+#ifdef LESS_OLD
+
 class Setting {
 public:
     Setting() = delete;
@@ -109,8 +111,7 @@ private:
 
 };
 
-
-
+#endif
 
 
 #ifdef OLD

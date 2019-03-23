@@ -207,7 +207,7 @@ bool FSMRenderEnvironment::loadSettings() {
             }
             else if (ecCreate) UNLIKELY {
                  LOG(ERROR) << "\nError reported by Operating System while attempting\n"
-                    << "to generate configuration file (" << SETTINGS_FILE_NAME << ")!\n"
+                    << "to generate configuration file (" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << ")!\n"
                     << "Operating System Error Message:\n\t"
                     << ecCreate.message() << std::endl;
             return false;
@@ -218,7 +218,7 @@ bool FSMRenderEnvironment::loadSettings() {
         }
         else /*if (ecFind) */ UNLIKELY { //
             LOG(ERROR) << "\nError reported by Operating System while attempting\n"
-                << "to load configuration file (" << SETTINGS_FILE_NAME << ")!\n"
+                << "to load configuration file (" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << ")!\n"
                 << "Operating System Error Message:\n\t"
                 << ecFind.message() << std::endl;
             return false;
@@ -266,9 +266,12 @@ bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
     if (ec)
         return false;
     else {
+#if 1
+        return true;
+#elif ready
         //Find out if the 'settings.fini' file exists in this directory
-        LOG(DEBUG) << "Looking for '" << SETTINGS_FILE_NAME << "' file in directory " << currentPath.string() << std::endl;
-        std::filesystem::path settingsFile{ currentPath.string() + "\\" + DEFAULT_SETTINGS_DIRECTORY_NAME + "\\" + SETTINGS_FILE_NAME };
+        LOG(DEBUG) << "Looking for '" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << "' file in directory " << currentPath.string() << std::endl;
+        std::filesystem::path settingsFile{ currentPath.string() + "\\" + /*DEFAULT_SETTINGS_DIRECTORY_NAME*/ + "\\" + /*SETTINGS_FILE_NAME*/ "UNNAMED" };
         settingsFile.make_preferred();
         LOG(DEBUG) << "The full path that is being verified for existence is: " << settingsFile.string() << std::endl;
         bool fileExists = std::filesystem::exists(settingsFile, ec);
@@ -276,6 +279,7 @@ bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
             return false;
         else
             return fileExists;
+#endif
     }
 }
 
@@ -384,6 +388,7 @@ bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
 
     return true;
     */
+    return true;
 }
 
 

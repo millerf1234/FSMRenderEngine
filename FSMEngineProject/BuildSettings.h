@@ -322,7 +322,7 @@
 //  (*The space saving comes from only reporting which of the 3 active possible options [4 if counting 'off'] is active when
 //      reporting on 'GLM_FORCE_PRECISION_***')
 //  (Double precision is skipped if GLM set to be forced to only use single-precision)
-#define FSM_ENGINE_REPORT_GLM_REQUESTED_CONFIGURATION 1
+//#define FSM_ENGINE_REPORT_GLM_REQUESTED_CONFIGURATION 1
 
 
 // MACRO:  GLM_FORCE_MESSAGES

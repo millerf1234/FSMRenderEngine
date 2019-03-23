@@ -15,9 +15,10 @@
 #include "EasyLogConfiguration.h"
 
 
-
+#include "AsciiTextFile.h"
 
 Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) {
+
 
     //WAIT! Don't move the 'Initializing Application' message up here*!!!                 *Times I have tried to
     //How the heck is that message going to get logged if the message                          do so counter:  3
@@ -45,7 +46,11 @@ Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) 
     if (!createRenderEnvironment()) {
         std::exit(EXIT_FAILURE);
     }
-   
+
+    AsciiTextFile temp("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\FSMEngineProject\\LOGS\\2019_081_15_10_33\\info.log");
+    std::cout << "\nINFO LOG HAS " << temp.countNumberOfLines() << " lines of ASCII text!\n";
+    AsciiTextFile temp2("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\FSMEngineProject\\LOGS\\2019_081_15_10_33\\info.log");
+    std::cout << "\nINFO LOG HAS " << temp2.countNumberOfLines() << " lines of ASCII text!\n";
 
 
     //The rest of the constructor code below here is just testing some functions

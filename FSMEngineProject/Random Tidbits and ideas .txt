@@ -10,6 +10,10 @@ that maybe one day will prove useful...
 That, and I just can't handle my previous 'system' for this sort of thing which was a 
 combination of open browser tabs and bookmarks.
 
+//-------------------------------------------
+// Copying Moving and 'noexcept'
+http://www.hlsl.co.uk/blog/2017/12/1/c-noexcept-and-move-constructors-effect-on-performance-in-stl-containers
+
 //----------------------------------------------------------------
    MSCV Compiler Intrinsics 
       CPUID

@@ -38,18 +38,18 @@
 //corresponding VidModeImpl versions
 
 FSMVideoMode::FSMVideoMode(const GLFWvidmode& vid, int physicalWidthMM, int physicalHeightMM) noexcept {
-    pVidModeImpl_ = std::make_unique< FSMVideoMode::VidModeImpl>(vid, physicalWidthMM, physicalHeightMM);
+    pVidModeImpl_ = std::make_unique<FSMVideoMode::VidModeImpl>(vid, physicalWidthMM, physicalHeightMM);
 }
 FSMVideoMode::~FSMVideoMode() = default;
 FSMVideoMode::FSMVideoMode(const FSMVideoMode& that) {
-    pVidModeImpl_ = std::make_unique< FSMVideoMode::VidModeImpl>(*(that.pVidModeImpl_));
+    pVidModeImpl_ = std::make_unique<FSMVideoMode::VidModeImpl>(*(that.pVidModeImpl_));
 }
 FSMVideoMode::FSMVideoMode(FSMVideoMode&& that) noexcept {
-    *this = std::move(that);
+    *this = std::move(that); //Call the move assignment operator
 }
 FSMVideoMode& FSMVideoMode::operator=(const FSMVideoMode& that) {
     if (this != &that) {
-        pVidModeImpl_ = std::make_unique< FSMVideoMode::VidModeImpl>(*(that.pVidModeImpl_));
+        pVidModeImpl_ = std::make_unique<FSMVideoMode::VidModeImpl>(*(that.pVidModeImpl_));
     }
     return *this;
 }

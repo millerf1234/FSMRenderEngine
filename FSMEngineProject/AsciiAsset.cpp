@@ -9,8 +9,7 @@
 //                                'parseFileText()' must be called afterwards to recreate this vector, which will ensure 
 //                                that all of the additional public functions keep working properly. 
 //
-//              Todo:         This class was written before the "FilepathWrapper" existed. This class could/should be refactored to 
-//                            use FilepathWrapper to provide filepath management. 
+
 
 #include "AsciiAsset.h"
 #if 0
