@@ -1,8 +1,18 @@
-// File:                 BuildSettings.h
-//
-//
-//  NOTE TO SELF:         STOP WRITING DOCUMENTATION. Most of this will be wrong anyways.
-//                        Wait until things have been proven to work and aren't in mid development
+// File:                     BuildSettings.h
+// 
+//                     [TL;DR] The (incomplete) documentation in this file contains known MISTAKES.  
+//  NOTE TO OTHER PEOPLE:        This file is a configuration file. When this header was first introduced to the 
+//                           codebase, every macro written in it was meant to include thorough documentation.  
+//                           Unfortunately the reality of coding is that things change, and to make matters 
+//                           worse there were mistakes in the original design of the code. Ideally one day 
+//                           in the future I will rewrite this entire file to make sure everything stated
+//                           is 100% correct, but unfortunately for this document in its current state 
+//                           there are quite a few things documented that turned out not to behave in
+//                           reality the way I was expecting (A major example being my attempt to toggle
+//                           which of the versions of the library 'glad' was compiled through macros). 
+// 
+//  NOTE TO SELF:           STOP WRITING DOCUMENTATION. Most of this will be wrong anyways.
+//                          Wait until things have been proven to work and aren't in mid development
 //
 //
 // Quick Description:    Defines macros that can either be set manually (recommended) or rigged to be
@@ -105,7 +115,7 @@
 //  |                |                             |   gets final (and first) say over how much the underlying OpenGL context is left alone to do its thing by enabling forced         |       common DEBUG macros most compilers provide. Luckily I was early in my design process when                                                         
 //  |                |                             |   synchronization between it and the application.                                                                                 |       I decided to just rely on my own. See: https://stackoverflow.com/questions/2290509/debug-vs-ndebug                                                          
 //  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                                        
-//  |                |                             |                                                                                                                                   |                                                     
+//  |                |                             |       WARNING! THIS SECTION HAS SETTINGS THAT DON'T WORK AS DOCUMENTED BECAUSE I MADE ASSUMPTIONS THAT WERE WRONG!                |                                                     
 //  |  Section 2)    |      "GLAD Behavior"        | Basically provides manual overrides for building the GLAD OpenGL function loader library in a DEBUG or RELEASE configuration      |                                                              
 //  |                |                             |   plus some additional options which affect how verbose GLAD should be when using its DEBUG configuration.                        |                                                                            
 //  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                                         
@@ -151,12 +161,25 @@
 
 
 
+//UPDATE: This Macro turned out to not work as expected, so the strategy of manually disabling the deprecated warning
+//       around each call to a deprecated C function is used when required.
+////--------------------------------------------------------------------------------------------------------------  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+//////////////////    SECTION TO ADD IN A FUTURE REORGANIZATION OF THIS DOCUMENT    /////////////////////////////  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+//// Allow C functions that normally require special windows versions to work anyways. Eventually these C functions  
+//// should be updated to their secure versions (the '_s' versions) or newer functions should be used instead.  
+//// See:    https://docs.microsoft.com/en-us/cpp/c-runtime-library/security-features-in-the-crt?view=vs-2017  
+////          https://stackoverflow.com/questions/16883037/remove-secure-warnings-crt-secure-no-warnings-from-projects-by-default-in-vis   
+//// IMPORTANT! The macro must be defined as 1. Failure to define it at 1 will cause it to not work properly   
+//#ifdef _MSC_VER
+//#define _CRT_SECURE_NO_WARNINGS 1 
+//#endif 
 
 
-
-// ============================================================================================================
+// ============================================================================================================  
 //  ( SECTION 1 )   Global Project Build Behavior
-// ============================================================================================================
+// ============================================================================================================  
 
 // MACRO:  USE_DEBUG_
 // Dependencies: 
@@ -197,38 +220,40 @@
 
 
 
-
+// !!!!!!!!!!!!!!!!!            WARNING SOME OF THE SECTION 2 SETTINGS DON'T WORK            !!!!!!!!!!!!!!!!!
+// SO IT TURNS OUT THAT I WAS WRONG AND THE WAY THE COMPILER COMPILES DOESN'T ALLOW THE FOLLOWING SETTING TO 
+//  WORK THE WAY I DOUCMENTED THEM TO WORKL... I SUGGEST ALL OF SECTION 2 BE IGNORED UNTIL I CAN REWRITE IT!
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  ( SECTION 2 )  GLAD Behavior Overrides 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/*                                              Choose at most one of the following two 
-  +-------------------------------------------------------------------------------------------------------------------------------------+  
+/// /*                                              Choose at most one of the following two 
+///  +-------------------------------------------------------------------------------------------------------------------------------------+  
+///
+///  // MACRO:   FORCE_GLAD_VERSION_DEBUG_                                                                                                 |
+///  // Dependencies:                                                                                                                      |
+///  //    - Must not also have defined FORCE_GLAD_VERSION_RELEASE_                                                                        |
+///  //                                                                                                                                    |
+///  //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
+///  //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |
+///  //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
+///  //                                                                                                                                    
+///  //#define FORCE_GLAD_VERSION_DEBUG_ 1                                                                                     
+///
+///  //                                                                                                                                    |
+///  // MACRO:   FORCE_GLAD_VERSION_RELEASE_                                                                                               |                                          
+///  // Dependencies:                                                                                                                      |
+///  //    - Must not also have defined FORCE_GLAD_VERSION_DEBUG_                                                                          |                                                              
+///  //                                                                                                                                    |
+///  //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
+///  //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |                                             
+///  //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
+///  //
+///  //#define FORCE_GLAD_VERSION_RELEASE_ 1
+///
+/// /*+-------------------------------------------------------------------------------------------------------------------------------------+   */
 
-  // MACRO:   FORCE_GLAD_VERSION_DEBUG_                                                                                                 |
-  // Dependencies:                                                                                                                      |
-  //    - Must not also have defined FORCE_GLAD_VERSION_RELEASE_                                                                        |
-  //                                                                                                                                    |
-  //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
-  //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |
-  //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
-  //                                                                                                                                    
-  //#define FORCE_GLAD_VERSION_DEBUG_ 1                                                                                     
-
-  //                                                                                                                                    |
-  // MACRO:   FORCE_GLAD_VERSION_RELEASE_                                                                                               |                                          
-  // Dependencies:                                                                                                                      |
-  //    - Must not also have defined FORCE_GLAD_VERSION_DEBUG_                                                                          |                                                              
-  //                                                                                                                                    |
-  //This macro is used to override the version of glad to be built with the project. glad is the utility library                        |
-  //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |                                             
-  //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
-  //
-  //#define FORCE_GLAD_VERSION_RELEASE_ 1
-
-/*+-------------------------------------------------------------------------------------------------------------------------------------+   */
-
-
+// These will work still (probably)
 /*   todo     
    None of these next 3 settings have been implemented.*/
 
@@ -271,9 +296,9 @@
 // this has not been yet tested by me.
 #define ENABLE_GLFUNCTION_PROFILING_ 1
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//  ( END SECTION 2 )   
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///  ( END SECTION 2 )   
+/// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
@@ -364,7 +389,7 @@
 // Dependencies:
 //     - none  (probably)      [I haven't tested for any dependencies/exclusions with this and the previous 4 commands]
 //
-// Similar to the four above macros in that it prevents GLM from detecting a part of the build envirnment during 
+// Similar to the four above macros in that it prevents GLM from detecting a part of the build environment during 
 // compilation. The documentation states that this macro is able to prevent GLM from detecting the "C++ Compiler
 // Standard Support" (see GLM Manual section 2.5). I am not sure what exactly this means or what impact is has,
 // but feel free to play around with it if you like disabling features for fun and profit.
@@ -375,11 +400,11 @@
 // Dependencies: 
 //     - none
 //
-// Prevents implicit conversions between GLM types. Essentially there are coversions allowed by the GLSL
+// Prevents implicit conversions between GLM types. Essentially there are conversions allowed by the GLSL
 // that are probably not the desired behavior we want to be allowing in out application, such as  
 // implicit conversions between vector and matrix types, or even worse implicit conversions from 
 // integer vectors to float vectors. (My Opinion: Typically conversions such as these are always best done explicitly
-// rather than allowing them to happen implcitly. This mostly is to always have in place as many options as possible 
+// rather than allowing them to happen implicitly. This mostly is to always have in place as many options as possible 
 // so as to avoid unexpected bugs plus to a much lesser extent to prevent unnecessary type conversions which may in theory
 // impact performance). To understand why this macro is even needed at all is due to the guiding philosophy which determines
 // the nature of GLM's implementation. For GLM, the main goal is to mimic the GLSL standard as closly as possible, so thus by
@@ -534,26 +559,26 @@
 //want to use the trace log... Actually wait I have an idea... See the macro after this one.
 #define ENABLE_TRACE_LOG 1
 
-
+/*  //UPDATE: REMOVED THIS OPTION!
 //Macro:  TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES                                     
 // Dependencies: 
 // -  The Trace Log must be enabled for this macro to have any effect
 //
-// Basically by enabling this macro the trace log will be signaled to know that it's job of
+// Basically by enabling this macro the trace log will be signaled to know that its job of
 //   simply reporting the trace information is tough enough and that it should ignore any 
 //   incoming data passed to it. This is risky since something important may be missed, but
 //   then again sending important messages to the trace log in-and-of-itself seems fairly 
 //   inadvisable. Having this available might also make the Trace log usable for reporting 
 //   the trace!
 #define TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES "YouUsedToCallMeOnYourTraceLog_LateNightWhenYouNeedMyStackTrace"
-
+*/
 
 
 
 
 /* //The following section is a work in progress and is currently not supported 
 //
-//     Note that the following 2 macros are used by EasyLogging++ during it's initialization
+//     Note that the following 2 macros are used by EasyLogging++ during its initialization
 //     to determine what names it will assign to the 2 default logging targets. I highly
 //      recommend that these do NOT get changed because that would just be bad...
 #ifndef ELPP_DEFAULT_LOGGER
