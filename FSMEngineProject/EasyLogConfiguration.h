@@ -168,17 +168,6 @@
 #ifndef EASY_LOG_CONFIGURATION_H_
 #define EASY_LOG_CONFIGURATION_H_
 
-//                            //I DON"T THINK THIS IS GOING TO WORK THE WAY I HOPED
-//#if defined __FUNCTION__
-//#define FUNCTION_NAME_STRING_MACRO  "   func: " __FUNCTION__ "()" 
-//#else 
-////If this is getting ported to another compiler that provides its own function macro,
-////then try it out here. It might be better than the built in function macro that EasyLogger++
-////uses.
-//#define FUNCTION_NAME_STRING_MACRO  "   func: %func"
-//#endif //__FUNCTION__
-
-
 
 #pragma message("\n\n  Testing Requirement:\n\t\tA request has been made to include the header \"EasyLogCongiuration.h\" within compilation.\n" \
 "\t\t  Testing preconditions for determining if requested spot of inclusion has met the necessary requirements...")
@@ -190,7 +179,7 @@
 #else 
 #pragma message("\n  Testing Failed! [See Error Report] \n\n" \
 "\n \t\t\t\t[ERROR REPORT!]\n\t\t The compiler was forced to cease progress with the current compilation due to one or more detected violations against restrictions \n"                            \
-"         in place from integrated security measures for the header file \"EasyLogConfiguration.h\" which exist to prevent inadvertant access to it.\n"                                             \
+"         in place from integrated security measures for the header file \"EasyLogConfiguration.h\" which exist to prevent inadvertent access to it.\n"                                             \
 "       Please be aware that this file contains several macro statements which necessitate a very specific location and manner in which this header file\n"                                         \
 "         can safely and legally be included in a project."                                                                                                                                         \
 "\n  Suggested Solutions:\n"                                                                                                                                                                        \
@@ -210,9 +199,29 @@
 #include <sstream>
 #include <iomanip>
 #include <optional>
+
+
+
+#ifdef _MSC_VER 
+//Windows recommends to instead just include the entire <Windows.h> header, but the specific headers are:
+#include <sysinfoapi.h>  //Provides function 'GetSystemTime()'     //see: https://docs.microsoft.com/en-us/windows/desktop/api/sysinfoapi/nf-sysinfoapi-getsystemtime  
+#include <minwinbase.h>  //Provides struct SYSTEMTIME              //see: https://docs.microsoft.com/en-us/windows/desktop/api/minwinbase/ns-minwinbase-systemtime  
+constexpr const bool USE_WINDOWS_API_TO_GET_TIME_STRING = true;
+#ifdef _WIN64
+//If platform is 64-bit, it is best to play it safe when converting pointers within the win32 API (I think)
+//see: https://docs.microsoft.com/en-us/windows/desktop/WinProg64/the-tools
+#include <Basetsd.h>  //Provides macros for safely dealing with both 32 and 64 bit pointers
+constexpr const bool USE_64_BIT_CONVERSION_FUNCTIONS_FOR_WINDOWS_API_CALLS = true;
+#endif //_WIN64
+#else 
+//Add a check for POSIX and then use POSIX functions to get time from OS?
 #include <ctime>
+constexpr const bool USE_WINDOWS_API_TO_GET_TIME_STRING = false;
+#endif //_MSC_VER
+
 
 #include "BuildSettings.h"  //Needed to check for DEBUG log feature level
+
 
 #include "ThirdParty/easyloggingpp/include/easylogging++.h" 
 
@@ -236,6 +245,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for s
     bool checkIfAlreadyConfigured();
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level); //Call with 'Global' level to just set up a directory for logs
     std::optional<std::filesystem::path> getLogFileDirectory(); 
+    std::string getTimeTag();                   //Helper function for getting the current date and time in string form
 } 
 
 
@@ -291,37 +301,7 @@ bool configureEasyLogger() {
     //Please be aware that this entire project is using hierarchical logging, which will cause the Verbose 'Level' to be disabled
 
 
-    //Loggers have their behavior determined by state-representation objects called el::Configurations.
-    //el:Configurations can have the following configuration values specified to determine logging behavior:
-    //       
-    //      ++-----------------------------------------------------------------------------------++
-    //      ++---------------------------------+-------------------------------------------------++
-    //      ||            (enum)               |                                                 ||
-    //      ||  el::ConfigurationType::Format  |                   Effect                        ||
-    //      ||                                 |                                                 ||
-    //      ++---------------------------------+-------------------------------------------------++
-    //      ||                                 |                                                 ||
-    //      ||            Enabled              |            To log or not to log?                ||
-    //      ||                                 |                                                 ||
-    //      ||            ToFile               |               To log to file?                   ||
-    //      ||                                 |                                                 ||
-    //      ||        ToStandardOutput         |  i.e. to log to screen/console/terminal etc...  ||
-    //      ||                                 |                                                 ||
-    //      ||            Format               |     Determines the format of log messages       ||
-    //      ||                                 |                                                 ||
-    //      ||           Filename              |  Sets where to write log files for this level --||-----> Be aware! Full File Path expected 
-    //      ||                                 |                                                 ||
-    //      ||      SubsecondPrecision         |  Specifies the digits of subsecond precision----||-----> limited to integers in range:  1 <= Precision <= 6        
-    //      ||                                 |                                                 ||
-    //      ||        MaxLogFileSize           |                    Duh                          ||
-    //      ||                                 |                                                 ||
-    //      ||       LogFlushThreshold         |   log events to store before flushing buffer    ||
-    //      ||                                 |                                                 ||
-    //      ++________________________________ +_________________________________________________++
-    //     ```````````````````````````````````  ````````````````````````````````````````````````
-    //
-    //     Note that these don't cover the complete set of el::ConfigurationType::Format enums. 
-    
+   
        
     //--------------------------------------------------------------------------------------------------------//
     //   At this point, it is time to configure what we want output for each logging level to look like.      //  
@@ -425,7 +405,36 @@ bool configureEasyLogger() {
     //   |    10 MB    is     10485760 Bytes      |     1 GB    is   1073741824 Bytes      |
     //   +----------------------------------------+----------------------------------------+
 
-
+     //Loggers have their behavior determined by state-representation objects called el::Configurations.
+    //el:Configurations can have the following configuration values specified to determine logging behavior:
+    //       
+    //      ++-------------------------------------------------------------------------------------++
+    //      ++---------------------------------+---------------------------------------------------++
+    //      ||            (enum)               |                                                   ||
+    //      ||  el::ConfigurationType::Format  |                    Effect                         ||
+    //      ||                                 |                                                   ||
+    //      ++---------------------------------+---------------------------------------------------++
+    //      ||                                 |                                                   ||
+    //      ||            Enabled              |             To log or not to log?                 ||
+    //      ||                                 |                                                   ||
+    //      ||            ToFile               |                To log to file?                    ||
+    //      ||                                 |                                                   ||
+    //      ||        ToStandardOutput         |   i.e. to log to screen/console/terminal etc...   ||
+    //      ||                                 |                                                   ||
+    //      ||            Format               |      Determines the format of log messages        ||
+    //      ||                                 |                                                   ||
+    //      ||           Filename              |   Sets where to write log files for this level ---||-----> Be aware! Full File Path expected 
+    //      ||                                 |                                                   ||
+    //      ||      SubsecondPrecision         |   Specifies the digits of subsecond precision ----||-----> limited to integers in range:  1 <= Precision <= 6        
+    //      ||                                 |                                                   ||
+    //      ||        MaxLogFileSize           | Max Log File Size (see table of byte conversions) ||
+    //      ||                                 |                                                   ||
+    //      ||       LogFlushThreshold         |     Log events to store before flushing buffer    ||
+    //      ||                                 |                                                   ||
+    //      ++_________________________________+___________________________________________________++
+    //        ````````````````````````````````` ```````````````````````````````````````````````````
+    //
+    //     Note that these don't cover the complete set of el::ConfigurationType::Format enums. 
 
     ////////////////////
     ////        Step 2      SET CONFIGURATION FOR EACH LEVEL 
@@ -435,29 +444,14 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "0");
-//#ifndef TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES
-//#ifdef __FUNCTION__
-//    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-//        "%level [%datetime{%Y-%M-%d | %H:%m:%s.%g}] '%fbase' line=%line " __FUNCTION__ "()\nMSG=%msg");
-//#else 
-//    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-//        "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line %func()\nMSG=%msg");
-//#endif 
-//#else 
-//#ifdef __FUNCTION__
-//    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-//       "%level [%datetime{%M-%d  %H:%m:%s.%g}] '%fbase' line=%line " __FUNCTION__ "()");
-//#else 
-//    //__FUNCTION__
-        logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-            "%level[%datetime{%Y-%M-%d|%H:%m:%s.%g}]'%fbase' line=%line %func()");
-//#endif //__FUNCTION__
-//#endif //TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
+    //       "[%datetime{%Y-%M-%d|%H:%m:%s.%g}]    '%fbase'  line=%line      %func()");
+        "[%datetime{%Y-%M-%d|%H:%m:%s.%g}]    '%fbase'  line %line               %func()");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace)->string());
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "6");
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "5242880");  //expects input type as size_t  //5 MB
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "16"); //expects input type as size_t
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "6");  //expects uint
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "67108864");  //expects input type as size_t  //64 MB
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "256"); //expects input type as size_t
   
 
 
@@ -475,12 +469,7 @@ bool configureEasyLogger() {
         "  [FSMEngine %level]\n"
         "  Location: '%fbase':%line\n  Message: %msg\n"
         "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n"); */
-#ifdef __FUNCTION__
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "[%level %datetime{%H:%m:%s.%g}] in " __FUNCTION__ "()  %msg");
-#else
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "[%level %datetime{%H:%m:%s.%g}] "
-        /*PUT_COMPILER'S SPECIFIC STRING MACRO EQUIVALENT FOR '__FUNCTION__' HERE*/ " %msg");
-#endif //ifdef __FUNCTION__
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "\n[%level Line %line '%fbase'] %msg\n");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename,
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Debug)->string());
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "1");
@@ -645,54 +634,8 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
         }
     }
 
-    //I am still searching for a more modern algorithm to do this... Had a few false positives for
-    //things to try that made me start rewriting the function only to discover that the new techniques
-    //flat out didn't work or they secretly relied on what I was doing in the old implementation anyways. 
-#if defined USE_MORE_MODERN_ALGORITHM_TO_GET_DATE_TIME
-    std::optional<std::filesystem::path> getLogFileDirectory() {
-        //Static filepath will be initialized first time this function is called.
-        //After returning it will remain initialized throughout the remaining lifetime
-        //of the program, thus allowing us to access is again simply by calling this function
-        static std::filesystem::path logDirectory{}; 
-
-        //We can tell if there is already a path to our directory for holding out logs by just seeing it 
-        //the filepath is empty (i.e. just created)
-        if (!(logDirectory.empty())) { //If filepath is not empty, we already have created one and can return it
-            return std::make_optional<std::filesystem::path>(logDirectory);
-        }
-        else { //no filepath yet exists 
-            //Thus we must create one
-            std::error_code ec;
-            ec.clear(); 
-            //This sets logDirectory to the same filepath as from where we launched our '.exe' 
-            logDirectory = std::filesystem::current_path(ec); 
-            if (ec) {
-                LOG(ERROR) << "Unable to communicate with filesystem to set up directory for log files!\n"
-                    << "The OS reports error: " << ec.message() << "\n\n";
-                return std::nullopt;
-            }
-            else { //we're in business
-                logDirectory = logDirectory.lexically_normal(); //Do this step just in case anything is weird about our filepath
-                logDirectory = logDirectory.string() + "\\LOGS\\"; //We are going to want to move into a subdirectory titled 'LOGS'
-                logDirectory = logDirectory.make_preferred(); //Ensures each '/' and '\' in filepath are all set to OS-preferred separator 
 
 
-                //Now it is time to append a unique identifier onto the end of it. Date and time 
-                //will pretty reliably be unique enough for our purposes.
-                //An example tag could look like: 2019_060_09_46_32      [year_dayOfYear_Hour_Min_Sec]
-                std::stringstream tag; //Tag is to be built into stringstream
-               
-
-                //OOps it turns out that the 'modern' implementation I thought didn't rely upon std::localtime,
-                //but I was wrong. It just was really good at hiding the fact that it used it. 
-            
-            
-            }
-        }
-    
-    }
-
-#else 
     //I apologize in advance for how confusing this function's implementation is
     std::optional<std::filesystem::path> getLogFileDirectory() {
         static std::filesystem::path logDirectory {}; //Static filepath will be initialized first time this function is called.
@@ -716,43 +659,8 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 logDirectory = logDirectory.string() + "/LOGS/";
                 logDirectory = logDirectory.make_preferred(); //Ensures each '/' and '\' in filepath are all set to OS-preferred separator 
                 
-
-                //Now it is time to append a unique identifier onto the end of it. Date and time will be unique (hopefully)
-                std::stringstream tag; //Tag is to be built into stringstream
-                auto timetag = std::chrono::system_clock::now(); //This is the system clock. However to get it into a format that will make a nice filepath tag,
-                time_t timetag2 = (std::chrono::system_clock::to_time_t(timetag)); //we have to do some crazy conversions from all these different time representations.
-                                                                   
-                /////////////////////
-                //
-                //    HACK   Use of deprecated function
-                //
-                //MSVC considers the C function 'localtime' to be deprecated since it is not thread safe and (i think) can cause buffer overflow. It is intended to be 
-                //replaced with 'localtime_s()' on windows or localtime_r() on POSIX-compliant. To use localtime_s though there needs to be some macros defined, which
-                //are:
-                //    check to make sure ' __STDC_LIB_EXT1__ ' is defined be the implementation
-                //    define ' __STDC_WANT_LIB_EXT1__ '  before the header 'time.h' is included.
-                //https://en.cppreference.com/w/c/chrono/localtime
-                //https://en.cppreference.com/w/cpp/chrono/c/localtime
-                //https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
-                //
-                // OR  just do this hack until C++20 provides a much easier way to do this 
-                //
-#pragma warning( push )
-#pragma warning( disable : 4996 ) 
-                auto timetagC = std::localtime(&timetag2); //I'm not really sure what is going on but it works
-#pragma warning ( pop )
-                //End of hack
-                /////////////////////
-
-                //  Reference: https://en.cppreference.com/w/cpp/io/manip/put_time
-                //Now we can extract the information we need
-                tag << std::put_time(timetagC, "%Y_%j_%H_%M_%S"); //Puts the 'day of the year', 'year', 'hour', 'minute', and 'second' into a stringstream
-                
-                std::string timetagString = tag.str();
-               // LOG(DEBUG) << "\nTimetag string is: " << timetagString;
-                //Remove any spaces that may have sneaked their way into the path
-               // timetagString.erase(remove(timetagString.begin(), timetagString.end(), ' '), timetagString.end());
-               // LOG(DEBUG) << "\nTimetag string after removing spaces is: " << timetagString;
+                //Now it is time to append a unique identifier onto the end of it. Date and time will be unique 
+                std::string timetagString = getTimeTag(); 
 
                 //Finally we can build the filepath
                 logDirectory = logDirectory.string() + timetagString;
@@ -769,7 +677,103 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             }
         }
     }
-#endif // USE_MORE_MODERN_ALGORITHM_TO_GET_DATE_TIME
+
+
+
+    //The idea of this function is to get the current time and date from the operating 
+    //system and format it into a std::string object with human-readable formatting to be
+    //used in formulating a syntactically valid filepath. Unfortunately this task is easier
+    //said then done, especially when building with modern MSVC. 
+    std::string getTimeTag() {
+
+        //The formated timetag is built using a stringstream
+        std::stringstream tag; 
+
+        if constexpr (USE_WINDOWS_API_TO_GET_TIME_STRING) {
+            //The Windows API is used to get the system time in a struct which looks like:
+            //   typedef struct _SYSTEMTIME {
+            //       WORD wYear;
+            //       WORD wMonth;
+            //       WORD wDayOfWeek;
+            //       WORD wDay;
+            //       WORD wHour;
+            //       WORD wMinute;
+            //       WORD wSecond;
+            //       WORD wMilliseconds;
+            //   } SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
+            FILETIME timeFromOS;
+
+            GetSystemTime(&timeFromOS);
+
+        }
+        else {
+            //We can use C++11's <chrono> library to get the current time from the system clock.
+            std::chrono::time_point timepointFromSystemClock = std::chrono::system_clock::now();
+
+            //Here is where things start to get a bit hairy. Unfortunately the main purpose of <chrono>
+            //is to provide a utility for measuring durations of time and (as of C++17) does not
+            //contain functionality to allow direct conversions of its types into usable date-time strings.                   (C++20 is expected to expand the available functionality of <chrono>)
+            //So the best <chrono> can offer us is a function to convert our timepoint to a time_t,
+            //which is a very old-school type which dates back to the C darkages (well, actually to
+            //1988 and the first POSIX standard).                                                                         //see: https://en.wikipedia.org/wiki/Unix_time#History
+
+
+            const time_t timetag2 = (std::chrono::system_clock::to_time_t(timepointFromSystemClock));
+
+
+
+#if 0
+
+            const time_t const * constTimeTag2 = &timetag2;
+#ifdef _MSC_VER
+            //MSVC has deprecated many C functions and replaced them with their own '_s' versions. Since we are to use the C function 'localtime()' here to get 
+            //the date and time from the OS, we check to see if our compiler is MSVC and if so, then we must use 'localtime_s()'.
+            tm timetagC;
+            errno_t err = 0; //0 means no error
+            err = localtime_s(&timetagC, constTimeTag2);
+            if (err != 0) {
+                fprintf(stderr, "\n\nError occurred within CRT function 'localtime_s()'! Error code is %d!\n"
+                    "For more information on error codes, do Internet search for meanings\n"
+                    "of variables of type 'errno_t'.\n\n", err);
+            }
+#else
+            auto timetagC = std::localtime(&timetag2);
+#endif
+
+            //                /////////////////////
+            //                //
+            //                //    HACK   Use of deprecated function
+            //                //
+            //                //MSVC considers the C function 'localtime' to be deprecated since it is not thread safe and (i think) can cause buffer overflow. It is intended to be 
+            //                //replaced with 'localtime_s()' on windows or localtime_r() on POSIX-compliant. To use localtime_s though there needs to be some macros defined, which
+            //                //are:
+            //                //    check to make sure ' __STDC_LIB_EXT1__ ' is defined be the implementation
+            //                //    define ' __STDC_WANT_LIB_EXT1__ '  before the header 'time.h' is included.
+            //                //https://en.cppreference.com/w/c/chrono/localtime
+            //                //https://en.cppreference.com/w/cpp/chrono/c/localtime
+            //                //https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
+            //                //
+            //                // OR  just do this hack until C++20 provides a much easier way to do this 
+            //                //
+            //                // UPDATE: Instead of disabling warnings to make this function call, the macro '#define _CRT_SECURE_NO_WARNINGS 1' has been added to the BuildSettings.h file
+            //                //         which allows for use of the deprecated C functions which otherwise block compilation
+            ////#pragma warning( push )
+            ////#pragma warning( disable : 4996 ) 
+            //                auto timetagC = std::localtime(&timetag2); 
+            ////#pragma warning ( pop )
+            //                //End of hack
+            //                /////////////////////
+            //
+            //                //  Reference: https://en.cppreference.com/w/cpp/io/manip/put_time
+            //                //Now we can extract the information we need
+                           // tag << put_time(timetagc, "%Y_%j_%H_%M_%S");
+            tag << std::put_time(&timetagC, "%Y_%j_%H_%M_%S"); //Puts the 'day of the year', 'year', 'hour', 'minute', and 'second' into a stringstream
+#endif
+        }
+
+
+        return tag.str();
+    }
 
 
 }  //namespace EASYLOGPP_CONFIGURATION_INTERNAL
