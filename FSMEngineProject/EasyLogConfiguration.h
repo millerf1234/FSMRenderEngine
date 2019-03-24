@@ -163,6 +163,7 @@
 //  Programmer:      Forrest Miller
 //  Date:            January 10, 2019 --    Started implementing file, got outline and file creation in place but left configuration unfinished
 //                   February 27, 2019  --  Resumed work towards finishing implementation
+//                   March 24, 2019   --    Moved the very confusing and hacky date-time retrieval code to its own file
 
 
 #ifndef EASY_LOG_CONFIGURATION_H_
@@ -201,23 +202,7 @@
 #include <optional>
 
 
-
-#ifdef _MSC_VER 
-//Windows recommends to instead just include the entire <Windows.h> header, but the specific headers are:
-#include <sysinfoapi.h>  //Provides function 'GetSystemTime()'     //see: https://docs.microsoft.com/en-us/windows/desktop/api/sysinfoapi/nf-sysinfoapi-getsystemtime  
-#include <minwinbase.h>  //Provides struct SYSTEMTIME              //see: https://docs.microsoft.com/en-us/windows/desktop/api/minwinbase/ns-minwinbase-systemtime  
-constexpr const bool USE_WINDOWS_API_TO_GET_TIME_STRING = true;
-#ifdef _WIN64
-//If platform is 64-bit, it is best to play it safe when converting pointers within the win32 API (I think)
-//see: https://docs.microsoft.com/en-us/windows/desktop/WinProg64/the-tools
-#include <Basetsd.h>  //Provides macros for safely dealing with both 32 and 64 bit pointers
-constexpr const bool USE_64_BIT_CONVERSION_FUNCTIONS_FOR_WINDOWS_API_CALLS = true;
-#endif //_WIN64
-#else 
-//Add a check for POSIX and then use POSIX functions to get time from OS?
-#include <ctime>
-constexpr const bool USE_WINDOWS_API_TO_GET_TIME_STRING = false;
-#endif //_MSC_VER
+#include "GetSystemDateTime.h"    
 
 
 #include "BuildSettings.h"  //Needed to check for DEBUG log feature level
@@ -245,6 +230,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for s
     bool checkIfAlreadyConfigured();
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level); //Call with 'Global' level to just set up a directory for logs
     std::optional<std::filesystem::path> getLogFileDirectory(); 
+    std::filesystem::path makeUniquePathIfOneAlreadyExistsWithThisName(const std::filesystem::path& path);
     std::string getTimeTag();                   //Helper function for getting the current date and time in string form
 } 
 
@@ -323,6 +309,7 @@ bool configureEasyLogger() {
     auto possibleFileForLog = EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Global);
 
     if (possibleFileForLog->empty()) {
+        LOG(DEBUG) << "The function call to create a filepath for logs returned an empty optional!";
         LOG(WARNING) << "\nAn issue was encountered setting up a directory for LOG files.\n"
                      << "All LOG output will be directed to the default file!\n\n";
         return false;
@@ -584,7 +571,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             return true;
         
         else {
-            hasBeenConfigured = true;
+            hasBeenConfigured = true; 
             return false;
         }
 
@@ -667,18 +654,67 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
 
                 //Create the new directory
                 if (!std::filesystem::create_directories(logDirectory)) {
-                    LOG(WARNING) << "\nAn error occurred while making a directory for logging files!\n";
-                    return std::nullopt;
+                    //Perhaps this directory already exists for some reason. 
+                    //Let's try to slightly modify the filepath to make it unique...
+                    logDirectory = makeUniquePathIfOneAlreadyExistsWithThisName(logDirectory);
+                    if (!std::filesystem::create_directories(logDirectory)) {
+                        LOG(WARNING) << "\nAn error occurred while making a directory for logging files!\n";
+                        return std::nullopt;
+                    }
                 }
-                else {  //YAY we did it!
+                //else {  //YAY we did it!
                     ///LOG(INFO) << "\nLog files for this program will be stored in folder:\n\t" << logDirectory.string();
                     return std::make_optional<std::filesystem::path>(logDirectory);
-                }
+                //}
             }
         }
     }
 
+    std::filesystem::path makeUniquePathIfOneAlreadyExistsWithThisName(const std::filesystem::path& path) {
+        std::string pathStr = path.string();
+        std::filesystem::path uniquePath(pathStr + std::string("_1")); //Then append an identifier
+        if (!std::filesystem::exists(uniquePath)) { //See if appending "_1" gave us a unique path...
+            return uniquePath; //the path is unique, return our unique path
+        }
+        //Otherwise, our first attempt at creating the unique path failed, so now let's iterate through
+        //the existing directories until we find a path that doesn't yet exist
+        int directoryCounter = 1;
+        std::filesystem::directory_iterator dirIter(uniquePath);
+        do {
+            directoryCounter++;
+            std::string tag = "_";
+            tag.append(std::to_string(directoryCounter));
+            uniquePath = path.string() + tag; 
 
+            dirIter++;
+            if (dirIter._At_end()) {
+                break;
+            }
+        } while ((dirIter->path == uniquePath));
+        
+        //At last, we have our uniquePath
+        return uniquePath;
+
+        //std::string pathStr = path.string();
+        //auto strIter = pathStr.end(); //Start with an iterator at the end of the string
+        //strIter--; //Move to the last character of the string
+        //if (!std::isdigit(*strIter)) { //If last character isn't a number
+        //    std::filesystem::path uniquePath (pathStr + std::string("_1")); //Then append an identifier
+        //    //But wait, there is chance we already did this, so now we must see if a directory of this name already exists...
+        //    if (!std::filesystem::exists(uniquePath)) {
+        //        return uniquePath;
+        //    } //Else if the path does exist, then the last character of an
+        //    //existing path is a number, so we start iterating on that number
+        //}
+        ////Try instead to use a directory_iterator
+        //std::filesystem::directory_iterator = 
+
+        /*while ('9' == *strIter)
+                strIter--;
+            if ('_' == *strIter)
+        }*/
+
+    }
 
     //The idea of this function is to get the current time and date from the operating 
     //system and format it into a std::string object with human-readable formatting to be
@@ -686,8 +722,9 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
     //said then done, especially when building with modern MSVC. 
     std::string getTimeTag() {
 
+#if 0
         //The formated timetag is built using a stringstream
-        std::stringstream tag; 
+        std::stringstream tag;
 
         if constexpr (USE_WINDOWS_API_TO_GET_TIME_STRING) {
             //The Windows API is used to get the system time in a struct which looks like:
@@ -703,7 +740,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             //   } SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
             FILETIME timeFromOS;
 
-            GetSystemTime(&timeFromOS);
+            // GetSystemTime(&timeFromOS);
 
         }
         else {
@@ -768,13 +805,31 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             //                //Now we can extract the information we need
                            // tag << put_time(timetagc, "%Y_%j_%H_%M_%S");
             tag << std::put_time(&timetagC, "%Y_%j_%H_%M_%S"); //Puts the 'day of the year', 'year', 'hour', 'minute', and 'second' into a stringstream
-#endif
+#endif //0
+            return tag.str();
         }
-
-
-        return tag.str();
+#endif //0
+        std::stringstream tag;
+        tag /*<< "TheImplementationForGettingDateAndTimeIsBeingReimplementedInASeperateFile"*/ << __DATE__ << __TIME__ ;
+        std::string tagString = tag.str();
+        auto tagIter = tagString.begin();
+        for (; tagIter != tagString.end(); tagIter++) {
+            switch (*tagIter) {
+            default:
+                break;
+            case (' '):
+                *tagIter = '_';
+                break;
+            case (','):
+                *tagIter = '_';
+                break;
+            case (':'):
+                *tagIter = '_';
+                break;
+            }
+        }
+        return tagString;
     }
-
 
 }  //namespace EASYLOGPP_CONFIGURATION_INTERNAL
 
