@@ -1,4 +1,11 @@
 //
+//  FSMEmgine NOTICE: This file contains several minor additions/modifications to provide necessary
+//                    compatibility and configuration with the FSMEngine project. These 
+//                    modifications are numerous enough to not be individually marked, but are 
+//                    pretty much all just pre-processor statements. 
+//                    
+//
+//
 //  Bismillah ar-Rahmaan ar-Raheem
 //
 //  Easylogging++ v9.96.5
@@ -15,10 +22,21 @@
 //  http://muflihun.com
 //
 
-#include "..\..\..\EasyLogging_BuildConfig.h" //This header has been added to this file to provide config macros to configure elpp for FSMEngine project
+#pragma once
 
 #ifndef EASYLOGGINGPP_H
 #define EASYLOGGINGPP_H
+
+#include "..\..\..\EasyLogging_BuildConfig.h" //This header has been added to this file to provide config macros to configure elpp for FSMEngine project
+
+//To make sure the macros contained in "EasyLogging_BuildConfig.h" are in effect during compilation, the 
+//following test is performed. If this macro is not defined at this point, then something is wrong.
+#ifndef FSMENGINE_CONFIRM_ELPP_CONFIGUATION_MACROS_ARE_DEFINED
+#pragma message("\nWARNING! ELPP CONFIGURATION MACROS LOCATED IN SEPEARTE FILE\n" \
+                "HAVE FAILED TO BE TAKEN INTO ACCOUNT DURING COMPILATION!\n")
+#endif
+
+
 // Compilers and C++0x/C++11 Evaluation
 #if __cplusplus >= 201103L
 #  define ELPP_CXX11 1

@@ -201,12 +201,9 @@
 #include <iomanip>
 #include <optional>
 
-
-#include "GetSystemDateTime.h"    
-
+#include "GetSystemDateTime.h"  //Used when generating a directory name for LOG files
 
 #include "BuildSettings.h"  //Needed to check for DEBUG log feature level
-
 
 #include "ThirdParty/easyloggingpp/include/easylogging++.h" 
 
@@ -223,7 +220,17 @@ INITIALIZE_EASYLOGGINGPP
 //                  +====================================================================================+
 //Please see the comments describing these two functions above under the section titled 'USAGE'
 void initializeEasyLogger(int argc, char ** argv);  //Gets EasyLogger up and running. Parameters 'argc' and 'argv' should be forwarded from command line parameters passed at launch 
+bool configureEasyLogger();
 
+
+//---------------------------------------------------------------------------------------------
+//Optional Logger State Query Functions [Only call these after calling initializeEasyLogger()]
+
+//Report only enabled flags
+std::string reportEnabledLoggerConfigurationFlags() noexcept;
+//Report the state of every possible flag
+std::string reportAllLoggerConfigurationFlags() noexcept;
+//--------------------------------------------------------------------------------------------
 
 
 //Function prototypes for some implementation functions
@@ -488,14 +495,20 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Error, el::ConfigurationType::ToStandardOutput, "1");
     //logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "[%level Time=%datetime{%h:%m:%s}]  %func\n(line %line '%fbase') %msg");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "\n"
-        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-        "~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERRO\n"
-        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-        "  [FSMEngine %level]\n"
-        "  Location: '%fbase':%line\n  Message: %msg\n"
-        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-        "ROR!~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~\n"
-        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+      //  "~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERRO\n"
+      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+#ifdef USE_DEBUG_
+        "\n\n[FSMEngine %level]\n"
+        "  Location: '%fbase':%line\n  Message: %msg"
+#else 
+        "\n\n[FSMEngine %level]\n"
+        "Error Message: %msg\n"
+#endif 
+      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+      //  "ROR!~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~\n"
+      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    );
     logConfigurator.set(el::Level::Error, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Error)->string());
     logConfigurator.set(el::Level::Error, el::ConfigurationType::SubsecondPrecision, "3");
@@ -559,8 +572,99 @@ bool configureEasyLogger() {
 
 
     return true;
-
 }
+
+
+//The configuration flags being reported here can be found in a macro in the "EasyLogging_BuildConfig.h" file.
+std::string reportEnabledLoggerConfigurationFlags() noexcept {
+    std::ostringstream enabledConfigFlags;
+    if (el::Loggers::hasFlag(el::LoggingFlag::NewLineForContainer))
+        enabledConfigFlags << "NewLineForContainer\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified))
+        enabledConfigFlags << "AllowVerboseIfModuleNotSpecified\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::LogDetailedCrashReason))
+        enabledConfigFlags << "LogDetailedCrashReason\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog))
+        enabledConfigFlags << "DisableApplicationAbortOnFatalLog\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::ImmediateFlush))
+        enabledConfigFlags << "ImmediateFlush \n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::StrictLogFileSizeCheck))
+        enabledConfigFlags << "StrictLogFileSizeCheck\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::ColoredTerminalOutput))
+        enabledConfigFlags << "ColoredTerminalOutput\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::MultiLoggerSupport))
+        enabledConfigFlags << "MultiLoggerSupport\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::DisablePerformanceTrackingCheckpointComparison))
+        enabledConfigFlags << "DisablePerformanceTrackingCheckpointComparison\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::DisableVModules))
+        enabledConfigFlags << "DisableVModules\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::DisableVModulesExtensions))
+        enabledConfigFlags << "DisableVModulesExtensions\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::HierarchicalLogging))
+        enabledConfigFlags << "HierarchicalLogging\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::CreateLoggerAutomatically))
+        enabledConfigFlags << "CreateLoggerAutomatically\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::AutoSpacing))
+        enabledConfigFlags << "AutoSpacing \n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::FixedTimeFormat))
+        enabledConfigFlags << "FixedTimeFormat\n";
+    if (el::Loggers::hasFlag(el::LoggingFlag::IgnoreSigInt))
+        enabledConfigFlags << "IgnoreSigInt\n";
+    return enabledConfigFlags.str();
+}
+
+std::string reportAllLoggerConfigurationFlags() noexcept {
+    std::ostringstream configFlags;
+
+    configFlags << "\nNewLineForContainer:                                ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::NewLineForContainer);
+
+    configFlags << "\nAllowVerboseIfModuleNotSpecified:                 ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
+
+    configFlags << "\nLogDetailedCrashReason                            ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::LogDetailedCrashReason);
+
+    configFlags << "\nDisableApplicationAbortOnFatalLog                 ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
+
+    configFlags << "\nImmediateFlush                                    ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::ImmediateFlush);
+
+    configFlags << "\nStrictLogFileSizeCheck                            ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::StrictLogFileSizeCheck);
+
+    configFlags << "\nColoredTerminalOutput                             ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::ColoredTerminalOutput);
+
+    configFlags << "\nDisablePerformanceTrackingCheckpointComparison    ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisablePerformanceTrackingCheckpointComparison);
+
+    configFlags << "\nDisableVModules                                   ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisableVModules);
+        
+    configFlags << "\nDisableVModulesExtensions                         ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisableVModulesExtensions);
+
+    configFlags << "\nHierarchicalLogging                               ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::HierarchicalLogging);
+
+    configFlags << "\nCreateLoggerAutomatically                         ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::CreateLoggerAutomatically);
+
+    configFlags << "\nAutoSpacing                                       ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::AutoSpacing);
+
+    configFlags << "\nFixedTimeFormat                                   ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::FixedTimeFormat);
+
+    configFlags << "\nIgnoreSigInt                                      ";
+    configFlags << el::Loggers::hasFlag(el::LoggingFlag::IgnoreSigInt);
+
+    return configFlags.str();
+}
+
+
 
 
 
