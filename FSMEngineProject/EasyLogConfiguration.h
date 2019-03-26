@@ -226,12 +226,14 @@ void initializeEasyLogger(int argc, char ** argv);  //Gets EasyLogger up and run
 
 
 
-namespace EASYLOGPP_CONFIGURATION_INTERNAL {         //Function prototypes for some implementation functions
+//Function prototypes for some implementation functions
+namespace EASYLOGPP_CONFIGURATION_INTERNAL {         
     bool checkIfAlreadyConfigured();
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level); //Call with 'Global' level to just set up a directory for logs
     std::optional<std::filesystem::path> getLogFileDirectory(); 
+    bool generateLogFileDirectory(std::filesystem::path&);
     std::filesystem::path makeUniquePathIfOneAlreadyExistsWithThisName(const std::filesystem::path& path);
-    std::string getTimeTag();                   //Helper function for getting the current date and time in string form
+    std::string getDateTimeTag();                   //Helper function for getting the current date and time in string form
 } 
 
 
@@ -621,63 +623,80 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
         }
     }
 
-
-
-    //I apologize in advance for how confusing this function's implementation is
     std::optional<std::filesystem::path> getLogFileDirectory() {
-        static std::filesystem::path logDirectory {}; //Static filepath will be initialized first time this function is called.
-        //                                         //This filepath will then remain constant throughout the lifetime of the program
-
-        if (!(logDirectory.empty())) { //If there is already a directory for log files created
+           
+        //The first time this function is called, an empty filepath to the directory in which 
+        //all the LOG files will reside is created.
+        static std::filesystem::path logDirectory{};
+             
+        //By declaring this path object as static, all of its state will remain extant after
+        //this function returns. This means a unique filepath only needs to be generated once.
+        //Assuming a valid path is generated during the first time this function is called, all 
+        //subsequent calls merely need to check the state of this path object to see if a path
+        //has already been set
+               
+        if (std::filesystem::exists(logDirectory)) { 
             return std::make_optional<std::filesystem::path>(logDirectory); 
         }
-        else { //else there hasn't been a filepath set yet for log files to be placed
-            //create one
-            std::error_code ec; 
-            ec.clear();         
-            logDirectory = std::filesystem::current_path(ec);
-            if (ec) {
-                LOG(ERROR) << "Unable to communicate with filesystem to set up directory for log files!\n"
-                    << "The OS reports error: " << ec.message() << "\n\n";
+          
+        if (generateLogFileDirectory(logDirectory)) {
+            return std::make_optional<std::filesystem::path>(logDirectory);
+        }
+        else {
+                logDirectory.clear();
+                fprintf(stderr,  "\nAn error occurred while making a directory for logging files!\n");
                 return std::nullopt;
             }
-            else { //we're in business
-                logDirectory = logDirectory.lexically_normal();
-                logDirectory = logDirectory.string() + "/LOGS/";
-                logDirectory = logDirectory.make_preferred(); //Ensures each '/' and '\' in filepath are all set to OS-preferred separator 
-                
-                //Now it is time to append a unique identifier onto the end of it. Date and time will be unique 
-                std::string timetagString = getTimeTag(); 
-
-                //Finally we can build the filepath
-                logDirectory = logDirectory.string() + timetagString;
-
-                //Create the new directory
-                if (!std::filesystem::create_directories(logDirectory)) {
-                    //Perhaps this directory already exists for some reason. 
-                    //Let's try to slightly modify the filepath to make it unique...
-                    logDirectory = makeUniquePathIfOneAlreadyExistsWithThisName(logDirectory);
-                    if (!std::filesystem::create_directories(logDirectory)) {
-                        LOG(WARNING) << "\nAn error occurred while making a directory for logging files!\n";
-                        return std::nullopt;
-                    }
-                }
-                //else {  //YAY we did it!
-                    ///LOG(INFO) << "\nLog files for this program will be stored in folder:\n\t" << logDirectory.string();
-                    return std::make_optional<std::filesystem::path>(logDirectory);
-                //}
-            }
-        }
     }
 
+
+
+    bool generateLogFileDirectory(std::filesystem::path& directory) {
+
+        std::error_code ec;
+        ec.clear();
+        directory = std::filesystem::current_path(ec);
+        if (ec) {
+            fprintf(stderr, "\nError!\nUnable to communicate with filesystem to set up directory for log files!\n"
+                 "The OS reports error: \n  %s\n\n",  ec.message().c_str());
+            return false;
+        }
+        else { //we're in business
+            directory = directory.lexically_normal();
+            directory = directory.string() + "/LOGS/"; //All logs will exist in this directory
+            directory = directory.make_preferred(); //Ensures each '/' and '\' in filepath are all set to OS-preferred separator 
+
+            //Now it is time to append a unique-at-runtime identifier tag for a directory to hold every 
+            //log that will be generated each time this program is run. Date and Time make for a good tag to use 
+            std::string timetagString = getDateTimeTag();
+
+            //Finally we can build the filepath
+            directory = directory.string() + timetagString;
+
+            //Create the new directory (there is a chance this may fail if the directory already exists)
+            if (!std::filesystem::create_directories(directory, ec)) {
+                if (ec) { return false; }
+                //Perhaps this directory already exists for some reason. 
+                //Let's try to slightly modify the filepath to make it unique...
+                directory = makeUniquePathIfOneAlreadyExistsWithThisName(directory);
+                if (!std::filesystem::create_directories(directory, ec)) {
+                    fprintf(stderr, "\nAn error occurred while making a directory for logging files!\n");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    
     std::filesystem::path makeUniquePathIfOneAlreadyExistsWithThisName(const std::filesystem::path& path) {
         std::string pathStr = path.string();
         std::filesystem::path uniquePath(pathStr + std::string("_1")); //Then append an identifier
         if (!std::filesystem::exists(uniquePath)) { //See if appending "_1" gave us a unique path...
             return uniquePath; //the path is unique, return our unique path
         }
-        //Otherwise, our first attempt at creating the unique path failed, so now let's iterate through
-        //the existing directories until we find a path that doesn't yet exist
+        //Otherwise, our first attempt at creating the unique path failed, so let's keep trying 
+        //until we can create one that is definitely unique
         int directoryCounter = 1;
         std::filesystem::directory_iterator dirIter(uniquePath);
         do {
@@ -685,43 +704,43 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             std::string tag = "_";
             tag.append(std::to_string(directoryCounter));
             uniquePath = path.string() + tag; 
-
-            dirIter++;
-            if (dirIter._At_end()) {
-                break;
-            }
-        } while ((dirIter->path == uniquePath));
-        
+        } while (std::filesystem::exists(uniquePath));
+          
+        ///printf("\n[LOG CONFIG DEBUG] Had to iterate through %d existing directories before\n"
+        ///    "a unique name was found!\n", directoryCounter);
+        ///printf("[LOG CONFIG DEBUG] Log Files will be placed in directory \"%s\"\n",
+        ///    uniquePath.string().c_str());
+          
         //At last, we have our uniquePath
         return uniquePath;
-
-        //std::string pathStr = path.string();
-        //auto strIter = pathStr.end(); //Start with an iterator at the end of the string
-        //strIter--; //Move to the last character of the string
-        //if (!std::isdigit(*strIter)) { //If last character isn't a number
-        //    std::filesystem::path uniquePath (pathStr + std::string("_1")); //Then append an identifier
-        //    //But wait, there is chance we already did this, so now we must see if a directory of this name already exists...
-        //    if (!std::filesystem::exists(uniquePath)) {
-        //        return uniquePath;
-        //    } //Else if the path does exist, then the last character of an
-        //    //existing path is a number, so we start iterating on that number
-        //}
-        ////Try instead to use a directory_iterator
-        //std::filesystem::directory_iterator = 
-
-        /*while ('9' == *strIter)
-                strIter--;
-            if ('_' == *strIter)
-        }*/
-
     }
 
     //The idea of this function is to get the current time and date from the operating 
     //system and format it into a std::string object with human-readable formatting to be
     //used in formulating a syntactically valid filepath. Unfortunately this task is easier
     //said then done, especially when building with modern MSVC. 
-    std::string getTimeTag() {
-
+    std::string getDateTimeTag() {
+        //Use preprocessor to use date+time at time-of-compilation
+        std::stringstream tag;
+        tag /*<< "TheImplementationForGettingDateAndTimeIsBeingReimplementedInASeperateFile"*/ << __DATE__ << __TIME__;
+        std::string tagString = tag.str();
+        auto tagIter = tagString.begin();
+        for (; tagIter != tagString.end(); tagIter++) {
+            switch (*tagIter) {
+            default:
+                break;
+            case (' '):
+                *tagIter = '_';
+                break;
+            case (','):
+                *tagIter = '_';
+                break;
+            case (':'):
+                *tagIter = '_';
+                break;
+            }
+        }
+        return tagString;
 #if 0
         //The formated timetag is built using a stringstream
         std::stringstream tag;
@@ -809,26 +828,7 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             return tag.str();
         }
 #endif //0
-        std::stringstream tag;
-        tag /*<< "TheImplementationForGettingDateAndTimeIsBeingReimplementedInASeperateFile"*/ << __DATE__ << __TIME__ ;
-        std::string tagString = tag.str();
-        auto tagIter = tagString.begin();
-        for (; tagIter != tagString.end(); tagIter++) {
-            switch (*tagIter) {
-            default:
-                break;
-            case (' '):
-                *tagIter = '_';
-                break;
-            case (','):
-                *tagIter = '_';
-                break;
-            case (':'):
-                *tagIter = '_';
-                break;
-            }
-        }
-        return tagString;
+
     }
 
 }  //namespace EASYLOGPP_CONFIGURATION_INTERNAL

@@ -21,9 +21,21 @@
 #include <string>
 #include <exception>
 
+//If string_view isn't available, comment the following 2 lines
+#define CONSTRUCT_FROM_STRING_VIEW 1
+#include <string_view>
 
 class FSMException : public std::exception {
 public:
+
+#ifdef CONSTRUCT_FROM_STRING_VIEW
+    /** Constructor (String type)
+        @param message The exception message.
+    */
+    FSMException(std::string_view message) : mMessage_(message) {
+
+    }
+#else 
     /** Constructor (C strings).
      *  @param message C-style string error message.
      *                 The string contents are copied upon construction.
@@ -31,13 +43,14 @@ public:
      *                 with the caller.
      */
     explicit FSMException(const char* message) :
-        msg_(message) {}
+        mMessage_(message) {}
 
     /** Constructor (C++ STL strings).
      *  @param message The error message.
      */
     explicit FSMException(const std::string& message) :
-        msg_(message) {}
+        mMessage_(message) {}
+#endif // CONSTRUCT_FROM_STRING_VIEW
 
     /** Destructor.
      * Virtual to allow for subclassing.
@@ -49,15 +62,17 @@ public:
      *          is in possession of the Exception object. Callers must
      *          not attempt to free the memory.
      */
-    virtual const char* what() const {
-        return msg_.c_str();
+    virtual const char* what() const /*noexcept*/ override {
+        return mMessage_.c_str();
     }
 
 protected:
     /** Error message.
      */
-    std::string msg_;
+    std::string mMessage_;
 };
+
+
 
 
 

@@ -195,7 +195,7 @@
 //For some of the third party libraries, there are both debug and release versions available. By
 //defining this macro, the debug versions of these libraries will be selected if available. Having
 //this macro be undefined will cause the release version of these libraries to be linked instead.
-#define USE_DEBUG_ 1
+//#define USE_DEBUG_ 1
 
 
 
@@ -210,7 +210,7 @@
 //    could cause a dramatic performance boost but could also result in context messages to be reported 
 //    long after the Application event that triggered them. It is recommended to leave this enabled while
 //    debugging unless absolutely necessary. 
-#define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 1
+//#define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 1
 
 // ============================================================================================================
 //  ( END SECTION 1 )
@@ -267,7 +267,7 @@
 // This macro by itself will not enabled profiling of OpenGL functions. This macro and the 
 // ENABLE_BASIC_POST_GLFUNCTION_CALLBACK_MESSAGE_ may be used simultaneously. Note that a compiler warning
 // will be triggered if this setting is enabled while glad is using its RELEASE version. 
-#define ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_ 1
+//#define ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_ 1
 
 
 // MACRO:    ENABLE_BASIC_POST_GLFUNCTION_CALLBACK_MESSAGE_
@@ -281,7 +281,7 @@
 // profiling of OpenGL functions. This macro and the ENABLE_BASIC_PRE_GLFUNCTION_CALLBACK_MESSAGE_ may be used
 // simultaneously.  Note that a compiler warning will be triggered if this setting is enabled while glad is
 // using its RELEASE version. 
-#define ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_ 1
+//#define ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_ 1
 
 
 // MACRO:      ENABLE_GLFUNCTION_PROFILING_
@@ -294,7 +294,7 @@
 // Enables profiling for each OpenGL function call. The profiling will be performed using the profiler that 
 // comes built into the EasyLogging++ 3rd-party library. The profiler is supposed to be thread-safe, but 
 // this has not been yet tested by me.
-#define ENABLE_GLFUNCTION_PROFILING_ 1
+//#define ENABLE_GLFUNCTION_PROFILING_ 1
 
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///  ( END SECTION 2 )   

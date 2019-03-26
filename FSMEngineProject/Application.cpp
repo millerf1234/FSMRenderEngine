@@ -34,24 +34,55 @@ Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) 
     if (!setupMessageLogs(argc, argv)) {
         std::exit(EXIT_FAILURE);
     }
+    LOG(TRACE) << __FUNCTION__;
 
     //Once we make it beyond this point, all message logging will be done
     //though the Easylogger++ library. 
 
     LOG(INFO) << "Initializing Application...";
     LOG(INFO) << "Creating directory for LOG files...DONE";
-   
+
+    //Here Would be a good location to log Application version number and other such info
+    LOG(INFO) << "Application Version 0.0 Build 0.0.01";
+    LOG(INFO) << "Compiler:                    MSVC " << _MSC_VER;
+    LOG(INFO) << "Compile Date:               " << __DATE__;
+    LOG(INFO) << "Compile Time:               " << __TIME__;
+    LOG(INFO) << "Implementation Is Hosted:   " << __STDC_HOSTED__;
 
     LOG(INFO) << "Inchoating A Render Environment...";
     if (!createRenderEnvironment()) {
         std::exit(EXIT_FAILURE);
     }
 
-    AsciiTextFile temp("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\FSMEngineProject\\LOGS\\2019_081_15_10_33\\info.log");
+    AsciiTextFile temp("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");  
     std::cout << "\nINFO LOG HAS " << temp.countNumberOfLines() << " lines of ASCII text!\n";
-    AsciiTextFile temp2("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\FSMEngineProject\\LOGS\\2019_081_15_10_33\\info.log");
+    AsciiTextFile temp2("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
     std::cout << "\nINFO LOG HAS " << temp2.countNumberOfLines() << " lines of ASCII text!\n";
+    AsciiTextFile temp3("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
+    AsciiTextFile temp4("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
+    AsciiTextFile temp5("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
+    LOG(TRACE) << "^-----------------------------------^  " << __FUNCTION__ << "\n\n";
 
+    LOG(INFO) << "\nTemp Counting Lines that begin with '[' ";
+    LOG(INFO) << temp.countNumberOfLinesThatBeginWith('[') << "\n";
+    LOG(INFO) << "Temp2 Counting Lines that begin with '-' ";
+    LOG(INFO) << temp2.countNumberOfLinesThatBeginWith('-') << "\n";
+    LOG(INFO) << "Temp3 Counting Lines that begin with '\t' ";
+    LOG(INFO) << temp3.countNumberOfLinesThatBeginWith('\t') << "\n";
+    LOG(INFO) << "Temp4 Counting Lines that begin with 'P' ";
+    LOG(INFO) << temp4.countNumberOfLinesThatBeginWith('P') << "\n";
+    LOG(INFO) << "Temp5 Counting Lines that begin with '!' ";
+    LOG(INFO) << temp5.countNumberOfLinesThatBeginWith('!') << "\n";
+
+    size_t tempSize = temp.countNumberOfLines();
+    size_t tempCharSize = 0u;
+
+    for (size_t i = 0u; i < tempSize; i++) {
+        tempCharSize += temp.getLineLength(i);
+    }
+
+    LOG(INFO) << "Temp has ";
+    LOG(INFO) << tempCharSize << " characters in total!\n";
 
     //The rest of the constructor code below here is just testing some functions
 
@@ -88,10 +119,12 @@ Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) 
 
 
 Application::~Application() {
+    LOG(TRACE) << __FUNCTION__;
     el::Loggers::flushAll();
 }
 
 void Application::launch() {
+    LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\nApplication launched....\n";
     mRenderEnvironment_->doMonitorSelectionLoop();
 }
@@ -99,11 +132,12 @@ void Application::launch() {
 
 
 bool Application::setupMessageLogs(int argc, char** argv) {
-
+    //LOG(TRACE) << __FUNCTION__; //This function doesn't get traced until logs are setup
     //Set up EasyLogger++ library
     try {
         initializeEasyLogger(argc, argv);
         if (configureEasyLogger()) {  //If there were no issues with setting up log files
+            LOG(TRACE) << __FUNCTION__;
             return true;
         }
         else { //There was something that went wrong while setting up logs
@@ -160,6 +194,7 @@ bool Application::setupMessageLogs(int argc, char** argv) {
 
 
 bool Application::createRenderEnvironment() {
+    LOG(TRACE) << __FUNCTION__;
     try {
         //Create the Render Environment
         mRenderEnvironment_ = std::make_unique<FSMRenderEnvironment>();

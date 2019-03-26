@@ -153,7 +153,7 @@ public:
 
     //Adds onto the back of the vector provided as parameter the number of each line
     //that begins with the specified character, ignoring spaces and tabs at the start. 
-    void getLinesThatBeginWithCharacter(char c, std::vector<int>& lines) const noexcept;
+    void getLinesThatBeginWithCharacter(char c, std::vector<size_t>& lines) const noexcept;
 
     //Retrieves the number of characters on the specified line. If the parameter
     //'line' does not correspond to a valid line number, this function returns 0.
@@ -174,7 +174,7 @@ public:
 
     //Returns the size of the file in [INSERT_UNITS_HERE_ONCE_I_CAN_FIGURE_THIS_OUT] 
     // (it will be in bits/bytes)
-    int getFileSize() const noexcept;
+    size_t getFileSize() const noexcept;
 
 
 

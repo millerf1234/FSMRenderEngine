@@ -98,6 +98,7 @@
 #define FSM_CALLBACK_INITIALIZER_H_
 
 #include <memory>
+#include "UniversalIncludes.h"
 
 namespace FSMEngineInternal {
 
@@ -110,6 +111,7 @@ namespace FSMEngineInternal {
         //       //////////////////////////////////////////////////////////////////////////
 
         static FSMCallbackInitializer& callbackInitializer() {
+            LOG(TRACE) << __FUNCTION__;
             static FSMCallbackInitializer callbackInitializerInstance;
             return callbackInitializerInstance;
         }
@@ -171,11 +173,10 @@ namespace FSMEngineInternal {
 
     private:
         FSMCallbackInitializer();
-        ~FSMCallbackInitializer();
+        ~FSMCallbackInitializer() noexcept;
 
 
-
-        class GlobalStateOfGLFWCallbacks; //
+        class GlobalStateOfGLFWCallbacks; //Class is defined in implementation
         std::unique_ptr<GlobalStateOfGLFWCallbacks> mGlobalCBState_;
     };
 

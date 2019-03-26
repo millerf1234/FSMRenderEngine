@@ -28,7 +28,7 @@
 #define ELPP_LOG_STD_ARRAY 1  //Must have ELPP_STL_LOGGING defined
 
 
-//Try out experimental Asynchronous Logging. Documentation claims this should work for any envirnment already
+//Try out experimental Asynchronous Logging. Documentation claims this should work for any environment already
 //supporting std::thread and std::this_thread::sleep_for. This feature is still under testing and may change 
 //in the future. It may also be buggy.
 //#define ELPP_EXPERIMENTAL_ASYNC 1

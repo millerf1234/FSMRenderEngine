@@ -32,6 +32,7 @@ namespace FSMEngineInternal {
     static constexpr const int LINE_HEADER_LENGTH = 80;
 
 	inline void FSMErrorCallbackFunction(int error, const char* description) {
+        LOG(TRACE) << __FUNCTION__;
         //For now, announce that a callback event was triggered
         LOG(INFO) << "\nA GLFW Error Callback call was made!!!\n";
 

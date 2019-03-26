@@ -36,14 +36,24 @@ namespace FSMEngineInternal {
 	//-------------------------------------------------------
 
 	bool checkMonitorEventQueues() {
+        LOG_EVERY_N(60, TRACE) << __FUNCTION__;
+        /*
 		if ((MonitorEventCallbackInternal::recentMonitorConnections().empty()) &&
 			(MonitorEventCallbackInternal::recentMonitorDisconnections().empty())) 
 			return false;
 		return true;
+        */
+        //Alternative Implementation (this cuts down on function calls required)
+        static std::queue<GLFWmonitor*> * ptrToConnectionQueue = &(MonitorEventCallbackInternal::recentMonitorConnections());
+        static std::queue<GLFWmonitor*> * ptrToDisconnectionQueue = &(MonitorEventCallbackInternal::recentMonitorDisconnections());
+        if (ptrToConnectionQueue->empty() && ptrToDisconnectionQueue->empty())
+            return false;
+        return true;
 	}
 
 
 	bool checkMonitorConnectionEventQueue() {
+        LOG(TRACE) << __FUNCTION__;
 		if ((MonitorEventCallbackInternal::recentMonitorConnections().empty()))
 			return false;
 		return true;
@@ -51,6 +61,7 @@ namespace FSMEngineInternal {
 
 	
 	bool checkMonitorDisconnectionEventQueue() {
+        LOG(TRACE) << __FUNCTION__;
 		if (MonitorEventCallbackInternal::recentMonitorDisconnections().empty())
 			return false;
 		return true;
@@ -58,6 +69,7 @@ namespace FSMEngineInternal {
 
 
 	std::optional<GLFWmonitor*> getNextAvailableMonitorConnection() {
+        LOG(TRACE) << __FUNCTION__;
 		if ((MonitorEventCallbackInternal::recentMonitorConnections().empty())) {
 			return std::nullopt; //return the empty optional
 		}
@@ -71,6 +83,7 @@ namespace FSMEngineInternal {
 
 
 	std::optional<GLFWmonitor*> getNextAvailableMonitorDisconnection() {
+        LOG(TRACE) << __FUNCTION__;
 		if ((MonitorEventCallbackInternal::recentMonitorDisconnections().empty())) {
 			return std::nullopt;
 		}
@@ -96,11 +109,13 @@ namespace FSMEngineInternal {
 		//can be processed by the application.
 
 		std::queue<GLFWmonitor*>& recentMonitorConnections() {
+            LOG(TRACE) << __FUNCTION__;
 			static std::queue<GLFWmonitor*> awaitingConnection;
 			return awaitingConnection;
 		}
 
 		std::queue<GLFWmonitor*>& recentMonitorDisconnections() {
+            LOG(TRACE) << __FUNCTION__;
 			static std::queue<GLFWmonitor*> awaitingDisconnection;
 			return awaitingDisconnection;
 		}
@@ -114,6 +129,7 @@ namespace FSMEngineInternal {
 		//-------------------------------------------------------
 	
 		void graphicsLanguageFrameworkMonitorEventCallbackFunction(GLFWmonitor* handle, int event) {
+            LOG(TRACE) << __FUNCTION__;
             LOG(INFO) << "\n\n\tA Monitor Event was detected! Event code " << event << std::endl;
 			if (event == GLFW_CONNECTED) {
 				recentMonitorConnections().push(handle);

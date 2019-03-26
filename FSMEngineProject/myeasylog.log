@@ -799,3 +799,1271 @@ Timetag string after removing spaces is:  2019_071_04_47_22
 2019-03-22 15:22:48,300 TRACE [default] [void __cdecl AsciiTextFile::AsciiTextFileImpl::parseTextToPopulateLineOffsets(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:326] 
 2019-03-22 15:22:48,301 TRACE [default] [unsigned __int64 __cdecl AsciiTextFile::countNumberOfLines(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:121] 
 2019-03-22 15:22:48,303 TRACE [default] [unsigned __int64 __cdecl AsciiTextFile::AsciiTextFileImpl::countNumberOfLines(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:185] 
+2019-03-24 02:57:01,490 TRACE [default] [bool __cdecl Application::setupMessageLogs(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:111] Application::setupMessageLogs 
+2019-03-24 03:04:51,508 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 03:04:51,510 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 03:04:51,513 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 03:05:07,110 INFO [default] 
+Right then... On with this whole initialization business... 
+
+2019-03-24 03:05:07,115 TRACE [default] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:37] Application::Application 
+2019-03-24 03:05:07,116 INFO [default] Initializing Application... 
+2019-03-24 03:05:07,117 INFO [default] Creating directory for LOG files...DONE 
+2019-03-24 03:05:07,117 INFO [default] Application Version 0.0 Build 0.0.01 
+2019-03-24 03:05:07,118 INFO [default] Compiler:                    MSVC  1916 
+2019-03-24 03:05:07,118 INFO [default] Compile Date:                Mar 24 2019 
+2019-03-24 03:05:07,119 INFO [default] Compile Time:                02:58:49 
+2019-03-24 03:05:07,119 INFO [default] Implementation Is Hosted:    1 
+2019-03-24 03:05:07,120 INFO [default] Inchoating A Render Environment... 
+2019-03-24 03:05:07,120 TRACE [default] [bool __cdecl Application::createRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:173] Application::createRenderEnvironment 
+2019-03-24 03:05:07,121 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(bool)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:33] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:05:07,122 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:39] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:05:07,125 INFO [default] 
+ [step 1]   Loading settings from initialization file!
+ 
+2019-03-24 03:05:07,125 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadSettings(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:194] FSMRenderEnvironment::loadSettings 
+2019-03-24 03:05:07,126 TRACE [default] [bool __cdecl FSMRenderEnvironment::locateSettingsFile(class std::error_code &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:278] FSMRenderEnvironment::locateSettingsFile 
+2019-03-24 03:05:07,126 TRACE [default] [void __cdecl FSMRenderEnvironment::parseSettingsFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:305] FSMRenderEnvironment::parseSettingsFile 
+2019-03-24 03:05:07,128 INFO [default] 
+Settings file found! Parsing now...
+ 
+2019-03-24 03:05:07,129 TRACE [default] [bool __cdecl FSMRenderEnvironment::initializeGLFW(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:415] FSMRenderEnvironment::initializeGLFW 
+2019-03-24 03:05:07,130 TRACE [default] [void __cdecl FSMRenderEnvironment::setGlobalGLFWInvariants(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:437] FSMRenderEnvironment::setGlobalGLFWInvariants 
+2019-03-24 03:05:07,130 TRACE [default] [void __cdecl FSMRenderEnvironment::setPreGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:449] FSMRenderEnvironment::setPreGLFWInitCallbacks 
+2019-03-24 03:05:07,131 INFO [default] 
+           Setting GLFW Error Callback Function!   
+ 
+2019-03-24 03:05:07,132 TRACE [default] [bool __cdecl FSMRenderEnvironment::callTheGLFWInitFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:461] FSMRenderEnvironment::callTheGLFWInitFunc 
+2019-03-24 03:05:07,243 TRACE [default] [void __cdecl FSMRenderEnvironment::setPostGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:480] FSMRenderEnvironment::setPostGLFWInitCallbacks 
+2019-03-24 03:05:07,244 INFO [default] 
+           Setting GLFW Joystick event Callback Function!   
+ 
+2019-03-24 03:05:07,247 INFO [default] 
+           Setting GLFW Monitor Event Callback Function!   
+ 
+2019-03-24 03:05:07,248 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] 
+ [step 2]    GLFW Library has initialized! GLFW version:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:05:07,248 INFO [default] GLFW 3.3.0 
+ 
+2019-03-24 03:05:07,249 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContext(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:494] FSMRenderEnvironment::createContext 
+2019-03-24 03:05:07,249 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyContextHints(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:520] FSMRenderEnvironment::specifyContextHints 
+2019-03-24 03:05:07,250 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMajor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:136] FSMRenderEnvironment::getGLVersionMajor 
+2019-03-24 03:05:07,251 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMinor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:141] FSMRenderEnvironment::getGLVersionMinor 
+2019-03-24 03:05:07,251 TRACE [default] [void __cdecl FSMRenderEnvironment::retrieveConnectedMonitors(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:538] FSMRenderEnvironment::retrieveConnectedMonitors 
+2019-03-24 03:05:07,252 INFO [default] 
+Here is where a list of already connected monitors would
+be loaded, which then would allow for the
+Application to call a function of FSMRenderEnvironment to enumerate
+These monitors, which then a user could select an appropriate choice from...
+
+  [or something like that]
+
+
+
+
+ 
+2019-03-24 03:05:07,252 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContextAndWindow(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:552] FSMRenderEnvironment::createContextAndWindow 
+2019-03-24 03:05:08,289 INFO [default] 
+Successfully created a current context!
+ 
+2019-03-24 03:05:08,291 TRACE [default] [void __cdecl FSMRenderEnvironment::setContextWindowCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:567] FSMRenderEnvironment::setContextWindowCallbacks 
+2019-03-24 03:05:08,292 INFO [default] 
+
+      WIndow Context Callbacks would be specified right here                 once they get implemented!!!
+
+ 
+2019-03-24 03:05:08,296 INFO [default] 
+  [step 3]      Graphics Language Context Created!
+ 
+2019-03-24 03:05:08,297 TRACE [default] [bool __cdecl FSMRenderEnvironment::setupGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:578] FSMRenderEnvironment::setupGLAD 
+2019-03-24 03:05:08,297 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyDebugCallbacksWithGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:594] FSMRenderEnvironment::specifyDebugCallbacksWithGLAD 
+2019-03-24 03:05:08,298 INFO [default] 
+
+    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!
+
+
+
+ 
+2019-03-24 03:05:08,299 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadOpenGLFunctions(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:609] FSMRenderEnvironment::loadOpenGLFunctions 
+2019-03-24 03:05:08,299 INFO [default] !Loading Graphics Language Functions...
+ 
+2019-03-24 03:05:08,306 INFO [default]   [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!
+ 
+2019-03-24 03:05:08,308 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFile(class str_view_template<char>)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:30] AsciiTextFile::AsciiTextFile 
+2019-03-24 03:05:08,309 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFile(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:39] AsciiTextFile::AsciiTextFile 
+2019-03-24 03:05:08,310 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFile(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:40] Used Private Delegating Constructor To Ensure Fully Initialized AsciiTextFile Object 
+2019-03-24 03:05:08,310 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:26] 
+2019-03-24 03:05:08,311 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:34] 
+2019-03-24 03:05:08,312 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:37] Preparing to Load File  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS\2019_081_15_10_33\info.log 
+2019-03-24 03:05:08,316 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:43] Confirmed Existence of a File at the Specified Location. Loading File... 
+2019-03-24 03:05:08,317 TRACE [default] [void __cdecl AsciiTextFile::AsciiTextFileImpl::loadFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:279] 
+2019-03-24 03:05:08,318 TRACE [default] [void __cdecl AsciiTextFile::AsciiTextFileImpl::loadUsingCFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:292] 
+2019-03-24 03:05:08,318 INFO [default] File Is Being Loaded Using The C FileIO API 
+2019-03-24 03:05:08,319 INFO [default] File Has Been Loaded Into Application's Memory 
+2019-03-24 03:05:08,320 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:45] Populating Internal Data Structure Representing File Layout 
+2019-03-24 03:05:08,320 TRACE [default] [void __cdecl AsciiTextFile::AsciiTextFileImpl::parseTextToPopulateLineOffsets(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:330] 
+2019-03-24 03:05:08,322 TRACE [default] [unsigned __int64 __cdecl AsciiTextFile::countNumberOfLines(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:123] AsciiTextFile::countNumberOfLines 
+2019-03-24 03:05:08,322 TRACE [default] [unsigned __int64 __cdecl AsciiTextFile::AsciiTextFileImpl::countNumberOfLines(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:186] 
+2019-03-24 03:05:08,328 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFile(class str_view_template<char>)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:30] AsciiTextFile::AsciiTextFile 
+2019-03-24 03:05:08,329 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFile(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:39] AsciiTextFile::AsciiTextFile 
+2019-03-24 03:05:08,330 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFile(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:40] Used Private Delegating Constructor To Ensure Fully Initialized AsciiTextFile Object 
+2019-03-24 03:05:08,331 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:26] 
+2019-03-24 03:05:08,332 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:34] 
+2019-03-24 03:05:08,333 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:37] Preparing to Load File  C:\Users\Forrest\source\repos\FSMEngine\FSMEngineProject\LOGS\2019_081_15_10_33\info.log 
+2019-03-24 03:05:08,333 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:43] Confirmed Existence of a File at the Specified Location. Loading File... 
+2019-03-24 03:05:08,334 TRACE [default] [void __cdecl AsciiTextFile::AsciiTextFileImpl::loadFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:279] 
+2019-03-24 03:05:08,334 TRACE [default] [void __cdecl AsciiTextFile::AsciiTextFileImpl::loadUsingCFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:292] 
+2019-03-24 03:05:08,335 INFO [default] File Is Being Loaded Using The C FileIO API 
+2019-03-24 03:05:08,336 INFO [default] File Has Been Loaded Into Application's Memory 
+2019-03-24 03:05:08,339 DEBUG [default] [Forrest@FMPC] [__cdecl AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char *) noexcept(false)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:45] Populating Internal Data Structure Representing File Layout 
+2019-03-24 03:05:08,340 TRACE [default] [void __cdecl AsciiTextFile::AsciiTextFileImpl::parseTextToPopulateLineOffsets(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:330] 
+2019-03-24 03:05:08,343 TRACE [default] [unsigned __int64 __cdecl AsciiTextFile::countNumberOfLines(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:123] AsciiTextFile::countNumberOfLines 
+2019-03-24 03:05:08,345 TRACE [default] [unsigned __int64 __cdecl AsciiTextFile::AsciiTextFileImpl::countNumberOfLines(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:186] 
+2019-03-24 03:05:08,346 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersion(int &,int &,int &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:155] FSMRenderEnvironment::getGLFWCompiletimeVersion 
+2019-03-24 03:05:08,347 INFO [default] Program was compiled to work with GLFW  3 . 3 . 0 
+
+2019-03-24 03:05:08,348 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersionString(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:162]  Using object's print function:  FSMRenderEnvironment::getGLFWCompiletimeVersionString 
+2019-03-24 03:05:08,352 INFO [default] 3.3.0 Win32 WGL EGL VisualC hybrid-GPU DLL 
+ 
+2019-03-24 03:05:08,352 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] GLFW Version Loaded at Runtime String:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:05:08,353 INFO [default] GLFW 3.3.0 
+
+ 
+2019-03-24 03:05:08,353 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLVersion(int &,int &,bool &) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:129] FSMRenderEnvironment::getGLVersion 
+2019-03-24 03:05:08,353 INFO [default] Program was compiled to target OpenGL  4 . 6   Core 
+
+2019-03-24 03:05:08,354 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:146] OpenGL version constructed by class: ' FSMRenderEnvironment::getGLVersionString 
+2019-03-24 03:05:08,354 INFO [default] OpenGL Version 4.6 Core 
+
+ 
+
+2019-03-24 03:05:08,355 INFO [default] 
+       Applications Constructor has completed running!
+ 
+2019-03-24 03:05:08,355 TRACE [default] [__cdecl AsciiTextFile::~AsciiTextFile(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:72] AsciiTextFile::~AsciiTextFile 
+2019-03-24 03:05:08,355 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFileImpl::~AsciiTextFileImpl(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:157] 
+2019-03-24 03:05:08,356 TRACE [default] [__cdecl AsciiTextFile::~AsciiTextFile(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfile.cpp:72] AsciiTextFile::~AsciiTextFile 
+2019-03-24 03:05:08,356 TRACE [default] [__cdecl AsciiTextFile::AsciiTextFileImpl::~AsciiTextFileImpl(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\asciitextfileimpl.cpp:157] 
+2019-03-24 03:05:08,356 TRACE [default] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:103] Application::launch 
+2019-03-24 03:05:08,357 INFO [default] 
+Application launched....
+ 
+2019-03-24 03:05:08,357 TRACE [default] [void __cdecl FSMRenderEnvironment::doMonitorSelectionLoop(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:100] FSMRenderEnvironment::doMonitorSelectionLoop 
+2019-03-24 03:05:12,394 TRACE [default] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:98] Application::~Application 
+2019-03-24 03:05:12,395 TRACE [default] [__cdecl FSMRenderEnvironment::~FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:84] FSMRenderEnvironment::~FSMRenderEnvironment 
+2019-03-24 03:31:40,611 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 03:31:40,612 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 03:31:40,613 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 03:32:06,840 INFO [default] 
+Right then... On with this whole initialization business... 
+
+2019-03-24 03:32:06,840 TRACE [default] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:37] Application::Application 
+2019-03-24 03:32:06,841 INFO [default] Initializing Application... 
+2019-03-24 03:32:06,841 INFO [default] Creating directory for LOG files...DONE 
+2019-03-24 03:32:06,842 INFO [default] Application Version 0.0 Build 0.0.01 
+2019-03-24 03:32:06,842 INFO [default] Compiler:                    MSVC  1916 
+2019-03-24 03:32:06,843 INFO [default] Compile Date:                Mar 24 2019 
+2019-03-24 03:32:06,843 INFO [default] Compile Time:                03:25:08 
+2019-03-24 03:32:06,844 INFO [default] Implementation Is Hosted:    1 
+2019-03-24 03:32:06,844 INFO [default] Inchoating A Render Environment... 
+2019-03-24 03:32:06,845 TRACE [default] [bool __cdecl Application::createRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:173] Application::createRenderEnvironment 
+2019-03-24 03:32:06,845 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(bool)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:33] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:32:06,846 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:39] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:32:06,846 INFO [default] 
+ [step 1]   Loading settings from initialization file!
+ 
+2019-03-24 03:32:06,847 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadSettings(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:194] FSMRenderEnvironment::loadSettings 
+2019-03-24 03:32:06,847 TRACE [default] [bool __cdecl FSMRenderEnvironment::locateSettingsFile(class std::error_code &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:278] FSMRenderEnvironment::locateSettingsFile 
+2019-03-24 03:32:06,848 TRACE [default] [void __cdecl FSMRenderEnvironment::parseSettingsFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:305] FSMRenderEnvironment::parseSettingsFile 
+2019-03-24 03:32:06,848 INFO [default] 
+Settings file found! Parsing now...
+ 
+2019-03-24 03:32:06,849 TRACE [default] [bool __cdecl FSMRenderEnvironment::initializeGLFW(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:415] FSMRenderEnvironment::initializeGLFW 
+2019-03-24 03:32:06,853 TRACE [default] [void __cdecl FSMRenderEnvironment::setGlobalGLFWInvariants(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:437] FSMRenderEnvironment::setGlobalGLFWInvariants 
+2019-03-24 03:32:06,853 TRACE [default] [void __cdecl FSMRenderEnvironment::setPreGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:449] FSMRenderEnvironment::setPreGLFWInitCallbacks 
+2019-03-24 03:32:06,854 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:32:06,855 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:36] FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer 
+2019-03-24 03:32:06,855 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:27] FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks 
+2019-03-24 03:32:06,856 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:47] FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback 
+2019-03-24 03:32:06,857 INFO [default] 
+           Setting GLFW Error Callback Function!   
+ 
+2019-03-24 03:32:06,858 TRACE [default] [bool __cdecl FSMRenderEnvironment::callTheGLFWInitFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:461] FSMRenderEnvironment::callTheGLFWInitFunc 
+2019-03-24 03:32:06,966 TRACE [default] [void __cdecl FSMRenderEnvironment::setPostGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:480] FSMRenderEnvironment::setPostGLFWInitCallbacks 
+2019-03-24 03:32:06,966 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:32:06,968 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:54] FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback 
+2019-03-24 03:32:06,970 INFO [default] 
+           Setting GLFW Joystick event Callback Function!   
+ 
+2019-03-24 03:32:06,971 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:60] FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback 
+2019-03-24 03:32:06,973 INFO [default] 
+           Setting GLFW Monitor Event Callback Function!   
+ 
+2019-03-24 03:32:06,973 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] 
+ [step 2]    GLFW Library has initialized! GLFW version:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:32:06,974 INFO [default] GLFW 3.3.0 
+ 
+2019-03-24 03:32:06,974 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContext(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:494] FSMRenderEnvironment::createContext 
+2019-03-24 03:32:06,975 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyContextHints(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:520] FSMRenderEnvironment::specifyContextHints 
+2019-03-24 03:32:06,975 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMajor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:136] FSMRenderEnvironment::getGLVersionMajor 
+2019-03-24 03:32:06,976 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMinor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:141] FSMRenderEnvironment::getGLVersionMinor 
+2019-03-24 03:32:06,979 TRACE [default] [void __cdecl FSMRenderEnvironment::retrieveConnectedMonitors(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:538] FSMRenderEnvironment::retrieveConnectedMonitors 
+2019-03-24 03:32:06,980 INFO [default] 
+Here is where a list of already connected monitors would
+be loaded, which then would allow for the
+Application to call a function of FSMRenderEnvironment to enumerate
+These monitors, which then a user could select an appropriate choice from...
+
+  [or something like that]
+
+
+
+
+ 
+2019-03-24 03:32:06,980 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContextAndWindow(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:552] FSMRenderEnvironment::createContextAndWindow 
+2019-03-24 03:32:08,001 INFO [default] 
+Successfully created a current context!
+ 
+2019-03-24 03:32:08,004 TRACE [default] [void __cdecl FSMRenderEnvironment::setContextWindowCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:567] FSMRenderEnvironment::setContextWindowCallbacks 
+2019-03-24 03:32:08,006 INFO [default] 
+
+      WIndow Context Callbacks would be specified right here                 once they get implemented!!!
+
+ 
+2019-03-24 03:32:08,007 INFO [default] 
+  [step 3]      Graphics Language Context Created!
+ 
+2019-03-24 03:32:08,009 TRACE [default] [bool __cdecl FSMRenderEnvironment::setupGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:578] FSMRenderEnvironment::setupGLAD 
+2019-03-24 03:32:08,009 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyDebugCallbacksWithGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:594] FSMRenderEnvironment::specifyDebugCallbacksWithGLAD 
+2019-03-24 03:32:08,010 INFO [default] 
+
+    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!
+
+
+
+ 
+2019-03-24 03:32:08,010 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadOpenGLFunctions(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:609] FSMRenderEnvironment::loadOpenGLFunctions 
+2019-03-24 03:32:08,011 INFO [default] !Loading Graphics Language Functions...
+ 
+2019-03-24 03:32:08,014 INFO [default]   [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!
+ 
+2019-03-24 03:32:08,016 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersion(int &,int &,int &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:155] FSMRenderEnvironment::getGLFWCompiletimeVersion 
+2019-03-24 03:32:08,018 INFO [default] Program was compiled to work with GLFW  3 . 3 . 0 
+
+2019-03-24 03:32:08,018 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersionString(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:162]  Using object's print function:  FSMRenderEnvironment::getGLFWCompiletimeVersionString 
+2019-03-24 03:32:08,019 INFO [default] 3.3.0 Win32 WGL EGL VisualC hybrid-GPU DLL 
+ 
+2019-03-24 03:32:08,020 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] GLFW Version Loaded at Runtime String:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:32:08,020 INFO [default] GLFW 3.3.0 
+
+ 
+2019-03-24 03:32:08,021 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLVersion(int &,int &,bool &) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:129] FSMRenderEnvironment::getGLVersion 
+2019-03-24 03:32:08,022 INFO [default] Program was compiled to target OpenGL  4 . 6   Core 
+
+2019-03-24 03:32:08,023 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:146] OpenGL version constructed by class: ' FSMRenderEnvironment::getGLVersionString 
+2019-03-24 03:32:08,023 INFO [default] OpenGL Version 4.6 Core 
+
+ 
+
+2019-03-24 03:32:08,024 INFO [default] 
+       Applications Constructor has completed running!
+ 
+2019-03-24 03:32:08,025 TRACE [default] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:103] Application::launch 
+2019-03-24 03:32:08,028 INFO [default] 
+Application launched....
+ 
+2019-03-24 03:32:08,029 TRACE [default] [void __cdecl FSMRenderEnvironment::doMonitorSelectionLoop(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:100] FSMRenderEnvironment::doMonitorSelectionLoop 
+2019-03-24 03:32:10,353 TRACE [default] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:98] Application::~Application 
+2019-03-24 03:32:10,353 TRACE [default] [__cdecl FSMRenderEnvironment::~FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:84] FSMRenderEnvironment::~FSMRenderEnvironment 
+2019-03-24 03:32:10,436 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:43] FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer 
+2019-03-24 03:32:17,373 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 03:32:17,374 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 03:32:17,375 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 03:32:19,287 INFO [default] 
+Right then... On with this whole initialization business... 
+
+2019-03-24 03:32:19,289 TRACE [default] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:37] Application::Application 
+2019-03-24 03:32:19,290 INFO [default] Initializing Application... 
+2019-03-24 03:32:19,290 INFO [default] Creating directory for LOG files...DONE 
+2019-03-24 03:32:19,291 INFO [default] Application Version 0.0 Build 0.0.01 
+2019-03-24 03:32:19,291 INFO [default] Compiler:                    MSVC  1916 
+2019-03-24 03:32:19,292 INFO [default] Compile Date:                Mar 24 2019 
+2019-03-24 03:32:19,292 INFO [default] Compile Time:                03:25:08 
+2019-03-24 03:32:19,293 INFO [default] Implementation Is Hosted:    1 
+2019-03-24 03:32:19,293 INFO [default] Inchoating A Render Environment... 
+2019-03-24 03:32:19,294 TRACE [default] [bool __cdecl Application::createRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:173] Application::createRenderEnvironment 
+2019-03-24 03:32:19,294 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(bool)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:33] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:32:19,295 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:39] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:32:19,295 INFO [default] 
+ [step 1]   Loading settings from initialization file!
+ 
+2019-03-24 03:32:19,296 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadSettings(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:194] FSMRenderEnvironment::loadSettings 
+2019-03-24 03:32:19,296 TRACE [default] [bool __cdecl FSMRenderEnvironment::locateSettingsFile(class std::error_code &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:278] FSMRenderEnvironment::locateSettingsFile 
+2019-03-24 03:32:19,297 TRACE [default] [void __cdecl FSMRenderEnvironment::parseSettingsFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:305] FSMRenderEnvironment::parseSettingsFile 
+2019-03-24 03:32:19,297 INFO [default] 
+Settings file found! Parsing now...
+ 
+2019-03-24 03:32:19,298 TRACE [default] [bool __cdecl FSMRenderEnvironment::initializeGLFW(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:415] FSMRenderEnvironment::initializeGLFW 
+2019-03-24 03:32:19,301 TRACE [default] [void __cdecl FSMRenderEnvironment::setGlobalGLFWInvariants(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:437] FSMRenderEnvironment::setGlobalGLFWInvariants 
+2019-03-24 03:32:19,302 TRACE [default] [void __cdecl FSMRenderEnvironment::setPreGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:449] FSMRenderEnvironment::setPreGLFWInitCallbacks 
+2019-03-24 03:32:19,303 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:32:19,303 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:36] FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer 
+2019-03-24 03:32:19,304 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:27] FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks 
+2019-03-24 03:32:19,305 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:47] FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback 
+2019-03-24 03:32:19,306 INFO [default] 
+           Setting GLFW Error Callback Function!   
+ 
+2019-03-24 03:32:19,306 TRACE [default] [bool __cdecl FSMRenderEnvironment::callTheGLFWInitFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:461] FSMRenderEnvironment::callTheGLFWInitFunc 
+2019-03-24 03:32:19,407 TRACE [default] [void __cdecl FSMRenderEnvironment::setPostGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:480] FSMRenderEnvironment::setPostGLFWInitCallbacks 
+2019-03-24 03:32:19,407 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:32:19,409 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:54] FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback 
+2019-03-24 03:32:19,410 INFO [default] 
+           Setting GLFW Joystick event Callback Function!   
+ 
+2019-03-24 03:32:19,410 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:60] FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback 
+2019-03-24 03:32:19,411 INFO [default] 
+           Setting GLFW Monitor Event Callback Function!   
+ 
+2019-03-24 03:32:19,411 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] 
+ [step 2]    GLFW Library has initialized! GLFW version:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:32:19,412 INFO [default] GLFW 3.3.0 
+ 
+2019-03-24 03:32:19,413 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContext(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:494] FSMRenderEnvironment::createContext 
+2019-03-24 03:32:19,413 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyContextHints(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:520] FSMRenderEnvironment::specifyContextHints 
+2019-03-24 03:32:19,414 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMajor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:136] FSMRenderEnvironment::getGLVersionMajor 
+2019-03-24 03:32:19,414 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMinor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:141] FSMRenderEnvironment::getGLVersionMinor 
+2019-03-24 03:32:19,415 TRACE [default] [void __cdecl FSMRenderEnvironment::retrieveConnectedMonitors(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:538] FSMRenderEnvironment::retrieveConnectedMonitors 
+2019-03-24 03:32:19,415 INFO [default] 
+Here is where a list of already connected monitors would
+be loaded, which then would allow for the
+Application to call a function of FSMRenderEnvironment to enumerate
+These monitors, which then a user could select an appropriate choice from...
+
+  [or something like that]
+
+
+
+
+ 
+2019-03-24 03:32:19,416 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContextAndWindow(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:552] FSMRenderEnvironment::createContextAndWindow 
+2019-03-24 03:32:20,394 INFO [default] 
+Successfully created a current context!
+ 
+2019-03-24 03:32:20,396 TRACE [default] [void __cdecl FSMRenderEnvironment::setContextWindowCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:567] FSMRenderEnvironment::setContextWindowCallbacks 
+2019-03-24 03:32:20,397 INFO [default] 
+
+      WIndow Context Callbacks would be specified right here                 once they get implemented!!!
+
+ 
+2019-03-24 03:32:20,398 INFO [default] 
+  [step 3]      Graphics Language Context Created!
+ 
+2019-03-24 03:32:20,399 TRACE [default] [bool __cdecl FSMRenderEnvironment::setupGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:578] FSMRenderEnvironment::setupGLAD 
+2019-03-24 03:32:20,400 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyDebugCallbacksWithGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:594] FSMRenderEnvironment::specifyDebugCallbacksWithGLAD 
+2019-03-24 03:32:20,400 INFO [default] 
+
+    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!
+
+
+
+ 
+2019-03-24 03:32:20,401 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadOpenGLFunctions(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:609] FSMRenderEnvironment::loadOpenGLFunctions 
+2019-03-24 03:32:20,401 INFO [default] !Loading Graphics Language Functions...
+ 
+2019-03-24 03:32:20,405 INFO [default]   [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!
+ 
+2019-03-24 03:32:20,407 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersion(int &,int &,int &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:155] FSMRenderEnvironment::getGLFWCompiletimeVersion 
+2019-03-24 03:32:20,410 INFO [default] Program was compiled to work with GLFW  3 . 3 . 0 
+
+2019-03-24 03:32:20,411 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersionString(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:162]  Using object's print function:  FSMRenderEnvironment::getGLFWCompiletimeVersionString 
+2019-03-24 03:32:20,411 INFO [default] 3.3.0 Win32 WGL EGL VisualC hybrid-GPU DLL 
+ 
+2019-03-24 03:32:20,412 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] GLFW Version Loaded at Runtime String:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:32:20,413 INFO [default] GLFW 3.3.0 
+
+ 
+2019-03-24 03:32:20,413 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLVersion(int &,int &,bool &) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:129] FSMRenderEnvironment::getGLVersion 
+2019-03-24 03:32:20,414 INFO [default] Program was compiled to target OpenGL  4 . 6   Core 
+
+2019-03-24 03:32:20,415 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:146] OpenGL version constructed by class: ' FSMRenderEnvironment::getGLVersionString 
+2019-03-24 03:32:20,415 INFO [default] OpenGL Version 4.6 Core 
+
+ 
+
+2019-03-24 03:32:20,416 INFO [default] 
+       Applications Constructor has completed running!
+ 
+2019-03-24 03:32:20,420 TRACE [default] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:103] Application::launch 
+2019-03-24 03:32:20,421 INFO [default] 
+Application launched....
+ 
+2019-03-24 03:32:20,422 TRACE [default] [void __cdecl FSMRenderEnvironment::doMonitorSelectionLoop(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:100] FSMRenderEnvironment::doMonitorSelectionLoop 
+2019-03-24 03:32:21,820 TRACE [default] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:98] Application::~Application 
+2019-03-24 03:32:21,821 TRACE [default] [__cdecl FSMRenderEnvironment::~FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:84] FSMRenderEnvironment::~FSMRenderEnvironment 
+2019-03-24 03:32:21,869 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:43] FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer 
+2019-03-24 03:32:47,890 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 03:32:47,892 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 03:32:47,893 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 03:32:54,145 INFO [default] 
+Right then... On with this whole initialization business... 
+
+2019-03-24 03:32:54,148 TRACE [default] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:37] Application::Application 
+2019-03-24 03:32:54,149 INFO [default] Initializing Application... 
+2019-03-24 03:32:54,149 INFO [default] Creating directory for LOG files...DONE 
+2019-03-24 03:32:54,150 INFO [default] Application Version 0.0 Build 0.0.01 
+2019-03-24 03:32:54,150 INFO [default] Compiler:                    MSVC  1916 
+2019-03-24 03:32:54,151 INFO [default] Compile Date:                Mar 24 2019 
+2019-03-24 03:32:54,151 INFO [default] Compile Time:                03:25:08 
+2019-03-24 03:32:54,151 INFO [default] Implementation Is Hosted:    1 
+2019-03-24 03:32:54,152 INFO [default] Inchoating A Render Environment... 
+2019-03-24 03:32:54,152 TRACE [default] [bool __cdecl Application::createRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:173] Application::createRenderEnvironment 
+2019-03-24 03:32:54,153 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(bool)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:33] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:32:54,153 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:39] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:32:54,154 INFO [default] 
+ [step 1]   Loading settings from initialization file!
+ 
+2019-03-24 03:32:54,154 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadSettings(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:194] FSMRenderEnvironment::loadSettings 
+2019-03-24 03:32:54,155 TRACE [default] [bool __cdecl FSMRenderEnvironment::locateSettingsFile(class std::error_code &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:278] FSMRenderEnvironment::locateSettingsFile 
+2019-03-24 03:32:54,155 TRACE [default] [void __cdecl FSMRenderEnvironment::parseSettingsFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:305] FSMRenderEnvironment::parseSettingsFile 
+2019-03-24 03:32:54,156 INFO [default] 
+Settings file found! Parsing now...
+ 
+2019-03-24 03:32:54,159 TRACE [default] [bool __cdecl FSMRenderEnvironment::initializeGLFW(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:415] FSMRenderEnvironment::initializeGLFW 
+2019-03-24 03:32:54,160 TRACE [default] [void __cdecl FSMRenderEnvironment::setGlobalGLFWInvariants(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:437] FSMRenderEnvironment::setGlobalGLFWInvariants 
+2019-03-24 03:32:54,161 TRACE [default] [void __cdecl FSMRenderEnvironment::setPreGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:449] FSMRenderEnvironment::setPreGLFWInitCallbacks 
+2019-03-24 03:32:54,161 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:32:54,162 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:36] FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer 
+2019-03-24 03:32:54,162 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:27] FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks 
+2019-03-24 03:32:54,163 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:47] FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback 
+2019-03-24 03:32:54,163 INFO [default] 
+           Setting GLFW Error Callback Function!   
+ 
+2019-03-24 03:32:54,164 TRACE [default] [bool __cdecl FSMRenderEnvironment::callTheGLFWInitFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:461] FSMRenderEnvironment::callTheGLFWInitFunc 
+2019-03-24 03:32:54,267 TRACE [default] [void __cdecl FSMRenderEnvironment::setPostGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:480] FSMRenderEnvironment::setPostGLFWInitCallbacks 
+2019-03-24 03:32:54,267 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:32:54,269 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:54] FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback 
+2019-03-24 03:32:54,270 INFO [default] 
+           Setting GLFW Joystick event Callback Function!   
+ 
+2019-03-24 03:32:54,270 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:60] FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback 
+2019-03-24 03:32:54,271 INFO [default] 
+           Setting GLFW Monitor Event Callback Function!   
+ 
+2019-03-24 03:32:54,272 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] 
+ [step 2]    GLFW Library has initialized! GLFW version:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:32:54,272 INFO [default] GLFW 3.3.0 
+ 
+2019-03-24 03:32:54,273 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContext(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:494] FSMRenderEnvironment::createContext 
+2019-03-24 03:32:54,273 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyContextHints(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:520] FSMRenderEnvironment::specifyContextHints 
+2019-03-24 03:32:54,274 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMajor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:136] FSMRenderEnvironment::getGLVersionMajor 
+2019-03-24 03:32:54,274 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMinor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:141] FSMRenderEnvironment::getGLVersionMinor 
+2019-03-24 03:32:54,275 TRACE [default] [void __cdecl FSMRenderEnvironment::retrieveConnectedMonitors(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:538] FSMRenderEnvironment::retrieveConnectedMonitors 
+2019-03-24 03:32:54,275 INFO [default] 
+Here is where a list of already connected monitors would
+be loaded, which then would allow for the
+Application to call a function of FSMRenderEnvironment to enumerate
+These monitors, which then a user could select an appropriate choice from...
+
+  [or something like that]
+
+
+
+
+ 
+2019-03-24 03:32:54,276 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContextAndWindow(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:552] FSMRenderEnvironment::createContextAndWindow 
+2019-03-24 03:32:55,366 INFO [default] 
+Successfully created a current context!
+ 
+2019-03-24 03:32:55,367 TRACE [default] [void __cdecl FSMRenderEnvironment::setContextWindowCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:567] FSMRenderEnvironment::setContextWindowCallbacks 
+2019-03-24 03:32:55,368 INFO [default] 
+
+      WIndow Context Callbacks would be specified right here                 once they get implemented!!!
+
+ 
+2019-03-24 03:32:55,369 INFO [default] 
+  [step 3]      Graphics Language Context Created!
+ 
+2019-03-24 03:32:55,370 TRACE [default] [bool __cdecl FSMRenderEnvironment::setupGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:578] FSMRenderEnvironment::setupGLAD 
+2019-03-24 03:32:55,372 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyDebugCallbacksWithGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:594] FSMRenderEnvironment::specifyDebugCallbacksWithGLAD 
+2019-03-24 03:32:55,373 INFO [default] 
+
+    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!
+
+
+
+ 
+2019-03-24 03:32:55,374 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadOpenGLFunctions(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:609] FSMRenderEnvironment::loadOpenGLFunctions 
+2019-03-24 03:32:55,374 INFO [default] !Loading Graphics Language Functions...
+ 
+2019-03-24 03:32:55,380 INFO [default]   [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!
+ 
+2019-03-24 03:32:55,380 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersion(int &,int &,int &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:155] FSMRenderEnvironment::getGLFWCompiletimeVersion 
+2019-03-24 03:32:55,382 INFO [default] Program was compiled to work with GLFW  3 . 3 . 0 
+
+2019-03-24 03:32:55,383 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersionString(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:162]  Using object's print function:  FSMRenderEnvironment::getGLFWCompiletimeVersionString 
+2019-03-24 03:32:55,384 INFO [default] 3.3.0 Win32 WGL EGL VisualC hybrid-GPU DLL 
+ 
+2019-03-24 03:32:55,385 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] GLFW Version Loaded at Runtime String:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:32:55,385 INFO [default] GLFW 3.3.0 
+
+ 
+2019-03-24 03:32:55,386 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLVersion(int &,int &,bool &) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:129] FSMRenderEnvironment::getGLVersion 
+2019-03-24 03:32:55,387 INFO [default] Program was compiled to target OpenGL  4 . 6   Core 
+
+2019-03-24 03:32:55,389 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:146] OpenGL version constructed by class: ' FSMRenderEnvironment::getGLVersionString 
+2019-03-24 03:32:55,393 INFO [default] OpenGL Version 4.6 Core 
+
+ 
+
+2019-03-24 03:32:55,394 INFO [default] 
+       Applications Constructor has completed running!
+ 
+2019-03-24 03:32:55,395 TRACE [default] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:103] Application::launch 
+2019-03-24 03:32:55,397 INFO [default] 
+Application launched....
+ 
+2019-03-24 03:32:55,398 TRACE [default] [void __cdecl FSMRenderEnvironment::doMonitorSelectionLoop(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:100] FSMRenderEnvironment::doMonitorSelectionLoop 
+2019-03-24 03:32:56,991 TRACE [default] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:98] Application::~Application 
+2019-03-24 03:32:56,992 TRACE [default] [__cdecl FSMRenderEnvironment::~FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:84] FSMRenderEnvironment::~FSMRenderEnvironment 
+2019-03-24 03:32:57,057 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:43] FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer 
+2019-03-24 03:33:35,217 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 03:33:35,218 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 03:33:35,219 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 03:33:43,361 INFO [default] 
+Right then... On with this whole initialization business... 
+
+2019-03-24 03:33:43,361 TRACE [default] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:37] Application::Application 
+2019-03-24 03:33:43,362 INFO [default] Initializing Application... 
+2019-03-24 03:33:43,362 INFO [default] Creating directory for LOG files...DONE 
+2019-03-24 03:33:43,362 INFO [default] Application Version 0.0 Build 0.0.01 
+2019-03-24 03:33:43,362 INFO [default] Compiler:                    MSVC  1916 
+2019-03-24 03:33:43,362 INFO [default] Compile Date:                Mar 24 2019 
+2019-03-24 03:33:43,362 INFO [default] Compile Time:                03:25:08 
+2019-03-24 03:33:43,362 INFO [default] Implementation Is Hosted:    1 
+2019-03-24 03:33:43,362 INFO [default] Inchoating A Render Environment... 
+2019-03-24 03:33:43,364 TRACE [default] [bool __cdecl Application::createRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:173] Application::createRenderEnvironment 
+2019-03-24 03:33:43,365 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(bool)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:33] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:33:43,366 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:39] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 03:33:43,367 INFO [default] 
+ [step 1]   Loading settings from initialization file!
+ 
+2019-03-24 03:33:43,367 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadSettings(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:194] FSMRenderEnvironment::loadSettings 
+2019-03-24 03:33:43,368 TRACE [default] [bool __cdecl FSMRenderEnvironment::locateSettingsFile(class std::error_code &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:278] FSMRenderEnvironment::locateSettingsFile 
+2019-03-24 03:33:43,368 TRACE [default] [void __cdecl FSMRenderEnvironment::parseSettingsFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:305] FSMRenderEnvironment::parseSettingsFile 
+2019-03-24 03:33:43,369 INFO [default] 
+Settings file found! Parsing now...
+ 
+2019-03-24 03:33:43,369 TRACE [default] [bool __cdecl FSMRenderEnvironment::initializeGLFW(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:415] FSMRenderEnvironment::initializeGLFW 
+2019-03-24 03:33:43,370 TRACE [default] [void __cdecl FSMRenderEnvironment::setGlobalGLFWInvariants(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:437] FSMRenderEnvironment::setGlobalGLFWInvariants 
+2019-03-24 03:33:43,373 TRACE [default] [void __cdecl FSMRenderEnvironment::setPreGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:449] FSMRenderEnvironment::setPreGLFWInitCallbacks 
+2019-03-24 03:33:43,374 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:33:43,374 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:36] FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer 
+2019-03-24 03:33:43,375 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:27] FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks 
+2019-03-24 03:33:43,376 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:47] FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback 
+2019-03-24 03:33:43,376 INFO [default] 
+           Setting GLFW Error Callback Function!   
+ 
+2019-03-24 03:33:43,377 TRACE [default] [bool __cdecl FSMRenderEnvironment::callTheGLFWInitFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:461] FSMRenderEnvironment::callTheGLFWInitFunc 
+2019-03-24 03:33:43,481 TRACE [default] [void __cdecl FSMRenderEnvironment::setPostGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:480] FSMRenderEnvironment::setPostGLFWInitCallbacks 
+2019-03-24 03:33:43,481 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 03:33:43,483 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:54] FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback 
+2019-03-24 03:33:43,484 INFO [default] 
+           Setting GLFW Joystick event Callback Function!   
+ 
+2019-03-24 03:33:43,484 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:60] FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback 
+2019-03-24 03:33:43,485 INFO [default] 
+           Setting GLFW Monitor Event Callback Function!   
+ 
+2019-03-24 03:33:43,485 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] 
+ [step 2]    GLFW Library has initialized! GLFW version:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:33:43,486 INFO [default] GLFW 3.3.0 
+ 
+2019-03-24 03:33:43,486 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContext(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:494] FSMRenderEnvironment::createContext 
+2019-03-24 03:33:43,487 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyContextHints(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:520] FSMRenderEnvironment::specifyContextHints 
+2019-03-24 03:33:43,487 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMajor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:136] FSMRenderEnvironment::getGLVersionMajor 
+2019-03-24 03:33:43,488 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMinor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:141] FSMRenderEnvironment::getGLVersionMinor 
+2019-03-24 03:33:43,488 TRACE [default] [void __cdecl FSMRenderEnvironment::retrieveConnectedMonitors(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:538] FSMRenderEnvironment::retrieveConnectedMonitors 
+2019-03-24 03:33:43,489 INFO [default] 
+Here is where a list of already connected monitors would
+be loaded, which then would allow for the
+Application to call a function of FSMRenderEnvironment to enumerate
+These monitors, which then a user could select an appropriate choice from...
+
+  [or something like that]
+
+
+
+
+ 
+2019-03-24 03:33:43,489 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContextAndWindow(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:552] FSMRenderEnvironment::createContextAndWindow 
+2019-03-24 03:33:44,534 INFO [default] 
+Successfully created a current context!
+ 
+2019-03-24 03:33:44,536 TRACE [default] [void __cdecl FSMRenderEnvironment::setContextWindowCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:567] FSMRenderEnvironment::setContextWindowCallbacks 
+2019-03-24 03:33:44,537 INFO [default] 
+
+      WIndow Context Callbacks would be specified right here                 once they get implemented!!!
+
+ 
+2019-03-24 03:33:44,538 INFO [default] 
+  [step 3]      Graphics Language Context Created!
+ 
+2019-03-24 03:33:44,539 TRACE [default] [bool __cdecl FSMRenderEnvironment::setupGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:578] FSMRenderEnvironment::setupGLAD 
+2019-03-24 03:33:44,540 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyDebugCallbacksWithGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:594] FSMRenderEnvironment::specifyDebugCallbacksWithGLAD 
+2019-03-24 03:33:44,541 INFO [default] 
+
+    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!
+
+
+
+ 
+2019-03-24 03:33:44,541 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadOpenGLFunctions(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:609] FSMRenderEnvironment::loadOpenGLFunctions 
+2019-03-24 03:33:44,542 INFO [default] !Loading Graphics Language Functions...
+ 
+2019-03-24 03:33:44,548 INFO [default]   [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!
+ 
+2019-03-24 03:33:44,548 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersion(int &,int &,int &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:155] FSMRenderEnvironment::getGLFWCompiletimeVersion 
+2019-03-24 03:33:44,551 INFO [default] Program was compiled to work with GLFW  3 . 3 . 0 
+
+2019-03-24 03:33:44,551 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersionString(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:162]  Using object's print function:  FSMRenderEnvironment::getGLFWCompiletimeVersionString 
+2019-03-24 03:33:44,552 INFO [default] 3.3.0 Win32 WGL EGL VisualC hybrid-GPU DLL 
+ 
+2019-03-24 03:33:44,553 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:174] GLFW Version Loaded at Runtime String:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 03:33:44,554 INFO [default] GLFW 3.3.0 
+
+ 
+2019-03-24 03:33:44,554 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLVersion(int &,int &,bool &) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:129] FSMRenderEnvironment::getGLVersion 
+2019-03-24 03:33:44,555 INFO [default] Program was compiled to target OpenGL  4 . 6   Core 
+
+2019-03-24 03:33:44,555 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:146] OpenGL version constructed by class: ' FSMRenderEnvironment::getGLVersionString 
+2019-03-24 03:33:44,556 INFO [default] OpenGL Version 4.6 Core 
+
+ 
+
+2019-03-24 03:33:44,556 INFO [default] 
+       Applications Constructor has completed running!
+ 
+2019-03-24 03:33:44,557 TRACE [default] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:103] Application::launch 
+2019-03-24 03:33:44,561 INFO [default] 
+Application launched....
+ 
+2019-03-24 03:33:44,561 TRACE [default] [void __cdecl FSMRenderEnvironment::doMonitorSelectionLoop(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:100] FSMRenderEnvironment::doMonitorSelectionLoop 
+2019-03-24 03:34:04,982 TRACE [default] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:98] Application::~Application 
+2019-03-24 03:34:04,983 TRACE [default] [__cdecl FSMRenderEnvironment::~FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:84] FSMRenderEnvironment::~FSMRenderEnvironment 
+2019-03-24 03:34:05,045 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:43] FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer 
+2019-03-24 03:35:42,394 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 03:35:42,395 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 03:35:42,396 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 03:36:17,856 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 03:36:17,857 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 03:36:17,858 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 04:00:59,433 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:00:59,434 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:01:16,202 WARNING [default] Unable to configure logs! Logs have already been configured!
+ 
+2019-03-24 04:01:52,468 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:01:52,469 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:02:42,798 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:02:42,799 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:03:23,784 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:20:00,328 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:20:00,329 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:311] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 04:20:00,330 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:22:28,813 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:22:28,814 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:311] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 04:22:28,815 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:22:38,635 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:22:38,636 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:311] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 04:22:38,637 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:23:09,326 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:23:09,327 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:311] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 04:23:09,328 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:28:57,391 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:28:57,393 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:311] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 04:28:57,393 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:34:49,019 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:34:49,020 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:311] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 04:34:49,020 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 04:35:33,927 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 04:35:33,928 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:311] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 04:35:33,929 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 05:50:46,738 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 05:50:46,739 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:312] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 05:50:46,740 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 05:50:46,741 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 05:50:52,421 INFO [default] 
+Right then... On with this whole initialization business... 
+
+2019-03-24 05:50:52,422 TRACE [default] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:37] Application::Application 
+2019-03-24 05:50:52,423 INFO [default] Initializing Application... 
+2019-03-24 05:50:52,424 INFO [default] Creating directory for LOG files...DONE 
+2019-03-24 05:50:52,424 INFO [default] Application Version 0.0 Build 0.0.01 
+2019-03-24 05:50:52,425 INFO [default] Compiler:                    MSVC  1916 
+2019-03-24 05:50:52,426 INFO [default] Compile Date:                Mar 24 2019 
+2019-03-24 05:50:52,427 INFO [default] Compile Time:                05:46:47 
+2019-03-24 05:50:52,427 INFO [default] Implementation Is Hosted:    1 
+2019-03-24 05:50:52,428 INFO [default] Inchoating A Render Environment... 
+2019-03-24 05:50:52,428 TRACE [default] [bool __cdecl Application::createRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:173] Application::createRenderEnvironment 
+2019-03-24 05:50:52,429 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(bool)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:37] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 05:50:52,430 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:43] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 05:50:52,433 INFO [default] 
+ [step 1]   Loading settings from initialization file!
+ 
+2019-03-24 05:50:52,433 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadSettings(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:269] FSMRenderEnvironment::loadSettings 
+2019-03-24 05:50:52,434 TRACE [default] [bool __cdecl FSMRenderEnvironment::locateSettingsFile(class std::error_code &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:353] FSMRenderEnvironment::locateSettingsFile 
+2019-03-24 05:50:52,435 TRACE [default] [void __cdecl FSMRenderEnvironment::parseSettingsFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:380] FSMRenderEnvironment::parseSettingsFile 
+2019-03-24 05:50:52,436 INFO [default] 
+Settings file found! Parsing now...
+ 
+2019-03-24 05:50:52,436 TRACE [default] [bool __cdecl FSMRenderEnvironment::initializeGLFW(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:490] FSMRenderEnvironment::initializeGLFW 
+2019-03-24 05:50:52,437 TRACE [default] [void __cdecl FSMRenderEnvironment::setGlobalGLFWInvariants(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:512] FSMRenderEnvironment::setGlobalGLFWInvariants 
+2019-03-24 05:50:52,437 TRACE [default] [void __cdecl FSMRenderEnvironment::setPreGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:524] FSMRenderEnvironment::setPreGLFWInitCallbacks 
+2019-03-24 05:50:52,438 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 05:50:52,439 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:36] FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer 
+2019-03-24 05:50:52,439 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:27] FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks 
+2019-03-24 05:50:52,440 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:47] FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback 
+2019-03-24 05:50:52,440 INFO [default] 
+           Setting GLFW Error Callback Function!   
+ 
+2019-03-24 05:50:52,441 TRACE [default] [bool __cdecl FSMRenderEnvironment::callTheGLFWInitFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:536] FSMRenderEnvironment::callTheGLFWInitFunc 
+2019-03-24 05:50:52,525 TRACE [default] [void __cdecl FSMRenderEnvironment::setPostGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:555] FSMRenderEnvironment::setPostGLFWInitCallbacks 
+2019-03-24 05:50:52,527 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 05:50:52,530 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:54] FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback 
+2019-03-24 05:50:52,530 INFO [default] 
+           Setting GLFW Joystick event Callback Function!   
+ 
+2019-03-24 05:50:52,531 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:60] FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback 
+2019-03-24 05:50:52,532 INFO [default] 
+           Setting GLFW Monitor Event Callback Function!   
+ 
+2019-03-24 05:50:52,534 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:249] 
+ [step 2]    GLFW Library has initialized! GLFW version:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 05:50:52,535 INFO [default] GLFW 3.3.0 
+ 
+2019-03-24 05:50:52,536 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContext(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:569] FSMRenderEnvironment::createContext 
+2019-03-24 05:50:52,536 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyContextHints(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:595] FSMRenderEnvironment::specifyContextHints 
+2019-03-24 05:50:52,537 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMajor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:211] FSMRenderEnvironment::getGLVersionMajor 
+2019-03-24 05:50:52,542 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMinor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:216] FSMRenderEnvironment::getGLVersionMinor 
+2019-03-24 05:50:52,543 TRACE [default] [void __cdecl FSMRenderEnvironment::retrieveConnectedMonitors(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:613] FSMRenderEnvironment::retrieveConnectedMonitors 
+2019-03-24 05:50:52,544 INFO [default] 
+Here is where a list of already connected monitors would
+be loaded, which then would allow for the
+Application to call a function of FSMRenderEnvironment to enumerate
+These monitors, which then a user could select an appropriate choice from...
+
+  [or something like that]
+
+
+
+
+ 
+2019-03-24 05:50:52,545 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContextAndWindow(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:627] FSMRenderEnvironment::createContextAndWindow 
+2019-03-24 05:50:53,554 INFO [default] 
+Successfully created a current context!
+ 
+2019-03-24 05:50:53,555 TRACE [default] [void __cdecl FSMRenderEnvironment::setContextWindowCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:642] FSMRenderEnvironment::setContextWindowCallbacks 
+2019-03-24 05:50:53,557 INFO [default] 
+
+      WIndow Context Callbacks would be specified right here                 once they get implemented!!!
+
+ 
+2019-03-24 05:50:53,560 INFO [default] 
+  [step 3]      Graphics Language Context Created!
+ 
+2019-03-24 05:50:53,562 TRACE [default] [bool __cdecl FSMRenderEnvironment::setupGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:653] FSMRenderEnvironment::setupGLAD 
+2019-03-24 05:50:53,562 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyDebugCallbacksWithGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:669] FSMRenderEnvironment::specifyDebugCallbacksWithGLAD 
+2019-03-24 05:50:53,563 INFO [default] 
+
+    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!
+
+
+
+ 
+2019-03-24 05:50:53,564 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadOpenGLFunctions(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:684] FSMRenderEnvironment::loadOpenGLFunctions 
+2019-03-24 05:50:53,568 INFO [default] !Loading Graphics Language Functions...
+ 
+2019-03-24 05:50:53,578 INFO [default]   [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!
+ 
+2019-03-24 05:50:53,579 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersion(int &,int &,int &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:230] FSMRenderEnvironment::getGLFWCompiletimeVersion 
+2019-03-24 05:50:53,581 INFO [default] Program was compiled to work with GLFW  3 . 3 . 0 
+
+2019-03-24 05:50:53,581 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersionString(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:237]  Using object's print function:  FSMRenderEnvironment::getGLFWCompiletimeVersionString 
+2019-03-24 05:50:53,582 INFO [default] 3.3.0 Win32 WGL EGL VisualC hybrid-GPU DLL 
+ 
+2019-03-24 05:50:53,583 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:249] GLFW Version Loaded at Runtime String:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 05:50:53,584 INFO [default] GLFW 3.3.0 
+
+ 
+2019-03-24 05:50:53,584 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLVersion(int &,int &,bool &) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:204] FSMRenderEnvironment::getGLVersion 
+2019-03-24 05:50:53,585 INFO [default] Program was compiled to target OpenGL  4 . 6   Core 
+
+2019-03-24 05:50:53,586 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:221] OpenGL version constructed by class: ' FSMRenderEnvironment::getGLVersionString 
+2019-03-24 05:50:53,589 INFO [default] OpenGL Version 4.6 Core 
+
+ 
+
+2019-03-24 05:50:53,591 INFO [default] 
+       Applications Constructor has completed running!
+ 
+2019-03-24 05:50:53,593 TRACE [default] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:103] Application::launch 
+2019-03-24 05:50:53,595 INFO [default] 
+Application launched....
+ 
+2019-03-24 05:50:53,595 TRACE [default] [void __cdecl FSMRenderEnvironment::doMonitorSelectionLoop(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:104] FSMRenderEnvironment::doMonitorSelectionLoop 
+2019-03-24 05:50:53,598 TRACE [default] [class std::queue<struct GLFWmonitor *,class std::deque<struct GLFWmonitor *,class std::allocator<struct GLFWmonitor *> > > &__cdecl FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorConnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmmonitoreventcallback.cpp:112] FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorConnections 
+2019-03-24 05:50:53,602 TRACE [default] [class std::queue<struct GLFWmonitor *,class std::deque<struct GLFWmonitor *,class std::allocator<struct GLFWmonitor *> > > &__cdecl FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorDisconnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmmonitoreventcallback.cpp:118] FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorDisconnections 
+2019-03-24 05:50:53,603 TRACE [default] [class std::queue<int,class std::deque<int,class std::allocator<int> > > &__cdecl FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickConnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmjoystickeventcallback.cpp:125] FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickConnections 
+2019-03-24 05:50:53,604 TRACE [default] [class std::queue<int,class std::deque<int,class std::allocator<int> > > &__cdecl FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickDisconnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmjoystickeventcallback.cpp:131] FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickDisconnections 
+2019-03-24 05:50:54,557 TRACE [default] [bool __cdecl FSMEngineInternal::checkMonitorEventQueues(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmmonitoreventcallback.cpp:39] FSMEngineInternal::checkMonitorEventQueues 
+2019-03-24 05:50:54,558 TRACE [default] [bool __cdecl FSMEngineInternal::checkJoystickEventQueues(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmjoystickeventcallback.cpp:40] FSMEngineInternal::checkJoystickEventQueues 
+2019-03-24 05:50:55,557 TRACE [default] [bool __cdecl FSMEngineInternal::checkMonitorEventQueues(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmmonitoreventcallback.cpp:39] FSMEngineInternal::checkMonitorEventQueues 
+2019-03-24 05:50:55,558 TRACE [default] [bool __cdecl FSMEngineInternal::checkJoystickEventQueues(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmjoystickeventcallback.cpp:40] FSMEngineInternal::checkJoystickEventQueues 
+2019-03-24 05:50:55,873 TRACE [default] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:98] Application::~Application 
+2019-03-24 05:50:55,875 TRACE [default] [__cdecl FSMRenderEnvironment::~FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:88] FSMRenderEnvironment::~FSMRenderEnvironment 
+2019-03-24 05:50:55,937 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:43] FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer 
+2019-03-24 05:51:02,079 WARNING [default] 
+An error occurred while making a directory for logging files!
+ 
+2019-03-24 05:51:02,080 DEBUG [default] [Forrest@FMPC] [bool __cdecl configureEasyLogger(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\easylogconfiguration.h:312] The function call to create a filepath for logs returned an empty optional! 
+2019-03-24 05:51:02,081 WARNING [default] 
+An issue was encountered setting up a directory for LOG files.
+ All LOG output will be directed to the default file!
+
+ 
+2019-03-24 05:51:02,082 INFO [default] 
+     SYSTEM REPORTED ISSUE        
+ Unable to provide full logging functionality due to an issue which
+ occurred while communicating with the OS!
+ 
+     SOLUTION 
+ Luckily this Application was built with the setting 'FECLFINAE' enabled!
+ 'FECLFINAE' in essence is a designation that an application can declare itself
+ to satisfy. Doing so implies that despite some issue preventing this
+ Application from not being able to fully establish and rely upon its usual
+ expected custom message-logging protocols and behaviors, this loss of function-
+ ality has been deemed to not violate any of this softwares allowable design 
+ tolerances. Thus the application should be able to expect to continue execution
+ with potentially reduced functionality!
+ 
+     OUTCOME   
+ Conditions have been determined to be within acceptable tolerances
+ to allow for continued program execution!
+
+          [Be advised that the Application may behave strangely]
+
+ 
+[Press Enter To acknowledge that you have read the above text]   
+2019-03-24 05:51:03,589 INFO [default] 
+Right then... On with this whole initialization business... 
+
+2019-03-24 05:51:03,590 TRACE [default] [__cdecl Application::Application(int,char **)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:37] Application::Application 
+2019-03-24 05:51:03,591 INFO [default] Initializing Application... 
+2019-03-24 05:51:03,592 INFO [default] Creating directory for LOG files...DONE 
+2019-03-24 05:51:03,594 INFO [default] Application Version 0.0 Build 0.0.01 
+2019-03-24 05:51:03,594 INFO [default] Compiler:                    MSVC  1916 
+2019-03-24 05:51:03,595 INFO [default] Compile Date:                Mar 24 2019 
+2019-03-24 05:51:03,596 INFO [default] Compile Time:                05:46:47 
+2019-03-24 05:51:03,596 INFO [default] Implementation Is Hosted:    1 
+2019-03-24 05:51:03,597 INFO [default] Inchoating A Render Environment... 
+2019-03-24 05:51:03,597 TRACE [default] [bool __cdecl Application::createRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:173] Application::createRenderEnvironment 
+2019-03-24 05:51:03,598 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(bool)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:37] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 05:51:03,598 TRACE [default] [__cdecl FSMRenderEnvironment::FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:43] FSMRenderEnvironment::FSMRenderEnvironment 
+2019-03-24 05:51:03,599 INFO [default] 
+ [step 1]   Loading settings from initialization file!
+ 
+2019-03-24 05:51:03,602 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadSettings(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:269] FSMRenderEnvironment::loadSettings 
+2019-03-24 05:51:03,603 TRACE [default] [bool __cdecl FSMRenderEnvironment::locateSettingsFile(class std::error_code &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:353] FSMRenderEnvironment::locateSettingsFile 
+2019-03-24 05:51:03,603 TRACE [default] [void __cdecl FSMRenderEnvironment::parseSettingsFile(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:380] FSMRenderEnvironment::parseSettingsFile 
+2019-03-24 05:51:03,604 INFO [default] 
+Settings file found! Parsing now...
+ 
+2019-03-24 05:51:03,604 TRACE [default] [bool __cdecl FSMRenderEnvironment::initializeGLFW(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:490] FSMRenderEnvironment::initializeGLFW 
+2019-03-24 05:51:03,605 TRACE [default] [void __cdecl FSMRenderEnvironment::setGlobalGLFWInvariants(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:512] FSMRenderEnvironment::setGlobalGLFWInvariants 
+2019-03-24 05:51:03,605 TRACE [default] [void __cdecl FSMRenderEnvironment::setPreGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:524] FSMRenderEnvironment::setPreGLFWInitCallbacks 
+2019-03-24 05:51:03,606 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 05:51:03,606 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:36] FSMEngineInternal::FSMCallbackInitializer::FSMCallbackInitializer 
+2019-03-24 05:51:03,607 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:27] FSMEngineInternal::FSMCallbackInitializer::GlobalStateOfGLFWCallbacks::GlobalStateOfGLFWCallbacks 
+2019-03-24 05:51:03,608 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:47] FSMEngineInternal::FSMCallbackInitializer::setGLFWErrorCallback 
+2019-03-24 05:51:03,609 INFO [default] 
+           Setting GLFW Error Callback Function!   
+ 
+2019-03-24 05:51:03,610 TRACE [default] [bool __cdecl FSMRenderEnvironment::callTheGLFWInitFunc(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:536] FSMRenderEnvironment::callTheGLFWInitFunc 
+2019-03-24 05:51:03,697 TRACE [default] [void __cdecl FSMRenderEnvironment::setPostGLFWInitCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:555] FSMRenderEnvironment::setPostGLFWInitCallbacks 
+2019-03-24 05:51:03,697 TRACE [default] [class FSMEngineInternal::FSMCallbackInitializer &__cdecl FSMEngineInternal::FSMCallbackInitializer::callbackInitializer(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.h:114] FSMEngineInternal::FSMCallbackInitializer::callbackInitializer 
+2019-03-24 05:51:03,700 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:54] FSMEngineInternal::FSMCallbackInitializer::setJoystickEventCallback 
+2019-03-24 05:51:03,701 INFO [default] 
+           Setting GLFW Joystick event Callback Function!   
+ 
+2019-03-24 05:51:03,702 TRACE [default] [void __cdecl FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:60] FSMEngineInternal::FSMCallbackInitializer::setMonitorEventCallback 
+2019-03-24 05:51:03,702 INFO [default] 
+           Setting GLFW Monitor Event Callback Function!   
+ 
+2019-03-24 05:51:03,703 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:249] 
+ [step 2]    GLFW Library has initialized! GLFW version:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 05:51:03,703 INFO [default] GLFW 3.3.0 
+ 
+2019-03-24 05:51:03,704 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContext(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:569] FSMRenderEnvironment::createContext 
+2019-03-24 05:51:03,704 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyContextHints(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:595] FSMRenderEnvironment::specifyContextHints 
+2019-03-24 05:51:03,705 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMajor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:211] FSMRenderEnvironment::getGLVersionMajor 
+2019-03-24 05:51:03,705 TRACE [default] [int __cdecl FSMRenderEnvironment::getGLVersionMinor(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:216] FSMRenderEnvironment::getGLVersionMinor 
+2019-03-24 05:51:03,706 TRACE [default] [void __cdecl FSMRenderEnvironment::retrieveConnectedMonitors(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:613] FSMRenderEnvironment::retrieveConnectedMonitors 
+2019-03-24 05:51:03,706 INFO [default] 
+Here is where a list of already connected monitors would
+be loaded, which then would allow for the
+Application to call a function of FSMRenderEnvironment to enumerate
+These monitors, which then a user could select an appropriate choice from...
+
+  [or something like that]
+
+
+
+
+ 
+2019-03-24 05:51:03,710 TRACE [default] [bool __cdecl FSMRenderEnvironment::createContextAndWindow(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:627] FSMRenderEnvironment::createContextAndWindow 
+2019-03-24 05:51:04,716 INFO [default] 
+Successfully created a current context!
+ 
+2019-03-24 05:51:04,718 TRACE [default] [void __cdecl FSMRenderEnvironment::setContextWindowCallbacks(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:642] FSMRenderEnvironment::setContextWindowCallbacks 
+2019-03-24 05:51:04,718 INFO [default] 
+
+      WIndow Context Callbacks would be specified right here                 once they get implemented!!!
+
+ 
+2019-03-24 05:51:04,719 INFO [default] 
+  [step 3]      Graphics Language Context Created!
+ 
+2019-03-24 05:51:04,720 TRACE [default] [bool __cdecl FSMRenderEnvironment::setupGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:653] FSMRenderEnvironment::setupGLAD 
+2019-03-24 05:51:04,721 TRACE [default] [void __cdecl FSMRenderEnvironment::specifyDebugCallbacksWithGLAD(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:669] FSMRenderEnvironment::specifyDebugCallbacksWithGLAD 
+2019-03-24 05:51:04,722 INFO [default] 
+
+    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!
+
+
+
+ 
+2019-03-24 05:51:04,722 TRACE [default] [bool __cdecl FSMRenderEnvironment::loadOpenGLFunctions(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:684] FSMRenderEnvironment::loadOpenGLFunctions 
+2019-03-24 05:51:04,723 INFO [default] !Loading Graphics Language Functions...
+ 
+2019-03-24 05:51:04,730 INFO [default]   [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!
+ 
+2019-03-24 05:51:04,731 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersion(int &,int &,int &)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:230] FSMRenderEnvironment::getGLFWCompiletimeVersion 
+2019-03-24 05:51:04,732 INFO [default] Program was compiled to work with GLFW  3 . 3 . 0 
+
+2019-03-24 05:51:04,734 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWCompiletimeVersionString(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:237]  Using object's print function:  FSMRenderEnvironment::getGLFWCompiletimeVersionString 
+2019-03-24 05:51:04,734 INFO [default] 3.3.0 Win32 WGL EGL VisualC hybrid-GPU DLL 
+ 
+2019-03-24 05:51:04,735 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLFWRuntimeVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:249] GLFW Version Loaded at Runtime String:  FSMRenderEnvironment::getGLFWRuntimeVersionString 
+2019-03-24 05:51:04,736 INFO [default] GLFW 3.3.0 
+
+ 
+2019-03-24 05:51:04,736 TRACE [default] [void __cdecl FSMRenderEnvironment::getGLVersion(int &,int &,bool &) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:204] FSMRenderEnvironment::getGLVersion 
+2019-03-24 05:51:04,737 INFO [default] Program was compiled to target OpenGL  4 . 6   Core 
+
+2019-03-24 05:51:04,738 TRACE [default] [class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FSMRenderEnvironment::getGLVersionString(void) noexcept const] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:221] OpenGL version constructed by class: ' FSMRenderEnvironment::getGLVersionString 
+2019-03-24 05:51:04,742 INFO [default] OpenGL Version 4.6 Core 
+
+ 
+
+2019-03-24 05:51:04,743 INFO [default] 
+       Applications Constructor has completed running!
+ 
+2019-03-24 05:51:04,744 TRACE [default] [void __cdecl Application::launch(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:103] Application::launch 
+2019-03-24 05:51:04,745 INFO [default] 
+Application launched....
+ 
+2019-03-24 05:51:04,746 TRACE [default] [void __cdecl FSMRenderEnvironment::doMonitorSelectionLoop(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:104] FSMRenderEnvironment::doMonitorSelectionLoop 
+2019-03-24 05:51:04,751 TRACE [default] [class std::queue<struct GLFWmonitor *,class std::deque<struct GLFWmonitor *,class std::allocator<struct GLFWmonitor *> > > &__cdecl FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorConnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmmonitoreventcallback.cpp:112] FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorConnections 
+2019-03-24 05:51:04,754 TRACE [default] [class std::queue<struct GLFWmonitor *,class std::deque<struct GLFWmonitor *,class std::allocator<struct GLFWmonitor *> > > &__cdecl FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorDisconnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmmonitoreventcallback.cpp:118] FSMEngineInternal::MonitorEventCallbackInternal::recentMonitorDisconnections 
+2019-03-24 05:51:04,755 TRACE [default] [class std::queue<int,class std::deque<int,class std::allocator<int> > > &__cdecl FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickConnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmjoystickeventcallback.cpp:125] FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickConnections 
+2019-03-24 05:51:04,756 TRACE [default] [class std::queue<int,class std::deque<int,class std::allocator<int> > > &__cdecl FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickDisconnections(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmjoystickeventcallback.cpp:131] FSMEngineInternal::JoystickEventCallbackInternal::recentJoystickDisconnections 
+2019-03-24 05:51:05,708 TRACE [default] [bool __cdecl FSMEngineInternal::checkMonitorEventQueues(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmmonitoreventcallback.cpp:39] FSMEngineInternal::checkMonitorEventQueues 
+2019-03-24 05:51:05,709 TRACE [default] [bool __cdecl FSMEngineInternal::checkJoystickEventQueues(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmjoystickeventcallback.cpp:40] FSMEngineInternal::checkJoystickEventQueues 
+2019-03-24 05:51:06,108 TRACE [default] [__cdecl Application::~Application(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\application.cpp:98] Application::~Application 
+2019-03-24 05:51:06,108 TRACE [default] [__cdecl FSMRenderEnvironment::~FSMRenderEnvironment(void)] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmrenderenvironment.cpp:88] FSMRenderEnvironment::~FSMRenderEnvironment 
+2019-03-24 05:51:06,159 TRACE [default] [__cdecl FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer(void) noexcept] [c:\users\forrest\source\repos\fsmengine\fsmengineproject\fsmcallbackinitializer.cpp:43] FSMEngineInternal::FSMCallbackInitializer::~FSMCallbackInitializer 

@@ -134,6 +134,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AdditionalIncludeDirectories>$(TargetDir)..\..\FSMEngineProject\ThirdParty\str_view-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -158,6 +159,7 @@
     <ClInclude Include="FSMMonitor.h" />
     <ClInclude Include="FSMMonitorEventCallback.h" />
     <ClInclude Include="FSMRenderEnvironment.h" />
+    <ClInclude Include="GetSystemDateTime.h" />
     <ClInclude Include="GraphicsLanguage.h" />
     <ClInclude Include="GraphicsLanguageFramework.h" />
     <ClInclude Include="JoystickStatePrinter.h" />
@@ -427,7 +429,6 @@
     </ClInclude>
     <ClInclude Include="UniversalIncludes.h" />
     <ClInclude Include="FSMVideoMode.h" />
-    <ClInclude Include="AsciiAsset.h" />
     <ClInclude Include="VidModeImpl.h" />
   </ItemGroup>
   <ItemGroup>
@@ -439,6 +440,7 @@
     <ClCompile Include="FSMMonitor.cpp" />
     <ClCompile Include="FSMMonitorEventCallback.cpp" />
     <ClCompile Include="FSMRenderEnvironment.cpp" />
+    <ClCompile Include="GetSystemDateTime.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc" />
@@ -456,7 +458,6 @@
     </ClCompile>
     <ClCompile Include="ThirdParty\glm\detail\glm.cpp" />
     <ClCompile Include="FSMVideoMode.cpp" />
-    <ClCompile Include="AsciiAsset.cpp" />
     <ClCompile Include="VidModeImpl.cpp" />
   </ItemGroup>
   <ItemGroup>

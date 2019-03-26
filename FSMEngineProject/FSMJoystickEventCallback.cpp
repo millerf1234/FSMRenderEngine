@@ -37,28 +37,52 @@ namespace FSMEngineInternal {
     //-------------------------------------------------------
 
     bool checkJoystickEventQueues() {
-        if ((JoystickEventCallbackInternal::recentJoystickConnections().empty()) &&
-            (JoystickEventCallbackInternal::recentJoystickDisconnections().empty()))
+        LOG_EVERY_N(60, TRACE) << __FUNCTION__;
+        /*if ((JoystickEventCallbackInternal::recentJoystickConnections().empty()) &&
+              (JoystickEventCallbackInternal::recentJoystickDisconnections().empty()))
+              return false;
+          return true;             */
+        //Alternative Implementation (this saves a pointer to both queues on first time  
+        //                             it runs to reduce required function calls) 
+        static std::queue<int> * ptrToConnectionQueue = &(JoystickEventCallbackInternal::recentJoystickConnections());
+        static std::queue<int> * ptrToDisconnectionQueue = &(JoystickEventCallbackInternal::recentJoystickDisconnections());
+        if (ptrToConnectionQueue->empty() && ptrToDisconnectionQueue->empty())
             return false;
         return true;
     }
 
 
     bool checkJoystickConnectionEventQueue() {
-        if ((JoystickEventCallbackInternal::recentJoystickConnections().empty()))
+        LOG(TRACE) << __FUNCTION__;
+        /*if ((JoystickEventCallbackInternal::recentJoystickConnections().empty()))
+            return false;
+        return true;   */
+        //Alternative Implementation (this saves a pointer to the queue on the first time     
+        //                             it runs to all it to quickly check the queue on 
+        //                             subsequent calls)    
+        static std::queue<int> * ptrToConnectionQueue = &(JoystickEventCallbackInternal::recentJoystickConnections());
+        if (ptrToConnectionQueue->empty())
             return false;
         return true;
     }
 
 
     bool checkJoystickDisconnectionEventQueue() {
-        if (JoystickEventCallbackInternal::recentJoystickDisconnections().empty())
+        LOG(TRACE) << __FUNCTION__;
+        /*if (JoystickEventCallbackInternal::recentJoystickDisconnections().empty())
+            return false;
+        return true;      */
+        //Alternative Implementation (this saves a pointer to the queue the first time    
+        //                             it runs to reduce required function calls)  
+        static std::queue<int> * ptrToDisconnectionQueue = &(JoystickEventCallbackInternal::recentJoystickDisconnections());
+        if (ptrToDisconnectionQueue->empty())
             return false;
         return true;
     }
 
 
     std::optional<int> getNextAvailableJoystickConnection() {
+        LOG(TRACE) << __FUNCTION__;
         if ((JoystickEventCallbackInternal::recentJoystickConnections().empty())) {
             return std::nullopt; //return the empty optional
         }
@@ -72,6 +96,7 @@ namespace FSMEngineInternal {
 
 
     std::optional<int> getNextAvailableJoystickDisconnection() {
+        LOG(TRACE) << __FUNCTION__;
         if ((JoystickEventCallbackInternal::recentJoystickDisconnections().empty())) {
             return std::nullopt;
         }
@@ -97,11 +122,13 @@ namespace FSMEngineInternal {
         //can be processed by the application.
 
         std::queue<int>& recentJoystickConnections() {
+            LOG(TRACE) << __FUNCTION__;
             static std::queue<int> awaitingConnection;
             return awaitingConnection;
         }
 
         std::queue<int>& recentJoystickDisconnections() {
+            LOG(TRACE) << __FUNCTION__;
             static std::queue<int> awaitingDisconnection;
             return awaitingDisconnection;
         }
@@ -115,6 +142,7 @@ namespace FSMEngineInternal {
         //-------------------------------------------------------
 
         void graphicsLanguageFrameworkJoystickEventCallbackFunction(int joyID, int event) {
+            LOG(TRACE) << __FUNCTION__;
             LOG(INFO) << "\n\n\tA Joystick Event was detected! Event code " << event << std::endl;
             if (event == GLFW_CONNECTED) {
                 recentJoystickConnections().push(joyID);
@@ -122,7 +150,7 @@ namespace FSMEngineInternal {
             else if (event == GLFW_DISCONNECTED) {
                 recentJoystickDisconnections().push(joyID);
             }
-            else {  //Should never happen
+            else {  //Should never happen 
                 LOG(WARNING) << "GLFW Joystick event callback was called with invalid event code!\n";
             }
         }

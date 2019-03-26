@@ -16,6 +16,10 @@
 #include "GraphicsLanguageFramework.h"
 #include "FSMCallbackInitializer.h"
 
+//The following includes are needed for checking the event queues
+#include "FSMMonitorEventCallback.h"
+#include "FSMJoystickEventCallback.h"
+
 using namespace FSMEngineInternal;
 using namespace FSMEngineDefaultInitializationConstants;
 
@@ -30,11 +34,13 @@ using namespace FSMEngineDefaultInitializationConstants;
 //The parameter 'dummyParameter' to this constructor is just a decoy to give this 
 //constructor a unique signature, this parameter is not used in any way. 
 FSMRenderEnvironment::FSMRenderEnvironment(bool dummyParameter) {
+    LOG(TRACE) << __FUNCTION__;
     (void)dummyParameter;//We don't care about the parameter, it exists just to identify this constructor  
     mGLFWIsInit_ = false;
 }
 
 FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
+    LOG(TRACE) << __FUNCTION__;
     //Because the delegating constructor was used, we know that FSMRenderEnvironment 
     //is now a complete type. Thus we don't need to worry about any further actions
     //we take here in this constructor throwing exceptions which otherwise would result in 
@@ -79,6 +85,7 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
 
 
 FSMRenderEnvironment::~FSMRenderEnvironment() {
+    LOG(TRACE) << __FUNCTION__;
     if (mGLFWIsInit_) {
         glfwTerminate();
         mGLFWIsInit_ = false;
@@ -94,6 +101,7 @@ FSMRenderEnvironment::~FSMRenderEnvironment() {
 
 
 void FSMRenderEnvironment::doMonitorSelectionLoop() {
+    LOG(TRACE) << __FUNCTION__;
 
     // Define the viewport dimensions
     glViewport(0, 0, width, height);
@@ -114,6 +122,77 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
 
         // Swap the screen buffers
         glfwSwapBuffers(mContextWindow_);
+
+        //Check queues?
+        if (checkMonitorEventQueues()) {
+            LOG(INFO) << "FSMEngine Detected a Monitor Event.";
+            if (checkMonitorConnectionEventQueue()) {
+                LOG(INFO) << "FSMEngine is ready to process the newly connected monitor!";
+                auto newMonitor = getNextAvailableMonitorConnection();
+                if (newMonitor.has_value()) {
+                    if (newMonitor.value() != nullptr)
+                        LOG(INFO) << "Adding monitor with handle to memory address of " << newMonitor.value();
+                    else
+                        LOG(DEBUG) << "Uh-oh, the new monitor's handle was a nullptr!\n";
+                }
+                else {
+                    LOG(INFO) << "Uh-oh! The Monitor Connection Queue returned an empty optional!\n";
+                    LOG(DEBUG) << "FSMEngine has detected that the Monitor Connection Queue returned an empty optional!";
+                }
+            }
+            else if (checkMonitorDisconnectionEventQueue()) {
+                LOG(INFO) << "FSMEngine is ready to remove the recently disconnect monitor from it's collection of tracked displays!";
+                auto disconnectedMonitor = getNextAvailableMonitorDisconnection();
+                if (disconnectedMonitor.has_value()) {
+                    if (disconnectedMonitor.value() != nullptr)
+                        LOG(INFO) << "Removing monitor with handle to memory address of " << disconnectedMonitor.value();
+                    else
+                        LOG(DEBUG) << "Uh-oh, the disconnected monitor's handle was a nullptr!\n";
+                }
+                else {
+                    LOG(INFO) << "Uh-oh! The Monitor Disconnection Queue returned an empty optional!\n";
+                    LOG(DEBUG) << "FSMEngine has detected that the Monitor Disconnection Queue returned an empty optional!";
+                }
+            }
+            else {
+                LOG(INFO) << "That is odd. Neither the connection nor disconnection queues are\n"
+                    << "populated despite a monitor event being detected!";
+                LOG(DEBUG) << "FSMEngine has detected a possible Monitor Event Misfire!\n";
+            }
+        }
+        if (checkJoystickEventQueues()) {
+            LOG(INFO) << "FSMEngine Detected a Joystick Event.";
+            if (checkJoystickConnectionEventQueue()) {
+                LOG(INFO) << "FSMEngine is ready to process the newly connected joystick!";
+                std::optional<int> newJS = getNextAvailableJoystickConnection();
+                if (newJS.has_value()) {
+                    LOG(INFO) << "FSMEngine has successfully assimilated the joystick under JoyID " << newJS.value();
+                }
+                else {
+                    LOG(INFO) << "Uh-oh! The Joystick Connection Queue returned an empty optional!\n";
+                    LOG(DEBUG) << "FSMEngine has detected that the Joystick Connection Queue returned an empty optional!";
+                }
+            }
+            else if (checkJoystickDisconnectionEventQueue()) {
+                LOG(INFO) << "FSMEngine is ready to remove the recently disconnected joystick from the list of connected input devices!";
+                std::optional<int> jsToRemove = getNextAvailableJoystickDisconnection();
+                if (jsToRemove.has_value()) {
+                    LOG(INFO) << "FSMEngine is no longer accepting input from joystick under JoyID " << jsToRemove.value();
+                }
+                else {
+                    LOG(INFO) << "Uh-oh! The Joystick Disconnection Queue returned an empty optional!\n";
+                    LOG(DEBUG) << "FSMEngine has detected that the Joystick Disconnection Queue returned an empty optional!";
+                }
+            }
+            else {
+                LOG(INFO) << "That is odd. Neither the Joystick connection nor disconnection queues are\n"
+                    << "populated despite a joystick event being detected!";
+                LOG(DEBUG) << "FSMEngine has detected a possible Joystick Event Misfire!\n";
+            }
+        }
+        
+        //FSMCallbackInitializer* theCBInitializer = &FSMCallbackInitializer::callbackInitializer(); 
+        //theCBInitializer->
     }
 
 
@@ -122,20 +201,24 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
 
 
 void FSMRenderEnvironment::getGLVersion(int& versionMajor, int& versionMinor, bool& usesCompatMode) const noexcept {
+    LOG(TRACE) << __FUNCTION__;
     versionMajor = GLVersion.major;
     versionMinor = GLVersion.minor;
     usesCompatMode = false; //Should be safe to assume this code never will run in compatibility mode....
 }
 
 int FSMRenderEnvironment::getGLVersionMajor() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
     return GLVersion.major;
 }
 
 int FSMRenderEnvironment::getGLVersionMinor() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
     return GLVersion.minor;
 }
 
 std::string FSMRenderEnvironment::getGLVersionString() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
     std::ostringstream version;
     version << "OpenGL Version " << std::to_string(GLVersion.major) << ".";
     version << std::to_string(GLVersion.minor) << " Core";
@@ -144,22 +227,26 @@ std::string FSMRenderEnvironment::getGLVersionString() const noexcept {
 
 void FSMRenderEnvironment::getGLFWCompiletimeVersion(int& compileVersionMajor,
     int& compileVersionMinor, int& compileVersionRevision) {
+    LOG(TRACE) << __FUNCTION__;
     compileVersionMajor = GLFW_VERSION_MAJOR;
     compileVersionMinor = GLFW_VERSION_MINOR;
     compileVersionRevision = GLFW_VERSION_REVISION;
 }
 
 std::string FSMRenderEnvironment::getGLFWCompiletimeVersionString() {
+    LOG(TRACE) << __FUNCTION__;
     return std::string(glfwGetVersionString()); //GLFW returns a compile-time generated string
 }
 
 
 void FSMRenderEnvironment::getGLFWRuntimeVersion(int& runtimeVersionMajor,
     int& runtimeVersionMinor, int& runtimeVersionRevision) const noexcept {
+    LOG(TRACE) << __FUNCTION__;
     glfwGetVersion(&runtimeVersionMajor, &runtimeVersionMinor, &runtimeVersionRevision);
 }
 
 std::string FSMRenderEnvironment::getGLFWRuntimeVersionString() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
     int maj, min, rev;
     glfwGetVersion(&maj, &min, &rev);
     std::ostringstream version;
@@ -179,6 +266,7 @@ std::string FSMRenderEnvironment::getGLFWRuntimeVersionString() const noexcept {
 //                                     STEP 1 
 //-----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::loadSettings() {
+    LOG(TRACE) << __FUNCTION__;
     //C++20 
 #if __has_cpp_attribute(likely)  
 #define LIKELY [[likely]]
@@ -262,6 +350,7 @@ bool FSMRenderEnvironment::loadSettings() {
 //--------------
 //Parameter 'ec' will be set to any errors which may be reported by the OS when calling functions from 'std::filesystem'
 bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
+    LOG(TRACE) << __FUNCTION__;
     auto currentPath = std::filesystem::current_path(ec);
     if (ec)
         return false;
@@ -288,6 +377,7 @@ bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
 //  STEP 1.2  [OPTION A: File Exists]
 //--------------
 void FSMRenderEnvironment::parseSettingsFile() {
+    LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\nSettings file found! Parsing now...\n";
     //return true;
 }
@@ -298,6 +388,7 @@ void FSMRenderEnvironment::parseSettingsFile() {
 //  STEP 1.2  [OPTION B: FILE DOES NOT EXIST]  (yet)
 //--------------
 bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
+    LOG(TRACE) << __FUNCTION__;
     /*
     LOG(INFO) << "\nUnable to find an existing settings file. Generating a settings file...\n";
     auto currentPath = std::filesystem::current_path(ec);
@@ -396,6 +487,7 @@ bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
 //                                     STEP 2 
 //-----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::initializeGLFW() {
+    LOG(TRACE) << __FUNCTION__;
     //Step 2.1
     setGlobalGLFWInvariants();
     
@@ -417,6 +509,7 @@ bool FSMRenderEnvironment::initializeGLFW() {
 //--------------
 //This function must be called before glfwInit() is called
 void FSMRenderEnvironment::setGlobalGLFWInvariants() noexcept {
+    LOG(TRACE) << __FUNCTION__;
     //Treat joystick hats as separate from Joystick buttons
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
 
@@ -428,6 +521,7 @@ void FSMRenderEnvironment::setGlobalGLFWInvariants() noexcept {
 //  STEP 2.2
 //--------------
 void FSMRenderEnvironment::setPreGLFWInitCallbacks() {
+    LOG(TRACE) << __FUNCTION__;
     //The callback initializer is a singleton object. We can get a pointer to it though to 
     //interact with it for the course of this function. 
     FSMCallbackInitializer* cbInitializer = &(FSMCallbackInitializer::callbackInitializer());
@@ -439,6 +533,7 @@ void FSMRenderEnvironment::setPreGLFWInitCallbacks() {
 //  STEP 2.3
 //--------------
 bool FSMRenderEnvironment::callTheGLFWInitFunc() {
+    LOG(TRACE) << __FUNCTION__;
     //This is it... The function to initialize GLFW. Before this function is called, be
     //sure that all GLFW invariants have been set and that the GLFW error callback function
     //has been specified. 
@@ -457,6 +552,7 @@ bool FSMRenderEnvironment::callTheGLFWInitFunc() {
 //  STEP 2.4
 //--------------
 void FSMRenderEnvironment::setPostGLFWInitCallbacks() {
+    LOG(TRACE) << __FUNCTION__;
     //We are going to use our friend the cbInitializer to set some more callbacks
     FSMCallbackInitializer* cbInitializer = &(FSMCallbackInitializer::callbackInitializer());
     cbInitializer->setJoystickEventCallback();
@@ -470,6 +566,7 @@ void FSMRenderEnvironment::setPostGLFWInitCallbacks() {
 //                                     STEP 3 
 //-----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::createContext() {
+    LOG(TRACE) << __FUNCTION__;
     mContextWindow_ = nullptr; //Since this variable is just a temporary handle until I write a 
     //                         full-blown window-context class, it is fine to cheat and just initialize 
     //                         it right here
@@ -495,7 +592,7 @@ bool FSMRenderEnvironment::createContext() {
 //  STEP 3.1
 //--------------
 void FSMRenderEnvironment::specifyContextHints() noexcept {
-
+    LOG(TRACE) << __FUNCTION__;
     //for now just do this:
     glfwDefaultWindowHints();
 
@@ -513,7 +610,7 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
 //  STEP 3.2
 //--------------
 void FSMRenderEnvironment::retrieveConnectedMonitors() {
-
+    LOG(TRACE) << __FUNCTION__;
    LOG(INFO) << "\nHere is where a list of already connected monitors would\n"
         "be loaded, which then would allow for the\n"
         "Application to call a function of FSMRenderEnvironment to enumerate\n"
@@ -527,6 +624,7 @@ void FSMRenderEnvironment::retrieveConnectedMonitors() {
 //  STEP 3.3
 //--------------
 bool FSMRenderEnvironment::createContextAndWindow() {
+    LOG(TRACE) << __FUNCTION__;
     mContextWindow_ = glfwCreateWindow(width, height, "My Title", NULL, NULL);
     if (mContextWindow_) {
         LOG(INFO) << "\nSuccessfully created a current context!\n";
@@ -541,7 +639,7 @@ bool FSMRenderEnvironment::createContextAndWindow() {
 //  STEP 3.4
 //--------------
 void FSMRenderEnvironment::setContextWindowCallbacks() {
-
+    LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\n\n      WIndow Context Callbacks would be specified right here"
         "                 once they get implemented!!!\n\n";
 }
@@ -552,7 +650,7 @@ void FSMRenderEnvironment::setContextWindowCallbacks() {
 //                                     STEP 4 
 //-----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::setupGLAD() {
-    
+    LOG(TRACE) << __FUNCTION__;
     //Step 4.1
     specifyDebugCallbacksWithGLAD();
     
@@ -568,7 +666,7 @@ bool FSMRenderEnvironment::setupGLAD() {
 //  STEP 4.1
 //--------------
 void FSMRenderEnvironment::specifyDebugCallbacksWithGLAD() {
-
+    LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\n\n    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!\n\n\n\n";
     /* example from glad's examples
 //#ifdef GLAD_DEBUG
@@ -583,6 +681,7 @@ void FSMRenderEnvironment::specifyDebugCallbacksWithGLAD() {
 //  STEP 4.2
 //--------------
 bool FSMRenderEnvironment::loadOpenGLFunctions() {
+    LOG(TRACE) << __FUNCTION__;
     //Load OpenGL functions once window context has been set
     LOG(INFO) << "!Loading Graphics Language Functions...\n";
     int success = gladLoadGL();

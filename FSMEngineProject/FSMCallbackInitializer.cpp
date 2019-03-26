@@ -24,6 +24,7 @@ namespace FSMEngineInternal {
         bool joystickCBSet_; //Joystick connect/disconnect event callback
         bool monitorCBSet_; //Monitor connect/disconnect event callback
         GlobalStateOfGLFWCallbacks() {
+            LOG(TRACE) << __FUNCTION__;
             errorCBSet_ = false;
             joystickCBSet_ = false;
             monitorCBSet_ = false;
@@ -32,25 +33,31 @@ namespace FSMEngineInternal {
     };
 
     FSMCallbackInitializer::FSMCallbackInitializer() : mGlobalCBState_(nullptr) {
+        LOG(TRACE) << __FUNCTION__;
         mGlobalCBState_ = std::make_unique<FSMCallbackInitializer::GlobalStateOfGLFWCallbacks>();
         if (!mGlobalCBState_)
             throw ("Error Initializing Callback Functions!\n");
     }
 
-    FSMCallbackInitializer::~FSMCallbackInitializer() = default;
+    FSMCallbackInitializer::~FSMCallbackInitializer() noexcept {
+        LOG(TRACE) << __FUNCTION__;
+    }
 
     void FSMCallbackInitializer::setGLFWErrorCallback() noexcept {
+        LOG(TRACE) << __FUNCTION__;
         LOG(INFO) << "\n           Setting GLFW Error Callback Function!   \n";
         glfwSetErrorCallback(FSMErrorCallbackFunction);
         mGlobalCBState_->errorCBSet_ = true;
     }
 
     void FSMCallbackInitializer::setJoystickEventCallback() noexcept {
+        LOG(TRACE) << __FUNCTION__;
         LOG(INFO) << "\n           Setting GLFW Joystick event Callback Function!   \n";
         glfwSetJoystickCallback(JoystickEventCallbackInternal::graphicsLanguageFrameworkJoystickEventCallbackFunction);
     }
 
     void FSMCallbackInitializer::setMonitorEventCallback() noexcept {
+        LOG(TRACE) << __FUNCTION__;
         LOG(INFO) << "\n           Setting GLFW Monitor Event Callback Function!   \n";
         glfwSetMonitorCallback(MonitorEventCallbackInternal::graphicsLanguageFrameworkMonitorEventCallbackFunction);
         mGlobalCBState_->monitorCBSet_ = true;
@@ -58,14 +65,17 @@ namespace FSMEngineInternal {
 
 	
     bool FSMCallbackInitializer::errorCBWasSet() const noexcept {
+        LOG(TRACE) << __FUNCTION__;
         return mGlobalCBState_->errorCBSet_;
     }
 
     bool FSMCallbackInitializer::joystickEventCBWasSet() const noexcept {
+        LOG(TRACE) << __FUNCTION__;
         return mGlobalCBState_->joystickCBSet_;
     }
 
     bool FSMCallbackInitializer::monitorEventCBWasSet() const noexcept {
+        LOG(TRACE) << __FUNCTION__;
         return mGlobalCBState_->monitorCBSet_;
     }
 

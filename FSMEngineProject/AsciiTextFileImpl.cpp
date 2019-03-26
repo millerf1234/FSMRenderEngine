@@ -8,6 +8,7 @@
 //#include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <stdio.h> //<cstdio>
 #include <string>
 #include "str_view.hpp"//Custom Version which guarantees each view is terminated with '\0' //#include <string_view>
 #include <algorithm>
@@ -22,7 +23,7 @@
 static char EMPTY_STRING[1u] = "";
 
 AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mPath_ = "";
     mFileText_ = "";
     mFileTextLineCount_ = 0;
@@ -30,7 +31,7 @@ AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl() {
 
 
 AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char* path) noexcept(false) : AsciiTextFileImpl() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mPath_ = std::filesystem::path(path);
     mPath_.make_preferred();
     LOG(DEBUG) << "Preparing to Load File " << path;
@@ -47,7 +48,7 @@ AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const char* path) noexcept(f
 }
 
 AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const std::string& path) noexcept(false) : AsciiTextFileImpl() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mPath_ = std::filesystem::path(path);
     mPath_.make_preferred();
     LOG(DEBUG) << "Preparing to Load File " << path;
@@ -64,7 +65,7 @@ AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const std::string& path) noe
 }
 
 AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(std::string_view path) noexcept(false) : AsciiTextFileImpl() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mPath_ = std::filesystem::path(path);
     mPath_.make_preferred();
     LOG(DEBUG) << "Preparing to Load File " << path;
@@ -81,7 +82,7 @@ AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(std::string_view path) noexc
 }
 
 AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(std::filesystem::path path) noexcept(false) : AsciiTextFileImpl() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mPath_ = path;
     mPath_.make_preferred();
     LOG(DEBUG) << "Preparing to Load File " << path;
@@ -100,7 +101,7 @@ AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(std::filesystem::path path) 
 
 
 AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const AsciiTextFile::AsciiTextFileImpl& that) noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mPath_ = that.mPath_;
     mFileTextLineCount_ = that.mFileTextLineCount_;
 
@@ -114,7 +115,7 @@ AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(const AsciiTextFile::AsciiTe
 }
 
 AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(AsciiTextFile::AsciiTextFileImpl&& that) noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mPath_ = that.mPath_;
     mFileTextLineCount_ = that.mFileTextLineCount_;
 
@@ -124,7 +125,7 @@ AsciiTextFile::AsciiTextFileImpl::AsciiTextFileImpl(AsciiTextFile::AsciiTextFile
 }
 
 AsciiTextFile::AsciiTextFileImpl& AsciiTextFile::AsciiTextFileImpl::operator=(const AsciiTextFile::AsciiTextFileImpl& that) noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     if (this != &that) {
         mPath_ = that.mPath_;
         mFileTextLineCount_ = that.mFileTextLineCount_;
@@ -140,7 +141,7 @@ AsciiTextFile::AsciiTextFileImpl& AsciiTextFile::AsciiTextFileImpl::operator=(co
     return *this;
 }
 AsciiTextFile::AsciiTextFileImpl& AsciiTextFile::AsciiTextFileImpl::operator=(AsciiTextFile::AsciiTextFileImpl&& that) noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     if (this != &that) {
         mPath_ = that.mPath_;
         mFileTextLineCount_ = that.mFileTextLineCount_;
@@ -153,22 +154,24 @@ AsciiTextFile::AsciiTextFileImpl& AsciiTextFile::AsciiTextFileImpl::operator=(As
 
 
 
-AsciiTextFile::AsciiTextFileImpl::~AsciiTextFileImpl() noexcept { LOG(TRACE); }
+AsciiTextFile::AsciiTextFileImpl::~AsciiTextFileImpl() noexcept {
+    LOG(TRACE) << __FUNCTION__;
+}
 
 
 const std::filesystem::path& AsciiTextFile::AsciiTextFileImpl::path() const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     return mPath_;
 }
 
 str_view AsciiTextFile::AsciiTextFileImpl::getViewOfFullFileText() const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     str_view fullTextView(mFileText_);
     return fullTextView;
 }
 
 std::string AsciiTextFile::AsciiTextFileImpl::getFullCopyOfFileText() const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     
     // OPTION A
     //return mFileText_;
@@ -182,13 +185,13 @@ std::string AsciiTextFile::AsciiTextFileImpl::getFullCopyOfFileText() const noex
 }
 
 size_t AsciiTextFile::AsciiTextFileImpl::countNumberOfLines() const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     return mLineOffsets_.size();
 }
 
 //The vector of line offsets must be complete and accurate for this function to operate properly
 size_t AsciiTextFile::AsciiTextFileImpl::countNumberOfLinesThatBeginWith(char c) const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     const char * fileText = mFileText_.c_str();
     int lineCounter = 0;
     const char * lineIter;
@@ -212,8 +215,8 @@ size_t AsciiTextFile::AsciiTextFileImpl::countNumberOfLinesThatBeginWith(char c)
 }
 
 //The vector of line offsets must be complete and accurate for this function to operate properly
-void AsciiTextFile::AsciiTextFileImpl::getLinesThatBeginWithCharacter(char c, std::vector<int>& lines) const noexcept {
-    LOG(TRACE);
+void AsciiTextFile::AsciiTextFileImpl::getLinesThatBeginWithCharacter(char c, std::vector<size_t>& lines) const noexcept {
+    LOG(TRACE) << __FUNCTION__;
     const char* fileText = mFileText_.c_str();
     const char* lineIter;
 
@@ -236,7 +239,7 @@ void AsciiTextFile::AsciiTextFileImpl::getLinesThatBeginWithCharacter(char c, st
 
 //The vector of line offsets must be complete and accurate for this function to operate properly
 size_t AsciiTextFile::AsciiTextFileImpl::getLineLength(size_t line) const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     if (line > mLineOffsets_.size())
         return static_cast<size_t>(0u);
     else
@@ -245,7 +248,7 @@ size_t AsciiTextFile::AsciiTextFileImpl::getLineLength(size_t line) const noexce
 
 //The vector of line offsets must be complete and accurate for this function to operate properly
 str_view AsciiTextFile::AsciiTextFileImpl::getViewOfLine(size_t line) const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     if (line > mLineOffsets_.size())
         return str_view(EMPTY_STRING);
     else {
@@ -258,7 +261,7 @@ str_view AsciiTextFile::AsciiTextFileImpl::getViewOfLine(size_t line) const noex
 
 //The vector of line offsets must be complete and accurate for this function to operate properly
 std::string AsciiTextFile::AsciiTextFileImpl::getCopyOfLine(size_t line) const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     if (line > mLineOffsets_.size())
         return std::string(EMPTY_STRING);
     else 
@@ -267,17 +270,21 @@ std::string AsciiTextFile::AsciiTextFileImpl::getCopyOfLine(size_t line) const n
 }
 
 size_t AsciiTextFile::AsciiTextFileImpl::getFileSize() const noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     size_t filesize = 0u;
-    std::filesystem::_File_size(mPath_, filesize);
+    std::error_code ec{ };
+    filesize = std::filesystem::file_size(mPath_, ec);
+    if (ec) {
+        LOG(DEBUG) << "ERROR GETTING FILESIZE IN FUNC:    " << __FUNCTION__ << "\n"
+            << "Error from OS is " << ec.message() << "\n";
+        filesize = 0u;
+    }
     return filesize;
 }
 
 
-
-
 void AsciiTextFile::AsciiTextFileImpl::loadFile() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
 
     //Choose one of the following options
 
@@ -288,8 +295,9 @@ void AsciiTextFile::AsciiTextFileImpl::loadFile() {
     //loadUsingIFStream();
 }
 
+#define READ_WITHOUT_LOCKING
 void AsciiTextFile::AsciiTextFileImpl::loadUsingCFunc() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "File Is Being Loaded Using The C FileIO API";
     std::string path = mPath_.string();
 #pragma warning( push )
@@ -300,7 +308,11 @@ void AsciiTextFile::AsciiTextFileImpl::loadUsingCFunc() {
         std::fseek(fp, 0L, SEEK_END);
         mFileText_.resize(std::ftell(fp));
         std::rewind(fp);
+#ifdef READ_WITHOUT_LOCKING
+        _fread_nolock(&mFileText_[0], 1u, mFileText_.size(), fp);
+#else
         std::fread(&mFileText_[0], 1u, mFileText_.size(), fp);
+#endif
         std::fclose(fp);   
         LOG(INFO) << "File Has Been Loaded Into Application's Memory";
     }
@@ -309,7 +321,7 @@ void AsciiTextFile::AsciiTextFileImpl::loadUsingCFunc() {
 }
 
 void AsciiTextFile::AsciiTextFileImpl::loadUsingIFStream() {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "File Is Being Loaded Using C++'s FStream";
     std::ifstream inFile{ mPath_ }; //Open a file stream from the filepath 
     mFileText_ = { std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>() };
@@ -323,7 +335,7 @@ void AsciiTextFile::AsciiTextFileImpl::loadUsingIFStream() {
 
 
 void AsciiTextFile::AsciiTextFileImpl::parseTextToPopulateLineOffsets()  {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     mLineOffsets_.clear(); //Clear any pre-existing line offset data
     if (mFileText_.length() > 0u) {
         size_t lineNumberCounter = 0u;
@@ -352,8 +364,8 @@ void AsciiTextFile::AsciiTextFileImpl::parseTextToPopulateLineOffsets()  {
             if (textIterator == mFileText_.end()) {
                 textIterator--;
                 mLineOffsets_.emplace_back(lineNumberCounter++,                                      //Line number
-                    std::distance(mFileText_.begin(), startOfCurrentLine),    //Offset
-                    std::distance(startOfCurrentLine, textIterator) + 1);     //Line length
+                    std::distance(mFileText_.begin(), startOfCurrentLine),     //Offset
+                    std::distance(startOfCurrentLine, textIterator) + 1u);     //Line length
                 continue; //Next iteration will cause exit condition to trigger
             }
             else if (startOfCurrentLine == textIterator) { //If the line consists solely of a single newline char
@@ -361,8 +373,8 @@ void AsciiTextFile::AsciiTextFileImpl::parseTextToPopulateLineOffsets()  {
             }
             else { //We encountered a new line that isn't at the end of the text
                 mLineOffsets_.emplace_back(lineNumberCounter++,                                      //Line number
-                    std::distance(mFileText_.begin(), startOfCurrentLine),    //Offset
-                    std::distance(startOfCurrentLine, textIterator) + 1);     //Line Length
+                    std::distance(mFileText_.begin(), startOfCurrentLine),     //Offset
+                    std::distance(startOfCurrentLine, textIterator) + 1u);     //Line Length
             }
         }
     }
@@ -375,7 +387,7 @@ void AsciiTextFile::AsciiTextFileImpl::parseTextToPopulateLineOffsets()  {
 
 
 void AsciiTextFile::AsciiTextFileImpl::addNewLineCharacterToFileTextIfOnlyOneLineOfTextWasRead() noexcept {
-    LOG(TRACE);
+    LOG(TRACE) << __FUNCTION__;
     if (mFileText_.length() > 0) {
         std::string::iterator it;
         //Try to find a newline character in the file-text

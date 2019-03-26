@@ -32,7 +32,7 @@ public:
     std::string getFullCopyOfFileText() const noexcept;
     size_t countNumberOfLines() const noexcept;
     size_t countNumberOfLinesThatBeginWith(char c) const noexcept;
-    void getLinesThatBeginWithCharacter(char c, std::vector<int>& lines) const noexcept;
+    void getLinesThatBeginWithCharacter(char c, std::vector<size_t>& lines) const noexcept;
     size_t getLineLength(size_t line) const noexcept;
     str_view getViewOfLine(size_t line) const noexcept;
     std::string getCopyOfLine(size_t line) const noexcept;
@@ -41,7 +41,7 @@ public:
 private:
     std::filesystem::path mPath_;
     std::string mFileText_;
-    int mFileTextLineCount_;
+    size_t mFileTextLineCount_;
 
     struct NewLineLocation { //The start of a non-empty filetext string will be considered 
         size_t lineNumber;              //'location 0' representing line number 0
