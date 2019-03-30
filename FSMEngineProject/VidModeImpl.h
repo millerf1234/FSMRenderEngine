@@ -6,7 +6,7 @@
 #ifndef VID_MODE_IMPL_H_
 #define VID_MODE_IMPL_H_
 
-#include "FSMVideoMode.h"
+#include "FSMVideoMode.h" 
 #include "GraphicsLanguageFramework.h"
 #include "UniversalIncludes.h"
 #include <sstream>

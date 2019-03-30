@@ -29,7 +29,7 @@ FSMVideoMode::VidModeImpl&  FSMVideoMode::VidModeImpl::operator=(const  FSMVideo
 FSMVideoMode::VidModeImpl&  FSMVideoMode::VidModeImpl::operator=(FSMVideoMode::VidModeImpl&& that) noexcept = default;
 
 std::string  FSMVideoMode::VidModeImpl::toString() const noexcept {
-    std::stringstream vidMode;
+    std::ostringstream vidMode;
     vidMode << "   Video Mode Details:\n";
     vidMode << "\t  DPI(height)=" << getDPI_Height() << ", DPI(width)=" << getDPI_Width() << ", DPI(avg)=" << getDPI_WidthHeightAverage();
     vidMode << "\n\t  Refresh Rate: " << mRefreshRate_ << " hz,\t  [in screen coord] height: " << mHeight_ << ", width: ";
