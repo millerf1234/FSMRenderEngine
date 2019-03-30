@@ -14,6 +14,7 @@
 #define FSM_MONITOR_H_
 
 #include <vector>
+#include <string>
 #include <memory>
 
 //Forward declare types as needed
@@ -32,7 +33,7 @@ public:
 	FSMMonitor(FSMMonitor&&) noexcept;
 	FSMMonitor& operator=(const FSMMonitor&);
 	FSMMonitor& operator=(FSMMonitor&&) noexcept;
-	~FSMMonitor();
+	~FSMMonitor() noexcept;
 
 	//------------------------------------------------------------------------------
 	//---------------------------        INTEFACE        ---------------------------
@@ -46,8 +47,23 @@ public:
 	FSMVideoMode getPrimaryVideoMode() const noexcept;
 	std::vector<FSMVideoMode> getVideoModes() const noexcept;
 
+	std::string getName() const noexcept;
+
 	GLFWgammaramp getGammaRamp() const noexcept;
-	void setGamma(float gamma);
+
+
+	//Sets a new gamma value for this monitor. The effects of this function will 
+	//follow the GLFW documentation for the function glfwSetGamma(). The GLFW
+	//documentation has the following note on setting Gamma:
+	//    "The software controlled gamma ramp is applied in addition to the
+	//     hardware gamma correction, which today is usually an approximation of
+	//     sRGB gamma. This means that setting a perfectly linear ramp, or gamma
+	//     1.0, will produce the default (usually sRGB-like) behavior."
+	//It is recommended to be conservative when calling this function, not 
+	//straying to far from the base value of 1.0f
+	//Please be aware that this function will throw a std::invalid_argument 
+	//exception if gamma is a non-positive value [i.e. gamma must be >0.0f]
+	void setGamma(float gamma) noexcept(false);
 
 private:
 	FSMMonitor(GLFWmonitor* handle);

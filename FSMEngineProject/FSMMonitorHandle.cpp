@@ -25,14 +25,15 @@ namespace FSMEngineInternal {
 		}
 		if (!found)
 			throw (std::invalid_argument("Invalid Monitor Handle"));
-		return std::make_unique<FSMMonitorHandle>(handle);
+		//return std::make_unique<FSMMonitorHandle>(handle); //See references for why std::make_unique doesn't work here
+		return std::unique_ptr<FSMMonitorHandle>(new FSMMonitorHandle(handle)); 
 	}
 
 
-	void destroyMonitorHandle(std::unique_ptr<FSMMonitorHandle>) noexcept {
-		LOG(TRACE) << __FUNCTION__;
-		//That's all?
-	}
+	//void destroyMonitorHandle(std::unique_ptr<FSMMonitorHandle>) noexcept {
+	//	LOG(TRACE) << __FUNCTION__;
+	//	//That's all?
+	//}
 
 	FSMMonitorHandle::~FSMMonitorHandle() noexcept {
 		LOG(TRACE) << __FUNCTION__;

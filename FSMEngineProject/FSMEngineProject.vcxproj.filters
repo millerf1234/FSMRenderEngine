@@ -24,9 +24,6 @@
     <Filter Include="ThirdParty\glad\release">
       <UniqueIdentifier>{3300dc7d-7272-4732-8faa-198b4d5438f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Notes">
-      <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Common">
       <UniqueIdentifier>{800e60c4-aca0-494c-9941-b5062a7522e1}</UniqueIdentifier>
     </Filter>
@@ -121,12 +118,6 @@
     <Filter Include="Source Files\FSMEngine\EngineInternal\Monitor\VideoMode">
       <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization">
-      <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization\Data Struct">
-      <UniqueIdentifier>{70ecc34e-5b3f-4ce0-babd-def18fd607c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\Common">
       <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
     </Filter>
@@ -144,6 +135,18 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\Utility\DateTime">
       <UniqueIdentifier>{de497dee-2686-4d05-919a-b7af07ce801a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types">
+      <UniqueIdentifier>{b424b128-9041-45dd-a852-875c3a1a8e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notes">
+      <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization">
+      <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization\Data Struct">
+      <UniqueIdentifier>{70ecc34e-5b3f-4ce0-babd-def18fd607c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -927,9 +930,6 @@
     <ClInclude Include="VidModeImpl.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
     </ClInclude>
-    <ClInclude Include="FSMMonitor.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
-    </ClInclude>
     <ClInclude Include="FSMJoystickEventCallback.h">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
     </ClInclude>
@@ -972,6 +972,15 @@
     <ClInclude Include="FSMException.h">
       <Filter>Source Files\FSMEngine\Common</Filter>
     </ClInclude>
+    <ClInclude Include="FSMMonitorHandle.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMMonitorImpl.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMMonitor.h">
+      <Filter>Source Files\FSMEngine\Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
@@ -1001,9 +1010,6 @@
     <ClCompile Include="VidModeImpl.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
     </ClCompile>
-    <ClCompile Include="FSMMonitor.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
-    </ClCompile>
     <ClCompile Include="FSMJoystickEventCallback.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
     </ClCompile>
@@ -1024,6 +1030,15 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMonitorHandle.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMonitorImpl.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMonitor.cpp">
+      <Filter>Source Files\FSMEngine\Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

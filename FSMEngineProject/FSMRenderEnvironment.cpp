@@ -20,6 +20,10 @@
 #include "FSMMonitorEventCallback.h"
 #include "FSMJoystickEventCallback.h"
 
+#include "FSMMonitorHandle.h"
+#include "FSMMonitor.h"
+#include "FSMVideoMode.h"
+
 using namespace FSMEngineInternal;
 using namespace FSMEngineDefaultInitializationConstants;
 
@@ -77,7 +81,7 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
  
     //STEP 4
     if (!setupGLAD()) {
-        throw FSMException("THe issue occurred setting up GLAD!\n");
+        throw FSMException("The issue occurred setting up GLAD!\n");
     }
 
     LOG(INFO) << "  [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!\n";
@@ -100,6 +104,86 @@ FSMRenderEnvironment::~FSMRenderEnvironment() {
 }
 
 
+void FSMRenderEnvironment::handleEvents() {
+	// Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
+	glfwPollEvents();
+
+	//Check queues?
+	if (checkMonitorEventQueues()) {
+		LOG(INFO) << "FSMEngine Detected a Monitor Event.";
+		if (checkMonitorConnectionEventQueue()) {
+			LOG(INFO) << "FSMEngine is ready to process the newly connected monitor!";
+			auto newMonitor = getNextAvailableMonitorConnection();
+			if (newMonitor.has_value()) {
+				if (newMonitor.value() != nullptr) {
+					LOG(INFO) << "Adding monitor with handle to memory address of " << newMonitor.value();
+					mMonitors_.push_back(createMonitorHandle(newMonitor.value()));
+				}
+				else
+					LOG(DEBUG) << "Uh-oh, the new monitor's handle was a nullptr!\n";
+			}
+			else {
+				LOG(INFO) << "Uh-oh! The Monitor Connection Queue returned an empty optional!\n";
+				LOG(DEBUG) << "FSMEngine has detected that the Monitor Connection Queue returned an empty optional!";
+			}
+		}
+		else if (checkMonitorDisconnectionEventQueue()) {
+			LOG(INFO) << "FSMEngine is ready to remove the recently disconnect monitor from it's collection of tracked displays!";
+			auto disconnectedMonitor = getNextAvailableMonitorDisconnection();
+			if (disconnectedMonitor.has_value()) {
+				if (disconnectedMonitor.value() != nullptr) {
+					LOG(INFO) << "Removing monitor with handle to memory address of " << disconnectedMonitor.value();
+					//std::find_if(mMonitors_.begin(), mMonitors_.end(),
+					//	[&](std::unique_ptr<FSMMonitorHandle> & mon) { return mon->hasHandle(disconnectedMonitor.value()); });
+					mMonitors_.remove_if([&](std::unique_ptr<FSMMonitorHandle> & mon) 
+						{ return mon->hasHandle(disconnectedMonitor.value()); });
+				}
+				else
+					LOG(DEBUG) << "Uh-oh, the disconnected monitor's handle was a nullptr!\n";
+			}
+			else {
+				LOG(INFO) << "Uh-oh! The Monitor Disconnection Queue returned an empty optional!\n";
+				LOG(DEBUG) << "FSMEngine has detected that the Monitor Disconnection Queue returned an empty optional!";
+			}
+		}
+		else {
+			LOG(INFO) << "That is odd. Neither the connection nor disconnection queues are\n"
+				<< "populated despite a monitor event being detected!";
+			LOG(DEBUG) << "FSMEngine has detected a possible Monitor Event Misfire!\n";
+		}
+	}
+	if (checkJoystickEventQueues()) {
+		LOG(INFO) << "FSMEngine Detected a Joystick Event.";
+		if (checkJoystickConnectionEventQueue()) {
+			LOG(INFO) << "FSMEngine is ready to process the newly connected joystick!";
+			std::optional<int> newJS = getNextAvailableJoystickConnection();
+			if (newJS.has_value()) {
+				LOG(INFO) << "FSMEngine has successfully assimilated the joystick under JoyID " << newJS.value();
+			}
+			else {
+				LOG(INFO) << "Uh-oh! The Joystick Connection Queue returned an empty optional!\n";
+				LOG(DEBUG) << "FSMEngine has detected that the Joystick Connection Queue returned an empty optional!";
+			}
+		}
+		else if (checkJoystickDisconnectionEventQueue()) {
+			LOG(INFO) << "FSMEngine is ready to remove the recently disconnected joystick from the list of connected input devices!";
+			std::optional<int> jsToRemove = getNextAvailableJoystickDisconnection();
+			if (jsToRemove.has_value()) {
+				LOG(INFO) << "FSMEngine is no longer accepting input from joystick under JoyID " << jsToRemove.value();
+			}
+			else {
+				LOG(INFO) << "Uh-oh! The Joystick Disconnection Queue returned an empty optional!\n";
+				LOG(DEBUG) << "FSMEngine has detected that the Joystick Disconnection Queue returned an empty optional!";
+			}
+		}
+		else {
+			LOG(INFO) << "That is odd. Neither the Joystick connection nor disconnection queues are\n"
+				<< "populated despite a joystick event being detected!";
+			LOG(DEBUG) << "FSMEngine has detected a possible Joystick Event Misfire!\n";
+		}
+	}
+}
+
 
 void FSMRenderEnvironment::doMonitorSelectionLoop() {
     LOG(TRACE) << __FUNCTION__;
@@ -107,10 +191,33 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
     // Define the viewport dimensions
     glViewport(0, 0, width, height);
 
+	int count = 0;
+	GLFWmonitor** mon = glfwGetMonitors(&count);
+
+	for (int i = 0; i < count; i++)
+		mMonitors_.push_back(createMonitorHandle(mon[i]));
+
+	if (!(mMonitors_.empty())) {
+		FSMMonitor primary = mMonitors_.front().get()->get();
+		LOG(INFO) << "\tNumber of VideoModes: " << primary.getVideoModes().size();
+		int counter = 0;
+		for (FSMVideoMode v : primary.getVideoModes()) {
+			LOG(INFO) << "VideoMode " << counter++;
+			LOG(INFO) << "\tRefresh Rate: " << v.getRefreshRate();
+			LOG(INFO) << "\tPixels X: " << v.getWidth() << ",    Pixels Y: " << v.getHeight();
+			LOG(INFO) << "\tDPI X: " << v.getDPI_Width() << ",    DPI Y: " << v.getDPI_Height();
+			LOG(INFO) << "\tDPI: " << v.getDPI_WidthHeightAverage() << "\n";
+		}
+	}
+	else {
+		LOG(INFO) << "\nUh-oh! mMonitors_ is empty as can be!\n\n";
+	}
     // Game loop
     while (!glfwWindowShouldClose(mContextWindow_)) {
-        // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
-        glfwPollEvents();
+
+
+		handleEvents();
+
 
         // Render
         // Clear the color-buffer
@@ -124,73 +231,7 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
         // Swap the screen buffers
         glfwSwapBuffers(mContextWindow_);
 
-        //Check queues?
-        if (checkMonitorEventQueues()) {
-            LOG(INFO) << "FSMEngine Detected a Monitor Event.";
-            if (checkMonitorConnectionEventQueue()) {
-                LOG(INFO) << "FSMEngine is ready to process the newly connected monitor!";
-                auto newMonitor = getNextAvailableMonitorConnection();
-                if (newMonitor.has_value()) {
-                    if (newMonitor.value() != nullptr)
-                        LOG(INFO) << "Adding monitor with handle to memory address of " << newMonitor.value();
-                    else
-                        LOG(DEBUG) << "Uh-oh, the new monitor's handle was a nullptr!\n";
-                }
-                else {
-                    LOG(INFO) << "Uh-oh! The Monitor Connection Queue returned an empty optional!\n";
-                    LOG(DEBUG) << "FSMEngine has detected that the Monitor Connection Queue returned an empty optional!";
-                }
-            }
-            else if (checkMonitorDisconnectionEventQueue()) {
-                LOG(INFO) << "FSMEngine is ready to remove the recently disconnect monitor from it's collection of tracked displays!";
-                auto disconnectedMonitor = getNextAvailableMonitorDisconnection();
-                if (disconnectedMonitor.has_value()) {
-                    if (disconnectedMonitor.value() != nullptr)
-                        LOG(INFO) << "Removing monitor with handle to memory address of " << disconnectedMonitor.value();
-                    else
-                        LOG(DEBUG) << "Uh-oh, the disconnected monitor's handle was a nullptr!\n";
-                }
-                else {
-                    LOG(INFO) << "Uh-oh! The Monitor Disconnection Queue returned an empty optional!\n";
-                    LOG(DEBUG) << "FSMEngine has detected that the Monitor Disconnection Queue returned an empty optional!";
-                }
-            }
-            else {
-                LOG(INFO) << "That is odd. Neither the connection nor disconnection queues are\n"
-                    << "populated despite a monitor event being detected!";
-                LOG(DEBUG) << "FSMEngine has detected a possible Monitor Event Misfire!\n";
-            }
-        }
-        if (checkJoystickEventQueues()) {
-            LOG(INFO) << "FSMEngine Detected a Joystick Event.";
-            if (checkJoystickConnectionEventQueue()) {
-                LOG(INFO) << "FSMEngine is ready to process the newly connected joystick!";
-                std::optional<int> newJS = getNextAvailableJoystickConnection();
-                if (newJS.has_value()) {
-                    LOG(INFO) << "FSMEngine has successfully assimilated the joystick under JoyID " << newJS.value();
-                }
-                else {
-                    LOG(INFO) << "Uh-oh! The Joystick Connection Queue returned an empty optional!\n";
-                    LOG(DEBUG) << "FSMEngine has detected that the Joystick Connection Queue returned an empty optional!";
-                }
-            }
-            else if (checkJoystickDisconnectionEventQueue()) {
-                LOG(INFO) << "FSMEngine is ready to remove the recently disconnected joystick from the list of connected input devices!";
-                std::optional<int> jsToRemove = getNextAvailableJoystickDisconnection();
-                if (jsToRemove.has_value()) {
-                    LOG(INFO) << "FSMEngine is no longer accepting input from joystick under JoyID " << jsToRemove.value();
-                }
-                else {
-                    LOG(INFO) << "Uh-oh! The Joystick Disconnection Queue returned an empty optional!\n";
-                    LOG(DEBUG) << "FSMEngine has detected that the Joystick Disconnection Queue returned an empty optional!";
-                }
-            }
-            else {
-                LOG(INFO) << "That is odd. Neither the Joystick connection nor disconnection queues are\n"
-                    << "populated despite a joystick event being detected!";
-                LOG(DEBUG) << "FSMEngine has detected a possible Joystick Event Misfire!\n";
-            }
-        }
+        
         
         //FSMCallbackInitializer* theCBInitializer = &FSMCallbackInitializer::callbackInitializer(); 
         //theCBInitializer->

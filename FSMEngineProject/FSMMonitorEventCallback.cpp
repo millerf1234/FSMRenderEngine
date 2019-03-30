@@ -72,6 +72,7 @@ namespace FSMEngineInternal {
 
 	std::optional<GLFWmonitor*> getNextAvailableMonitorConnection() {
         LOG(TRACE) << __FUNCTION__;
+		LOG(INFO) << "Monitor Connection Event Detected!\n";
 		if ((MonitorEventCallbackInternal::recentMonitorConnections().empty())) {
 			return std::nullopt; //return the empty optional
 		}
@@ -86,6 +87,7 @@ namespace FSMEngineInternal {
 
 	std::optional<GLFWmonitor*> getNextAvailableMonitorDisconnection() {
         LOG(TRACE) << __FUNCTION__;
+		LOG(INFO) << "Monitor Disconnection Event Detected!\n";
 		if ((MonitorEventCallbackInternal::recentMonitorDisconnections().empty())) {
 			return std::nullopt;
 		}

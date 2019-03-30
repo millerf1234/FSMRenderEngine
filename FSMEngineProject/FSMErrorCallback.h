@@ -37,7 +37,7 @@ namespace FSMEngineInternal {
         //LOG(INFO) << "\nA GLFW Error Callback call was made!!!\n";
 
         //Build a formated error message printout
-		std::stringstream errorMessage;
+		std::ostringstream errorMessage;
 		errorMessage << "\n\n";
 	//	for (int i = 0; i < LINE_HEADER_LENGTH; i++) {
 	//		errorMessage << "^";

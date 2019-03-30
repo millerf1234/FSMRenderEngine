@@ -10,8 +10,8 @@
 
 class FSMMonitor::FSMMonitorImpl final {
 public:
-	FSMMonitor::FSMMonitorImpl() = delete;
-	FSMMonitor::FSMMonitorImpl(GLFWmonitor* handle) noexcept;
+	FSMMonitor::FSMMonitorImpl();
+	FSMMonitor::FSMMonitorImpl(GLFWmonitor* handle);
 
 	FSMMonitor::FSMMonitorImpl(const FSMMonitor::FSMMonitorImpl&);
 	FSMMonitor::FSMMonitorImpl(FSMMonitor::FSMMonitorImpl&&) noexcept;
@@ -28,15 +28,22 @@ public:
 	FSMVideoMode getPrimaryVideoMode() const noexcept;
 	std::vector<FSMVideoMode> getVideoModes() const noexcept;
 
-	GLFWgammaramp getGammaRamp() const noexcept;
-	void setGamma(float gamma);
+	std::string getName() const noexcept;
 
+	GLFWgammaramp getGammaRamp() const noexcept;
+
+	//Throws a std::invalid_argument exception if gamma is not 
+	//a positive value
+	void setGamma(float gamma) noexcept(false);
 
 	//Special Implementation-Only function
 	GLFWmonitor* get() const noexcept { return mHandle_; }
 
 private:
 	GLFWmonitor* mHandle_;
+	std::string mName_;
+	std::unique_ptr<FSMVideoMode> mPrimaryVideoMode_;
+	std::vector<FSMVideoMode> mVideoModes_;
 };
 
 

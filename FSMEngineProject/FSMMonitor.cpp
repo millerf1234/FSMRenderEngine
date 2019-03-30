@@ -4,7 +4,7 @@
 #include "FSMMonitor.h"
 #include "FSMMonitorImpl.h"
 #include "UniversalIncludes.h"
-
+#include "GraphicsLanguageFramework.h"
 
 
 FSMMonitor::FSMMonitor(GLFWmonitor* handle) {
@@ -14,22 +14,31 @@ FSMMonitor::FSMMonitor(GLFWmonitor* handle) {
 
 FSMMonitor::FSMMonitor(const FSMMonitor& that) {
 	LOG(TRACE) << __FUNCTION__;
-	pImpl_ = std::make_unique<FSMMonitorImpl>(that.pImpl_.get());
+	//pImpl_ = std::make_unique<FSMMonitorImpl>(that.pImpl_.get());
+	pImpl_ = std::make_unique<FSMMonitorImpl>(*(that.pImpl_));
 }
 
-FSMMonitor::FSMMonitor(FSMMonitor&& that) {
+FSMMonitor::FSMMonitor(FSMMonitor&& that) noexcept {
 	LOG(TRACE) << __FUNCTION__;
 	pImpl_ = std::move(that.pImpl_);
 }
 
 FSMMonitor& FSMMonitor::operator=(const FSMMonitor& that) {
 	LOG(TRACE) << __FUNCTION__;
-	pImpl_ = std::make_unique<FSMMonitorImpl>(that.pImpl_.get());
+	if (this != &that) {
+		//pImpl_ = std::make_unique<FSMMonitorImpl>(that.pImpl_.get());
+		//Is this the correct way to implement this operator?
+		pImpl_ = std::make_unique<FSMMonitorImpl>(*(that.pImpl_));
+	}
+	return *this;
 }
 
 FSMMonitor& FSMMonitor::operator=(FSMMonitor&& that) noexcept {
 	LOG(TRACE) << __FUNCTION__;
-	pImpl_ = std::move(that.pImpl_);
+	if (this != &that) {
+		pImpl_ = std::move(that.pImpl_);
+	}
+	return *this;
 }
 
 FSMMonitor::~FSMMonitor() noexcept {
@@ -67,12 +76,17 @@ std::vector<FSMVideoMode> FSMMonitor::getVideoModes() const noexcept {
 	return pImpl_->getVideoModes();
 }
 
+std::string FSMMonitor::getName() const noexcept {
+	LOG(TRACE) << __FUNCTION__;
+	return pImpl_->getName();
+}
+
 GLFWgammaramp FSMMonitor::getGammaRamp() const noexcept {
 	LOG(TRACE) << __FUNCTION__;
 	return pImpl_->getGammaRamp();
 }
 
-void FSMMonitor::setGamma(float gamma) {
+void FSMMonitor::setGamma(float gamma) noexcept(false) {
 	LOG(TRACE) << __FUNCTION__;
-	return pImpl_->setGamma();
+	return pImpl_->setGamma(gamma);
 }

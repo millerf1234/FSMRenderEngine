@@ -143,7 +143,7 @@ namespace FSMEngineInternal {
         //  POST-GLFW Init callback
         //-------------------------
 
-        //Call this function after GLFW has been initialized
+        //Call these functions after GLFW has been initialized
         void setJoystickEventCallback() noexcept;
         void setMonitorEventCallback() noexcept;
 
@@ -179,69 +179,6 @@ namespace FSMEngineInternal {
         class GlobalStateOfGLFWCallbacks; //Class is defined in implementation
         std::unique_ptr<GlobalStateOfGLFWCallbacks> mGlobalCBState_;
     };
-
-
-
-
-
-#ifdef OLD
-
-	class FSMCallbackInitializer final {
-	public:
-		FSMCallbackInitializer();
-		~FSMCallbackInitializer() = default;
-		FSMCallbackInitializer(const FSMCallbackInitializer&) = delete;
-		FSMCallbackInitializer(FSMCallbackInitializer&&) = delete;
-		FSMCallbackInitializer& operator=(const FSMCallbackInitializer&) = delete;
-		FSMCallbackInitializer& operator=(FSMCallbackInitializer&&) = delete;
-		
-
-		//Call this function to release all GLFW callbacks 
-		void reset();
-
-
-		//To be called before GLFW is initialized
-		//Callbacks functions to be set:
-		//   -) Error callback function
-		void configurePreInitializationCallbackFunctions();
-
-
-		//To be called soon after GLFW has returned from a successful 
-		//initialization.
-		//Callback functions to be set:
-		//   -) Monitor Connection Event Callback
-		//   -) Joystick Connected Event Callback 
-		void configurePostInitializationCallbackFunctions();
-
-
-		//Once a render window has been created, it almost certainly will  
-		//be desired to have both the necessary and unnecessary callbacks 
-		//assigned to the window so that it behaves properly.
-		//These are the callbacks that will be assigned to the window:
-
-		//void configureWindowSpecificCallbackFunctions(GLFWwindow*);
-
-
-
-		/////////////////////////////////////////////
-		///////   Query the callback states    /////
-		/////////////////////////////////////////////
-
-
-	private:
-		struct Callback_State;
-	};
-
-
-
-#endif //old
-
-
-
-
-
-
-
 
 } //namespace FSMEngineInternal
 

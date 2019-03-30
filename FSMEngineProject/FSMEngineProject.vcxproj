@@ -162,6 +162,8 @@
     <ClInclude Include="FSMException.h" />
     <ClInclude Include="FSMJoystickEventCallback.h" />
     <ClInclude Include="FSMMonitor.h" />
+    <ClInclude Include="FSMMonitorHandle.h" />
+    <ClInclude Include="FSMMonitorImpl.h" />
     <ClInclude Include="FSMMonitorEventCallback.h" />
     <ClInclude Include="FSMRenderEnvironment.h" />
     <ClInclude Include="GetSystemDateTime.h" />
@@ -443,6 +445,8 @@
     <ClCompile Include="FSMCallbackInitializer.cpp" />
     <ClCompile Include="FSMJoystickEventCallback.cpp" />
     <ClCompile Include="FSMMonitor.cpp" />
+    <ClCompile Include="FSMMonitorHandle.cpp" />
+    <ClCompile Include="FSMMonitorImpl.cpp" />
     <ClCompile Include="FSMMonitorEventCallback.cpp" />
     <ClCompile Include="FSMRenderEnvironment.cpp" />
     <ClCompile Include="GetSystemDateTime.cpp" />

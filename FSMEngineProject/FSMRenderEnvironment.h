@@ -17,10 +17,11 @@
 #include <exception>
 #include <system_error>                 //std::error_code
 #include <vector>
+#include <list>  //<forward_list>
 //#include <optional>  //Turns out including <optional> is optional
 #include <filesystem>
 #include "FSMException.h"
-#include "FSMMonitor.h"
+#include "FSMMonitorHandle.h"
 #include "FInitSetting.h"
 #include "DefaultValuesForFSMEngine.h"
 
@@ -135,6 +136,7 @@ private:
     bool mGLFWIsInit_;
     struct GLFWwindow* mContextWindow_;
 
+	std::list<std::unique_ptr<FSMEngineInternal::FSMMonitorHandle>> mMonitors_;
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
