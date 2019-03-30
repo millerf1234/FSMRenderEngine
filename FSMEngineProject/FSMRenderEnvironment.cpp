@@ -66,9 +66,10 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
 
     //STEP 3
     if (!createContext()) {
-        throw FSMException("An issue was encountered while creating the GLFW window and OpenGL\n"
-            "context! These are kinda sorta vital for this application to function properly, so \n"
-            "the fact they failed means this whole application is probably going to have to crash!\n\n");
+        throw FSMNamedException(FSMNamedException::NamedException::NO_GL_DRIVER, "Failed to Create Context. No GL Driver Tho!");
+        //throw FSMException("An issue was encountered while creating the GLFW window and OpenGL\n"
+        //    "context! These are kinda sorta vital for this application to function properly, so \n"
+        //   "the fact they failed means this whole application is probably going to have to crash!\n\n");
     }
 
     LOG(INFO) << "\n  [step 3]      Graphics Language Context Created!\n";
@@ -267,6 +268,8 @@ std::string FSMRenderEnvironment::getGLFWRuntimeVersionString() const noexcept {
 //-----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::loadSettings() {
     LOG(TRACE) << __FUNCTION__;
+
+    /*
     //C++20 
 #if __has_cpp_attribute(likely)  
 #define LIKELY [[likely]]
@@ -275,36 +278,36 @@ bool FSMRenderEnvironment::loadSettings() {
 #define LIKELY     
 #define UNLIKELY     
 #endif 
-   
+   */
     //Step 1.1
     std::error_code ecFind{};
     bool settingsFileFound = locateSettingsFile(ecFind);
 
-    if (settingsFileFound) LIKELY {
+    if (settingsFileFound) /*LIKELY*/ {
         parseSettingsFile();                                              //Step 1.2
         return true;
     }
 
-    else UNLIKELY{
-        if (!ecFind) LIKELY {
+    else /*UNLIKELY*/ {
+        if (!ecFind) /* LIKELY */ {
             std::error_code ecCreate{};
             bool settingsFileCreated = generateSettingsFile(ecCreate);   //Step 1.1b
-            if (settingsFileCreated && (!ecCreate)) LIKELY {
+            if (settingsFileCreated && (!ecCreate)) /* LIKELY */ {
                 parseSettingsFile();                                     //Step 1.2
                 return true;
             }
-            else if (ecCreate) UNLIKELY {
+            else if (ecCreate) /*UNLIKELY*/ {
                  LOG(ERROR) << "\nError reported by Operating System while attempting\n"
                     << "to generate configuration file (" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << ")!\n"
                     << "Operating System Error Message:\n\t"
                     << ecCreate.message() << std::endl;
             return false;
             }
-            else UNLIKELY {
+            else /*UNLIKELY*/ {
                 return false;
             }
         }
-        else /*if (ecFind) */ UNLIKELY { //
+        else /*if (ecFind) */ /*UNLIKELY*/ { //
             LOG(ERROR) << "\nError reported by Operating System while attempting\n"
                 << "to load configuration file (" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << ")!\n"
                 << "Operating System Error Message:\n\t"
@@ -338,8 +341,8 @@ bool FSMRenderEnvironment::loadSettings() {
     //}
     //return settingsLoaded;
 
-#undef LIKELY
-#undef UNLIKELY
+//#undef LIKELY
+//#undef UNLIKELY
 }
 
 

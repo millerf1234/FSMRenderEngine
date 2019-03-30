@@ -29,29 +29,29 @@
 //this function is set globally for the entire library as opposed to on a per-window basis.                               *Joystick and Monitor callbacks are exceptions
 namespace FSMEngineInternal {
 
-    static constexpr const int LINE_HEADER_LENGTH = 80;
+   // static constexpr const int LINE_HEADER_LENGTH = 80;
 
 	inline void FSMErrorCallbackFunction(int error, const char* description) {
         LOG(TRACE) << __FUNCTION__;
         //For now, announce that a callback event was triggered
-        LOG(INFO) << "\nA GLFW Error Callback call was made!!!\n";
+        //LOG(INFO) << "\nA GLFW Error Callback call was made!!!\n";
 
         //Build a formated error message printout
 		std::stringstream errorMessage;
 		errorMessage << "\n\n";
-		for (int i = 0; i < LINE_HEADER_LENGTH; i++) {
-			errorMessage << "^";
-		}
+	//	for (int i = 0; i < LINE_HEADER_LENGTH; i++) {
+	//		errorMessage << "^";
+	//	}
 		
 		errorMessage << "\n\tGLFW Error " << error << "!\n";
 		errorMessage << "\tERROR DESCRIPTION: " << description << "\n";
-
-		for (int i = 0; i < LINE_HEADER_LENGTH; i++) {
-			errorMessage << "v";
-		}
-		errorMessage << "\n\n";
-
-		//Print the message to the ERRLOG
+         
+    //  for (int i = 0; i < LINE_HEADER_LENGTH; i++) {
+    //      errorMessage << "v";
+    //  }
+        errorMessage << "\n\n";
+         
+        //Print the message to the ERRLOG
         LOG(ERROR) << errorMessage.str();
 	}
 } //namespace FSMEngineInternal

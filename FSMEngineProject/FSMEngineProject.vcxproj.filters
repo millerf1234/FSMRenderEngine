@@ -12,9 +12,6 @@
     <Filter Include="ThirdParty">
       <UniqueIdentifier>{947e5c71-10cc-4d90-b687-4749a8d92860}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ThirdParty\easylogging++">
-      <UniqueIdentifier>{8055b678-1fd7-4fa3-8d4a-a86892bbe60b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty\glad">
       <UniqueIdentifier>{85c3f23a-429e-451e-9d19-69ce3e8501d8}</UniqueIdentifier>
     </Filter>
@@ -41,15 +38,6 @@
     </Filter>
     <Filter Include="Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly">
       <UniqueIdentifier>{eb442a31-e3f1-431d-9ebe-39d62cc78229}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utility">
-      <UniqueIdentifier>{14cbad73-a6a3-42dc-943b-1c6f691322cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utility\Filepath">
-      <UniqueIdentifier>{a5aab355-8a84-4eff-a482-bbe5b23db19e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utility\Debug">
-      <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -79,51 +67,6 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{710d3603-afd1-4bc8-81dd-6b514564d55e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\RenderEnvironment">
-      <UniqueIdentifier>{436d2ceb-5d3b-4019-bc05-d2270412d908}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\CallbackFunctions">
-      <UniqueIdentifier>{f1c5edef-8ff1-4497-9b8c-f9af9e1981bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\CallbackFunctions\ErrorCallback">
-      <UniqueIdentifier>{6674a74a-3864-4dc4-81ea-da281ea9c265}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\CallbackFunctions\MonitorEventCallback">
-      <UniqueIdentifier>{8a9adf10-95b3-4d25-91b2-35d61f61d280}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\Components">
-      <UniqueIdentifier>{487ed7c0-2c3e-4e35-a8d9-71eb85ba2187}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\Monitor">
-      <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\Engine">
-      <UniqueIdentifier>{c3961245-a422-4a22-b27a-ea2f150e3f56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\Monitor\VideoMode">
-      <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Logging_Initialization">
-      <UniqueIdentifier>{339b20fa-2f8b-4ebb-8d3c-8f365a313220}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Logging_Initialization\Logging Init">
-      <UniqueIdentifier>{0944decd-e772-40fd-8b18-6374f65d9ac7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\CallbackFunctions\WindowSpecificCallbacks">
-      <UniqueIdentifier>{156f1e2a-1ab3-4dbd-a5c0-16a03de5e935}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\CallbackFunctions\JoystickCallback">
-      <UniqueIdentifier>{c1af8cdc-787a-4f2b-a176-090730f4446d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\Initialization">
-      <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utility\Asset">
-      <UniqueIdentifier>{dba52829-f9dd-41a5-aff0-64408370a251}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\RenderEnvironment\Initialization\Data Struct">
-      <UniqueIdentifier>{70ecc34e-5b3f-4ce0-babd-def18fd607c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty\glfw">
       <UniqueIdentifier>{7cf2abe4-fa2a-40b7-bbd4-edde694d094c}</UniqueIdentifier>
     </Filter>
@@ -133,17 +76,77 @@
     <Filter Include="ThirdParty\str_view">
       <UniqueIdentifier>{c7416c92-7628-46ab-8f47-efd96410a47e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utility\Asset\ASCII">
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{e358efb9-de20-4d65-a2a9-74308d5d591a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\Logging_Initialization">
+      <UniqueIdentifier>{339b20fa-2f8b-4ebb-8d3c-8f365a313220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\Logging_Initialization\Logging Init">
+      <UniqueIdentifier>{0944decd-e772-40fd-8b18-6374f65d9ac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\easylogging++">
+      <UniqueIdentifier>{8055b678-1fd7-4fa3-8d4a-a86892bbe60b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine">
+      <UniqueIdentifier>{436d2ceb-5d3b-4019-bc05-d2270412d908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal">
+      <UniqueIdentifier>{bb1793e2-dd59-4838-988c-99f7427d1d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions">
+      <UniqueIdentifier>{f1c5edef-8ff1-4497-9b8c-f9af9e1981bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\ErrorCallback">
+      <UniqueIdentifier>{6674a74a-3864-4dc4-81ea-da281ea9c265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\MonitorEventCallback">
+      <UniqueIdentifier>{8a9adf10-95b3-4d25-91b2-35d61f61d280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\WindowSpecificCallbacks">
+      <UniqueIdentifier>{156f1e2a-1ab3-4dbd-a5c0-16a03de5e935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback">
+      <UniqueIdentifier>{c1af8cdc-787a-4f2b-a176-090730f4446d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Components">
+      <UniqueIdentifier>{487ed7c0-2c3e-4e35-a8d9-71eb85ba2187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Engine">
+      <UniqueIdentifier>{c3961245-a422-4a22-b27a-ea2f150e3f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Monitor">
+      <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Monitor\VideoMode">
+      <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization">
+      <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization\Data Struct">
+      <UniqueIdentifier>{70ecc34e-5b3f-4ce0-babd-def18fd607c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Common">
+      <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility">
+      <UniqueIdentifier>{14cbad73-a6a3-42dc-943b-1c6f691322cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\Debug">
+      <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\Asset">
+      <UniqueIdentifier>{dba52829-f9dd-41a5-aff0-64408370a251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\Asset\ASCII">
       <UniqueIdentifier>{b0de04d3-c61c-4d11-bd90-a7d73899d767}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utility\DateTime">
+    <Filter Include="Source Files\FSMEngine\Utility\DateTime">
       <UniqueIdentifier>{de497dee-2686-4d05-919a-b7af07ce801a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\glad\KHR\khrplatform.h">
       <Filter>ThirdParty\glad\KHR</Filter>
     </ClInclude>
@@ -157,13 +160,13 @@
       <Filter>Header Files\Common</Filter>
     </ClInclude>
     <ClInclude Include="JoystickStatePrinter.h">
-      <Filter>Source Files\Utility\Debug</Filter>
+      <Filter>Source Files\FSMEngine\Utility\Debug</Filter>
     </ClInclude>
     <ClInclude Include="FSMCallbackInitializer.h">
-      <Filter>Source Files\RenderEnvironment\CallbackFunctions</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions</Filter>
     </ClInclude>
     <ClInclude Include="FSMMonitorEventCallback.h">
-      <Filter>Source Files\RenderEnvironment\CallbackFunctions\MonitorEventCallback</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\MonitorEventCallback</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h">
       <Filter>ThirdParty\easylogging++</Filter>
@@ -187,7 +190,7 @@
       <Filter>ThirdParty\easylogging++</Filter>
     </ClInclude>
     <ClInclude Include="FSMErrorCallback.h">
-      <Filter>Source Files\RenderEnvironment\CallbackFunctions\ErrorCallback</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\ErrorCallback</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsLanguage.h">
       <Filter>Header Files\Common</Filter>
@@ -918,56 +921,59 @@
     <ClInclude Include="ThirdParty\glm\vector_relational.hpp">
       <Filter>ThirdParty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="EasyLogConfiguration.h">
-      <Filter>Source Files\Logging_Initialization\Logging Init</Filter>
-    </ClInclude>
     <ClInclude Include="FSMVideoMode.h">
-      <Filter>Source Files\RenderEnvironment\Monitor\VideoMode</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
     </ClInclude>
     <ClInclude Include="VidModeImpl.h">
-      <Filter>Source Files\RenderEnvironment\Monitor\VideoMode</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
     </ClInclude>
     <ClInclude Include="FSMMonitor.h">
-      <Filter>Source Files\RenderEnvironment\Monitor</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMRenderEnvironment.h">
-      <Filter>Source Files\RenderEnvironment</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMException.h">
-      <Filter>Source Files\RenderEnvironment</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
     </ClInclude>
     <ClInclude Include="FSMJoystickEventCallback.h">
-      <Filter>Source Files\RenderEnvironment\CallbackFunctions\JoystickCallback</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
     </ClInclude>
     <ClInclude Include="FInitSetting.h">
-      <Filter>Source Files\RenderEnvironment\Initialization</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
       <Filter>ThirdParty\glad\debug</Filter>
     </ClInclude>
     <ClInclude Include="DefaultValuesForFSMEngine.h">
-      <Filter>Source Files\RenderEnvironment\Initialization</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="LoadableAssetCollection.h">
-      <Filter>Source Files\RenderEnvironment\Initialization</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\str_view-master\str_view.hpp">
       <Filter>ThirdParty\str_view</Filter>
     </ClInclude>
     <ClInclude Include="AsciiTextFile.h">
-      <Filter>Source Files\Utility\Asset\ASCII</Filter>
+      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII</Filter>
     </ClInclude>
     <ClInclude Include="AsciiTextFileImpl.h">
-      <Filter>Source Files\Utility\Asset\ASCII</Filter>
+      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII</Filter>
     </ClInclude>
     <ClInclude Include="GetSystemDateTime.h">
-      <Filter>Source Files\Utility\DateTime</Filter>
+      <Filter>Source Files\FSMEngine\Utility\DateTime</Filter>
+    </ClInclude>
+    <ClInclude Include="EasyLogConfiguration.h">
+      <Filter>Source Files\Application\Logging_Initialization\Logging Init</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMEngine.h">
+      <Filter>Source Files\FSMEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMRenderEnvironment.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMException.h">
+      <Filter>Source Files\FSMEngine\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
       <Filter>ThirdParty\easylogging++</Filter>
     </ClCompile>
@@ -975,13 +981,13 @@
       <Filter>ThirdParty\glad\release</Filter>
     </ClCompile>
     <ClCompile Include="JoystickStatePrinter.cpp">
-      <Filter>Source Files\Utility\Debug</Filter>
+      <Filter>Source Files\FSMEngine\Utility\Debug</Filter>
     </ClCompile>
     <ClCompile Include="FSMCallbackInitializer.cpp">
-      <Filter>Source Files\RenderEnvironment\CallbackFunctions</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions</Filter>
     </ClCompile>
     <ClCompile Include="FSMMonitorEventCallback.cpp">
-      <Filter>Source Files\RenderEnvironment\CallbackFunctions\MonitorEventCallback</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\MonitorEventCallback</Filter>
     </ClCompile>
     <ClCompile Include="ThirdParty\glad\debug\glad_debug.c">
       <Filter>ThirdParty\glad\debug</Filter>
@@ -990,31 +996,34 @@
       <Filter>ThirdParty\glm\glm\detail</Filter>
     </ClCompile>
     <ClCompile Include="FSMVideoMode.cpp">
-      <Filter>Source Files\RenderEnvironment\Monitor\VideoMode</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
     </ClCompile>
     <ClCompile Include="VidModeImpl.cpp">
-      <Filter>Source Files\RenderEnvironment\Monitor\VideoMode</Filter>
-    </ClCompile>
-    <ClCompile Include="FSMRenderEnvironment.cpp">
-      <Filter>Source Files\RenderEnvironment</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
     </ClCompile>
     <ClCompile Include="FSMMonitor.cpp">
-      <Filter>Source Files\RenderEnvironment\Monitor</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
     </ClCompile>
     <ClCompile Include="FSMJoystickEventCallback.cpp">
-      <Filter>Source Files\RenderEnvironment\CallbackFunctions\JoystickCallback</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
+    </ClCompile>
+    <ClCompile Include="AsciiTextFile.cpp">
+      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII</Filter>
+    </ClCompile>
+    <ClCompile Include="AsciiTextFileImpl.cpp">
+      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII</Filter>
+    </ClCompile>
+    <ClCompile Include="GetSystemDateTime.cpp">
+      <Filter>Source Files\FSMEngine\Utility\DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMRenderEnvironment.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Engine</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AsciiTextFile.cpp">
-      <Filter>Source Files\Utility\Asset\ASCII</Filter>
-    </ClCompile>
-    <ClCompile Include="AsciiTextFileImpl.cpp">
-      <Filter>Source Files\Utility\Asset\ASCII</Filter>
-    </ClCompile>
-    <ClCompile Include="GetSystemDateTime.cpp">
-      <Filter>Source Files\Utility\DateTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

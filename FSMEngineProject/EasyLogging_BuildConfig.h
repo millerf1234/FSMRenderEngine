@@ -48,6 +48,23 @@
 
 
 //----------------------------------------------------------------------------------------------------------------------  
+//        Ungrouped  --  Configuration Flags   [These may one day get moved to being set in a config file]
+//----------------------------------------------------------------------------------------------------------------------
+
+//Logging flag values (This does not list all of them):
+//   NewLineForContainer -------------------------->      1
+//   DisableApplicationAbortOnFatalLog------------->      8
+//   ImmediateFlush ------------------------------->     16
+//   ColoredTerminalOutput ------------------------>     64      (only has effect if OS supports color terminal [Windows does not support])
+//   MultiLoggerSupport --------------------------->    128 
+//   HierarchicalLogging -------------------------->   2048      (Not able to work simultaneously with Verbose logging)
+//   CreateLoggerAutomatically -------------------->   4096
+//   AutoSpacing----------------------------------->   8192
+//   FixedTimeFormat------------------------------->  16384
+#define ELPP_DEFAULT_LOGGING_FLAGS  1 | 8 | 128 | 2048 | 4096 | 8192  | 16384 
+
+
+//----------------------------------------------------------------------------------------------------------------------  
 //        Option Group 1  -- Freely Modifiable Options
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -71,6 +88,9 @@
 //Not supported on Windows, requires header file <syslog.h> (which I think is a UNIX/POSIX thing)
 ///#define ELPP_SYSLOG  
 
+//#define ELPP_THREAD_SAFE 1 
+
+
 
 //----------------------------------------------------------------------------------------------------------------------  
 //        Option Group 3  -- PROJECT INVARIANTS  [DO NOT MODIFY!]
@@ -83,23 +103,9 @@
 
 
 
-
-
-//Logging flag values (This does not list all of them):
-//   NewLineForContainer -------------------------->      1
-//   DisableApplicationAbortOnFatalLog------------->      8
-//   ImmediateFlush ------------------------------->     16
-//   ColoredTerminalOutput ------------------------>     64      (only has effect if OS supports color terminal [Windows does not support])
-//   MultiLoggerSupport --------------------------->    128 
-//   HierarchicalLogging -------------------------->   2048      (Not able to work simultaneously with Verbose logging)
-//   CreateLoggerAutomatically -------------------->   4096
-//   AutoSpacing----------------------------------->   8192
-//   FixedTimeFormat------------------------------->  16384
-#define ELPP_DEFAULT_LOGGING_FLAGS  1 | 8 | 128 | 2048 | 4096 | 8192 | 16384 
-
 #define ELPP_FEATURE_PERFORMANCE_TRACKING  //Enable performance-tracking logging
 
-#define ELPP_THREAD_SAFE 1 
+
 
 ///////////////////////////////////////////////////////////////
 //////    End of FSMEngine settings configuration

@@ -227,9 +227,9 @@ bool configureEasyLogger();
 //Optional Logger State Query Functions [Only call these after calling initializeEasyLogger()]
 
 //Report only enabled flags
-std::string reportEnabledLoggerConfigurationFlags() noexcept;
+std::string reportEnabledLoggerConfigurationFlags(size_t leadingIndent = 0u) noexcept;
 //Report the state of every possible flag
-std::string reportAllLoggerConfigurationFlags() noexcept;
+std::string reportAllLoggerConfigurationFlags(size_t leadingIndent = 0u) noexcept;
 //--------------------------------------------------------------------------------------------
 
 
@@ -335,7 +335,6 @@ bool configureEasyLogger() {
 
     el::Configurations logConfigurator;
     logConfigurator.setToDefault();  //First we set everything to default  
-    
 
     //                                              +------------------+   
     //                                              | Additional NOTES |
@@ -446,12 +445,16 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace)->string());
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "6");  //expects uint
+    logConfigurator.set(el::Level::Trace, el::ConfigurationType::MillisecondsWidth, "6"); //expectts uint, alternative name for SubsecondPrecision?
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "67108864");  //expects input type as size_t  //64 MB
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "256"); //expects input type as size_t
   
 
 
     //Configure Debug  (The macro 'USE_DEBUG_' would be defined in the header "BuildSettings.h")
+    //NOTE: The debug log should just report debug messages as is without including additional 
+    //      information such as the file location or function name it is called from. For 
+    //      information like fileName or function name report using warning or error log.
 #ifndef USE_DEBUG_     
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "0");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "0");
@@ -460,12 +463,7 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "1");
-   /*logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "\n"
-        "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n"
-        "  [FSMEngine %level]\n"
-        "  Location: '%fbase':%line\n  Message: %msg\n"
-        "`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`'`\n"); */
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "\n[%level Line %line '%fbase'] %msg\n");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "%msg");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename,
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Debug)->string());
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "1");
@@ -476,11 +474,17 @@ bool configureEasyLogger() {
 
 
 
-    //Configure Fatal  [Be warned that logging to FATAL will trigger the executable to abort (i.e. crash)]
+    //Configure Fatal  [Be warned that logging to FATAL may trigger the executable to abort (depending on what configuration flags were set)]
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::ToStandardOutput, "1");
-    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Format, "\n\n\n[%level] at (line %line '%fbase') <encountered %datetime{%b %d, %Y %F %g:%m:%s}> in '%func'\nMSG=%msg");
+#ifdef USE_DEBUG_
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Format,
+        "\n\n\n[%level] at (line %line '%fbase')\n"
+        "<encountered %datetime{%b %d, %Y %F %g:%m:%s}> in '%func'\nMSG=%msg\n\n");
+#else 
+    logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Format, "%msg");
+#endif
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::Filename,
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Fatal)->string());
     logConfigurator.set(el::Level::Fatal, el::ConfigurationType::SubsecondPrecision, "6");
@@ -489,26 +493,18 @@ bool configureEasyLogger() {
 
 
 
-    //Configure Error
+    //Configure Error    
     logConfigurator.set(el::Level::Error, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Error, el::ConfigurationType::ToStandardOutput, "1");
-    //logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "[%level Time=%datetime{%h:%m:%s}]  %func\n(line %line '%fbase') %msg");
-    logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, "\n"
-      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-      //  "~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERRO\n"
-      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 #ifdef USE_DEBUG_
-        "\n\n[FSMEngine %level]\n"
-        "  Location: '%fbase':%line\n  Message: %msg"
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Format, 
+        "\n\n[FSMEngine %level]\n  Location: '%fbase':%line\n  Message: %msg\n\n");
 #else 
-        "\n\n[FSMEngine %level]\n"
-        "Error Message: %msg\n"
+    logConfigurator.set(el::Level::Error, el::ConfigurationType::Format,
+        "\n\n[FSMEngine %level]\nError Message: %msg\n\n");
 #endif 
-      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-      //  "ROR!~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~~~~~ ERROR! ~~\n"
-      //  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    );
+    
     logConfigurator.set(el::Level::Error, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Error)->string());
     logConfigurator.set(el::Level::Error, el::ConfigurationType::SubsecondPrecision, "3");
@@ -521,7 +517,12 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::ToStandardOutput, "1");
-    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Format, "\n[%level Time = %datetime{%h:%m:%s}]  '%func'\n{line %line '%fbase'}\nMSG: %msg");
+#ifdef USE_DEBUG_
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Format, 
+        "\n[%level Time = %datetime{%h:%m:%s}]  '%func'\n{line %line '%fbase'}\nMSG: %msg");
+#else 
+    logConfigurator.set(el::Level::Warning, el::ConfigurationType::Format, "\n\n[%level]\n%msg\n");
+#endif
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Warning)->string());
     logConfigurator.set(el::Level::Warning, el::ConfigurationType::SubsecondPrecision, "3");
@@ -545,13 +546,18 @@ bool configureEasyLogger() {
     //Configure Verbose             [Verbose Logging is Disabled]
     logConfigurator.set(el::Level::Verbose, el::ConfigurationType::Enabled, "0");
 
+	
 
-
-    //Configure Unknown
+    //Configure Unknown   (Unknown is never used, it is probably safe to delete this configuration)
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToFile, "0");
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::ToStandardOutput, "1");
-    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Format, "[UNKNOWN] %msg");
+	goto SKIP_LINE_THAT_CAUSES_BUG;
+	//BUG 
+	//For some reason this next line causes an unhandled exception to be thrown within easylogger++
+	//which didn't occur in VisualStudio 2017 but now is occuring in VisualStudio 2019
+    logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Format, "[%level] %msg");
+	SKIP_LINE_THAT_CAUSES_BUG:
     //logConfigurator.set(el::Level::Unknown, el::ConfigurationType::Filename, 
     //    EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Unknown)->string());
     logConfigurator.set(el::Level::Unknown, el::ConfigurationType::SubsecondPrecision, "3");
@@ -576,90 +582,99 @@ bool configureEasyLogger() {
 
 
 //The configuration flags being reported here can be found in a macro in the "EasyLogging_BuildConfig.h" file.
-std::string reportEnabledLoggerConfigurationFlags() noexcept {
+std::string reportEnabledLoggerConfigurationFlags(size_t leadingIndent) noexcept {
+    LOG(TRACE) << __FUNCTION__;
+    std::string indent;
+    for (int i = 0; i < leadingIndent; i++)
+        indent.append(" ");
     std::ostringstream enabledConfigFlags;
     if (el::Loggers::hasFlag(el::LoggingFlag::NewLineForContainer))
-        enabledConfigFlags << "NewLineForContainer\n";
+        enabledConfigFlags << indent << "NewLineForContainer\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified))
-        enabledConfigFlags << "AllowVerboseIfModuleNotSpecified\n";
+        enabledConfigFlags << indent << "AllowVerboseIfModuleNotSpecified\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::LogDetailedCrashReason))
-        enabledConfigFlags << "LogDetailedCrashReason\n";
+        enabledConfigFlags << indent << "LogDetailedCrashReason\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog))
-        enabledConfigFlags << "DisableApplicationAbortOnFatalLog\n";
+        enabledConfigFlags << indent << "DisableApplicationAbortOnFatalLog\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::ImmediateFlush))
-        enabledConfigFlags << "ImmediateFlush \n";
+        enabledConfigFlags << indent << "ImmediateFlush \n";
     if (el::Loggers::hasFlag(el::LoggingFlag::StrictLogFileSizeCheck))
-        enabledConfigFlags << "StrictLogFileSizeCheck\n";
+        enabledConfigFlags << indent << "StrictLogFileSizeCheck\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::ColoredTerminalOutput))
-        enabledConfigFlags << "ColoredTerminalOutput\n";
+        enabledConfigFlags << indent << "ColoredTerminalOutput\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::MultiLoggerSupport))
-        enabledConfigFlags << "MultiLoggerSupport\n";
+        enabledConfigFlags << indent << "MultiLoggerSupport\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::DisablePerformanceTrackingCheckpointComparison))
-        enabledConfigFlags << "DisablePerformanceTrackingCheckpointComparison\n";
+        enabledConfigFlags << indent << "DisablePerformanceTrackingCheckpointComparison\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::DisableVModules))
-        enabledConfigFlags << "DisableVModules\n";
+        enabledConfigFlags << indent << "DisableVModules\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::DisableVModulesExtensions))
-        enabledConfigFlags << "DisableVModulesExtensions\n";
+        enabledConfigFlags << indent << "DisableVModulesExtensions\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::HierarchicalLogging))
-        enabledConfigFlags << "HierarchicalLogging\n";
+        enabledConfigFlags << indent << "HierarchicalLogging\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::CreateLoggerAutomatically))
-        enabledConfigFlags << "CreateLoggerAutomatically\n";
+        enabledConfigFlags << indent << "CreateLoggerAutomatically\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::AutoSpacing))
-        enabledConfigFlags << "AutoSpacing \n";
+        enabledConfigFlags << indent << "AutoSpacing \n";
     if (el::Loggers::hasFlag(el::LoggingFlag::FixedTimeFormat))
-        enabledConfigFlags << "FixedTimeFormat\n";
+        enabledConfigFlags << indent << "FixedTimeFormat\n";
     if (el::Loggers::hasFlag(el::LoggingFlag::IgnoreSigInt))
-        enabledConfigFlags << "IgnoreSigInt\n";
+        enabledConfigFlags << indent << "IgnoreSigInt\n";
     return enabledConfigFlags.str();
 }
 
-std::string reportAllLoggerConfigurationFlags() noexcept {
+std::string reportAllLoggerConfigurationFlags(size_t leadingIndent) noexcept {
+    LOG(TRACE) << __FUNCTION__;
+
+    std::string indent;
+    for (int i = 0; i < leadingIndent; i++)
+        indent.append(" ");
     std::ostringstream configFlags;
 
-    configFlags << "\nNewLineForContainer:                                ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::NewLineForContainer);
+    configFlags << "\nNewLineForContainer                               ";
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::NewLineForContainer);
 
-    configFlags << "\nAllowVerboseIfModuleNotSpecified:                 ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
+    configFlags << "\nAllowVerboseIfModuleNotSpecified                  ";
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::AllowVerboseIfModuleNotSpecified);
 
     configFlags << "\nLogDetailedCrashReason                            ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::LogDetailedCrashReason);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::LogDetailedCrashReason);
 
     configFlags << "\nDisableApplicationAbortOnFatalLog                 ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
 
     configFlags << "\nImmediateFlush                                    ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::ImmediateFlush);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::ImmediateFlush);
 
     configFlags << "\nStrictLogFileSizeCheck                            ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::StrictLogFileSizeCheck);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::StrictLogFileSizeCheck);
 
     configFlags << "\nColoredTerminalOutput                             ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::ColoredTerminalOutput);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::ColoredTerminalOutput);
 
     configFlags << "\nDisablePerformanceTrackingCheckpointComparison    ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisablePerformanceTrackingCheckpointComparison);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::DisablePerformanceTrackingCheckpointComparison);
 
     configFlags << "\nDisableVModules                                   ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisableVModules);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::DisableVModules);
         
     configFlags << "\nDisableVModulesExtensions                         ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::DisableVModulesExtensions);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::DisableVModulesExtensions);
 
     configFlags << "\nHierarchicalLogging                               ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::HierarchicalLogging);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::HierarchicalLogging);
 
     configFlags << "\nCreateLoggerAutomatically                         ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::CreateLoggerAutomatically);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::CreateLoggerAutomatically);
 
     configFlags << "\nAutoSpacing                                       ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::AutoSpacing);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::AutoSpacing);
 
     configFlags << "\nFixedTimeFormat                                   ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::FixedTimeFormat);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::FixedTimeFormat);
 
     configFlags << "\nIgnoreSigInt                                      ";
-    configFlags << el::Loggers::hasFlag(el::LoggingFlag::IgnoreSigInt);
+    configFlags << indent << el::Loggers::hasFlag(el::LoggingFlag::IgnoreSigInt);
 
     return configFlags.str();
 }
@@ -671,16 +686,13 @@ std::string reportAllLoggerConfigurationFlags() noexcept {
 namespace EASYLOGPP_CONFIGURATION_INTERNAL {       
 
     bool checkIfAlreadyConfigured() {
-
         static bool hasBeenConfigured = false;
         if (hasBeenConfigured)
             return true;
-        
         else {
             hasBeenConfigured = true; 
             return false;
         }
-
     }
 
     std::optional<std::filesystem::path> getFilepathToLogForLevel(el::Level level) {
@@ -717,7 +729,6 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
                 case el::Level::Unknown:
                     logFilepath += "Unkown.log";
                     break;
-                    //[[fallthrough]];
                 default:
                     logFilepath += "Default.log";
                     break;
@@ -824,6 +835,9 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
     //used in formulating a syntactically valid filepath. Unfortunately this task is easier
     //said then done, especially when building with modern MSVC. 
     std::string getDateTimeTag() {
+        
+        return getDateTimeStringTagFromOS();
+
         //Use preprocessor to use date+time at time-of-compilation
         std::stringstream tag;
         tag /*<< "TheImplementationForGettingDateAndTimeIsBeingReimplementedInASeperateFile"*/ << __DATE__ << __TIME__;
@@ -845,93 +859,6 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             }
         }
         return tagString;
-#if 0
-        //The formated timetag is built using a stringstream
-        std::stringstream tag;
-
-        if constexpr (USE_WINDOWS_API_TO_GET_TIME_STRING) {
-            //The Windows API is used to get the system time in a struct which looks like:
-            //   typedef struct _SYSTEMTIME {
-            //       WORD wYear;
-            //       WORD wMonth;
-            //       WORD wDayOfWeek;
-            //       WORD wDay;
-            //       WORD wHour;
-            //       WORD wMinute;
-            //       WORD wSecond;
-            //       WORD wMilliseconds;
-            //   } SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
-            FILETIME timeFromOS;
-
-            // GetSystemTime(&timeFromOS);
-
-        }
-        else {
-            //We can use C++11's <chrono> library to get the current time from the system clock.
-            std::chrono::time_point timepointFromSystemClock = std::chrono::system_clock::now();
-
-            //Here is where things start to get a bit hairy. Unfortunately the main purpose of <chrono>
-            //is to provide a utility for measuring durations of time and (as of C++17) does not
-            //contain functionality to allow direct conversions of its types into usable date-time strings.                   (C++20 is expected to expand the available functionality of <chrono>)
-            //So the best <chrono> can offer us is a function to convert our timepoint to a time_t,
-            //which is a very old-school type which dates back to the C darkages (well, actually to
-            //1988 and the first POSIX standard).                                                                         //see: https://en.wikipedia.org/wiki/Unix_time#History
-
-
-            const time_t timetag2 = (std::chrono::system_clock::to_time_t(timepointFromSystemClock));
-
-
-
-#if 0
-
-            const time_t const * constTimeTag2 = &timetag2;
-#ifdef _MSC_VER
-            //MSVC has deprecated many C functions and replaced them with their own '_s' versions. Since we are to use the C function 'localtime()' here to get 
-            //the date and time from the OS, we check to see if our compiler is MSVC and if so, then we must use 'localtime_s()'.
-            tm timetagC;
-            errno_t err = 0; //0 means no error
-            err = localtime_s(&timetagC, constTimeTag2);
-            if (err != 0) {
-                fprintf(stderr, "\n\nError occurred within CRT function 'localtime_s()'! Error code is %d!\n"
-                    "For more information on error codes, do Internet search for meanings\n"
-                    "of variables of type 'errno_t'.\n\n", err);
-            }
-#else
-            auto timetagC = std::localtime(&timetag2);
-#endif
-
-            //                /////////////////////
-            //                //
-            //                //    HACK   Use of deprecated function
-            //                //
-            //                //MSVC considers the C function 'localtime' to be deprecated since it is not thread safe and (i think) can cause buffer overflow. It is intended to be 
-            //                //replaced with 'localtime_s()' on windows or localtime_r() on POSIX-compliant. To use localtime_s though there needs to be some macros defined, which
-            //                //are:
-            //                //    check to make sure ' __STDC_LIB_EXT1__ ' is defined be the implementation
-            //                //    define ' __STDC_WANT_LIB_EXT1__ '  before the header 'time.h' is included.
-            //                //https://en.cppreference.com/w/c/chrono/localtime
-            //                //https://en.cppreference.com/w/cpp/chrono/c/localtime
-            //                //https://docs.microsoft.com/en-us/cpp/preprocessor/warning?view=vs-2017
-            //                //
-            //                // OR  just do this hack until C++20 provides a much easier way to do this 
-            //                //
-            //                // UPDATE: Instead of disabling warnings to make this function call, the macro '#define _CRT_SECURE_NO_WARNINGS 1' has been added to the BuildSettings.h file
-            //                //         which allows for use of the deprecated C functions which otherwise block compilation
-            ////#pragma warning( push )
-            ////#pragma warning( disable : 4996 ) 
-            //                auto timetagC = std::localtime(&timetag2); 
-            ////#pragma warning ( pop )
-            //                //End of hack
-            //                /////////////////////
-            //
-            //                //  Reference: https://en.cppreference.com/w/cpp/io/manip/put_time
-            //                //Now we can extract the information we need
-                           // tag << put_time(timetagc, "%Y_%j_%H_%M_%S");
-            tag << std::put_time(&timetagC, "%Y_%j_%H_%M_%S"); //Puts the 'day of the year', 'year', 'hour', 'minute', and 'second' into a stringstream
-#endif //0
-            return tag.str();
-        }
-#endif //0
 
     }
 

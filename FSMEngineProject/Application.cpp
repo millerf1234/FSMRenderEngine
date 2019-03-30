@@ -1,7 +1,7 @@
 //File:      Application.cpp
 //
-//  Programmer:   Forrest Miller
-//  Date:         January 10, 2019
+//  Programmer:           Forrest Miller
+//  Created Date:         January 10, 2019
 
 
 #include <istream>  //For std::cin.get()   to keep console open
@@ -17,13 +17,12 @@
 
 #include "AsciiTextFile.h"
 
-Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) {
+Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(nullptr) {
 
 
     //WAIT! Don't move the 'Initializing Application' message up here*!!!                 *Times I have tried to
-    //How the heck is that message going to get logged if the message                          do so counter:  3
-    //logging hasn't been set up yet? Instead just pretend logging isn't ready
-    //yet and print it.
+    //How the heck is that message going to get logged if  message                            do so counter:  4
+    //logging hasn't been set up yet?
     
     //
     //BUG (of sorts)
@@ -37,23 +36,30 @@ Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) 
     LOG(TRACE) << __FUNCTION__;
 
     //Once we make it beyond this point, all message logging will be done
-    //though the Easylogger++ library. 
+    //though the Easylogger++ library 
 
     LOG(INFO) << "Initializing Application...";
     LOG(INFO) << "Creating directory for LOG files...DONE";
 
+#ifndef USE_DEBUG_
+    LOG(INFO) << "     LOGGER CONFIGURATION FLAGS" << reportAllLoggerConfigurationFlags(7u) << "\n\n" << std::endl;
+#else 
+    LOG(INFO) << "    ACTIVE LOGGER CONFIGURATION FLAGS";
+    LOG(INFO) << reportEnabledLoggerConfigurationFlags(6u) << "\n";
+#endif
+
     //Here Would be a good location to log Application version number and other such info
-    LOG(INFO) << "Application Version 0.0 Build 0.0.01";
+    LOG(INFO) << "Application Version 0.0 Build 0.0.01"; //Eventually a real version system will be implemented
     LOG(INFO) << "Compiler:                    MSVC " << _MSC_VER;
     LOG(INFO) << "Compile Date:               " << __DATE__;
     LOG(INFO) << "Compile Time:               " << __TIME__;
-    LOG(INFO) << "Implementation Is Hosted:   " << __STDC_HOSTED__;
+    LOG(INFO) << "Implementation Is Hosted:   " << ((__STDC_HOSTED__) ? "True" : "False");
 
-    LOG(INFO) << "Inchoating A Render Environment...";
+    LOG(INFO) << "Inchoating The Render Environment...";
     if (!createRenderEnvironment()) {
-        std::exit(EXIT_FAILURE);
+        //std::exit(EXIT_FAILURE);
     }
-
+    /*
     AsciiTextFile temp("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");  
     std::cout << "\nINFO LOG HAS " << temp.countNumberOfLines() << " lines of ASCII text!\n";
     AsciiTextFile temp2("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
@@ -83,7 +89,7 @@ Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) 
 
     LOG(INFO) << "Temp has ";
     LOG(INFO) << tempCharSize << " characters in total!\n";
-
+    */
     //The rest of the constructor code below here is just testing some functions
 
 
@@ -178,6 +184,22 @@ bool Application::setupMessageLogs(int argc, char** argv) {
 #endif //FECLFINAE
         }
     }
+    catch (const FSMNamedException& e) {
+        switch (e.getName()) {
+        case FSMNamedException::NamedException::NO_GL_DRIVER:
+            LOG(ERROR) << " System does not appear to have a driver which is\n"
+                "                OpenGL compatible installed!\n";
+            LOG(INFO) << "[Press enter to terminate process]";
+            std::cin.get();
+            std::exit(EXIT_FAILURE);
+            break;
+
+        default:
+            throw; //Re-throws the caught exception (Note on re-throw behavior: will go to
+            //      catch block in the next outer scope level, not one of the other catches at this scope)
+            break;
+        }
+    }
     catch (const FSMException& e) { //Catch 
         printf("\nApplication encountered the following exception during runtime:\n%s", e.what());
         printf("\nSeeing as how this is an integral feature to this Application, the most\n"
@@ -199,6 +221,16 @@ bool Application::createRenderEnvironment() {
         //Create the Render Environment
         mRenderEnvironment_ = std::make_unique<FSMRenderEnvironment>();
         return true;
+    }
+    catch (const FSMNamedException& e) {
+        switch (e.getName()) {
+        case FSMNamedException::NamedException::NO_GL_DRIVER:
+            LOG(ERROR) << " System does not appear to have a driver which is\n"
+                "                OpenGL compatible installed!\n";
+            LOG(INFO) << "[Press enter to terminate process]";
+            std::cin.get();
+            std::exit(EXIT_FAILURE);
+        }
     }
     catch (const FSMException& e) {
         LOG(FATAL) << "The following exception was encountered: \n" << e.what()

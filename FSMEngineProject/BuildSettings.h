@@ -161,22 +161,6 @@
 
 
 
-//UPDATE: This Macro turned out to not work as expected, so the strategy of manually disabling the deprecated warning
-//       around each call to a deprecated C function is used when required.
-////--------------------------------------------------------------------------------------------------------------  
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
-//////////////////    SECTION TO ADD IN A FUTURE REORGANIZATION OF THIS DOCUMENT    /////////////////////////////  
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
-//// Allow C functions that normally require special windows versions to work anyways. Eventually these C functions  
-//// should be updated to their secure versions (the '_s' versions) or newer functions should be used instead.  
-//// See:    https://docs.microsoft.com/en-us/cpp/c-runtime-library/security-features-in-the-crt?view=vs-2017  
-////          https://stackoverflow.com/questions/16883037/remove-secure-warnings-crt-secure-no-warnings-from-projects-by-default-in-vis   
-//// IMPORTANT! The macro must be defined as 1. Failure to define it at 1 will cause it to not work properly   
-//#ifdef _MSC_VER
-//#define _CRT_SECURE_NO_WARNINGS 1 
-//#endif 
-
-
 // ============================================================================================================  
 //  ( SECTION 1 )   Global Project Build Behavior
 // ============================================================================================================  
@@ -195,7 +179,7 @@
 //For some of the third party libraries, there are both debug and release versions available. By
 //defining this macro, the debug versions of these libraries will be selected if available. Having
 //this macro be undefined will cause the release version of these libraries to be linked instead.
-//#define USE_DEBUG_ 1
+#define USE_DEBUG_ 1
 
 
 
@@ -210,7 +194,7 @@
 //    could cause a dramatic performance boost but could also result in context messages to be reported 
 //    long after the Application event that triggered them. It is recommended to leave this enabled while
 //    debugging unless absolutely necessary. 
-//#define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 1
+#define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 1
 
 // ============================================================================================================
 //  ( END SECTION 1 )

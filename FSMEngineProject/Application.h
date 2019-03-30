@@ -36,7 +36,7 @@
 
 class Application final {
 public:
-    Application(int argc = 0, char ** argv = nullptr);
+    Application(int argc = 0, char ** argv = nullptr) noexcept;
     ~Application();
 
     void launch();
