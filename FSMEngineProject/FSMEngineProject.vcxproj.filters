@@ -124,9 +124,6 @@
     <Filter Include="Source Files\FSMEngine\Utility">
       <UniqueIdentifier>{14cbad73-a6a3-42dc-943b-1c6f691322cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Utility\Debug">
-      <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\Utility\Asset">
       <UniqueIdentifier>{dba52829-f9dd-41a5-aff0-64408370a251}</UniqueIdentifier>
     </Filter>
@@ -148,6 +145,12 @@
     <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization\Data Struct">
       <UniqueIdentifier>{70ecc34e-5b3f-4ce0-babd-def18fd607c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Joystick">
+      <UniqueIdentifier>{7888c779-4ebd-4b39-9356-d9ec356486ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Joystick\Debug">
+      <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\glad\KHR\khrplatform.h">
@@ -163,7 +166,7 @@
       <Filter>Header Files\Common</Filter>
     </ClInclude>
     <ClInclude Include="JoystickStatePrinter.h">
-      <Filter>Source Files\FSMEngine\Utility\Debug</Filter>
+      <Filter>Source Files\FSMEngine\Types\Joystick\Debug</Filter>
     </ClInclude>
     <ClInclude Include="FSMCallbackInitializer.h">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions</Filter>
@@ -981,6 +984,15 @@
     <ClInclude Include="FSMMonitor.h">
       <Filter>Source Files\FSMEngine\Types</Filter>
     </ClInclude>
+    <ClInclude Include="JoystickHandle.h">
+      <Filter>Source Files\FSMEngine\Types\Joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="JoystickPort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMJoystickCommon.h">
+      <Filter>Source Files\FSMEngine\Types\Joystick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
@@ -990,7 +1002,7 @@
       <Filter>ThirdParty\glad\release</Filter>
     </ClCompile>
     <ClCompile Include="JoystickStatePrinter.cpp">
-      <Filter>Source Files\FSMEngine\Utility\Debug</Filter>
+      <Filter>Source Files\FSMEngine\Types\Joystick\Debug</Filter>
     </ClCompile>
     <ClCompile Include="FSMCallbackInitializer.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions</Filter>
@@ -1039,6 +1051,12 @@
     </ClCompile>
     <ClCompile Include="FSMMonitor.cpp">
       <Filter>Source Files\FSMEngine\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="JoystickHandle.cpp">
+      <Filter>Source Files\FSMEngine\Types\Joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="JoystickPort.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

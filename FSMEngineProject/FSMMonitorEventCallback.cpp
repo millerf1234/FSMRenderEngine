@@ -28,6 +28,22 @@
 #include "UniversalIncludes.h"
 
 namespace FSMEngineInternal {
+	
+	void debugFunc() {
+		//Debug
+		static long counter = 0L;
+		counter++;
+		if (counter == 240L) {
+			MonitorEventCallbackInternal::graphicsLanguageFrameworkMonitorEventCallbackFunction(
+				glfwGetPrimaryMonitor(), GLFW_CONNECTED);
+		}
+		if (counter == 245L)
+			MonitorEventCallbackInternal::graphicsLanguageFrameworkMonitorEventCallbackFunction(
+				glfwGetPrimaryMonitor(), GLFW_DISCONNECTED);
+		if (counter > 250L)
+			counter--; //Keep counter from growing forever
+		//end Debug
+	}
 
 	//-------------------------------------------------------
 	//
@@ -37,6 +53,9 @@ namespace FSMEngineInternal {
 
 	bool checkMonitorEventQueues() {
         LOG_EVERY_N(60, TRACE) << __FUNCTION__;
+		//Debug
+		debugFunc();
+		//end Debug
         /*
 		if ((MonitorEventCallbackInternal::recentMonitorConnections().empty()) &&
 			(MonitorEventCallbackInternal::recentMonitorDisconnections().empty())) 

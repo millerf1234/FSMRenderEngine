@@ -117,6 +117,7 @@ void FSMRenderEnvironment::handleEvents() {
 			if (newMonitor.has_value()) {
 				if (newMonitor.value() != nullptr) {
 					LOG(INFO) << "Adding monitor with handle to memory address of " << newMonitor.value();
+					LOG(INFO) << "Monitor Name: " << glfwGetMonitorName(newMonitor.value());
 					mMonitors_.push_back(createMonitorHandle(newMonitor.value()));
 				}
 				else
@@ -147,7 +148,7 @@ void FSMRenderEnvironment::handleEvents() {
 			}
 		}
 		else {
-			LOG(INFO) << "That is odd. Neither the connection nor disconnection queues are\n"
+			LOG(INFO) << "That is odd. Neither the Monitor connection nor disconnection queues are\n"
 				<< "populated despite a monitor event being detected!";
 			LOG(DEBUG) << "FSMEngine has detected a possible Monitor Event Misfire!\n";
 		}
@@ -210,7 +211,7 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
 		}
 	}
 	else {
-		LOG(INFO) << "\nUh-oh! mMonitors_ is empty as can be!\n\n";
+		LOG(INFO) << "\nUh-oh! mMonitors_ is as empty as can be!\n\n";
 	}
     // Game loop
     while (!glfwWindowShouldClose(mContextWindow_)) {

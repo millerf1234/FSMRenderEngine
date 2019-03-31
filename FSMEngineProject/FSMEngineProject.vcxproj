@@ -160,6 +160,7 @@
     <ClInclude Include="FSMEngine.h" />
     <ClInclude Include="FSMErrorCallback.h" />
     <ClInclude Include="FSMException.h" />
+    <ClInclude Include="FSMJoystickCommon.h" />
     <ClInclude Include="FSMJoystickEventCallback.h" />
     <ClInclude Include="FSMMonitor.h" />
     <ClInclude Include="FSMMonitorHandle.h" />
@@ -169,6 +170,8 @@
     <ClInclude Include="GetSystemDateTime.h" />
     <ClInclude Include="GraphicsLanguage.h" />
     <ClInclude Include="GraphicsLanguageFramework.h" />
+    <ClInclude Include="JoystickHandle.h" />
+    <ClInclude Include="JoystickPort.h" />
     <ClInclude Include="JoystickStatePrinter.h" />
     <ClInclude Include="LoadableAssetCollection.h" />
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h" />
@@ -450,6 +453,8 @@
     <ClCompile Include="FSMMonitorEventCallback.cpp" />
     <ClCompile Include="FSMRenderEnvironment.cpp" />
     <ClCompile Include="GetSystemDateTime.cpp" />
+    <ClCompile Include="JoystickHandle.cpp" />
+    <ClCompile Include="JoystickPort.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc" />
