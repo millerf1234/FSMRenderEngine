@@ -164,9 +164,9 @@ public:
      *  @param name    The name of this named exception
      *  @param message The exception message.
     */
-    FSMNamedException(NamedException name, std::string_view message) noexcept : FSMException(message) {
+    FSMNamedException(NamedException name, std::string_view message) noexcept 
+        : FSMException(message), mName_(name) {
         LOG(TRACE) << __FUNCTION__;
-        mName_ = name;
     }
 #else 
     /** Constructor (C strings).
@@ -177,9 +177,8 @@ public:
      *                 with the caller.
      */
     explicit FSMNamedException(NamedException name, const char* message) noexcept :
-        FSMException(message) { //Let FSMException's constructor handle the potential nullptr 'message'
-        LOG(TRACE) << __FUNCTION__;
-        mName_ = name;
+        FSMException(message), mName_(name) { //Let FSMException's constructor handle the potential nullptr 'message'
+        LOG(TRACE) << __FUNCTION__;   
     }
 
     /** Constructor (C++ STL strings). 
@@ -187,9 +186,8 @@ public:
      *  @param message The error message.
      */
     explicit FSMNamedException(NamedException name, const std::string& message) noexcept :
-        FSMException(message) {
+        FSMException(message), mName_(name) {
         LOG(TRACE) << __FUNCTION__;
-        mName_ = name;
     }
 #endif // CONSTRUCT_FROM_STRING_VIEW
 

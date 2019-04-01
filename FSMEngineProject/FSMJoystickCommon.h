@@ -52,22 +52,24 @@
 
 #include "GraphicsLanguageFramework.h"
 #include "UniversalIncludes.h"
+
+
 #include "FSMException.h"
-
-
 #ifndef CONSTRUCT_FROM_STRING_VIEW
 #define CONSTRUCT_FROM_STRING_VIEW 1
+#include <string_view>
 #endif
 
 namespace FSMJoystickInternal {
 
 
-    //+                       " __(%_---------------------------------------_%)__ "
-    //++               "/         **Constant** **Values**         \"        
-    //+                     "/_U_%_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_=_-_%_U_\"
+    // /--------------------------------------\  
+    // |           Constant Values            |    
+    // \--------------------------------------/  
 
 
     static constexpr const int MAX_XINPUT_GAMEPADS = 4;
+    static constexpr const float AXIS_DEAD_ZONE_SIZE = 0.025f;
 
 
 	//Represents the maximum supported number of simultaneously connected Joysticks
@@ -77,13 +79,13 @@ namespace FSMJoystickInternal {
 	static constexpr const float AXIS_INPUT_MAX = 1.0f;
 	static constexpr const float AXIS_INPUT_MIN = -1.0f;
 
-    static constexpr const float DEFAULT_AXIS_ZERO_VALUE = 0.025f;
+    
 
 
 
-//+                     "  __v%--------------------------------------%v__ "
-//++             "/        Internal Exception         \"        
-//+                      "^%--------------------------------------------%^"
+    // /------------------------------------\  
+    // |         Internal Exception         |     
+    // \------------------------------------/
 
 
     class FSMJoystickException final : public FSMException {
@@ -95,9 +97,8 @@ namespace FSMJoystickInternal {
         *  @param message The exception message.
         */
         FSMJoystickException(JoystickException joyExcept, std::string_view msg) noexcept :
-            FSMException(msg) {
+            FSMException(msg), mName_(joyExcept) {
             LOG(TRACE) << __FUNCTION__;
-            mName_ = joyExcept;
         }
 #else 
     /** Constructor (C strings).
@@ -107,21 +108,19 @@ namespace FSMJoystickInternal {
      *                 Hence, responsibility for deleting the char* lies
      *                 with the caller.
      */
-    explicit FSMNamedException(NamedException name, const char* message) noexcept :
-        FSMException(message) { //Let FSMException's constructor handle the potential nullptr 'message'
+        explicit FSMNamedException(JoystickException name, const char* message) noexcept :
+        FSMException(message), mName_(name) { //Let FSMException's constructor handle the potential nullptr 'message'
         LOG(TRACE) << __FUNCTION__;
-        mName_ = name;
     }
 
     /** Constructor (C++ STL strings). 
      *  @param name    The name of this named exception
      *  @param message The error message.
      */
-    explicit FSMNamedException(NamedException name, const std::string& message) noexcept :
-        FSMException(message) {
+    explicit FSMNamedException(JoystickException name, const std::string& message) noexcept :
+        FSMException(message), mName_(name) {
         LOG(TRACE) << __FUNCTION__;
-        mName_ = name;
-
+    }
 #endif // CONSTRUCT_FROM_STRING_VIEW
 
 
@@ -140,16 +139,96 @@ namespace FSMJoystickInternal {
     };
 
 
-//+                     "  __v%------------------------------------------%v__  "
-//++               "/        JoystickID Wrapper        \"        
-//+                      "^%------------------------------------------------%^"
 
+    // /------------------------------------\  
+    // |         Internal Exception         |     
+    // \------------------------------------/
+
+
+    //Wrapper type that will only fully initialize properly if 
+    //constructed using a valid ID. Attempting to construct this 
+    //type with an invalid ID will throw a 
 class JoystickID final {
 public:
+    JoystickID() = delete;
+
+    ~JoystickID() noexcept {
+        LOG(TRACE) << __FUNCTION__;
+    }
+    //Constructor must be passed a valid JoyID or a JoystickException
+    //of name Illegal_Joystick_ID will be thrown.
+    JoystickID(int JoyID) noexcept(false) : mID_(JoyID) {
+        LOG(TRACE) << __FUNCTION__;
+        if ((JoyID < GLFW_JOYSTICK_1) || (JoyID > MAX_JOY_ID)) {
+            std::ostringstream exceptionMessage;
+            exceptionMessage << "Unable to construct JoystickID object with the illegal ID "
+                << std::to_string(JoyID) << "\nOnly IDs " << std::to_string(JoyID) << "to " << MAX_JOY_ID
+                << " are legal JoyID values!\n";
+            throw FSMJoystickException(FSMJoystickException::JoystickException::ILLEGAL_JOYSTICK_ID,
+                exceptionMessage.str());
+        }
+    }
+
+    //Copy and move constructors are both straightforward
+    JoystickID(const JoystickID& that) noexcept : mID_(that.mID_) {
+        LOG(TRACE) << __FUNCTION__;
+    }
+    JoystickID(JoystickID&& that) noexcept : mID_(that.mID_) {
+        LOG(TRACE) << __FUNCTION__;
+    }
+
+    //Allow Object's to be explicitly cast to ints
+    explicit operator int() const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        return mID_;
+    }
+
+    bool operator<(const JoystickID& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        if (mID_ < that.mID_)
+            return true;
+        return false;
+    }
+
+    bool operator<=(const JoystickID& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        if (mID_ <= that.mID_)
+            return true;
+        return false;
+    }
+
+    bool operator>(const JoystickID& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        if (mID_ < that.mID_)
+            return true;
+        return false;
+    }
+
+    bool operator>=(const JoystickID& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        if (mID_ <= that.mID_)
+            return true;
+        return false;
+    }
+
+    bool operator==(const JoystickID& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        if (mID_ == that.mID_)
+            return true;
+        return false;
+    }
+
+    bool operator!=(const JoystickID& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        if (mID_ != that.mID_)
+            return true;
+        return false;
+    }
 
 private:
+    const int mID_;
 
-	};
+};
 
 
 } //namespcace FSMJoystickInternal

@@ -70,7 +70,7 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
             "Graphics Language Framework [GLFW] Library!\n");
     }
 
-    LOG(INFO) << "\n [step 2]    GLFW Library has initialized! GLFW version: " << getGLFWRuntimeVersionString() << "\n";
+    LOG(INFO) << "\n [step 2]    GLFW Library has initialized! GLFW version: " << getGLFWRuntimeVersionString();
 
     //STEP 3
     if (!createContext()) {
@@ -209,14 +209,14 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
     glViewport(0, 0, width, height);
 
 	int count = 0;
-	GLFWmonitor** mon = glfwGetMonitors(&count);
+	GLFWmonitor** monitorHandles = glfwGetMonitors(&count);
 
 	for (int i = 0; i < count; i++)
-		mMonitors_.push_back(createMonitorHandle(mon[i]));
+		mMonitors_.push_back(createMonitorHandle(monitorHandles[i]));
 
 	if (!(mMonitors_.empty())) {
 		FSMMonitor primary = mMonitors_.front().get()->get();
-		LOG(INFO) << "\tNumber of VideoModes: " << primary.getVideoModes().size();
+		//LOG(INFO) << "\tNumber of VideoModes: " << primary.getVideoModes().size();
 		int counter = 0;
 		//for (FSMVideoMode v : primary.getVideoModes()) {
 		//	LOG(INFO) << "VideoMode " << counter++;
@@ -227,18 +227,41 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
 		//}
 	}
 	else {
-		LOG(INFO) << "\nUh-oh! mMonitors_ is as empty as can be!\n\n";
+        std::string msg = "\nUh-oh! mMonitors_ is as empty as can be!\n";
+		LOG(INFO) << msg;
 	}
+
+    glEnable(GL_BLEND);
+    
     // Game loop
     while (!glfwWindowShouldClose(mContextWindow_)) {
 
-
+        static float time = 0.0f;
+        static uint64_t counter = 0u;
+        counter++;
+        time += 0.05f;
 		handleEvents();
 
 
         // Render
         // Clear the color-buffer
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        static glm::vec4 clearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        if (counter % 102 == 0) {
+            float temp = std::min(1.0f, std::abs(clearColor.r + sin(time + clearColor.r)));
+            clearColor.r = clearColor.g;
+            clearColor.g = clearColor.b;
+            clearColor.b = temp;
+            if (std::abs(clearColor.r - clearColor.g) < 0.1f)
+                clearColor.g += 0.5f;
+            else if (std::abs(clearColor.r - clearColor.b) < 0.1f)
+                clearColor.b += 0.5f;
+            std::ostringstream msg;
+            msg << "New Background  {R: " << clearColor.r << ", G: "
+                << clearColor.g << ", B: " << clearColor.b << "}\n\n";
+            LOG(INFO) << msg.str();
+        }
+
+        glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (glfwGetKey(mContextWindow_, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -658,11 +681,17 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
     //for now just do this:
     glfwDefaultWindowHints();
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, (getGLVersionMajor() != 0) ? getGLVersionMajor() : 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, (getGLVersionMinor() != 0) ? getGLVersionMinor() : 6);
+    constexpr int GL_VERSION_MAJOR = 4;
+    constexpr int GL_VERSION_MINOR = 6;
+
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GL_VERSION_MAJOR);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GL_VERSION_MINOR);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
     glfwWindowHint(GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET); //Can be set to either GLFW_NO_RESET_NOTIFICATION or GLFW_LOSE_CONTEXT_ON_RESET
+    glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
 
@@ -672,7 +701,7 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
 //    STEP 3.2
 // --------------
 void FSMRenderEnvironment::retrieveConnectedMonitors() {
-    LOG(TRACE) << __FUNCTION__;
+   LOG(TRACE) << __FUNCTION__;
    LOG(INFO) << "\nHere is where a list of already connected monitors would\n"
         "be loaded, which then would allow for the\n"
         "Application to call a function of FSMRenderEnvironment to enumerate\n"
