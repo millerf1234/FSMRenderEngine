@@ -5,8 +5,12 @@
 //       Copy Operations        ENABLED
 //       Move Operations        ENABLED
 //
+// Please Note:        This class was implemented at a separate time and place when compared with
+//                     the rest of the FSMEngine Joystick code and as such is a completely 
+//                     independent standalone type. This code is primarily intended for internal 
+//                     usage for debugging purposes.
 //
-// Description:        A class built for debugging which simply echos input
+// Description:        A class built for debugging which simply echoes input
 //                     read from a connected Joystick. Requires GLFW to have been initialized.
 //
 // How To Use:         Pass in target joystick's ID during construction to specify the 
@@ -60,11 +64,11 @@
 // Date:               December 29-30, 2018
 //
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//--------------------------------------------------------------------------------------------------------------------
-//                                       JOYSTICK REFERENCE INFORMATION
-//--------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
+//                                         JOYSTICK REFERENCE INFORMATION
+// --------------------------------------------------------------------------------------------------------------------
 //
 //            Common Joystick Types/Standards:
 //
@@ -118,6 +122,9 @@
 
 #pragma once
 
+#ifndef JOYSTICK_STATE_PRINTER_H_
+#define JOYSTICK_STATE_PRINTER_H_
+
 #include <string>
 #include <vector>
 
@@ -152,6 +159,14 @@ public:
 	void printState();
 	//Returns an empty string if no Joystick is located which has the target ID
 	std::string getStateString();
+
+    //Will return all available relevant information about the currently active Joystick
+    //(such as its name, type, GUID, etc...). If no Joystick is connected under
+    //the currently active JoyID, then the returned string will state so. The intended 
+    //usage of this function is to provide a way to quickly dump information out to
+    //the console, it is not recommended to try to parse any relevant information from
+    //the returned string. 
+    std::string getJoystickInfo() noexcept;
 
 	///////////////////////////////////
 	////       Change Target       ////
@@ -251,3 +266,6 @@ private:
 	std::string convertHatInputToText(char hatState) const;
 };
 
+
+
+#endif //JOYSTICK_STATE_PRINTER_H_

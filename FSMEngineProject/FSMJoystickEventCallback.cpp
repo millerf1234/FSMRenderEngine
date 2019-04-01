@@ -143,7 +143,7 @@ namespace FSMEngineInternal {
 
         void graphicsLanguageFrameworkJoystickEventCallbackFunction(int joyID, int event) {
             LOG(TRACE) << __FUNCTION__;
-            LOG(INFO) << "\n\n\tA Joystick Event was detected! Event code " << event << std::endl;
+            //LOG(DEBUG) << "\n\n\tA Joystick Event was detected! Event code " << event << std::endl;
             if (event == GLFW_CONNECTED) {
                 recentJoystickConnections().push(joyID);
             }

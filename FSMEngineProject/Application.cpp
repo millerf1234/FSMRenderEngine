@@ -41,12 +41,12 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
     LOG(INFO) << "Initializing Application...";
     LOG(INFO) << "Creating directory for LOG files...DONE";
 
-#ifndef USE_DEBUG_
-    LOG(INFO) << "     LOGGER CONFIGURATION FLAGS" << reportAllLoggerConfigurationFlags(7u) << "\n\n" << std::endl;
-#else 
-    LOG(INFO) << "    ACTIVE LOGGER CONFIGURATION FLAGS";
-    LOG(INFO) << reportEnabledLoggerConfigurationFlags(6u) << "\n";
-#endif
+//#ifndef USE_DEBUG_
+//    LOG(INFO) << "     LOGGER CONFIGURATION FLAGS" << reportAllLoggerConfigurationFlags(7u) << "\n\n" << std::endl;
+//#else 
+//    LOG(INFO) << "    ACTIVE LOGGER CONFIGURATION FLAGS";
+//    LOG(INFO) << reportEnabledLoggerConfigurationFlags(6u) << "\n";
+//#endif
 
     //Here Would be a good location to log Application version number and other such info
     LOG(INFO) << "Application Version 0.0 Build 0.0.01"; //Eventually a real version system will be implemented
@@ -102,10 +102,13 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
     LOG(INFO) << "Program was compiled to work with GLFW " << compileVersionMajor << "."
         << compileVersionMinor << "." << compileVersionRevision << std::endl;
    
-    LOG(INFO) << " Using object's print function: " << mRenderEnvironment_->getGLFWCompiletimeVersionString() << "\n";
+    LOG(INFO) << " Using object's print function: ";
+    LOG(INFO) << mRenderEnvironment_->getGLFWCompiletimeVersionString() << "\n";
     
     //Test GLFW runtime version reporting
-    LOG(INFO) << "GLFW Version Loaded at Runtime String: " << mRenderEnvironment_->getGLFWRuntimeVersionString() << "\n\n";
+    LOG(INFO) << "GLFW Version Loaded at Runtime String: ";
+    LOG(INFO) << mRenderEnvironment_->getGLFWRuntimeVersionString();
+    
 
     //Test GLAD OpenGL Version Reporting
     int openGLVerMajor = 0;

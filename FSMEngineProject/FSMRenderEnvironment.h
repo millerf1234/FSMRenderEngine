@@ -25,6 +25,8 @@
 #include "FInitSetting.h"
 #include "DefaultValuesForFSMEngine.h"
 
+#include "JoystickStatePrinter.h"
+
 constexpr const int width = 1240;
 constexpr const int height = 980;
 
@@ -132,11 +134,20 @@ public:
 
 
 private:
+
+   
     
     bool mGLFWIsInit_;
     struct GLFWwindow* mContextWindow_;
 
 	std::list<std::unique_ptr<FSMEngineInternal::FSMMonitorHandle>> mMonitors_;
+
+     //For Joystick Debug
+    bool mJoystickStatePrintingEnabled_;
+    std::unique_ptr<JoystickStatePrinter> mJoystickInputPrinter_;
+    //For context reset (should be enabled at construction and will disable 
+    //itself after determining what reset strategy is to be used.
+    bool mContextResetAwareness_;
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -184,12 +195,21 @@ private:
     //STEP 4
     bool setupGLAD();
     void specifyDebugCallbacksWithGLAD();     //step 4.1
-    bool loadOpenGLFunctions();               //step 4.2
+    bool loadOpenGLFunctions() noexcept;      //step 4.2
 
     
     //STEP 5
+    bool checkForContextResetStrategy();
     //void retrieveConnectedMonitors();
 
+
+    //-------------------------------------
+    //--    Upkeep Loop Functions
+    //-------------------------------------
+
+    void doJoystickPrinterLoopLogic() noexcept; //Function to be called as part of each frame
+   
+    bool checkForContextReset(); 
 };
 
 

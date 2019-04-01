@@ -103,6 +103,37 @@ std::string JoystickStatePrinter::getStateString() {
 	return buildStateString();
 }
 
+
+//Implementation detail: This function [perhaps foolishly] ignores all object-local
+//data [besides 'mID_' for active joystick id] and instead queries GLFW for the info.
+std::string JoystickStatePrinter::getJoystickInfo() noexcept {
+    std::ostringstream joyInfo;
+    if (!(glfwJoystickPresent(mID_))) {
+        joyInfo << "\n"
+            << "JoyID:        " << mID_ << "\n"
+            << "Name:         " << DISCONNECTED_JOYSTICK_NAME << "\n\n";
+    }
+    else {
+        int axes = 0;
+        int buttons = 0;
+        int isGamepad = glfwJoystickIsGamepad(mID_);
+        glfwGetJoystickButtons(mID_, &buttons);
+        glfwGetJoystickAxes(mID_, &axes);
+       
+        joyInfo << "\n"
+            << "JoyID:        " << mID_ << "\n"
+            << "Name:         " << glfwGetJoystickName(mID_) << "\n"
+            << "GUID:         " << glfwGetJoystickGUID(mID_) << "\n"
+            << "Axes=" << axes << "      Buttons=" << buttons << "\n"
+            << "Is Gamepad:   " << ((isGamepad == GLFW_TRUE) ? "TRUE" : "False") << "\n";  
+        if (isGamepad)
+            joyInfo << "Gamepad Name: " << glfwGetGamepadName(mID_) << "\n";
+            
+        joyInfo << "\n";
+    }
+    return joyInfo.str();
+}
+
 void JoystickStatePrinter::toggleMessageOutputMode() {
 	mPrintFullJoystickState_ = !mPrintFullJoystickState_;
 }
@@ -173,7 +204,7 @@ std::string JoystickStatePrinter::buildStateString() {
 	if (mPrintedDisconnectMessage_) { return ""; }  //No need to print a message repeatedly for a disconnected joystick
 
 	//If we are connected but don't have a name currently, that must be fixed by 
-	//aquiring a name for our newly connected Joystick
+	//acquiring a name for our newly connected Joystick
 	if (joystickPresent && !mHasName_) {
 		mName_ = glfwGetJoystickName(mID_);
 		mHasName_ = true;

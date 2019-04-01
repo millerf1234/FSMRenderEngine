@@ -145,10 +145,10 @@
     <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization\Data Struct">
       <UniqueIdentifier>{70ecc34e-5b3f-4ce0-babd-def18fd607c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Joystick">
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Joystick">
       <UniqueIdentifier>{7888c779-4ebd-4b39-9356-d9ec356486ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Joystick\Debug">
+    <Filter Include="Source Files\FSMEngine\Utility\JoystickDebugger">
       <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -166,7 +166,7 @@
       <Filter>Header Files\Common</Filter>
     </ClInclude>
     <ClInclude Include="JoystickStatePrinter.h">
-      <Filter>Source Files\FSMEngine\Types\Joystick\Debug</Filter>
+      <Filter>Source Files\FSMEngine\Utility\JoystickDebugger</Filter>
     </ClInclude>
     <ClInclude Include="FSMCallbackInitializer.h">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions</Filter>
@@ -984,14 +984,11 @@
     <ClInclude Include="FSMMonitor.h">
       <Filter>Source Files\FSMEngine\Types</Filter>
     </ClInclude>
-    <ClInclude Include="JoystickHandle.h">
-      <Filter>Source Files\FSMEngine\Types\Joystick</Filter>
+    <ClInclude Include="FSMJoystickCommon.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClInclude>
     <ClInclude Include="JoystickPort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMJoystickCommon.h">
-      <Filter>Source Files\FSMEngine\Types\Joystick</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1002,7 +999,7 @@
       <Filter>ThirdParty\glad\release</Filter>
     </ClCompile>
     <ClCompile Include="JoystickStatePrinter.cpp">
-      <Filter>Source Files\FSMEngine\Types\Joystick\Debug</Filter>
+      <Filter>Source Files\FSMEngine\Utility\JoystickDebugger</Filter>
     </ClCompile>
     <ClCompile Include="FSMCallbackInitializer.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions</Filter>
@@ -1052,11 +1049,8 @@
     <ClCompile Include="FSMMonitor.cpp">
       <Filter>Source Files\FSMEngine\Types</Filter>
     </ClCompile>
-    <ClCompile Include="JoystickHandle.cpp">
-      <Filter>Source Files\FSMEngine\Types\Joystick</Filter>
-    </ClCompile>
     <ClCompile Include="JoystickPort.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -79,3 +79,27 @@ http://www.hlsl.co.uk/blog/2017/12/1/c-noexcept-and-move-constructors-effect-on-
 	//===================================
 	Multi-Threaded exception handling
 	  https://stackoverflow.com/questions/233127/how-can-i-propagate-exceptions-between-threads
+
+
+
+
+
+
+
+
+
+      //   RANDOM
+      //I'm going to preserve this following formated std::ostringstream rather than delete it forever
+
+      #ifdef OLDER_VERSION_INACTIVATE
+      std::ostringstream errorMessage;
+        errorMessage << "\n\n ###################################################";
+        errorMessage <<   "\n #` _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/`#";
+        errorMessage <<   "\n #`+ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ +`#";
+        errorMessage <<   "\n #`|          GLFW REPORTED AN ERROR !!!         |`#";
+        errorMessage <<   "\n #`|   Check Error Log File for more detail...   |`#";
+        errorMessage <<   "\n #`+_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_~_+`#";
+        errorMessage <<   "\n #` / / / / / / / / / / / / / / / / / / / / / / / `#";
+        errorMessage <<   "\n ###################################################";
+        errorMessage <<   "\n\n";
+      #endif

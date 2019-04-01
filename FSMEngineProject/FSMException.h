@@ -95,7 +95,8 @@
 #define FSM_EXCEPTION_H_
 
 #include <string>
-#include <exception>
+#include <stdexcept>  //#include <exception>
+#include "UniversalIncludes.h"  //For LOG message writing
 
 //If string_view isn't available, comment the following 2 lines
 #define CONSTRUCT_FROM_STRING_VIEW 1
@@ -108,7 +109,9 @@ public:
     /** Constructor (String type)
         @param message The exception message.
     */
-    FSMException(std::string_view message) : mMessage_(message) {}
+    FSMException(std::string_view message) noexcept : mMessage_(message) {
+                LOG(TRACE) << __FUNCTION__;
+    }
 #else 
     /** Constructor (C strings).
      *  @param message C-style string error message.
@@ -116,27 +119,32 @@ public:
      *                 Hence, responsibility for deleting the char* lies
      *                 with the caller.
      */
-    explicit FSMException(const char* message) :
-        mMessage_(message) {}
+    explicit FSMException(const char* message) noexcept :
+        mMessage_((message != nullptr)?(message):("")) {
+        LOG(TRACE) << __FUNCTION__;
+    }
 
     /** Constructor (C++ STL strings).
      *  @param message The error message.
      */
-    explicit FSMException(const std::string& message) :
-        mMessage_(message) {}
+    explicit FSMException(const std::string& message) noexcept :
+        mMessage_(message) {
+            LOG(TRACE) << __FUNCTION__;
+    }
 #endif // CONSTRUCT_FROM_STRING_VIEW
 
     /** Destructor.
      * Virtual to allow for subclassing.
      */
-    virtual ~FSMException() {}
+    virtual ~FSMException() noexcept { LOG(TRACE) << __FUNCTION__; }
 
     /** Returns a pointer to the (constant) error description.
      *  @return A pointer to a const char*. The underlying memory
      *          is in possession of the Exception object. Callers must
      *          not attempt to free the memory.
      */
-    virtual const char* what() const /*noexcept*/ override {
+    virtual const char* what() const noexcept override {        
+        LOG(TRACE) << __FUNCTION__;
         return mMessage_.c_str();
     }
 
@@ -149,14 +157,15 @@ protected:
 
 class FSMNamedException final : public FSMException {
 public:
-    enum class NamedException { NO_GL_DRIVER, };
+    enum class NamedException { NO_GL_DRIVER };
 
 #ifdef CONSTRUCT_FROM_STRING_VIEW
     /** Constructor (String type)
      *  @param name    The name of this named exception
      *  @param message The exception message.
     */
-    FSMNamedException(NamedException name, std::string_view message) : FSMException(message) {
+    FSMNamedException(NamedException name, std::string_view message) noexcept : FSMException(message) {
+        LOG(TRACE) << __FUNCTION__;
         mName_ = name;
     }
 #else 
@@ -167,8 +176,9 @@ public:
      *                 Hence, responsibility for deleting the char* lies
      *                 with the caller.
      */
-    explicit FSMNamedException(NamedException name, const char* message) :
-        FSMException(message) {
+    explicit FSMNamedException(NamedException name, const char* message) noexcept :
+        FSMException(message) { //Let FSMException's constructor handle the potential nullptr 'message'
+        LOG(TRACE) << __FUNCTION__;
         mName_ = name;
     }
 
@@ -176,21 +186,24 @@ public:
      *  @param name    The name of this named exception
      *  @param message The error message.
      */
-    explicit FSMNamedException(NamedException name, const std::string& message) :
+    explicit FSMNamedException(NamedException name, const std::string& message) noexcept :
         FSMException(message) {
+        LOG(TRACE) << __FUNCTION__;
         mName_ = name;
     }
-#endif // ONSTRUCT_FROM_STRING_VIEW
+#endif // CONSTRUCT_FROM_STRING_VIEW
 
-    virtual ~FSMNamedException() {}
+    virtual ~FSMNamedException() noexcept {
+        LOG(TRACE) << __FUNCTION__;
+    }
 
-    /** Returns the stored enum value representing this exception's name
-     * @return the enum value representing this exception's name
+    /** Returns the stored enum value representing this exception's name.
+     * @return The enum value representing this exception's name.
     */
     NamedException getName() const noexcept { return mName_; }
 
 private:
-    NamedException mName_;
+    const NamedException mName_;
 };
 
 

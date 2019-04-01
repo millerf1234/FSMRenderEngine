@@ -47,9 +47,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 
 
-//----------------------------------------------------------------------------------------------------------------------  
-//        Ungrouped  --  Configuration Flags   [These may one day get moved to being set in a config file]
-//----------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------  
+//          Ungrouped  --  Configuration Flags   [These may one day get moved to being set in a config file]
+// ----------------------------------------------------------------------------------------------------------------------
 
 //Logging flag values (This does not list all of them):
 //   NewLineForContainer -------------------------->      1
@@ -64,9 +64,9 @@
 #define ELPP_DEFAULT_LOGGING_FLAGS  1 | 8 | 128 | 2048 | 4096 | 8192  | 16384 
 
 
-//----------------------------------------------------------------------------------------------------------------------  
-//        Option Group 1  -- Freely Modifiable Options
-//----------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------  
+//         Option Group 1  -- Freely Modifiable Options
+// ----------------------------------------------------------------------------------------------------------------------
 
 //Disable logging [Not Recommended]
 ///#define ELPP_DISABLE_LOGS 1
@@ -75,9 +75,9 @@
 ///#define ELPP_NO_LOG_TO_FILE 1
 
 
-//----------------------------------------------------------------------------------------------------------------------  
-//        Option Group 2  -- Unstable Modifiable Options
-//----------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------  
+//          Option Group 2  -- Unstable Modifiable Options
+// ----------------------------------------------------------------------------------------------------------------------
 
 //Define this setting to try out experimental Asynchronous Logging. The EasyLogger++ documentation claims this
 //should work for any environment already supporting std::thread and std::this_thread::sleep_for. This feature
@@ -92,18 +92,23 @@
 
 
 
-//----------------------------------------------------------------------------------------------------------------------  
-//        Option Group 3  -- PROJECT INVARIANTS  [DO NOT MODIFY!]
-//----------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------  
+//          Option Group 3  -- PROJECT INVARIANTS  [DO NOT MODIFY!]
+// ----------------------------------------------------------------------------------------------------------------------
 //Disable verbose logging
 #define ELPP_DISABLE_VERBOSE_LOGS 1
 
+
+//For C++11 and newer projects it is possible to call loggers
+//using variadic arguments a la 'printf()' style
+//  See: https://github.com/zuhd-org/easyloggingpp#printf-like-logging
 //#define ELPP_STL_LOGGING 1
 //#define ELPP_LOG_STD_ARRAY 1  //Must have ELPP_STL_LOGGING defined
 
 
 
-#define ELPP_FEATURE_PERFORMANCE_TRACKING  //Enable performance-tracking logging
+//Enable performance-tracking logging
+#define ELPP_FEATURE_PERFORMANCE_TRACKING 1
 
 
 

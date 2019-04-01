@@ -41,6 +41,10 @@ FSMRenderEnvironment::FSMRenderEnvironment(bool dummyParameter) {
     LOG(TRACE) << __FUNCTION__;
     (void)dummyParameter;//We don't care about the parameter, it exists just to identify this constructor  
     mGLFWIsInit_ = false;
+    mContextWindow_ = nullptr;
+    mJoystickInputPrinter_ = std::make_unique<JoystickStatePrinter>();
+    mContextResetAwareness_ = true; 
+    mJoystickStatePrintingEnabled_ = false;
 }
 
 FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
@@ -86,6 +90,10 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
 
     LOG(INFO) << "  [step 4]     GLAD LOADED OPENGL SUCCESFULLY !~!!!  OMG ALMOST THERE !!!!\n";
 
+    LOG(INFO) << "\n  [step 5]     Configuring Engine from Loaded Settings\n";
+
+    mContextResetAwareness_ = checkForContextResetStrategy();
+
 }
 
 
@@ -107,6 +115,14 @@ FSMRenderEnvironment::~FSMRenderEnvironment() {
 void FSMRenderEnvironment::handleEvents() {
 	// Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
 	glfwPollEvents();
+     
+     
+    //If context aware, then need to check status
+    if (mContextResetAwareness_)
+        checkForContextReset();
+     
+    //Do Joystick-printer Debug logic
+    doJoystickPrinterLoopLogic();
 
 	//Check queues?
 	if (checkMonitorEventQueues()) {
@@ -202,13 +218,13 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
 		FSMMonitor primary = mMonitors_.front().get()->get();
 		LOG(INFO) << "\tNumber of VideoModes: " << primary.getVideoModes().size();
 		int counter = 0;
-		for (FSMVideoMode v : primary.getVideoModes()) {
-			LOG(INFO) << "VideoMode " << counter++;
-			LOG(INFO) << "\tRefresh Rate: " << v.getRefreshRate();
-			LOG(INFO) << "\tPixels X: " << v.getWidth() << ",    Pixels Y: " << v.getHeight();
-			LOG(INFO) << "\tDPI X: " << v.getDPI_Width() << ",    DPI Y: " << v.getDPI_Height();
-			LOG(INFO) << "\tDPI: " << v.getDPI_WidthHeightAverage() << "\n";
-		}
+		//for (FSMVideoMode v : primary.getVideoModes()) {
+		//	LOG(INFO) << "VideoMode " << counter++;
+		//	LOG(INFO) << "\tRefresh Rate: " << v.getRefreshRate();
+		//	LOG(INFO) << "\tPixels X: " << v.getWidth() << ",    Pixels Y: " << v.getHeight();
+		//	LOG(INFO) << "\tDPI X: " << v.getDPI_Width() << ",    DPI Y: " << v.getDPI_Height();
+		//	LOG(INFO) << "\tDPI: " << v.getDPI_WidthHeightAverage() << "\n";
+		//}
 	}
 	else {
 		LOG(INFO) << "\nUh-oh! mMonitors_ is as empty as can be!\n\n";
@@ -300,14 +316,15 @@ std::string FSMRenderEnvironment::getGLFWRuntimeVersionString() const noexcept {
 
 
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////     IMPLEMENTATION FUNCTIONS     /////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 
-//-----------------------------------------------------------------------------------------
-//                                     STEP 1 
-//-----------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------
+//                                       STEP 1 
+// -----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::loadSettings() {
     LOG(TRACE) << __FUNCTION__;
 
@@ -390,9 +407,9 @@ bool FSMRenderEnvironment::loadSettings() {
 
 
 
-//--------------
-//  STEP 1.1
-//--------------
+// --------------  
+//    STEP 1.1     
+// --------------
 //Parameter 'ec' will be set to any errors which may be reported by the OS when calling functions from 'std::filesystem'
 bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
     LOG(TRACE) << __FUNCTION__;
@@ -418,9 +435,9 @@ bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
 }
 
 
-//--------------
-//  STEP 1.2  [OPTION A: File Exists]
-//--------------
+// --------------
+//    STEP 1.2  [OPTION A: File Exists]
+// --------------
 void FSMRenderEnvironment::parseSettingsFile() {
     LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\nSettings file found! Parsing now...\n";
@@ -429,9 +446,9 @@ void FSMRenderEnvironment::parseSettingsFile() {
 
 
 
-//--------------
-//  STEP 1.2  [OPTION B: FILE DOES NOT EXIST]  (yet)
-//--------------
+// --------------
+//   STEP 1.2  [OPTION B: FILE DOES NOT EXIST]  (yet)
+// --------------
 bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
     LOG(TRACE) << __FUNCTION__;
     /*
@@ -528,9 +545,9 @@ bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
 }
 
 
-//-----------------------------------------------------------------------------------------
-//                                     STEP 2 
-//-----------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------
+//                                      STEP 2 
+// -----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::initializeGLFW() {
     LOG(TRACE) << __FUNCTION__;
     //Step 2.1
@@ -549,9 +566,9 @@ bool FSMRenderEnvironment::initializeGLFW() {
     return success;
 }
 
-//--------------
-//  STEP 2.1
-//--------------
+// --------------
+//    STEP 2.1
+// --------------
 //This function must be called before glfwInit() is called
 void FSMRenderEnvironment::setGlobalGLFWInvariants() noexcept {
     LOG(TRACE) << __FUNCTION__;
@@ -562,9 +579,9 @@ void FSMRenderEnvironment::setGlobalGLFWInvariants() noexcept {
     //OpenGL it hardly feels worth doing more than just mentioning them here...
 }
 
-//--------------
-//  STEP 2.2
-//--------------
+// --------------
+//    STEP 2.2
+// --------------
 void FSMRenderEnvironment::setPreGLFWInitCallbacks() {
     LOG(TRACE) << __FUNCTION__;
     //The callback initializer is a singleton object. We can get a pointer to it though to 
@@ -574,9 +591,9 @@ void FSMRenderEnvironment::setPreGLFWInitCallbacks() {
     cbInitializer->setGLFWErrorCallback();
 }
 
-//--------------
-//  STEP 2.3
-//--------------
+// --------------
+//    STEP 2.3
+// --------------
 bool FSMRenderEnvironment::callTheGLFWInitFunc() {
     LOG(TRACE) << __FUNCTION__;
     //This is it... The function to initialize GLFW. Before this function is called, be
@@ -593,9 +610,9 @@ bool FSMRenderEnvironment::callTheGLFWInitFunc() {
     }
 }
 
-//--------------
-//  STEP 2.4
-//--------------
+// --------------
+//    STEP 2.4
+// --------------
 void FSMRenderEnvironment::setPostGLFWInitCallbacks() {
     LOG(TRACE) << __FUNCTION__;
     //We are going to use our friend the cbInitializer to set some more callbacks
@@ -607,9 +624,9 @@ void FSMRenderEnvironment::setPostGLFWInitCallbacks() {
 
 
 
-//-----------------------------------------------------------------------------------------
-//                                     STEP 3 
-//-----------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------
+//                                      STEP 3 
+// -----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::createContext() {
     LOG(TRACE) << __FUNCTION__;
     mContextWindow_ = nullptr; //Since this variable is just a temporary handle until I write a 
@@ -633,9 +650,9 @@ bool FSMRenderEnvironment::createContext() {
     return success;
 }
 
-//--------------
-//  STEP 3.1
-//--------------
+// --------------
+//    STEP 3.1
+// --------------
 void FSMRenderEnvironment::specifyContextHints() noexcept {
     LOG(TRACE) << __FUNCTION__;
     //for now just do this:
@@ -651,9 +668,9 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
 
 }
 
-//--------------
-//  STEP 3.2
-//--------------
+// --------------
+//    STEP 3.2
+// --------------
 void FSMRenderEnvironment::retrieveConnectedMonitors() {
     LOG(TRACE) << __FUNCTION__;
    LOG(INFO) << "\nHere is where a list of already connected monitors would\n"
@@ -665,9 +682,9 @@ void FSMRenderEnvironment::retrieveConnectedMonitors() {
     return;
 }
 
-//--------------
-//  STEP 3.3
-//--------------
+// --------------
+//    STEP 3.3
+// --------------
 bool FSMRenderEnvironment::createContextAndWindow() {
     LOG(TRACE) << __FUNCTION__;
     mContextWindow_ = glfwCreateWindow(width, height, "My Title", NULL, NULL);
@@ -680,9 +697,9 @@ bool FSMRenderEnvironment::createContextAndWindow() {
     return (mContextWindow_ != nullptr);
 }
 
-//--------------
-//  STEP 3.4
-//--------------
+// --------------
+//    STEP 3.4
+// --------------
 void FSMRenderEnvironment::setContextWindowCallbacks() {
     LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\n\n      WIndow Context Callbacks would be specified right here"
@@ -691,9 +708,9 @@ void FSMRenderEnvironment::setContextWindowCallbacks() {
 
 
 
-//-----------------------------------------------------------------------------------------
-//                                     STEP 4 
-//-----------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------
+//                                      STEP 4 
+// -----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::setupGLAD() {
     LOG(TRACE) << __FUNCTION__;
     //Step 4.1
@@ -707,9 +724,9 @@ bool FSMRenderEnvironment::setupGLAD() {
 }
 
 
-//--------------
-//  STEP 4.1
-//--------------
+// --------------
+//    STEP 4.1    
+// --------------
 void FSMRenderEnvironment::specifyDebugCallbacksWithGLAD() {
     LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\n\n    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!\n\n\n\n";
@@ -722,10 +739,10 @@ void FSMRenderEnvironment::specifyDebugCallbacksWithGLAD() {
 //*/
 }
 
-//--------------
-//  STEP 4.2
-//--------------
-bool FSMRenderEnvironment::loadOpenGLFunctions() {
+// --------------
+//    STEP 4.2
+// --------------
+bool FSMRenderEnvironment::loadOpenGLFunctions() noexcept {
     LOG(TRACE) << __FUNCTION__;
     //Load OpenGL functions once window context has been set
     LOG(INFO) << "!Loading Graphics Language Functions...\n";
@@ -738,9 +755,50 @@ bool FSMRenderEnvironment::loadOpenGLFunctions() {
 
 
 //This was moved to be step 3.2
-////-----------------------------------------------------------------------------------------
-////                                     STEP 5 
-////-----------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
+//                                     STEP 5 
+//-----------------------------------------------------------------------------------------
+bool FSMRenderEnvironment::checkForContextResetStrategy() {
+    LOG(TRACE) << __FUNCTION__;
+   
+    bool contextResetAwarenessEnabled;
+          
+    //See also: https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGet.xml
+    //          https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetGraphicsResetStatus.xhtml 
+
+    int resetStrategy = 0;    
+    glGetIntegerv(GL_RESET_NOTIFICATION_STRATEGY, &resetStrategy);
+         
+    std::ostringstream resetStrategyReport;
+    resetStrategyReport << "\n\n           [CONTEXT RESET STRATEGY NOTIFICATION]\n"
+        << "Reset Strategy is................0x" << resetStrategy << "\n";
+    if (resetStrategy == GL_NO_RESET_NOTIFICATION) {
+        contextResetAwarenessEnabled = false;
+        resetStrategyReport << "This corresponds to strategy.....NO_RESET_NOTIFICATION\n";
+        resetStrategyReport << "\nALERT! Context will not attempt to reset and recover from\n"
+            "any issues with the GL context\n"
+            "  In other words:      ( GPU Crash ==> Application Crash )\n";
+    }
+    else if (resetStrategy == GL_LOSE_CONTEXT_ON_RESET) {
+        contextResetAwarenessEnabled = true;
+        resetStrategyReport << "This corresponds to strategy.....LOSE_CONTEXT_ON_RESET\n";
+        resetStrategyReport << "\nThis Application is actively context-aware and will attempt\n"
+            "to do a full self-recovery in the event of any context-loss\n"
+            "educing event.\n";
+    }
+    else {
+        contextResetAwarenessEnabled = false;
+        resetStrategyReport << "\nWhoops! This is an unexpected return value for this function call!\n";
+        LOG(ERROR) << "\nContext reported unexpected/invalid context reset strategy\n";
+    }
+
+    std::string resetStrat = resetStrategyReport.str();
+    LOG(INFO) << resetStrat;
+    LOG(DEBUG) << "\n[DEBUG]\n" << resetStrat << "\nDEBUG\n";
+
+
+    return contextResetAwarenessEnabled;
+}
 //void FSMRenderEnvironment::retrieveConnectedMonitors() {
 //
 //   LOG(INFO) << "\nHere is where a list of already connected monitors would\n"
@@ -751,3 +809,143 @@ bool FSMRenderEnvironment::loadOpenGLFunctions() {
 //        
 //    return;
 //}
+
+
+
+
+
+// -------------------------------------------------------------------------------------------------
+//                                   Loop Logic Functions
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+void FSMRenderEnvironment::doJoystickPrinterLoopLogic() noexcept {
+     LOG_EVERY_N(60, TRACE) << __FUNCTION__;
+
+     //If the pointer for some reason got deleted
+     if (!mJoystickInputPrinter_)
+         mJoystickInputPrinter_ = std::make_unique<JoystickStatePrinter>();
+
+     GLFWwindow* mainRenderWindow = mContextWindow_;
+
+     static unsigned long long iterationsSinceLastJoystickStatePrintingLastModified = 0ull;
+     iterationsSinceLastJoystickStatePrintingLastModified++;
+	
+	//Perform Input Checking
+	if (iterationsSinceLastJoystickStatePrintingLastModified > 9ull) { //Have a slight delay between when inputs are accepted
+
+		if ((glfwGetKey(mainRenderWindow, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) ||
+			(glfwGetKey(mainRenderWindow, GLFW_KEY_RIGHT_CONTROL) == GLFW_PRESS)) {
+
+			if (glfwGetKey(mainRenderWindow, GLFW_KEY_J) == GLFW_PRESS) {
+				mJoystickStatePrintingEnabled_ = !mJoystickStatePrintingEnabled_;
+                iterationsSinceLastJoystickStatePrintingLastModified = 0ull;
+                std::ostringstream msg;
+                msg << "Joystick Output Reporting Is Now ";
+                if (mJoystickStatePrintingEnabled_)
+                    msg << "Enabled\n";     
+                else
+                    msg << "Disabled\n";
+                LOG(INFO) << msg.str();
+			}
+
+			if (mJoystickStatePrintingEnabled_) {
+                //Check if need to reset stored default state for joystick (this would be necessary if
+                //buttons were held down when stick connected)
+				if (glfwGetKey(mainRenderWindow, GLFW_KEY_K) == GLFW_PRESS) {
+                    std::ostringstream msg;
+                    msg << "Reacquiring Default State for Joystick " << mJoystickInputPrinter_->id() << "\n";
+                    LOG(INFO) << msg.str();
+					mJoystickInputPrinter_->reaquireDefaultState();
+					iterationsSinceLastJoystickStatePrintingLastModified = 0ull;
+				}
+
+				//Toggle Message Output Mode
+				if (glfwGetKey(mainRenderWindow, GLFW_KEY_H)) {
+					mJoystickInputPrinter_->toggleMessageOutputMode();
+                    std::ostringstream msg;
+                    msg << "\nJoystick Output Mode Set To: ";
+                    if (mJoystickInputPrinter_->isUsingEchoInputPrintMode())
+						msg <<  "ECHO INPUT\n";
+					else
+						msg << "ECHO FULL STATE\n";
+                    LOG(INFO) << msg.str();
+					iterationsSinceLastJoystickStatePrintingLastModified = 0ull;
+				}
+
+                if (glfwGetKey(mainRenderWindow, GLFW_KEY_I)) {
+                    LOG(INFO) << mJoystickInputPrinter_->getJoystickInfo();
+                }
+                   
+
+				if (glfwGetKey(mainRenderWindow, GLFW_KEY_SEMICOLON)) {
+					//increment joystick ID to poll
+					mJoystickInputPrinter_->nextJoystick();
+                    std::ostringstream msg;
+                    msg << "\nNow reporting input from Joystick ";
+                    msg << mJoystickInputPrinter_->id();
+                    LOG(INFO) << msg.str();
+					iterationsSinceLastJoystickStatePrintingLastModified = 0ull;
+				}
+
+				if (glfwGetKey(mainRenderWindow, GLFW_KEY_APOSTROPHE)) {
+					//decrement joystick ID to poll
+					mJoystickInputPrinter_->previousJoystick();
+                    std::ostringstream msg;
+                    msg << "\nNow reporting input from Joystick ";
+                    msg << mJoystickInputPrinter_->id();
+                    LOG(INFO) << msg.str();
+					iterationsSinceLastJoystickStatePrintingLastModified = 0ull;
+				}
+			}
+		}
+	}
+
+	//Perform logic
+	if (mJoystickStatePrintingEnabled_) {
+		mJoystickInputPrinter_->printState();
+	}
+
+
+}
+
+
+bool FSMRenderEnvironment::checkForContextReset() {
+    LOG_EVERY_N(60, TRACE) << __FUNCTION__;
+     
+
+
+    bool resetDetected = false;
+
+	GLenum contextResetStatus = glGetGraphicsResetStatus();
+    if (contextResetStatus != GL_NO_ERROR) {
+        std::ostringstream resetStatusMsg;
+        switch (contextResetStatus) {
+        //case GL_NO_ERROR:
+        //    fprintf(MSGLOG, "\nglGetGraphicsResetStatus() returned enum GL_NO_ERROR!\n");
+        //    resetDetected = false;
+        //    break;
+        case GL_GUILTY_CONTEXT_RESET:
+            resetStatusMsg << "\nglGetGraphicsResetStatus() returned enum GL_GUILTY_CONTEXT_RESET!\nThis means this program caused the issue!\n";
+            resetDetected = true;
+            break;
+        case GL_INNOCENT_CONTEXT_RESET:
+            resetStatusMsg << "\nglGetGraphicsResetStatus() returned enum GL_INNOCENT_CONTEXT_RESET!\nThis means something else caused the reset!\n";
+            resetDetected = true;
+            break;
+        case GL_UNKNOWN_CONTEXT_RESET:
+            resetStatusMsg << "\nglGetGraphicsResetStatus() returned enum GL_UNKNOWN_CONTEXT_RESET!\n"
+                "This means it is not known what happened or why, but what happened was bad!!!\n";
+            resetDetected = true;
+            break;
+        default:
+            resetStatusMsg << "\nglGetGraphicsResetStatus() returned unexpected enum (i.e. DEFAULT CASE WAS CHOSEN FOR SOME REASON!)\n";
+            resetDetected = false;
+            break;
+        }
+        LOG(INFO) << resetStatusMsg.str();
+        LOG(ERROR) << resetStatusMsg.str();
+    }
+
+	return resetDetected;
+ }
