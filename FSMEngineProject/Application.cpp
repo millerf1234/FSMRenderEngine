@@ -95,7 +95,7 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
 
 
     //Test GLFW compile version reporting
-    int compileVersionMajor = 0;
+    /*int compileVersionMajor = 0;
     int compileVersionMinor = 0;
     int compileVersionRevision = 0;
     mRenderEnvironment_->getGLFWCompiletimeVersion(compileVersionMajor, compileVersionMinor, compileVersionRevision);
@@ -119,7 +119,7 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
         << ((runWIthOpenGLInCompatabilityMode) ?  "Compatibility" : "Core" ) << std::endl;
 
     LOG(INFO) << "OpenGL version constructed by class: \'" << mRenderEnvironment_->getGLVersionString() << "\n\n" << std::endl;
-
+    */
     
 
     LOG(INFO) << "\n       Applications Constructor has completed running!\n";
@@ -159,7 +159,8 @@ bool Application::setupMessageLogs(int argc, char** argv) {
                 "the resources necessary to allow for full message-logging functionality!\n");
 #ifdef FECLFINAE
             //I wrote this message late at night and I have no idea what I am talking about here
-            LOG(INFO) << "\n     SYSTEM REPORTED ISSUE        \n"
+            std::ostringstream feclfinae_msg;
+            feclfinae_msg << "\n     SYSTEM REPORTED ISSUE        \n"
                 << "Unable to provide full logging functionality due to an issue which\n"
                 << "occurred while communicating with the OS!\n"
                 << "\n     SOLUTION \n"
@@ -176,8 +177,9 @@ bool Application::setupMessageLogs(int argc, char** argv) {
                 << "to allow for continued program execution!\n\n"
                 << "         [Be advised that the Application may behave strangely]\n\n"
                 << "\n[Press Enter To acknowledge that you have read the above text]  ";
+            LOG(INFO) << feclfinae_msg.str();
             std::cin.get();
-            LOG(INFO) << "\nRight then... On with this whole initialization business..." << std::endl;
+            LOG(INFO) << "\nRight then... On with this whole initialization business...";
             return true;
 #else //Uh-oh 
             //Else if 'FECLFINAE' is not defined, our best course of action is to throw an exception

@@ -134,7 +134,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -149,15 +149,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AsciiSterilizer.h" />
     <ClInclude Include="AsciiTextFile.h" />
     <ClInclude Include="AsciiTextFileImpl.h" />
     <ClInclude Include="BuildSettings.h" />
+    <ClInclude Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.h" />
     <ClInclude Include="DefaultValuesForFSMEngine.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FInitSetting.h" />
     <ClInclude Include="FSMCallbackInitializer.h" />
     <ClInclude Include="EasyLogging_BuildConfig.h" />
     <ClInclude Include="FSMEngine.h" />
+    <ClInclude Include="FSMEngineSettings.h" />
     <ClInclude Include="FSMErrorCallback.h" />
     <ClInclude Include="FSMException.h" />
     <ClInclude Include="FSMJoystickCommon.h" />
@@ -168,11 +171,13 @@
     <ClInclude Include="FSMMonitorEventCallback.h" />
     <ClInclude Include="FSMRenderEnvironment.h" />
     <ClInclude Include="GetSystemDateTime.h" />
+    <ClInclude Include="GL_Context_Debug_Message_Callback_Function.h" />
     <ClInclude Include="GraphicsLanguage.h" />
     <ClInclude Include="GraphicsLanguageFramework.h" />
     <ClInclude Include="JoystickPort.h" />
     <ClInclude Include="JoystickStatePrinter.h" />
     <ClInclude Include="LoadableAssetCollection.h" />
+    <ClInclude Include="reportDetailsOnGLImplementation.h" />
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h" />
     <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -442,6 +447,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AsciiSterilizer.cpp" />
     <ClCompile Include="AsciiTextFile.cpp" />
     <ClCompile Include="AsciiTextFileImpl.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
@@ -455,6 +461,7 @@
     <ClCompile Include="JoystickPort.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.cpp" />
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc" />
     <ClCompile Include="ThirdParty\glad\debug\glad_debug.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

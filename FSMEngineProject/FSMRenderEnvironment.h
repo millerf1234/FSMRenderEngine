@@ -134,13 +134,13 @@ public:
 
 
 private:
-
-   
-    
+     
+     
+     
     bool mGLFWIsInit_;
     struct GLFWwindow* mContextWindow_;
 
-	std::list<std::unique_ptr<FSMEngineInternal::FSMMonitorHandle>> mMonitors_;
+    std::list<FSMEngineInternal::FSMMonitorHandle*> mMonitors_;
 
      //For Joystick Debug
     bool mJoystickStatePrintingEnabled_;
@@ -173,33 +173,36 @@ private:
     bool locateSettingsFile(std::error_code& ec);          //step 1.1
     bool generateSettingsFile(std::error_code& ec);        //step 1.1b [Only if needed] 
     void parseSettingsFile();                              //step 1.2 
-   
-   
-
-
-    //STEP 2
+                                                                           
+                                                                            
+                                                                           
+    //STEP 2                                                                
     bool initializeGLFW(); 
-    void setGlobalGLFWInvariants() noexcept;  //step 2.1
-    void setPreGLFWInitCallbacks();           //step 2.2
-    bool callTheGLFWInitFunc();               //step 2.3
-    void setPostGLFWInitCallbacks();          //step 2.4
+    void setGlobalGLFWInvariants() noexcept;       //step 2.1
+    void setPreGLFWInitCallbacks();                //step 2.2
+    bool callTheGLFWInitFunc();                    //step 2.3
+    void setPostGLFWInitCallbacks();               //step 2.4
 
     //STEP 3
     bool createContext();
-    void specifyContextHints() noexcept;      //step 3.1
-    void retrieveConnectedMonitors();         //step 3.2
-    bool createContextAndWindow();            //step 3.3
-    void setContextWindowCallbacks();         //step 3.4
+    void specifyContextHints() noexcept;           //step 3.1
+    int retrieveConnectedMonitors() noexcept;      //step 3.2
+    bool createContextAndWindow();                 //step 3.3
+    void setContextWindowCallbacks();              //step 3.4
 
 
     //STEP 4
     bool setupGLAD();
-    void specifyDebugCallbacksWithGLAD();     //step 4.1
-    bool loadOpenGLFunctions() noexcept;      //step 4.2
+    void specifyDebugCallbacksWithGLAD() noexcept; //step 4.1 [Debug Only]
+    bool loadOpenGLFunctions() noexcept;           //step 4.2
+    void setInitialContextState() noexcept ;       //Step 4.3
 
     
     //STEP 5
     bool checkForContextResetStrategy();
+
+    void reportGLImplementationDetails() const noexcept;     //Optional and not very useful
+     
     //void retrieveConnectedMonitors();
 
 

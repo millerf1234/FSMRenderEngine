@@ -196,6 +196,9 @@
 //    debugging unless absolutely necessary. 
 #define FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 1
 
+
+
+
 // ============================================================================================================
 //  ( END SECTION 1 )
 // ============================================================================================================
@@ -211,7 +214,11 @@
 //  ( SECTION 2 )  GLAD Behavior Overrides 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/// /*                                              Choose at most one of the following two 
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    Broken -- Do Not Use    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//xxxxxxxxxxxxxxxxxxx   Instead Control Glad Included Version Using MSVC Build Settings and the USE_DEBUG_ macro   xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+/// /*                                              Choose at most one of the following two                                         
 ///  +-------------------------------------------------------------------------------------------------------------------------------------+  
 ///
 ///  // MACRO:   FORCE_GLAD_VERSION_DEBUG_                                                                                                 |
@@ -222,7 +229,7 @@
 ///  //used to load the graphics-language. Leaving both of the glad-version-override macros undefined will result in                       |
 ///  //the glad version being determined from the USE_DEBUG_ macro.                                                                        |   */
 ///  //                                                                                                                                    
-///  //#define FORCE_GLAD_VERSION_DEBUG_ 1                                                                                     
+///#define FORCE_GLAD_VERSION_DEBUG_ 1                                                                                     
 ///
 ///  //                                                                                                                                    |
 ///  // MACRO:   FORCE_GLAD_VERSION_RELEASE_                                                                                               |                                          
@@ -236,10 +243,9 @@
 ///  //#define FORCE_GLAD_VERSION_RELEASE_ 1
 ///
 /// /*+-------------------------------------------------------------------------------------------------------------------------------------+   */
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-// These will work still (probably)
-/*   todo     
-   None of these next 3 settings have been implemented.*/
+
 
 // MACRO:    ENABLE_BASIC_PRE_GLFUNCTION_CALLBACK_MESSAGE_
 // Dependencies: 
@@ -251,7 +257,7 @@
 // This macro by itself will not enabled profiling of OpenGL functions. This macro and the 
 // ENABLE_BASIC_POST_GLFUNCTION_CALLBACK_MESSAGE_ may be used simultaneously. Note that a compiler warning
 // will be triggered if this setting is enabled while glad is using its RELEASE version. 
-//#define ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_ 1
+#define ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_ 1
 
 
 // MACRO:    ENABLE_BASIC_POST_GLFUNCTION_CALLBACK_MESSAGE_
@@ -265,9 +271,10 @@
 // profiling of OpenGL functions. This macro and the ENABLE_BASIC_PRE_GLFUNCTION_CALLBACK_MESSAGE_ may be used
 // simultaneously.  Note that a compiler warning will be triggered if this setting is enabled while glad is
 // using its RELEASE version. 
-//#define ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_ 1
+#define ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_ 1
 
 
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    NOT YET IMPLEMENTED    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // MACRO:      ENABLE_GLFUNCTION_PROFILING_
 // Dependencies:
 //    -  GLAD must also be the DEBUG version. Turning on this setting while GLAD is not 
@@ -279,6 +286,7 @@
 // comes built into the EasyLogging++ 3rd-party library. The profiler is supposed to be thread-safe, but 
 // this has not been yet tested by me.
 //#define ENABLE_GLFUNCTION_PROFILING_ 1
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 /// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///  ( END SECTION 2 )   
@@ -543,6 +551,8 @@
 //want to use the trace log... Actually wait I have an idea... See the macro after this one.
 #define ENABLE_TRACE_LOG 1
 
+
+
 /*  //UPDATE: REMOVED THIS OPTION!
 //Macro:  TRACE_LOG_IGNORE_ALL_PASSED_MESSAGES                                     
 // Dependencies: 
@@ -583,5 +593,8 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  ( END SECTION 4 )   
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
 
 #endif //BUILD_SETTINGS_H_

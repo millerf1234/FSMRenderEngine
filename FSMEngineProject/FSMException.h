@@ -110,7 +110,7 @@ public:
         @param message The exception message.
     */
     FSMException(std::string_view message) noexcept : mMessage_(message) {
-                LOG(TRACE) << __FUNCTION__;
+        LOG(TRACE) << __FUNCTION__;
     }
 #else 
     /** Constructor (C strings).
@@ -157,16 +157,36 @@ protected:
 
 class FSMNamedException final : public FSMException {
 public:
-    enum class NamedException { NO_GL_DRIVER };
+    enum class NamedException { NO_GL_DRIVER, INVALID_ASCII_SEQ, };
 
 #ifdef CONSTRUCT_FROM_STRING_VIEW
     /** Constructor (String type)
      *  @param name    The name of this named exception
      *  @param message The exception message.
     */
-    FSMNamedException(NamedException name, std::string_view message) noexcept 
+    FSMNamedException(NamedException name, std::string_view message) noexcept
         : FSMException(message), mName_(name) {
         LOG(TRACE) << __FUNCTION__;
+        std::string exceptionName;
+        switch (name) {
+        case NamedException::NO_GL_DRIVER:
+            exceptionName = "NO_GL_DRIVER";
+            break;
+        case NamedException::INVALID_ASCII_SEQ:
+            exceptionName = "INVALID_ASCII_SEQ";
+            break;
+        default:
+            exceptionName = "DEFAULT_CASE_IN_SWITCH_STATEMENT";
+            LOG(WARNING) << "\nWARNING! DEFAULT CASE WAS CHOSEN IN FSMNamedException's CONSTRUCTOR!\n";
+            break;
+        }
+#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
+        LOG(WARNING) <<  exceptionName;
+#endif // LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
+#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
+        LOG(ERROR) <<  exceptionName;
+#endif //LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
+       
     }
 #else 
     /** Constructor (C strings).
@@ -179,6 +199,25 @@ public:
     explicit FSMNamedException(NamedException name, const char* message) noexcept :
         FSMException(message), mName_(name) { //Let FSMException's constructor handle the potential nullptr 'message'
         LOG(TRACE) << __FUNCTION__;   
+         std::string exceptionName;
+        switch (name) {
+        case NamedException::NO_GL_DRIVER:
+            exceptionName = "NO_GL_DRIVER";
+            break;
+        case NamedException::INVALID_ASCII_SEQ:
+            exceptionName = "INVALID_ASCII_SEQ";
+            break;
+        default:
+            exceptionName = "DEFAULT_CASE_IN_SWITCH_STATEMENT";
+            LOG(WARNING) << "\nWARNING! DEFAULT CASE WAS CHOSEN IN FSMNamedException's CONSTRUCTOR!\n";
+            break;
+        }
+#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
+        LOG(WARNING) <<  exceptionName;
+#endif // LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
+#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
+        LOG(ERROR) <<  exceptionName;
+#endif //LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
     }
 
     /** Constructor (C++ STL strings). 
@@ -193,6 +232,7 @@ public:
 
     virtual ~FSMNamedException() noexcept {
         LOG(TRACE) << __FUNCTION__;
+
     }
 
     /** Returns the stored enum value representing this exception's name.

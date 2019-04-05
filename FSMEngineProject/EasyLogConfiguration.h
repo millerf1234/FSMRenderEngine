@@ -440,12 +440,12 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::ToStandardOutput, "0");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Format, ""
-    //       "[%datetime{%Y-%M-%d|%H:%m:%s.%g}]    '%fbase'  line=%line      %func()");
-        "[%datetime{%Y-%M-%d|%H:%m:%s.%g}]    '%fbase'  line %line               %func()");
+   // "[%datetime{%Y-%M-%d|%H:%m:%s.%g}]  '%fbase'  line %line                 %func()");
+    "[%datetime{%Y-%M-%d|%H:%m:%s.%g}]  '%fbase'  line %line                 [%msg]");
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::Filename, 
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Trace)->string());
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::SubsecondPrecision, "6");  //expects uint
-    logConfigurator.set(el::Level::Trace, el::ConfigurationType::MillisecondsWidth, "6"); //expectts uint, alternative name for SubsecondPrecision?
+    ///logConfigurator.set(el::Level::Trace, el::ConfigurationType::MillisecondsWidth, "6"); //expects uint, [alternative name for SubsecondPrecision?]
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::MaxLogFileSize, "67108864");  //expects input type as size_t  //64 MB
     logConfigurator.set(el::Level::Trace, el::ConfigurationType::LogFlushThreshold, "256"); //expects input type as size_t
   
@@ -463,7 +463,7 @@ bool configureEasyLogger() {
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Enabled, "1");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToFile, "1");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::ToStandardOutput, "1");
-    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "%msg");
+    logConfigurator.set(el::Level::Debug, el::ConfigurationType::Format, "[%level] %msg");
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::Filename,
         EASYLOGPP_CONFIGURATION_INTERNAL::getFilepathToLogForLevel(el::Level::Debug)->string());
     logConfigurator.set(el::Level::Debug, el::ConfigurationType::SubsecondPrecision, "1");

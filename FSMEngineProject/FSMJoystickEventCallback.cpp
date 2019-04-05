@@ -82,9 +82,15 @@ namespace FSMEngineInternal {
 
 
     std::optional<int> getNextAvailableJoystickConnection() {
-        LOG(TRACE) << __FUNCTION__;
+        LOG(TRACE) << __FUNCTION__;  
+#ifdef USE_DEBUG_
+        std::ostringstream debugMsg;
+        debugMsg << "\n  Number of joystick events currently awaiting processing\n    in queue for CONNECTIONS: ";
+        debugMsg << JoystickEventCallbackInternal::recentJoystickConnections().size() << "\n\n";
+        LOG(DEBUG) << debugMsg.str();
+#endif 
         if ((JoystickEventCallbackInternal::recentJoystickConnections().empty())) {
-            return std::nullopt; //return the empty optional
+            return std::nullopt; 
         }
         else {
             std::optional<int> joystickHandle =
@@ -97,6 +103,12 @@ namespace FSMEngineInternal {
 
     std::optional<int> getNextAvailableJoystickDisconnection() {
         LOG(TRACE) << __FUNCTION__;
+#ifdef USE_DEBUG_
+        std::ostringstream debugMsg;
+        debugMsg << "\n  Number of joystick events currently awaiting processing\n    in queue for DISCONNECTIONS: ";
+        debugMsg << JoystickEventCallbackInternal::recentJoystickDisconnections().size() << "\n\n";
+        LOG(DEBUG) << debugMsg.str();
+#endif 
         if ((JoystickEventCallbackInternal::recentJoystickDisconnections().empty())) {
             return std::nullopt;
         }

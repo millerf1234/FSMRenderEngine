@@ -2,11 +2,11 @@
 
 
 
-JoystickPort::JoystickPort() {
+//JoystickPort::JoystickPort() {
+//
+//}
 
-}
 
-
-JoystickPort::~JoystickPort() {
-
-}
+//JoystickPort::~JoystickPort() {
+//
+//}

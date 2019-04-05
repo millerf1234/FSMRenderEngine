@@ -16,6 +16,9 @@
 #include "GraphicsLanguageFramework.h"
 #include "FSMCallbackInitializer.h"
 
+#include "GL_Context_Debug_Message_Callback_Function.h"    //Function for reporting context callback messages
+#include "Pre_And_Post_OpenGL_Function_Call_Callbacks.h"  //glad_debug allows for assignment of two callback functions to
+//                                                         //bookend every call made to each 'gl____()' function.
 //The following includes are needed for checking the event queues
 #include "FSMMonitorEventCallback.h"
 #include "FSMJoystickEventCallback.h"
@@ -93,12 +96,20 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
     LOG(INFO) << "\n  [step 5]     Configuring Engine from Loaded Settings\n";
 
     mContextResetAwareness_ = checkForContextResetStrategy();
+     
+    
+    reportGLImplementationDetails();
 
 }
 
 
 FSMRenderEnvironment::~FSMRenderEnvironment() {
     LOG(TRACE) << __FUNCTION__;
+
+    for (auto monHandleIter = mMonitors_.begin(); monHandleIter != mMonitors_.end(); monHandleIter++) {
+        destroyMonitorHandle(*monHandleIter);
+    }
+
     if (mGLFWIsInit_) {
         glfwTerminate();
         mGLFWIsInit_ = false;
@@ -114,8 +125,13 @@ FSMRenderEnvironment::~FSMRenderEnvironment() {
 
 void FSMRenderEnvironment::handleEvents() {
 	// Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
+    
+    ///LOG(TRACE) << "CALLING glfwPollEvents Function!";
 	glfwPollEvents();
+    ///LOG(TRACE) << "Returned from glfwPollEvents Function!";
      
+    ///std::string msg = std::string("mMonitors_ size is ") + std::to_string(mMonitors_.size());
+    ///LOG_EVERY_N(120, DEBUG) << msg;
      
     //If context aware, then need to check status
     if (mContextResetAwareness_)
@@ -152,8 +168,20 @@ void FSMRenderEnvironment::handleEvents() {
 					LOG(INFO) << "Removing monitor with handle to memory address of " << disconnectedMonitor.value();
 					//std::find_if(mMonitors_.begin(), mMonitors_.end(),
 					//	[&](std::unique_ptr<FSMMonitorHandle> & mon) { return mon->hasHandle(disconnectedMonitor.value()); });
-					mMonitors_.remove_if([&](std::unique_ptr<FSMMonitorHandle> & mon) 
-						{ return mon->hasHandle(disconnectedMonitor.value()); });
+					///mMonitors_.remove_if([&](std::unique_ptr<FSMMonitorHandle> & mon) 
+					///	{ return mon->hasHandle(disconnectedMonitor.value()); });
+                   auto iter = std::find_if(mMonitors_.begin(), mMonitors_.end(),
+                       [&](FSMMonitorHandle* mon) { 
+                           return mon->hasHandle(disconnectedMonitor.value()); 
+                       });
+                   if (iter != mMonitors_.end()) {
+                       destroyMonitorHandle(*iter);
+                       mMonitors_.erase(iter);
+                   }
+                   else {
+                       LOG(WARNING) << "WARNING! FSMEngine encountered a monitor in the Disconnect event queue that\n"
+                           "         failed to match with any of the currently connected monitors!\n";
+                   }
 				}
 				else
 					LOG(DEBUG) << "Uh-oh, the disconnected monitor's handle was a nullptr!\n";
@@ -208,16 +236,19 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
     // Define the viewport dimensions
     glViewport(0, 0, width, height);
 
-	int count = 0;
-	GLFWmonitor** monitorHandles = glfwGetMonitors(&count);
+	//int count = 0;
+	//GLFWmonitor** monitorHandles = glfwGetMonitors(&count);
 
-	for (int i = 0; i < count; i++)
-		mMonitors_.push_back(createMonitorHandle(monitorHandles[i]));
+	//for (int i = 0; i < count; i++)
+	//	mMonitors_.push_back(createMonitorHandle(monitorHandles[i]));
 
 	if (!(mMonitors_.empty())) {
-		FSMMonitor primary = mMonitors_.front().get()->get();
+		FSMMonitor primary = mMonitors_.front()->get();
+        
+        //Is primary deleted by this point?
+         
 		//LOG(INFO) << "\tNumber of VideoModes: " << primary.getVideoModes().size();
-		int counter = 0;
+//		int counter = 0;
 		//for (FSMVideoMode v : primary.getVideoModes()) {
 		//	LOG(INFO) << "VideoMode " << counter++;
 		//	LOG(INFO) << "\tRefresh Rate: " << v.getRefreshRate();
@@ -240,6 +271,7 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
         static uint64_t counter = 0u;
         counter++;
         time += 0.05f;
+        
 		handleEvents();
 
 
@@ -251,14 +283,14 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
             clearColor.r = clearColor.g;
             clearColor.g = clearColor.b;
             clearColor.b = temp;
-            if (std::abs(clearColor.r - clearColor.g) < 0.1f)
-                clearColor.g += 0.5f;
-            else if (std::abs(clearColor.r - clearColor.b) < 0.1f)
-                clearColor.b += 0.5f;
+            if (std::abs(clearColor.r - clearColor.g) < 0.01f)
+                clearColor.g += 0.4f;
+            else if (std::abs(clearColor.r - clearColor.b) < 0.01f)
+                clearColor.b += 0.4f;
             std::ostringstream msg;
             msg << "New Background  {R: " << clearColor.r << ", G: "
                 << clearColor.g << ", B: " << clearColor.b << "}\n\n";
-            LOG(INFO) << msg.str();
+            LOG_EVERY_N(1, INFO) << msg.str();
         }
 
         glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
@@ -660,8 +692,15 @@ bool FSMRenderEnvironment::createContext() {
     specifyContextHints();
 
     //Step 3.2 
-    retrieveConnectedMonitors();
-
+    const int monitorCount = retrieveConnectedMonitors();
+    if (monitorCount < 1) {
+        LOG(ERROR) << "Error! Unable to detect any connected monitors!";
+        return false;
+    }
+    else {
+        std::string msg = std::string("Detected ") + std::to_string(monitorCount) + std::string(" monitors available.");
+            LOG(INFO) << msg;
+    }
     //Step 3.3
     bool success = createContextAndWindow();
 
@@ -691,8 +730,11 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
     glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
     glfwWindowHint(GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET); //Can be set to either GLFW_NO_RESET_NOTIFICATION or GLFW_LOSE_CONTEXT_ON_RESET
-    glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+    //This is stuff like force context to flush contents whenever released.
+    //This application probably won't be releasing it's context all that much though
+    glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR); 
+   
 
 
 }
@@ -700,15 +742,15 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
 // --------------
 //    STEP 3.2
 // --------------
-void FSMRenderEnvironment::retrieveConnectedMonitors() {
-   LOG(TRACE) << __FUNCTION__;
-   LOG(INFO) << "\nHere is where a list of already connected monitors would\n"
-        "be loaded, which then would allow for the\n"
-        "Application to call a function of FSMRenderEnvironment to enumerate\n"
-        "These monitors, which then a user could select an appropriate choice from...\n\n"
-        "  [or something like that]\n\n\n\n\n";
-        
-    return;
+int FSMRenderEnvironment::retrieveConnectedMonitors() noexcept {
+    LOG(TRACE) << __FUNCTION__;
+    int count = 0;
+    GLFWmonitor** monitors = glfwGetMonitors(&count);
+    if (count > 0) {
+        for (int i = 0; i < count; i++) 
+            mMonitors_.push_back(createMonitorHandle(monitors[i]));
+    }
+    return count;
 }
 
 // --------------
@@ -716,7 +758,7 @@ void FSMRenderEnvironment::retrieveConnectedMonitors() {
 // --------------
 bool FSMRenderEnvironment::createContextAndWindow() {
     LOG(TRACE) << __FUNCTION__;
-    mContextWindow_ = glfwCreateWindow(width, height, "My Title", NULL, NULL);
+    mContextWindow_ = glfwCreateWindow(width, height, "My Amazing Application", NULL, NULL);
     if (mContextWindow_) {
         LOG(INFO) << "\nSuccessfully created a current context!\n";
         //Context must be made current here in order to load dependencies [GLAD Step 3]
@@ -742,30 +784,35 @@ void FSMRenderEnvironment::setContextWindowCallbacks() {
 // -----------------------------------------------------------------------------------------
 bool FSMRenderEnvironment::setupGLAD() {
     LOG(TRACE) << __FUNCTION__;
-    //Step 4.1
+
+    //Step 4.1 [Debug Only]
+#ifdef GLAD_DEBUG
     specifyDebugCallbacksWithGLAD();
-    
+#endif
+
     //Step 4.2
     bool success = loadOpenGLFunctions();
 
+
+    //Step 4.3
+    if (success)
+        setInitialContextState();
 
     return success;
 }
 
 
 // --------------
-//    STEP 4.1    
+//    STEP 4.1    [Debug Only]
 // --------------
-void FSMRenderEnvironment::specifyDebugCallbacksWithGLAD() {
+void FSMRenderEnvironment::specifyDebugCallbacksWithGLAD() noexcept {
     LOG(TRACE) << __FUNCTION__;
-    LOG(INFO) << "\n\n    GLAD CALLBACKS WOULD BE SPECIFIED HERE ONCE THINGS ARE FURTHER ALONG!\n\n\n\n";
-    /* example from glad's examples
-//#ifdef GLAD_DEBUG
-//void pre_gl_call(const char *name, void *funcptr, int len_args, ...) {
-//    printf("Calling: %s (%d arguments)\n", name, len_args);
-//}
-//#endif
-//*/
+#ifdef ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_
+        glad_set_pre_callback(customPreGLFuncCallCallback);
+#endif 
+#ifdef ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_
+        glad_set_post_callback(customPostGLFuncCallCallback);
+#endif 
 }
 
 // --------------
@@ -774,7 +821,7 @@ void FSMRenderEnvironment::specifyDebugCallbacksWithGLAD() {
 bool FSMRenderEnvironment::loadOpenGLFunctions() noexcept {
     LOG(TRACE) << __FUNCTION__;
     //Load OpenGL functions once window context has been set
-    LOG(INFO) << "!Loading Graphics Language Functions...\n";
+    LOG(INFO) << "Loading Graphics Language Functions...\n";
     int success = gladLoadGL();
     if (success) 
         return true;
@@ -782,8 +829,30 @@ bool FSMRenderEnvironment::loadOpenGLFunctions() noexcept {
 }
 
 
+// --------------
+//    STEP 4.3
+// --------------
+void FSMRenderEnvironment::setInitialContextState() noexcept {
+    LOG(TRACE) << __FUNCTION__;
 
-//This was moved to be step 3.2
+    LOG(INFO) << "Setting Global Context State To Hardcoded [Soon To Be \"Loaded\"] values";
+
+#ifdef USE_DEBUG_ 
+    glEnable(GL_DEBUG_OUTPUT);
+#ifdef FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+#endif
+#else 
+    glDisable(GL_DEBUG_OUTPUT);
+    glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+#endif 
+
+    LOG(INFO) << "Setting GL Context Callback Function so we can hear all of the context's output";
+    glDebugMessageCallback(printGraphicsContextMessageCallback, nullptr);
+}
+
+
+
 //-----------------------------------------------------------------------------------------
 //                                     STEP 5 
 //-----------------------------------------------------------------------------------------
@@ -828,17 +897,116 @@ bool FSMRenderEnvironment::checkForContextResetStrategy() {
 
     return contextResetAwarenessEnabled;
 }
-//void FSMRenderEnvironment::retrieveConnectedMonitors() {
-//
-//   LOG(INFO) << "\nHere is where a list of already connected monitors would\n"
-//        "be loaded, which then would allow for the\n"
-//        "Application to call a function of FSMRenderEnvironment to enumerate\n"
-//        "These monitors, which then a user could select an appropriate choice from...\n\n"
-//        "  [or something like that]\n\n\n\n\n";
-//        
-//    return;
-//}
 
+void FSMRenderEnvironment::reportGLImplementationDetails() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
+
+    std::ostringstream detailsOnGLImpl;
+    const char* indent = "     ";
+    const char* sectionDelimiter = "~~~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~~~";
+
+
+    detailsOnGLImpl << "\n\n\n"
+        << indent << indent << indent << "           ________________________       \n"
+        << indent << indent << indent << "          /                        \\      \n"
+        << indent << indent << indent << "     --- ( GL Implementation Report ) --- \n"
+        << indent << indent << indent << "          \\________________________/      \n";
+
+
+    //General Information
+    const GLubyte *name     =  glGetString(GL_VENDOR);
+    const GLubyte *renderer =  glGetString(GL_RENDERER);
+    const GLubyte *version  =  glGetString(GL_VERSION);
+
+    detailsOnGLImpl << ""
+        << indent << indent << indent << indent << "Vendor:    " << indent << "   " << name << "\n"
+        << indent << indent << indent << indent << "Renderer:  " << indent << "   " << renderer << "\n"
+        << indent << indent << indent << indent << "Version:   " << indent << "   " << version << "\n";
+
+
+    
+    // ------------
+    //    NOTE:  It turns out there are like a kajillion different combinations of details that can be 
+    //           queried from the implementation. This code here is just going to do some basic
+    //           queries of somewhat arbitrary details, just to get a sense of what to expect from
+    //           calls to functions such as the function glGetInternalformativ()
+    // ------------
+
+
+
+    //Report On Implementations Preferred Internal Format When Dealing With RGB8 images  
+    //(based off code found at:  https://gist.github.com/rdb/83b1d952e3808f100465 )
+    GLint preferredInternalFormat = 0;
+    GLint preferredInternalType = 0;
+
+     detailsOnGLImpl << "\n"
+        << "+------------------------------+\n"
+        << "|   INTERNAL FORMAT:   RGB8    |\n"
+        << indent << "+------------------------------+\n";
+    
+     glGetInternalformativ(GL_TEXTURE_2D, GL_R11F_G11F_B10F, GL_TEXTURE_IMAGE_FORMAT, 1, &preferredInternalFormat);
+     glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_TEXTURE_IMAGE_TYPE, 1, &preferredInternalType);
+
+     detailsOnGLImpl << "Preferred Internal Format [Operation=UPLOAD] 0x" << preferredInternalFormat << "\n";
+     detailsOnGLImpl << "Preferred Internal Type   [Operation=UPLOAD] 0x" << preferredInternalType << "\n";
+
+     LOG(INFO) << detailsOnGLImpl.str();
+     LOG(INFO) << "\nYEAH!\n";
+/*
+    printf("  0x%x / 0x%x  -- upload\n", preferred_format, preferred_type);
+
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_READ_PIXELS_FORMAT, 1, &preferred_format);
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_READ_PIXELS_TYPE, 1, &preferred_type);
+    printf("  0x%x / 0x%x  -- read\n", preferred_format, preferred_type);
+
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_GET_TEXTURE_IMAGE_FORMAT, 1, &preferred_format);
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_GET_TEXTURE_IMAGE_TYPE, 1, &preferred_type);
+    printf("  0x%x / 0x%x  -- get texture\n", preferred_format, preferred_type);
+
+    printf("Preferred formats for GL_RGBA8:\n");
+
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_FORMAT, 1, &preferred_format);
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_TYPE, 1, &preferred_type);
+    printf("  0x%x / 0x%x  -- upload\n", preferred_format, preferred_type);
+
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_READ_PIXELS_FORMAT, 1, &preferred_format);
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_READ_PIXELS_TYPE, 1, &preferred_type);
+    printf("  0x%x / 0x%x  -- read\n", preferred_format, preferred_type);
+
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_GET_TEXTURE_IMAGE_FORMAT, 1, &preferred_format);
+    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_GET_TEXTURE_IMAGE_TYPE, 1, &preferred_type);
+    printf("  0x%x / 0x%x  -- get texture\n", preferred_format, preferred_type);
+
+
+    //The following links to the RefPage for the 
+    //Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetInternalformat.xhtml
+
+
+    detailsOnGLImpl << sectionDelimiter << "\nDetermining Available Page Sizes for Some Common\nInternal Texture Formats. The page size determines\n"
+        << "how much data can be committed/decommitted\nwhen using sparse texturing.\n";
+
+
+    //It is highly unlikely for an implementation to support more than 10 different internal
+    //page sizes, but to be safe let's set an upper limit of 20. 
+    constexpr const GLint MAX_SUPPORTED_PAGE_SIZES = 20; 
+    //Sparse Texturing Page Size -- See OpenGL Super Bible page 511
+    GLint num_available_page_sizes = 0;
+    GLint page_sizes_x[MAX_SUPPORTED_PAGE_SIZES];
+    GLint page_sizes_y[MAX_SUPPORTED_PAGE_SIZES];
+    GLint page_sizes_z[MAX_SUPPORTED_PAGE_SIZES];  
+
+   
+    //Figure Out How Many Page Sizes Are Available For a 2D Texture With Internal Format GL_RGBA8
+
+    glGetInternalformativ(GL_TEXTURE_2D, 
+                          GL_RGBA8,
+                          GL_NUM_VIRTUAL_PAGE_SIZES_ARB,
+                          sizeof(GLint),
+                          &num_available_page_sizes);
+    if (0 == num_available_page_sizes)
+        detailsOnGLImpl << 
+        */
+}
 
 
 

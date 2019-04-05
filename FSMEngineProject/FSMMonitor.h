@@ -1,5 +1,56 @@
 //
 //  
+//      Quick Overview of FSMEngine's Assortment of Monitor Classes
+//
+//           LifeCycle of a Monitor
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                                                                                                                  
+//                                      |             |                          |  
+//                                      |             |                          |                                                          
+//                                      |[Monitor     |[Monitor Event Queues     |            [FSMEngine Collection of
+//     [Cloud of Asynchronous Time]     |  Event      |  Provide Temporary       |               FSMMonitorHandle Objects]
+//                                      |   Callback  |  Storage For Raw Monitor |      
+//                                      |    Function]|   Handle Until Engine is |                 
+//    ,==----------------------------.  |             |     Ready to Process]    |                     +------------------+     
+//   /++/  ~~  ~~  ~~  ~~  ~~  ~~   ++\ |             |      _________           | [FSMMonitorHandle   |                  |
+//  /++/ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++\_/____________|  ,+==\>>\>>\>>\_/        |   is Constructed    | FSMMonitorHandle |            
+//        Monitor Connection Event      _(]=[HANDLE]=>]=(    }--|--|--|}>--->----->----->---->----->---|                  |           
+//  \++\ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++/|\¯¯¯¯¯¯¯¯¯¯¯¯|  `+==/>>/>>/>>/¯\        |    From Queued      |  --------------  |      
+//   \++\ ~~  ~~  ~~  ~~  ~~  ~~    ++/ |             |      ¯¯¯¯¯¯¯¯            |     Monitor Handle] |                  |     
+//    `------------------------------'  | Depending   |   [Connection Queue]     |                     | FSMMonitorHandle |            
+// [Each Event Consists of both a Raw   |  On Event,  |                          |                     |                  |         
+//  glfwMonitor Pointer Which Serves    | Callback fn |                          |                     |  --------------  |                 
+//   as a Unique Handle and an Event    | will push   |   [Disconnection Queue]  |                     |                  |                   
+//    Code for Connect/Disconnect]      | the handle  |   ,;=============,       |                     | FSMMonitorHandle |           
+//    ,==----------------------------.  |  onto...    |  //              \\      |                     |                  |       
+//   /++/  ~~  ~~  ~~  ~~  ~~  ~~   ++\ |             | //     _________  |\     |[Once a matching     |  --------------  |     
+//  /++/ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++\_/____________|//   \_/<</<</<</==+ \    |  handle is found    |                  |      
+//      Monitor Disconnection Event     (]=[HANDLE]=>=(/  ;-<{[--|--|--{-----)<-----<---<---<---<---<--| FSMMonitorHandle |       
+//  \++\ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++/¯\¯¯¯¯¯¯¯¯¯¯¯¯|  /  /¯\<<\<<\<<\====J    | amongst the active  |                  |        
+//   \++\ ~~  ~~  ~~  ~~  ~~  ~~    ++/ |             | (      ¯¯¯¯¯¯¯¯¯         |  FSMMonitorHandles, +------------------+       
+//    `------------------------------'  |             |  \                       |    it is Destroyed]                 
+//                                      |             |   \_                     |                          
+//                                      |             |     ¯`->[FSMMonitorHandle|                  
+//                                      |             |         Is Destroyed]    |                         
+//                                                                    
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//  Description:
+//            Monitor connections and disconnections are processed completely autonomously by the FSMEngine 
+//          [as long as its 'processEvents()' function is  called consistently]. Due to the external hardware nature
+//          of monitors, creation and destruction of their wrapper type is to be done only internally by the engine so 
+//          that each object's lifetime matches a physical connection's lifetime.
+//           
+//            To enable the Application to query details and interact with a connected monitor, the Engine provides the public
+//          type FSMMonitor. This type is meant only to be temporary and thus is only guaranteed to be valid for the duration
+//          of the local stack of a function acquiring it [Basically it is best to always re-acquire these objects from
+//          the engine whenever they are needed]. These types are meant to serve merely as temporary interfaces to a monitor
+//          and assume no ownership over the resource. 
+//
+//             FSMMonitors can be created by a FSMMonitorHandle object using the handle's 'get()' function.
+//                                 
+//
+//                                 
 //
 //  Reference:  https://www.glfw.org/docs/3.3/monitor_guide.html#monitor_scale
 //              https://www.glfw.org/docs/latest/monitor_guide.html

@@ -38,7 +38,7 @@
 //                                            |                             |
 //                                            V                             |
 //           Bottom                    Rest of the Codebase  <--------------+    [Both "GraphicsLanguage.h" and "GraphicsLanguageFramework.h" are intended 
-//                                                                                          to be included whereever they are needed]
+//                                                                                          to be included where-ever they are needed]
 //
 //
 //
@@ -55,6 +55,15 @@
 
 #include "..\..\BuildSettings.h"
 
+//The following ugly mess of statements are preprocessor checks performed to make sure 
+//the settings set in 'BuildSettings.h' are all compatible and that they all take effect.
+
+
+
+
+//---------
+// Glad Configuration Macros Batch 1:  Determine which version of the glad library is to be used
+//---------
 #if defined FORCE_GLAD_VERSION_DEBUG_
   #if defined FORCE_GLAD_VERSION_RELEASE_
     #error "Error: Unable to have both FORCE_GLAD_VERSION_DEBUG_ and FORCE_GLAD_VERSION_RELEASE_ defined at\
@@ -71,10 +80,18 @@
 #else
   #define _FSM_ENGINE_BUILD_SETTING___GLAD_USE_RELEASE___
 #endif //FORCE_GLAD_VERSION_DEBUG_
+//----------
+// End Batch 1
+//----------
 
 
 
-//Load glad based off the specified version
+
+
+
+//----------
+// Glad Configuration Macros Batch 2: Pre-Load glad based off the specified version
+//----------
 #if defined _FSM_ENGINE_BUILD_SETTING___GLAD_USE_DEBUG___
   //Do setup for loading debug glad
   #include "..\glad\debug\glad_debug.h"
@@ -109,7 +126,7 @@ Either make sure the setting ENABLE_GLFUNCTION_PROFILING_ is undefined or switch
     "  {cause}:         Unfortunately, this is a feature that is available only when using glad in its DEBUG configuration.\n"                                    \
     "  {consequences}:  Logging of OpenGL Function calls will be disabled for this current build!\n\n"                                                            \
     "  {how to fix}:       [ To disable this warning, either:\n"                                                                                                  \
-    "                             (i) disable Pre-Function-Call Callback logging; or\n"                                                                           \
+    "                             (i) disable Post-Function-Call Callback logging; or\n"                                                                           \
     "                            (ii) set glad to build in its DEBUG configuration to use this feature ]\n"                                                       \
     "                      (both of these settings are located in the header \"BuildSettings.h\")\n"                                                              \
     "---------------------------------------------------------------------------------------------------------------\n" )
@@ -128,7 +145,37 @@ Either make sure the setting ENABLE_GLFUNCTION_PROFILING_ is undefined or switch
 
 #else 
   #error "ERROR: Must have either debug or release version of glad [Right now there is a bug causing neither option to be available]!!!"
-#endif //_GLAD_USE_DEBUG__
+#endif 
+//--------------
+// End Batch 2
+//--------------
+
+
+
+
+
+//--------------
+// Batch 3 -- HACK (of sorts)
+//        To make sure all GLAD Debug functionality is disabled if 
+//        GLAD was not built in debug mode. If GLAD_DEBUG is not defined, then 
+//        none of any of the types and functions used by glad for implementing
+//        the debug callbacks ever get defined, so 
+//--------------
+#ifndef GLAD_DEBUG
+#ifdef ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_
+#pragma message("Unable to set glFunction Pre-Call Callback Function when building with release version of glad!")
+#undef ENABLE_GLAD_PRE_CALLBACK_LOGGING_MESSAGES_
+#endif 
+
+#ifdef ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_
+#pragma message("Unable to set glFunction Post-Call Callback Function when building with release version of glad!")
+#undef ENABLE_GLAD_POST_CALLBACK_LOGGING_MESSAGES_
+#endif
+#endif //GLAD_DEBUG
+//---------------
+// End Batch 3
+//---------------
+
 
 
 

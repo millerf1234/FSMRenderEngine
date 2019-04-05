@@ -94,9 +94,6 @@
     <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions">
       <UniqueIdentifier>{f1c5edef-8ff1-4497-9b8c-f9af9e1981bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\ErrorCallback">
-      <UniqueIdentifier>{6674a74a-3864-4dc4-81ea-da281ea9c265}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\MonitorEventCallback">
       <UniqueIdentifier>{8a9adf10-95b3-4d25-91b2-35d61f61d280}</UniqueIdentifier>
     </Filter>
@@ -114,9 +111,6 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Monitor">
       <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Monitor\VideoMode">
-      <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FSMEngine\Common">
       <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
@@ -150,6 +144,33 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\Utility\JoystickDebugger">
       <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer">
+      <UniqueIdentifier>{becc8202-35c3-44ca-b088-46f1ad418456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Monitor">
+      <UniqueIdentifier>{7117dfda-ca14-4edc-b48c-a7b757d4f9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Monitor\Implementation">
+      <UniqueIdentifier>{4f574541-733e-4da7-91e3-3b9d6739f1ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Monitor\Implementation\VideoMode">
+      <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks">
+      <UniqueIdentifier>{6674a74a-3864-4dc4-81ea-da281ea9c265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks\GL_Context_Message_Callback">
+      <UniqueIdentifier>{19ac1214-9d68-4a0f-ba5a-9bd0b232676e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks\GLFW_ErrorMessage_Callback">
+      <UniqueIdentifier>{9ca16c12-26f7-4d34-8597-5225c8239e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\GLFunctionCall_Pre_And_Post_Callbacks">
+      <UniqueIdentifier>{3c643362-08f9-41fd-aeff-6e8d3ee8c02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\OpenGL_Support">
+      <UniqueIdentifier>{ff4cef3b-6e81-4570-8c00-92c17e9aba54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +215,6 @@
     </ClInclude>
     <ClInclude Include="EasyLogging_BuildConfig.h">
       <Filter>ThirdParty\easylogging++</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMErrorCallback.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\ErrorCallback</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsLanguage.h">
       <Filter>Header Files\Common</Filter>
@@ -927,12 +945,6 @@
     <ClInclude Include="ThirdParty\glm\vector_relational.hpp">
       <Filter>ThirdParty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="FSMVideoMode.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
-    </ClInclude>
-    <ClInclude Include="VidModeImpl.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
-    </ClInclude>
     <ClInclude Include="FSMJoystickEventCallback.h">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
     </ClInclude>
@@ -978,17 +990,41 @@
     <ClInclude Include="FSMMonitorHandle.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
     </ClInclude>
-    <ClInclude Include="FSMMonitorImpl.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMMonitor.h">
-      <Filter>Source Files\FSMEngine\Types</Filter>
-    </ClInclude>
     <ClInclude Include="FSMJoystickCommon.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClInclude>
     <ClInclude Include="JoystickPort.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMEngineSettings.h">
+      <Filter>Header Files\ConfigurationAndSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="AsciiSterilizer.h">
+      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMMonitor.h">
+      <Filter>Source Files\FSMEngine\Types\Monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="VidModeImpl.h">
+      <Filter>Source Files\FSMEngine\Types\Monitor\Implementation\VideoMode</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMVideoMode.h">
+      <Filter>Source Files\FSMEngine\Types\Monitor</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMMonitorImpl.h">
+      <Filter>Source Files\FSMEngine\Types\Monitor\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_Context_Debug_Message_Callback_Function.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks\GL_Context_Message_Callback</Filter>
+    </ClInclude>
+    <ClInclude Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\GLFunctionCall_Pre_And_Post_Callbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMErrorCallback.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks\GLFW_ErrorMessage_Callback</Filter>
+    </ClInclude>
+    <ClInclude Include="reportDetailsOnGLImplementation.h">
+      <Filter>Source Files\FSMEngine\Utility\OpenGL_Support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1013,15 +1049,6 @@
     <ClCompile Include="ThirdParty\glm\detail\glm.cpp">
       <Filter>ThirdParty\glm\glm\detail</Filter>
     </ClCompile>
-    <ClCompile Include="FSMVideoMode.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
-    </ClCompile>
-    <ClCompile Include="VidModeImpl.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor\VideoMode</Filter>
-    </ClCompile>
-    <ClCompile Include="FSMJoystickEventCallback.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
-    </ClCompile>
     <ClCompile Include="AsciiTextFile.cpp">
       <Filter>Source Files\FSMEngine\Utility\Asset\ASCII</Filter>
     </ClCompile>
@@ -1043,14 +1070,29 @@
     <ClCompile Include="FSMMonitorHandle.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
     </ClCompile>
-    <ClCompile Include="FSMMonitorImpl.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
-    </ClCompile>
-    <ClCompile Include="FSMMonitor.cpp">
-      <Filter>Source Files\FSMEngine\Types</Filter>
-    </ClCompile>
     <ClCompile Include="JoystickPort.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="AsciiSterilizer.cpp">
+      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMJoystickEventCallback.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMVideoMode.cpp">
+      <Filter>Source Files\FSMEngine\Types\Monitor\Implementation\VideoMode</Filter>
+    </ClCompile>
+    <ClCompile Include="VidModeImpl.cpp">
+      <Filter>Source Files\FSMEngine\Types\Monitor\Implementation\VideoMode</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMonitorImpl.cpp">
+      <Filter>Source Files\FSMEngine\Types\Monitor\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMonitor.cpp">
+      <Filter>Source Files\FSMEngine\Types\Monitor\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\GLFunctionCall_Pre_And_Post_Callbacks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -231,6 +231,6 @@ private:
 };
 
 
-} //namespcace FSMJoystickInternal
+} //namespace FSMJoystickInternal
 
 #endif //FSM_JOYSTICK_COMMON_H_
