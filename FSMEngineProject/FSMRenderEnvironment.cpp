@@ -27,6 +27,8 @@
 #include "FSMMonitor.h"
 #include "FSMVideoMode.h"
 
+#include "ReportDetailsOnGLImplementation.h"
+
 using namespace FSMEngineInternal;
 using namespace FSMEngineDefaultInitializationConstants;
 
@@ -42,12 +44,14 @@ using namespace FSMEngineDefaultInitializationConstants;
 //constructor a unique signature, this parameter is not used in any way. 
 FSMRenderEnvironment::FSMRenderEnvironment(bool dummyParameter) {
     LOG(TRACE) << __FUNCTION__;
-    (void)dummyParameter;//We don't care about the parameter, it exists just to identify this constructor  
+    (void)dummyParameter;//We don't care about the parameter, it exists just to 
+    //                   //differentiate this constructor from default public one  
     mGLFWIsInit_ = false;
     mContextWindow_ = nullptr;
-    mJoystickInputPrinter_ = std::make_unique<JoystickStatePrinter>();
     mContextResetAwareness_ = true; 
     mJoystickStatePrintingEnabled_ = false;
+    //Question: Can this next line fail? Should it be moved to be with other parts of constructor which can throw? 
+    mJoystickInputPrinter_ = std::make_unique<JoystickStatePrinter>(); 
 }
 
 FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
@@ -64,7 +68,7 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
 
     //STEP 1
     if (!loadSettings()) {
-        throw FSMException("Unable to load settings from the '.FIni' file!\n");
+        throw FSMException("Unable to load settings!\n");
     } 
 
     //STEP 2
@@ -73,7 +77,9 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
             "Graphics Language Framework [GLFW] Library!\n");
     }
 
-    LOG(INFO) << "\n [step 2]    GLFW Library has initialized! GLFW version: " << getGLFWRuntimeVersionString();
+    std::ostringstream msg;
+    msg << "[step 2]    GLFW Library has initialized! GLFW version: " << getGLFWRuntimeVersionString();
+    LOG(INFO) << msg.str();
 
     //STEP 3
     if (!createContext()) {
@@ -83,7 +89,7 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
         //   "the fact they failed means this whole application is probably going to have to crash!\n\n");
     }
 
-    LOG(INFO) << "\n  [step 3]      Graphics Language Context Created!\n";
+    LOG(INFO) << "  [step 3]      Graphics Language Context Created!\n";
 
  
     //STEP 4
@@ -97,13 +103,13 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
 
     mContextResetAwareness_ = checkForContextResetStrategy();
      
-    
+    //This function is a work in progress at the moment
     reportGLImplementationDetails();
 
 }
 
 
-FSMRenderEnvironment::~FSMRenderEnvironment() {
+FSMRenderEnvironment::~FSMRenderEnvironment() noexcept {
     LOG(TRACE) << __FUNCTION__;
 
     for (auto monHandleIter = mMonitors_.begin(); monHandleIter != mMonitors_.end(); monHandleIter++) {
@@ -278,7 +284,7 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
         // Render
         // Clear the color-buffer
         static glm::vec4 clearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        if (counter % 102 == 0) {
+        if (counter % 180u == 0u) {
             float temp = std::min(1.0f, std::abs(clearColor.r + sin(time + clearColor.r)));
             clearColor.r = clearColor.g;
             clearColor.g = clearColor.b;
@@ -340,21 +346,23 @@ std::string FSMRenderEnvironment::getGLVersionString() const noexcept {
 }
 
 void FSMRenderEnvironment::getGLFWCompiletimeVersion(int& compileVersionMajor,
-    int& compileVersionMinor, int& compileVersionRevision) {
+                                                     int& compileVersionMinor,
+                                                     int& compileVersionRevision) noexcept {
     LOG(TRACE) << __FUNCTION__;
     compileVersionMajor = GLFW_VERSION_MAJOR;
     compileVersionMinor = GLFW_VERSION_MINOR;
     compileVersionRevision = GLFW_VERSION_REVISION;
 }
 
-std::string FSMRenderEnvironment::getGLFWCompiletimeVersionString() {
+std::string FSMRenderEnvironment::getGLFWCompiletimeVersionString() noexcept {
     LOG(TRACE) << __FUNCTION__;
     return std::string(glfwGetVersionString()); //GLFW returns a compile-time generated string
 }
 
 
 void FSMRenderEnvironment::getGLFWRuntimeVersion(int& runtimeVersionMajor,
-    int& runtimeVersionMinor, int& runtimeVersionRevision) const noexcept {
+                                                 int& runtimeVersionMinor,
+                                                 int& runtimeVersionRevision) const noexcept {
     LOG(TRACE) << __FUNCTION__;
     glfwGetVersion(&runtimeVersionMajor, &runtimeVersionMinor, &runtimeVersionRevision);
 }
@@ -474,7 +482,7 @@ bool FSMRenderEnvironment::locateSettingsFile(std::error_code& ec) {
     else {
 #if 1
         return true;
-#elif ready
+#elif defined ReadyToHaveEngineParseFilesForSettings
         //Find out if the 'settings.fini' file exists in this directory
         LOG(DEBUG) << "Looking for '" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << "' file in directory " << currentPath.string() << std::endl;
         std::filesystem::path settingsFile{ currentPath.string() + "\\" + /*DEFAULT_SETTINGS_DIRECTORY_NAME*/ + "\\" + /*SETTINGS_FILE_NAME*/ "UNNAMED" };
@@ -847,8 +855,13 @@ void FSMRenderEnvironment::setInitialContextState() noexcept {
     glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif 
 
-    LOG(INFO) << "Setting GL Context Callback Function so we can hear all of the context's output";
-    glDebugMessageCallback(printGraphicsContextMessageCallback, nullptr);
+    std::ostringstream msg;
+    msg << "Setting GL Context Callback Function so we can hear all of the context's complaints about\n"
+        << "the plethora of deprecated behavior and improper usage we are soon to put it through.\n\n";
+    LOG(INFO) << msg.str();
+    //With 'glDebugMessageCallback()', the second parameter is for a user-assignable void pointer that will be
+    //passed to the callback function each time it is called. We don't use this feature here, so it is left as nullptr
+    glDebugMessageCallback(printGraphicsContextMessageCallback, nullptr); 
 }
 
 
@@ -903,109 +916,14 @@ void FSMRenderEnvironment::reportGLImplementationDetails() const noexcept {
 
     std::ostringstream detailsOnGLImpl;
     const char* indent = "     ";
-    const char* sectionDelimiter = "~~~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~~~";
+    //const char* sectionDelimiter = "~~~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~--~~~~~~~~~~~~";
 
 
-    detailsOnGLImpl << "\n\n\n"
-        << indent << indent << indent << "           ________________________       \n"
-        << indent << indent << indent << "          /                        \\      \n"
-        << indent << indent << indent << "     --- ( GL Implementation Report ) --- \n"
-        << indent << indent << indent << "          \\________________________/      \n";
-
-
-    //General Information
-    const GLubyte *name     =  glGetString(GL_VENDOR);
-    const GLubyte *renderer =  glGetString(GL_RENDERER);
-    const GLubyte *version  =  glGetString(GL_VERSION);
-
-    detailsOnGLImpl << ""
-        << indent << indent << indent << indent << "Vendor:    " << indent << "   " << name << "\n"
-        << indent << indent << indent << indent << "Renderer:  " << indent << "   " << renderer << "\n"
-        << indent << indent << indent << indent << "Version:   " << indent << "   " << version << "\n";
-
-
+    detailsOnGLImpl << "\n\n" << getGLImplentationReportHeader() << "\n";
     
-    // ------------
-    //    NOTE:  It turns out there are like a kajillion different combinations of details that can be 
-    //           queried from the implementation. This code here is just going to do some basic
-    //           queries of somewhat arbitrary details, just to get a sense of what to expect from
-    //           calls to functions such as the function glGetInternalformativ()
-    // ------------
-
-
-
-    //Report On Implementations Preferred Internal Format When Dealing With RGB8 images  
-    //(based off code found at:  https://gist.github.com/rdb/83b1d952e3808f100465 )
-    GLint preferredInternalFormat = 0;
-    GLint preferredInternalType = 0;
-
-     detailsOnGLImpl << "\n"
-        << "+------------------------------+\n"
-        << "|   INTERNAL FORMAT:   RGB8    |\n"
-        << indent << "+------------------------------+\n";
-    
-     glGetInternalformativ(GL_TEXTURE_2D, GL_R11F_G11F_B10F, GL_TEXTURE_IMAGE_FORMAT, 1, &preferredInternalFormat);
-     glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_TEXTURE_IMAGE_TYPE, 1, &preferredInternalType);
-
-     detailsOnGLImpl << "Preferred Internal Format [Operation=UPLOAD] 0x" << preferredInternalFormat << "\n";
-     detailsOnGLImpl << "Preferred Internal Type   [Operation=UPLOAD] 0x" << preferredInternalType << "\n";
-
-     LOG(INFO) << detailsOnGLImpl.str();
-     LOG(INFO) << "\nYEAH!\n";
-/*
-    printf("  0x%x / 0x%x  -- upload\n", preferred_format, preferred_type);
-
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_READ_PIXELS_FORMAT, 1, &preferred_format);
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_READ_PIXELS_TYPE, 1, &preferred_type);
-    printf("  0x%x / 0x%x  -- read\n", preferred_format, preferred_type);
-
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_GET_TEXTURE_IMAGE_FORMAT, 1, &preferred_format);
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGB8, GL_GET_TEXTURE_IMAGE_TYPE, 1, &preferred_type);
-    printf("  0x%x / 0x%x  -- get texture\n", preferred_format, preferred_type);
-
-    printf("Preferred formats for GL_RGBA8:\n");
-
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_FORMAT, 1, &preferred_format);
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_TYPE, 1, &preferred_type);
-    printf("  0x%x / 0x%x  -- upload\n", preferred_format, preferred_type);
-
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_READ_PIXELS_FORMAT, 1, &preferred_format);
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_READ_PIXELS_TYPE, 1, &preferred_type);
-    printf("  0x%x / 0x%x  -- read\n", preferred_format, preferred_type);
-
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_GET_TEXTURE_IMAGE_FORMAT, 1, &preferred_format);
-    glGetInternalformativ(GL_TEXTURE_2D, GL_RGBA8, GL_GET_TEXTURE_IMAGE_TYPE, 1, &preferred_type);
-    printf("  0x%x / 0x%x  -- get texture\n", preferred_format, preferred_type);
-
-
-    //The following links to the RefPage for the 
-    //Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetInternalformat.xhtml
-
-
-    detailsOnGLImpl << sectionDelimiter << "\nDetermining Available Page Sizes for Some Common\nInternal Texture Formats. The page size determines\n"
-        << "how much data can be committed/decommitted\nwhen using sparse texturing.\n";
-
-
-    //It is highly unlikely for an implementation to support more than 10 different internal
-    //page sizes, but to be safe let's set an upper limit of 20. 
-    constexpr const GLint MAX_SUPPORTED_PAGE_SIZES = 20; 
-    //Sparse Texturing Page Size -- See OpenGL Super Bible page 511
-    GLint num_available_page_sizes = 0;
-    GLint page_sizes_x[MAX_SUPPORTED_PAGE_SIZES];
-    GLint page_sizes_y[MAX_SUPPORTED_PAGE_SIZES];
-    GLint page_sizes_z[MAX_SUPPORTED_PAGE_SIZES];  
-
-   
-    //Figure Out How Many Page Sizes Are Available For a 2D Texture With Internal Format GL_RGBA8
-
-    glGetInternalformativ(GL_TEXTURE_2D, 
-                          GL_RGBA8,
-                          GL_NUM_VIRTUAL_PAGE_SIZES_ARB,
-                          sizeof(GLint),
-                          &num_available_page_sizes);
-    if (0 == num_available_page_sizes)
-        detailsOnGLImpl << 
-        */
+    detailsOnGLImpl << getImplementationsPreferencesForFormat(GL_RGB8); //GL_RGB9_E5
+ 
+    LOG(INFO) << detailsOnGLImpl.str();
 }
 
 

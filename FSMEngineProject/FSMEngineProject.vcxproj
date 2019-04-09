@@ -177,7 +177,7 @@
     <ClInclude Include="JoystickPort.h" />
     <ClInclude Include="JoystickStatePrinter.h" />
     <ClInclude Include="LoadableAssetCollection.h" />
-    <ClInclude Include="reportDetailsOnGLImplementation.h" />
+    <ClInclude Include="ReportDetailsOnGLImplementation.h" />
     <ClInclude Include="ThirdParty\easyloggingpp\include\easylogging++.h" />
     <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

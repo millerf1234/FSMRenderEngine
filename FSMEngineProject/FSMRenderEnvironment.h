@@ -63,7 +63,7 @@ public:
     //FSMRenderEnvironment(/* Take in a collection of Settings/data/assets to load */);
 
     //Handles the proper release of resources used by this engine  
-    ~FSMRenderEnvironment();
+    ~FSMRenderEnvironment() noexcept;
 
 
     //             /////////////////////////////////////////////////////////////////
@@ -111,10 +111,10 @@ public:
     //Retrieves the Major, Minor and Revision numbers corresponding to the version of GLFW used 
     //during compile time. These values can be compared with the shared-library GLFW version loaded
     //at runtime (which could be helpful for debugging).
-    static void getGLFWCompiletimeVersion(int& compileVersionMajor, int& compileVersionMinor, int& compileVersionRevision);
+    static void getGLFWCompiletimeVersion(int& compileVersionMajor, int& compileVersionMinor, int& compileVersionRevision) noexcept;
     //Returns a string that looks like: "Compiled against GLFW 'major'.'minor'.'revision'", with the
     //'major', 'minor' and 'revision' replaced with their corresponding integer values. 
-    static std::string getGLFWCompiletimeVersionString();
+    static std::string getGLFWCompiletimeVersionString() noexcept;
     //Retrieves the Major, Minor and Revision numbers corresponding to the version of GLFW linked with 
     //during run time. These values can be compared with the compile-time GLFW version (which could be 
     //helpful for debugging purposes).

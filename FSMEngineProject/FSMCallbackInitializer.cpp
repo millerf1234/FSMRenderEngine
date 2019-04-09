@@ -29,7 +29,9 @@ namespace FSMEngineInternal {
             joystickCBSet_ = false;
             monitorCBSet_ = false;
         }
-        ~GlobalStateOfGLFWCallbacks() = default;
+        ~GlobalStateOfGLFWCallbacks() noexcept {
+            LOG(TRACE) << __FUNCTION__;
+        }
     };
 
     FSMCallbackInitializer::FSMCallbackInitializer() : mGlobalCBState_(nullptr) {

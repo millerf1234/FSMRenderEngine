@@ -6,19 +6,26 @@
 #include "UniversalIncludes.h"
 #include "GraphicsLanguage.h"
 
+
+
 namespace FSMEngineInternal {
 
-
-
     void customPreGLFuncCallCallback(const char* name, void* funcptr, int len_args, ...) {
-        LOG(TRACE) << __FUNCTION__;
-        LOG(TRACE) << name;
+        /*
+        std::ostringstream msg;
+        msg << "[Pre-call] " << name;
+        LOG(TRACE) << msg.str();
+        */
     }
 
 
     void customPostGLFuncCallCallback(const char* name, void* funcptr, int len_args, ...) {
-        LOG(TRACE) << __FUNCTION__;
-
+        /*
+        std::ostringstream msg;
+        msg << "[Post-call] " << name;
+        LOG(TRACE) << msg.str();
+        //LOG(TRACE) << name;// __FUNCTION__;
+        */
         GLenum error_code;
 
         error_code = glad_glGetError();
@@ -36,7 +43,7 @@ namespace FSMEngineInternal {
                 errorMsg << ")";
             errorMsg << "\'.";
 
-            LOG(INFO) << errorMsg.str();
+            //LOG(INFO) << errorMsg.str();
             LOG(ERROR) << errorMsg.str();  
         }
     }

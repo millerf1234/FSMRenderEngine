@@ -1,7 +1,8 @@
+
 //
-//
-//
-//
+//  These callback functions are assignable to be called immediately before and after
+//  every gl___() function call when using glad in its debug version. Using the release
+//  version of glad prevents callbacks from being assignable. 
 //
 
 #pragma once

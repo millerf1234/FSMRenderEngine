@@ -232,7 +232,6 @@ public:
 
     virtual ~FSMNamedException() noexcept {
         LOG(TRACE) << __FUNCTION__;
-
     }
 
     /** Returns the stored enum value representing this exception's name.

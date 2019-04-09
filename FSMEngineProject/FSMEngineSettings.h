@@ -43,7 +43,7 @@
 //FSMExceptions is controlled using separate macros. 
 //
 #define LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS 1
-#define LOG_EVERY_FSM_NAMED_EXCEPTION_AS_ERROR 1
+///#define LOG_EVERY_FSM_NAMED_EXCEPTION_AS_ERROR 1
 
 
 

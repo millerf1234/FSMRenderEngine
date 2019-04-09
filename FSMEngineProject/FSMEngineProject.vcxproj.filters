@@ -978,9 +978,6 @@
     <ClInclude Include="Application.h">
       <Filter>Source Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="FSMEngine.h">
-      <Filter>Source Files\FSMEngine</Filter>
-    </ClInclude>
     <ClInclude Include="FSMRenderEnvironment.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Engine</Filter>
     </ClInclude>
@@ -1023,8 +1020,11 @@
     <ClInclude Include="FSMErrorCallback.h">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks\GLFW_ErrorMessage_Callback</Filter>
     </ClInclude>
-    <ClInclude Include="reportDetailsOnGLImplementation.h">
+    <ClInclude Include="ReportDetailsOnGLImplementation.h">
       <Filter>Source Files\FSMEngine\Utility\OpenGL_Support</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMEngine.h">
+      <Filter>Source Files\FSMEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
