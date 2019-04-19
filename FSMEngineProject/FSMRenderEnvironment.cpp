@@ -52,6 +52,8 @@ FSMRenderEnvironment::FSMRenderEnvironment(bool dummyParameter) {
     mJoystickStatePrintingEnabled_ = false;
     //Question: Can this next line fail? Should it be moved to be with other parts of constructor which can throw? 
     mJoystickInputPrinter_ = std::make_unique<JoystickStatePrinter>(); 
+
+    mScreenClearColor_ = glm::vec4(0.2f, 0.3f, 0.3f, 1.0f);
 }
 
 FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
@@ -282,24 +284,13 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
 
 
         // Render
-        // Clear the color-buffer
-        static glm::vec4 clearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        if (counter % 180u == 0u) {
-            float temp = std::min(1.0f, std::abs(clearColor.r + sin(time + clearColor.r)));
-            clearColor.r = clearColor.g;
-            clearColor.g = clearColor.b;
-            clearColor.b = temp;
-            if (std::abs(clearColor.r - clearColor.g) < 0.01f)
-                clearColor.g += 0.4f;
-            else if (std::abs(clearColor.r - clearColor.b) < 0.01f)
-                clearColor.b += 0.4f;
-            std::ostringstream msg;
-            msg << "New Background  {R: " << clearColor.r << ", G: "
-                << clearColor.g << ", B: " << clearColor.b << "}\n\n";
-            LOG_EVERY_N(1, INFO) << msg.str();
+        
+        if (counter % 150u == 0u) {
+            setNextFrameClearColor(time);
+            logToInfoNextFrameClearColor();
         }
 
-        glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+        glClearColor(mScreenClearColor_.r, mScreenClearColor_.g, mScreenClearColor_.b, mScreenClearColor_.a);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (glfwGetKey(mContextWindow_, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -934,6 +925,26 @@ void FSMRenderEnvironment::reportGLImplementationDetails() const noexcept {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+void FSMRenderEnvironment::setNextFrameClearColor(float time) noexcept {
+    float temp = std::min(1.0f, std::abs(mScreenClearColor_.r + std::sin(time + mScreenClearColor_.r)));
+    mScreenClearColor_.r = mScreenClearColor_.g;
+    mScreenClearColor_.g = mScreenClearColor_.b;
+    mScreenClearColor_.b = temp;
+    if (std::abs(mScreenClearColor_.r - mScreenClearColor_.g) < 0.01f)
+        mScreenClearColor_.g += 0.4f;
+    else if (std::abs(mScreenClearColor_.r - mScreenClearColor_.b) < 0.01f)
+        mScreenClearColor_.b += 0.4f;
+}
+
+
+void FSMRenderEnvironment::logToInfoNextFrameClearColor() noexcept {
+    std::ostringstream msg;
+    msg << "New Background  {R: " << mScreenClearColor_.r << ", G: "
+        << mScreenClearColor_.g << ", B: " << mScreenClearColor_.b << "}\n\n";
+    LOG(INFO) << msg.str();
+}
+
+
 void FSMRenderEnvironment::doJoystickPrinterLoopLogic() noexcept {
      LOG_EVERY_N(60, TRACE) << __FUNCTION__;
 
@@ -1028,8 +1039,6 @@ void FSMRenderEnvironment::doJoystickPrinterLoopLogic() noexcept {
 bool FSMRenderEnvironment::checkForContextReset() {
     LOG_EVERY_N(60, TRACE) << __FUNCTION__;
      
-
-
     bool resetDetected = false;
 
 	GLenum contextResetStatus = glGetGraphicsResetStatus();

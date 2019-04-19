@@ -24,6 +24,7 @@
 #include "FSMMonitorHandle.h"
 #include "FInitSetting.h"
 #include "DefaultValuesForFSMEngine.h"
+#include "GraphicsLanguage.h"
 
 #include "JoystickStatePrinter.h"
 
@@ -149,6 +150,7 @@ private:
     //itself after determining what reset strategy is to be used.
     bool mContextResetAwareness_;
 
+    glm::vec4 mScreenClearColor_;
 
     /////////////////////////////////////////////////////////////////////////////////////////
     /////////////////                Implementation Functions
@@ -210,6 +212,11 @@ private:
     //--    Upkeep Loop Functions
     //-------------------------------------
 
+    //RENDER
+    void setNextFrameClearColor(float time) noexcept;
+    void logToInfoNextFrameClearColor() noexcept;
+
+    //LOGIC
     void doJoystickPrinterLoopLogic() noexcept; //Function to be called as part of each frame
    
     bool checkForContextReset(); 
