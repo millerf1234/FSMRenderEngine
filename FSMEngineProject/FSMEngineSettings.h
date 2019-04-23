@@ -48,6 +48,9 @@
 
 
 
+static constexpr const int FSM_MINIMUM_GL_VERSION_MAJOR = 4;
+static constexpr const int FSM_MINIMUM_GL_VERSION_MINOR = 5; //6?
+
 
  
    

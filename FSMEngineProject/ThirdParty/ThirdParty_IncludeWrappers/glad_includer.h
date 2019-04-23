@@ -21,7 +21,7 @@
 //
 // This header's position amongst the various Graphics-Language intermediate header include-chain structure:
 //
-//            Top                    "BuildSettings.h" ---------------------+
+//            Top                  "FSMEngineBuildConfig.h" ----------------+
 //                                            |                             |
 //                                            V                             |
 //                 +------------------------------------+                   |
@@ -32,9 +32,9 @@
 //                                   "glfw_includer.h"                      |                   |
 //                                            |                             V                   |
 //                                            |                    "GraphicsLanuage.h" <--------+
-//                                            |                             |
-//                                            V                             |
-//                              "GraphicsLanguageFramework.h"  <------------+
+//                                            |                            ||
+//                                            V                           / |
+//                              "GraphicsLanguageFramework.h"  <---------'  +
 //                                            |                             |
 //                                            V                             |
 //           Bottom                    Rest of the Codebase  <--------------+    [Both "GraphicsLanguage.h" and "GraphicsLanguageFramework.h" are intended 
@@ -53,7 +53,7 @@
 #ifndef GLAD_INCLUDER_H_
 #define GLAD_INCLUDER_H_
 
-#include "..\..\BuildSettings.h"
+#include "..\..\FSMEngineBuildConfig.h"
 
 //The following ugly mess of statements are preprocessor checks performed to make sure 
 //the settings set in 'BuildSettings.h' are all compatible and that they all take effect.

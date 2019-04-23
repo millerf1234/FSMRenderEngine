@@ -17,6 +17,8 @@
 
 #include "AsciiTextFile.h"
 
+#include "JSON_Test.h" //Experimental
+
 Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(nullptr) {
 
 
@@ -54,6 +56,14 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
     LOG(INFO) << "Compile Date:               " << __DATE__;
     LOG(INFO) << "Compile Time:               " << __TIME__;
     LOG(INFO) << "Implementation Is Hosted:   " << ((__STDC_HOSTED__) ? "True" : "False");
+
+    
+    
+    LOG(INFO) << "Parsing a test JSON!\n";
+    JSON_Test testJSONParser;
+    std::filesystem::path path = std::filesystem::current_path();
+    testJSONParser.parseFile(path);
+
 
     LOG(INFO) << "Inchoating The Render Environment...";
     if (!createRenderEnvironment()) {
@@ -211,8 +221,9 @@ bool Application::setupMessageLogs(int argc, char** argv) {
             "logical thing to do here is to abort.\nPerhaps try a different operating system?\n");
         std::exit(EXIT_FAILURE);//std::terminate();
     }
-    catch (...) {
+    catch (const std::exception& e) {
         printf("\nSome odd unexpected exception was thrown!\n");
+        printf("Message:\n  %s", e.what());
         printf("\nThere is no clear way to respond to this issue. Application will close!\n");
         std::exit(EXIT_FAILURE);
     }
@@ -230,8 +241,9 @@ bool Application::createRenderEnvironment() {
     catch (const FSMNamedException& e) {
         switch (e.getName()) {
         case FSMNamedException::NamedException::NO_GL_DRIVER:
-            LOG(ERROR) << " System does not appear to have a driver which is\n"
-                "                OpenGL compatible installed!\n";
+            LOG(ERROR) << " Unable to detect the existance of an OpenGL-capable driver.";
+            //std::ostringstream minGlVersionMsg;
+            //minGlVersionMsg << " This program requires a driver which supports OpenGL " << FSM_MINIMUM_GL_VERSION_MAJOR
             LOG(INFO) << "[Press enter to terminate process]";
             std::cin.get();
             std::exit(EXIT_FAILURE);

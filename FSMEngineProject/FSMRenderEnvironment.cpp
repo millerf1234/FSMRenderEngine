@@ -15,6 +15,7 @@
 #include "UniversalIncludes.h"
 #include "GraphicsLanguageFramework.h"
 #include "FSMCallbackInitializer.h"
+#include "FSMJoystickInvariants.h"           //To get invariant for joystick hat behavior
 
 #include "GL_Context_Debug_Message_Callback_Function.h"    //Function for reporting context callback messages
 #include "Pre_And_Post_OpenGL_Function_Call_Callbacks.h"  //glad_debug allows for assignment of two callback functions to
@@ -215,7 +216,7 @@ void FSMRenderEnvironment::handleEvents() {
 			}
 			else {
 				LOG(INFO) << "Uh-oh! The Joystick Connection Queue returned an empty optional!\n";
-				LOG(DEBUG) << "FSMEngine has detected that the Joystick Connection Queue returned an empty optional!";
+				LOG(WARNING) << "FSMEngine has detected that the Joystick Connection Queue returned an empty optional!";
 			}
 		}
 		else if (checkJoystickDisconnectionEventQueue()) {
@@ -226,13 +227,13 @@ void FSMRenderEnvironment::handleEvents() {
 			}
 			else {
 				LOG(INFO) << "Uh-oh! The Joystick Disconnection Queue returned an empty optional!\n";
-				LOG(DEBUG) << "FSMEngine has detected that the Joystick Disconnection Queue returned an empty optional!";
+				LOG(WARNING) << "FSMEngine has detected that the Joystick Disconnection Queue returned an empty optional!";
 			}
 		}
 		else {
 			LOG(INFO) << "That is odd. Neither the Joystick connection nor disconnection queues are\n"
 				<< "populated despite a joystick event being detected!";
-			LOG(DEBUG) << "FSMEngine has detected a possible Joystick Event Misfire!\n";
+			LOG(WARNING) << "FSMEngine has detected a possible Joystick Event Misfire!\n";
 		}
 	}
 }
@@ -626,8 +627,12 @@ bool FSMRenderEnvironment::initializeGLFW() {
 //This function must be called before glfwInit() is called
 void FSMRenderEnvironment::setGlobalGLFWInvariants() noexcept {
     LOG(TRACE) << __FUNCTION__;
-    //Treat joystick hats as separate from Joystick buttons
-    glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
+
+    //Specifiy if should treat joystick hats as separate from Joystick buttons
+    if (FSMJoystickInternal::JOYSTICK_REPORTS_HAT_INPUT_AS_BUTTONS)
+        glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_TRUE);
+    else 
+        glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
 
     //There are 2 other MacOS Cocoa-specific hints, but seeing as Apple is deprecating 
     //OpenGL it hardly feels worth doing more than just mentioning them here...
@@ -926,6 +931,7 @@ void FSMRenderEnvironment::reportGLImplementationDetails() const noexcept {
 
 
 void FSMRenderEnvironment::setNextFrameClearColor(float time) noexcept {
+    LOG(TRACE) << __FUNCTION__;
     float temp = std::min(1.0f, std::abs(mScreenClearColor_.r + std::sin(time + mScreenClearColor_.r)));
     mScreenClearColor_.r = mScreenClearColor_.g;
     mScreenClearColor_.g = mScreenClearColor_.b;

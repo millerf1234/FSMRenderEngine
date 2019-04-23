@@ -99,7 +99,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>$(TargetDir)..\..\FSMEngineProject\ThirdParty\str_view-master</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TargetDir)..\..\FSMEngineProject\ThirdParty\jsoncpp\include;$(TargetDir)..\..\FSMEngineProject\ThirdParty\str_view-master;</AdditionalIncludeDirectories>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <AssemblerOutput>All</AssemblerOutput>
     </ClCompile>
@@ -138,7 +138,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>$(TargetDir)..\..\FSMEngineProject\ThirdParty\str_view-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TargetDir)..\..\FSMEngineProject\ThirdParty\jsoncpp\include;$(TargetDir)..\..\FSMEngineProject\ThirdParty\str_view-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -152,7 +152,11 @@
     <ClInclude Include="AsciiSterilizer.h" />
     <ClInclude Include="AsciiTextFile.h" />
     <ClInclude Include="AsciiTextFileImpl.h" />
-    <ClInclude Include="BuildSettings.h" />
+    <ClInclude Include="FSMCoreDirectoryAndFilepathInvariants.h" />
+    <ClInclude Include="FSMEngineBuildConfig.h" />
+    <ClInclude Include="FSMGlobalInvariants.h" />
+    <ClInclude Include="FSMJoystickInvariants.h" />
+    <ClInclude Include="JSON_Test.h" />
     <ClInclude Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.h" />
     <ClInclude Include="DefaultValuesForFSMEngine.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
@@ -434,6 +438,17 @@
     <ClInclude Include="ThirdParty\glm\vec3.hpp" />
     <ClInclude Include="ThirdParty\glm\vec4.hpp" />
     <ClInclude Include="ThirdParty\glm\vector_relational.hpp" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\allocator.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\assertions.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\autolink.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\config.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\features.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\forwards.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\json.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\reader.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\value.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\version.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\include\writer.h" />
     <ClInclude Include="ThirdParty\str_view-master\str_view.hpp" />
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\elcc_includer.h" />
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\glad_includer.h" />
@@ -460,6 +475,7 @@
     <ClCompile Include="GetSystemDateTime.cpp" />
     <ClCompile Include="JoystickPort.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
+    <ClCompile Include="JSON_Test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.cpp" />
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc" />
@@ -480,6 +496,7 @@
     <ClCompile Include="VidModeImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\AssetData\JSON\FSMEngineConfig\EngineConfig.json" />
     <None Include="..\AssetData\Shaders\Basic.vert" />
     <None Include="glfw3.dll" />
     <None Include="glfw3.ilk" />
@@ -619,11 +636,23 @@
     <None Include="ThirdParty\glm\gtx\vector_query.inl" />
     <None Include="ThirdParty\glm\gtx\wrap.inl" />
     <None Include="ThirdParty\glm\readme.md" />
+    <None Include="ThirdParty\jsoncpp\LICENSE" />
     <None Include="ThirdParty\str_view-master\LICENSE" />
     <None Include="ThirdParty\str_view-master\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3dll.lib" />
+    <Library Include="ThirdParty\jsoncpp\x64\Debug\jsoncpp.lib">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DeploymentContent>
+    </Library>
+    <Library Include="ThirdParty\jsoncpp\x64\Release\jsoncpp.lib">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+    </Library>
   </ItemGroup>
   <ItemGroup>
     <Text Include="GLSL_References.txt" />
@@ -632,6 +661,7 @@
     <Text Include="Notes\NotesOnMSVC.txt" />
     <Text Include="Random Tidbits and ideas .txt" />
     <Text Include="SafeConstructableExample.txt" />
+    <Text Include="ThirdParty\easyloggingpp\license.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -130,6 +130,10 @@ std::string JoystickStatePrinter::getJoystickInfo() noexcept {
             joyInfo << "Gamepad Name: " << glfwGetGamepadName(mID_) << "\n";
             
         joyInfo << "\n";
+        joyInfo << "Axes predicted to be triggers: ";
+        for (auto iter = mDefaultState_.axesPredictedToBeTriggers.cbegin(); iter != mDefaultState_.axesPredictedToBeTriggers.cend(); iter++)
+            joyInfo << *iter << "  ";
+        joyInfo << "\n";
     }
     return joyInfo.str();
 }
@@ -346,7 +350,7 @@ void JoystickStatePrinter::buildFullStateMessage(std::stringstream& stateMsg) {
 
 }
 
-
+//Echo Input-mode string builder
 void JoystickStatePrinter::buildDetectedInputsMessage(std::stringstream& stateMsg) {
 	bool hasGamepadMapping = glfwJoystickIsGamepad(mID_);
 
@@ -423,6 +427,8 @@ void JoystickStatePrinter::buildDetectedInputsMessage(std::stringstream& stateMs
 	}
 	int pressedButtonCounter = 0;
 	
+    stateMsg << "[DEBUG] Default state reports " << mDefaultState_.numButtons << " buttons\n";
+
 	for (int i = 0; i < mDefaultState_.numButtons; i++) {
 		if (buttonStates[i] == GLFW_PRESS) {
 			buttonWasPrinted = true;

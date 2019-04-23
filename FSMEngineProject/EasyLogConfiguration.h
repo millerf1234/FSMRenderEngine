@@ -203,7 +203,7 @@
 
 #include "GetSystemDateTime.h"  //Used when generating a directory name for LOG files
 
-#include "BuildSettings.h"  //Needed to check for DEBUG log feature level
+#include "FSMEngineBuildConfig.h"  //Needed to check for DEBUG log feature level
 
 #include "ThirdParty/easyloggingpp/include/easylogging++.h" 
 
@@ -859,7 +859,6 @@ namespace EASYLOGPP_CONFIGURATION_INTERNAL {
             }
         }
         return tagString;
-
     }
 
 }  //namespace EASYLOGPP_CONFIGURATION_INTERNAL

@@ -1,7 +1,16 @@
-// File:                     BuildSettings.h
+// File:                     FSMEngineBuildConfig.h
 // 
+//            [Note: This file was named "BuildSettings.h" over the majority of its development and no work has
+//                   been yet done updating 
+//
+//           [Note2:  This file's comments and documentation are a complete mess and will need a major rewrite. Please be 
+//                    aware that some of the comments may state false information, I have tried to mark/replace these as 
+//                    much as possible but due to the volatile and growing nature of the project I have been forced to make 
+//                    changes from the initial design, thus invalidating/contradicting some assumptions/rukes stated within the
+//                    documentation]
+//
 //                     [TL;DR] The (incomplete) documentation in this file contains known MISTAKES.  
-//  NOTE TO OTHER PEOPLE:        This file is a configuration file. When this header was first introduced to the 
+//  NOTE TO OTHER PEOPLE:        This file is a configuration* file. When this header was first introduced to the 
 //                           codebase, every macro written in it was meant to include thorough documentation.  
 //                           Unfortunately the reality of coding is that things change, and to make matters 
 //                           worse there were mistakes in the original design of the code. Ideally one day 
@@ -10,6 +19,8 @@
 //                           there are quite a few things documented that turned out not to behave in
 //                           reality the way I was expecting (A major example being my attempt to toggle
 //                           which of the versions of the library 'glad' was compiled through macros). 
+//
+//                                         [*More specifically, it is a compilation-configuration file 
 // 
 //  NOTE TO SELF:           STOP WRITING DOCUMENTATION. Most of this will be wrong anyways.
 //                          Wait until things have been proven to work and aren't in mid development
@@ -42,9 +53,6 @@
 //                        (i) https://stackoverflow.com/questions/18818223/how-to-make-debug-macros-portable
 //                       (ii) https://stackoverflow.com/questions/34302265/does-cmake-build-type-release-imply-dndebug
 //                 
-//
-//
-//
 //
 // Description:          This file defines macros that provide clear unambiguous control over how the code is to be built.
 //                           The intent here is to provide a verifiable way to achieve explicit control over the resulting
@@ -105,7 +113,7 @@
 //  | Section Number |        Section Title        |     Section Description                                                                                                           |          
 //  +================+=============================+===================================================================================================================================+          
 //  |                |                             |                                                                                                                                   |        
-//  |  Section 0)    | "Project Invariants"        |  These aren't really you usual type of settings that you get to 'customize' but then again its                                    |                                                      
+//  |  Section 0)    |    "Project Invariants"     |  These aren't really you usual type of settings that you get to 'customize' but then again its                                    |                                                      
 //  |                |                             |    settings like this that necessitated the existence of a section 'Zero' in the first place...                                   |                                                                     
 //  +----------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------+                                                                    
 //  |                |                             | This section (known affectionately to the French as "section un") rightfully contains the two far most influential build macros   |                                     
@@ -141,13 +149,15 @@
 
 #pragma once
 
-#ifndef BUILD_SETTINGS_H_
-#define BUILD_SETTINGS_H_
+#ifndef FSM_ENGINE_BUILD_CONFIG_H_
+#define FSM_ENGINE_BUILD_CONFIG_H_
 
-
+//  Todo:  Move this invariants section to be with where the new place for invariants is...
 // ------------------------------------------------------------------------------------------------------------
 //  ( SECTION 0 )   PROJECT BUILD INVARIANTS                  
 // ------------------------------------------------------------------------------------------------------------
+
+///#include "FSMEngineInvariants.h"
 //  - PROJECT MUST TARGET x64
 //  - PROJECT MUST TARGET SAME OPENGL VERSION AS GLAD                    (Will be OpenGL 4.6 most likely)
 //  - PROJECT MUST BE BUILT IN ENVIRONMENT WHICH SUPPORTS SSE2           (This is implied by requiring 'x64' though since 'x64' hardware by definition has support for SSE2 written into its standard)
@@ -597,4 +607,4 @@
 
 
 
-#endif //BUILD_SETTINGS_H_
+#endif //FSM_ENGINE_BUILD_CONFIG_H_

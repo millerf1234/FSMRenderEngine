@@ -27,15 +27,6 @@
     <Filter Include="Header Files\Common">
       <UniqueIdentifier>{800e60c4-aca0-494c-9941-b5062a7522e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ConfigurationAndSetup">
-      <UniqueIdentifier>{b2fb5c0e-017c-4ff2-9cab-46fb7c665d3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly">
-      <UniqueIdentifier>{4bc84b2a-0021-49b1-a509-18a6097aded8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly">
-      <UniqueIdentifier>{eb442a31-e3f1-431d-9ebe-39d62cc78229}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -172,6 +163,51 @@
     <Filter Include="Source Files\FSMEngine\Utility\OpenGL_Support">
       <UniqueIdentifier>{ff4cef3b-6e81-4570-8c00-92c17e9aba54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\jsoncpp">
+      <UniqueIdentifier>{a2fe54d2-8c58-4c30-8389-a643a797153f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\jsoncpp\Includes">
+      <UniqueIdentifier>{bc73ddb2-801d-4b08-b310-f6c12e64e53f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\jsoncpp\Release">
+      <UniqueIdentifier>{0de7d411-40f9-4ed2-984b-3f3912027949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\jsoncpp\Debug">
+      <UniqueIdentifier>{ec382926-7284-460d-b3d3-37e9e75a8f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\JSON">
+      <UniqueIdentifier>{b1222ef5-1956-4636-aca5-fc9942715d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\JSON">
+      <UniqueIdentifier>{89e72e2e-270e-4784-aa14-3fb3a1eeb8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\JSON\FSMEngineConfig">
+      <UniqueIdentifier>{45f0a242-75d6-4478-95f4-b72f070d72c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders">
+      <UniqueIdentifier>{b2fb5c0e-017c-4ff2-9cab-46fb7c665d3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration">
+      <UniqueIdentifier>{e4015f98-1f28-48da-921c-f2bd0d752220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants">
+      <UniqueIdentifier>{79ad884f-c4d3-4e9b-9be3-a4491334e4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\Internal">
+      <UniqueIdentifier>{770fd835-7ab5-4e58-85bf-59f1d4cf6fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly">
+      <UniqueIdentifier>{4bc84b2a-0021-49b1-a509-18a6097aded8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly">
+      <UniqueIdentifier>{eb442a31-e3f1-431d-9ebe-39d62cc78229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineBuildConfig">
+      <UniqueIdentifier>{14d82097-57e8-4289-a0f8-8a91efb923fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineJSON">
+      <UniqueIdentifier>{1cee3ed9-28a8-4d0d-a607-64c1840ef53d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\glad\KHR\khrplatform.h">
@@ -199,19 +235,16 @@
       <Filter>ThirdParty\easylogging++</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\elcc_includer.h">
-      <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
+      <Filter>Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\glad_includer.h">
-      <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
+      <Filter>Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\glfw_includer.h">
-      <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
+      <Filter>Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\glm_includer.h">
-      <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildSettings.h">
-      <Filter>Header Files\ConfigurationAndSetup</Filter>
+      <Filter>Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
     </ClInclude>
     <ClInclude Include="EasyLogging_BuildConfig.h">
       <Filter>ThirdParty\easylogging++</Filter>
@@ -993,9 +1026,6 @@
     <ClInclude Include="JoystickPort.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClInclude>
-    <ClInclude Include="FSMEngineSettings.h">
-      <Filter>Header Files\ConfigurationAndSetup</Filter>
-    </ClInclude>
     <ClInclude Include="AsciiSterilizer.h">
       <Filter>Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer</Filter>
     </ClInclude>
@@ -1025,6 +1055,57 @@
     </ClInclude>
     <ClInclude Include="FSMEngine.h">
       <Filter>Source Files\FSMEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\allocator.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\assertions.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\autolink.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\config.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\features.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\forwards.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\json.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\reader.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\value.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\version.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\include\writer.h">
+      <Filter>ThirdParty\jsoncpp\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="JSON_Test.h">
+      <Filter>Source Files\FSMEngine\Utility\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMEngineSettings.h">
+      <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMEngineBuildConfig.h">
+      <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineBuildConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMGlobalInvariants.h">
+      <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMJoystickInvariants.h">
+      <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMCoreDirectoryAndFilepathInvariants.h">
+      <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1093,6 +1174,9 @@
     </ClCompile>
     <ClCompile Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\GLFunctionCall_Pre_And_Post_Callbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="JSON_Test.cpp">
+      <Filter>Source Files\FSMEngine\Utility\JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1519,10 +1603,22 @@
     <None Include="..\AssetData\Shaders\Basic.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="ThirdParty\jsoncpp\LICENSE">
+      <Filter>ThirdParty\jsoncpp</Filter>
+    </None>
+    <None Include="..\AssetData\JSON\FSMEngineConfig\EngineConfig.json">
+      <Filter>Resource Files\JSON\FSMEngineConfig</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3dll.lib">
       <Filter>ThirdParty\glfw</Filter>
+    </Library>
+    <Library Include="ThirdParty\jsoncpp\x64\Release\jsoncpp.lib">
+      <Filter>ThirdParty\jsoncpp\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\jsoncpp\x64\Debug\jsoncpp.lib">
+      <Filter>ThirdParty\jsoncpp\Debug</Filter>
     </Library>
   </ItemGroup>
   <ItemGroup>
@@ -1533,7 +1629,7 @@
       <Filter>Notes</Filter>
     </Text>
     <Text Include="IntermediateHeadersImplementation_readme.txt">
-      <Filter>Header Files\IntermediateHeaders_DoNotIncludeTheseDirectly</Filter>
+      <Filter>Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly</Filter>
     </Text>
     <Text Include="SafeConstructableExample.txt">
       <Filter>Notes</Filter>
@@ -1543,6 +1639,9 @@
     </Text>
     <Text Include="Random Tidbits and ideas .txt">
       <Filter>Notes</Filter>
+    </Text>
+    <Text Include="ThirdParty\easyloggingpp\license.txt">
+      <Filter>ThirdParty\easylogging++</Filter>
     </Text>
   </ItemGroup>
 </Project>

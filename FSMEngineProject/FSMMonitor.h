@@ -13,14 +13,14 @@
 //                                                                                                                                                                    
 // Description:                       [In Leu of The Traditional Rambling Multi-Paragraphed Desciption You Are In All Likelyhood Regularly                            
 //                                     Skipping-In-Entirety At This Point, An Alternative Experimental Approach Has Been Undertaken In Documenting                    
-//                                     Object's of type FSMEngine.                                                                                                    
+//                                     Object's of type FSMEngine]                                                                                                    
 //                                                                                                                                                                    
 //                                                                                                                                                                    
 //                                            |                                              |                                                                        
 //                                            |       __~~~~~~~~~~~~~~~~~~~~~~~~~~~~__       |                                                                        
 //                                            |_~~~~~/~~~/                        \~~~\~~~~~_|                            Divide Between Internal                     
 //                                            /_\___/=^=/  LifeCycle of a Monitor  \=^=\___/_\                                  and External                          
-//                                            \__\__\_|_\__________________________/_|_/__/__/                                      //                                
+//                                            \__\__\_|_\_/______________________\_/_|_/__/__/                                      //                                
 //                                                                                                                                 ((                                
 //    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\\~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
 //         | Engine Internals |                                                                                                      ))    | Client Interface |       
@@ -45,13 +45,13 @@
 //    ,==----------------------------.  | Handle       |  //              \\      |                      |                  |       \\                                
 //   /++/  ~~  ~~  ~~  ~~  ~~  ~~   ++\ |              | //     _________  |\     |[Once a matching      |  --------------  |        ))                               
 //  /++/ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++\_/_____________|//   \_/<</<</<</==+ \    |  handle is found     |                  |       //                                
-//      Monitor Disconnection Event     (]=[HANDLE]=>=(/  ;-<{[--|--|--{-----)<----<----<----<---<---<---| FSMMonitorHandle |      ((                                 
+//      Monitor Disconnection Event     (]=[HANDLE]=>=(/  ;-<{[--|--|--{------)<----<----<---<---<---<---| FSMMonitorHandle |      ((                                 
 //  \++\ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++/¯\¯¯¯¯¯¯¯¯¯¯¯¯¯|  /  /¯\<<\<<\<<\====J    | amongst the active   |                  |       \\                                
 //   \++\ ~~  ~~  ~~  ~~  ~~  ~~    ++/ |              | (      ¯¯¯¯¯¯¯¯¯         |  FSMMonitorHandles,  +------------------+        ))                               
 //    `------------------------------'  |              |  \                       |    it is Destroyed]                             //                                
 //                                      |              |   \_                     |                                                ((                                 
 //                                      |              |     ¯`->[FSMMonitorHandle|                                                 \\                                
-//                                      |              |         Is Destroyed]    |                                                  ))                               
+//                                      |              |          Is Destroyed]   |                                                  ))                               
 //                                                                                                                                  //                                
 //    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~((~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
 //                                                                                                                                  \\                                

@@ -6,7 +6,7 @@
 #define UNIVERSAL_INCLUDES_H_
 
 
-#include "BuildSettings.h"
+#include "FSMEngineBuildConfig.h"
 
 
 #include "ThirdParty\ThirdParty_IncludeWrappers\elcc_includer.h"

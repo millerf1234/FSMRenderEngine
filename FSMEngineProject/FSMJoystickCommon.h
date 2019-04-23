@@ -6,7 +6,7 @@
 //
 //                           These include:
 //                                   - Core Dependencies (i.e. GLFW is a core dependency)
-//                                   - Constants 
+//                                   - [NOT ANYMORE] Constants 
 //                                   - Internal Exception Type
 //                                   - JoystickID Type-safe wrapper
 //
@@ -52,7 +52,7 @@
 
 #include "GraphicsLanguageFramework.h"
 #include "UniversalIncludes.h"
-
+#include "FSMJoystickInvariants.h"
 
 #include "FSMException.h"
 #ifndef CONSTRUCT_FROM_STRING_VIEW
@@ -68,6 +68,8 @@ namespace FSMJoystickInternal {
     // \--------------------------------------/  
 
 
+    ///Moved to be with the other FSMEngine Invariants
+    /* //Moved to be with the other FSMEngine Invariants
     static constexpr const int MAX_XINPUT_GAMEPADS = 4;
     static constexpr const float AXIS_DEAD_ZONE_SIZE = 0.025f;
 
@@ -78,7 +80,7 @@ namespace FSMJoystickInternal {
 	//Max Input value that can be read from an axis (Axes include  
 	static constexpr const float AXIS_INPUT_MAX = 1.0f;
 	static constexpr const float AXIS_INPUT_MIN = -1.0f;
-
+    */
     
 
 

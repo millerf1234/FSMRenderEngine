@@ -15,7 +15,7 @@
 //
 // This header's position amongst the various Graphics-Language itermediate header include-chain structure:
 //
-//            Top                    "BuildSettings.h" ---------------------+
+//            Top                  "FSMEngineBuildConfig.h" ----------------+
 //                                            |                             |
 //                                            |                             |
 //                                            V                             |
@@ -49,7 +49,7 @@
 #define GLM_INCLUDER_H_
 
 //All of the specific macros which control GLM's build settings are set within "BuildSettings.h"
-#include "..\..\BuildSettings.h"
+#include "..\..\FSMEngineBuildConfig.h"
 
 
 //As promised in section 3 of "BuildSettings.h", if the special macro is defined requesting a 

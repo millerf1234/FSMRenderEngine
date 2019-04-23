@@ -173,7 +173,7 @@ public:
 	///////////////////////////////////
 
 	//Gets the ID of the joystick being monitored by this object
-	int id() const { return mID_; }
+	int id() const noexcept { return mID_; }
     //Sets the ID of the joystick this object is monitoring to the specified value.
 	//Values outside of the range from 0 to GLFW_JOYSTICK_LAST will be ignored.
 	void changeID(int);
