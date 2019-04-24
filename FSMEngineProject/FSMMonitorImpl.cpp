@@ -87,12 +87,16 @@ FSMMonitor::FSMMonitorImpl::~FSMMonitorImpl() noexcept {
 
 bool FSMMonitor::FSMMonitorImpl::isPrimary() const noexcept {
     LOG(TRACE) << __FUNCTION__;
-
-    if (mHandle_ == glfwGetPrimaryMonitor())
-        mIsPrimary_ = true;
-    else
-        mIsPrimary_ = false;
-    return mIsPrimary_;
+    GLFWmonitor* primary = glfwGetPrimaryMonitor();
+    if (!primary) {
+        std::string msg = "Error! The function glfwGetPrimaryMonitor() returned NULL, which means\n"
+            "  either a) there are no monitors detected, or b) an error occured!\n"
+            "  In both cases there is a serious problem that just occured here!\n";
+        LOG(ERROR) << msg;
+        std::exit(EXIT_FAILURE);
+    }
+    return (mHandle_ == primary);
+   
 }
 
 int FSMMonitor::FSMMonitorImpl::getVirtualPositionX() const noexcept {
@@ -125,6 +129,11 @@ float FSMMonitor::FSMMonitorImpl::getContentScaleY() const noexcept {
 	float yScale = 0.0f;
 	glfwGetMonitorContentScale(mHandle_, &xScale, &yScale);
 	return yScale;
+}
+
+MonitorWorkarea FSMMonitor::FSMMonitorImpl::getWorkarea() const noexcept {
+    MonitorWorkarea workarea = { 0, 0, 0, 0 };
+    //glfwGetMonitorWorkarea(nullptr, nullptr, nullptr, nullptr, nullptr);//glfwGetMonitorWorkarea()
 }
 
 FSMVideoMode FSMMonitor::FSMMonitorImpl::getPrimaryVideoMode() const noexcept {

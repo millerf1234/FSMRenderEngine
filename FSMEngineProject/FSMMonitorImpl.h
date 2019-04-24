@@ -27,6 +27,8 @@ public:
 	float getContentScaleX() const noexcept;
 	float getContentScaleY() const noexcept;
 
+    MonitorWorkarea getWorkarea() const noexcept;
+
 	FSMVideoMode getPrimaryVideoMode() const noexcept;
 	std::vector<FSMVideoMode> getVideoModes() const noexcept;
 
@@ -44,7 +46,6 @@ public:
 private:
 	GLFWmonitor* mHandle_;
 	std::string mName_;
-    mutable bool mIsPrimary_;
 	std::unique_ptr<FSMVideoMode> mPrimaryVideoMode_;
 	std::vector<FSMVideoMode> mVideoModes_;
 };

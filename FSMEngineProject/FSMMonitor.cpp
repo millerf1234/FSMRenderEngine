@@ -71,6 +71,11 @@ float FSMMonitor::getContentScaleY() const noexcept {
 	return pImpl_->getContentScaleY();
 }
 
+MonitorWorkarea FSMMonitor::getWorkarea() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
+    return pImpl_->getWorkarea();
+}
+
 FSMVideoMode FSMMonitor::getPrimaryVideoMode() const noexcept {
 	LOG(TRACE) << __FUNCTION__;
 	return pImpl_->getPrimaryVideoMode();

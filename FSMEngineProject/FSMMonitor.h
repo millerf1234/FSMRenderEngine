@@ -97,6 +97,12 @@ namespace FSMEngineInternal {
 	class FSMMonitorHandle;
 }
 
+struct MonitorWorkarea {
+    int xPos;
+    int yPos;
+    int width;
+    int height;
+};
 
 class FSMMonitor final {
 public:
@@ -119,6 +125,12 @@ public:
 	int getVirtualPositionY() const noexcept;
 	float getContentScaleX() const noexcept;
 	float getContentScaleY() const noexcept;
+
+    //Returns the position (in screen coordinates) of the upper-left corner of the
+    //workarea along with the length and width of the workarea. The work area is
+    //defined as the part of the screen that is not occluded by the Operating 
+    //System's task bars or UI. 
+    MonitorWorkarea getWorkarea() const noexcept;
 
 	FSMVideoMode getPrimaryVideoMode() const noexcept;
 	std::vector<FSMVideoMode> getVideoModes() const noexcept;
