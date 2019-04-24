@@ -219,7 +219,7 @@ bool Application::setupMessageLogs(int argc, char** argv) {
         printf("\nApplication encountered the following exception during runtime:\n%s", e.what());
         printf("\nSeeing as how this is an integral feature to this Application, the most\n"
             "logical thing to do here is to abort.\nPerhaps try a different operating system?\n");
-        std::exit(EXIT_FAILURE);//std::terminate();
+        std::exit(EXIT_FAILURE);//or equivalently could call std::terminate();
     }
     catch (const std::exception& e) {
         printf("\nSome odd unexpected exception was thrown!\n");

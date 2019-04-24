@@ -42,10 +42,10 @@
 //exceptions. Only FSMNamedExceptions are affected by this macro, so generating a log entry for generic 
 //FSMExceptions is controlled using separate macros. 
 //
-#define LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS 1
-///#define LOG_EVERY_FSM_NAMED_EXCEPTION_AS_ERROR 1
-
-
+///#define LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS 1
+///#define LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS 1
+static constexpr const bool LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS = true;
+static constexpr const bool LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS = true;
 
 
 static constexpr const int FSM_MINIMUM_GL_VERSION_MAJOR = 4;

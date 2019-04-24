@@ -46,6 +46,11 @@ FSMMonitor::~FSMMonitor() noexcept {
 	//That's it?
 }
 
+bool FSMMonitor::isPrimary() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
+    return pImpl_->isPrimary();
+}
+
 int FSMMonitor::getVirtualPositionX() const noexcept {
 	LOG(TRACE) << __FUNCTION__;
 	return pImpl_->getVirtualPositionX();

@@ -59,8 +59,7 @@ public:
     FSMVideoMode& operator=(const FSMVideoMode&);
     FSMVideoMode& operator=(FSMVideoMode&&) noexcept;
 
-    //Formats this object's data into a 2-line string meant for printing to a console or log screen.
-    //This object owns the underlying string data and 
+    //Get a formatted multi-line string outlining details about this video mode.
     std::string toString() const noexcept;
 
 

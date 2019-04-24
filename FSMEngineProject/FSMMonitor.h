@@ -1,4 +1,4 @@
-// File:                              FSMMonitor.h                                                                                                                    
+ // File:                              FSMMonitor.h                                                                                                                    
 // Class:                             FSMMonitor                                                                                                                      
 // QuickInfo:                                                                                                                                                         
 //          Default Constructor       DISABLED    [ See Note* --> ]                   *Note: FSMMonitor objects by design have all of their public constructors       
@@ -111,6 +111,10 @@ public:
 	//---------------------------        INTEFACE        ---------------------------
 	//------------------------------------------------------------------------------
 	
+    //Checks to see if this object is currently the primary monitor. Only one 
+    //monitor can be primary at a time.
+    bool isPrimary() const noexcept;
+
 	int getVirtualPositionX() const noexcept;
 	int getVirtualPositionY() const noexcept;
 	float getContentScaleX() const noexcept;

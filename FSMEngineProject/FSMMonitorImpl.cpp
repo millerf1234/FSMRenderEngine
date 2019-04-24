@@ -85,6 +85,16 @@ FSMMonitor::FSMMonitorImpl::~FSMMonitorImpl() noexcept {
 	LOG(TRACE) << __FUNCTION__;
 }
 
+bool FSMMonitor::FSMMonitorImpl::isPrimary() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
+
+    if (mHandle_ == glfwGetPrimaryMonitor())
+        mIsPrimary_ = true;
+    else
+        mIsPrimary_ = false;
+    return mIsPrimary_;
+}
+
 int FSMMonitor::FSMMonitorImpl::getVirtualPositionX() const noexcept {
 	LOG(TRACE) << __FUNCTION__;
 	int xPos = 0;

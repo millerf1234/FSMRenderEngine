@@ -20,6 +20,8 @@ public:
 
 	~FSMMonitorImpl() noexcept;
 
+    bool isPrimary() const noexcept;
+
 	int getVirtualPositionX() const noexcept;
 	int getVirtualPositionY() const noexcept;
 	float getContentScaleX() const noexcept;
@@ -42,6 +44,7 @@ public:
 private:
 	GLFWmonitor* mHandle_;
 	std::string mName_;
+    mutable bool mIsPrimary_;
 	std::unique_ptr<FSMVideoMode> mPrimaryVideoMode_;
 	std::vector<FSMVideoMode> mVideoModes_;
 };

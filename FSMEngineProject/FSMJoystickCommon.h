@@ -229,7 +229,6 @@ public:
 
 private:
     const int mID_;
-
 };
 
 

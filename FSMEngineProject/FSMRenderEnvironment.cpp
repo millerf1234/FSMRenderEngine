@@ -13,6 +13,7 @@
 
 #include "FSMRenderEnvironment.h"
 #include "UniversalIncludes.h"
+#include "FSMEngineSettings.h"
 #include "GraphicsLanguageFramework.h"
 #include "FSMCallbackInitializer.h"
 #include "FSMJoystickInvariants.h"           //To get invariant for joystick hat behavior
@@ -31,7 +32,7 @@
 #include "ReportDetailsOnGLImplementation.h"
 
 using namespace FSMEngineInternal;
-using namespace FSMEngineDefaultInitializationConstants;
+//using namespace FSMEngineDefaultInitializationConstants;
 
 //This is the private internal delegating constructor that exists simply to 
 //give each member of this class an initial value. By making use of this 
@@ -43,7 +44,7 @@ using namespace FSMEngineDefaultInitializationConstants;
 //
 //The parameter 'dummyParameter' to this constructor is just a decoy to give this 
 //constructor a unique signature, this parameter is not used in any way. 
-FSMRenderEnvironment::FSMRenderEnvironment(bool dummyParameter) {
+FSMRenderEnvironment::FSMRenderEnvironment(bool dummyParameter) noexcept {
     LOG(TRACE) << __FUNCTION__;
     (void)dummyParameter;//We don't care about the parameter, it exists just to 
     //                   //differentiate this constructor from default public one  
@@ -53,6 +54,8 @@ FSMRenderEnvironment::FSMRenderEnvironment(bool dummyParameter) {
     mJoystickStatePrintingEnabled_ = false;
     //Question: Can this next line fail? Should it be moved to be with other parts of constructor which can throw? 
     mJoystickInputPrinter_ = std::make_unique<JoystickStatePrinter>(); 
+
+    mTargetMonitor_ = NO_MONITOR_TARGETED;
 
     mScreenClearColor_ = glm::vec4(0.2f, 0.3f, 0.3f, 1.0f);
 }
@@ -70,7 +73,7 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
     LOG(INFO) << "\n [step 1]   Loading settings from initialization file!\n";
 
     //STEP 1
-    if (!loadSettings()) {
+    if (!loadEngineSettings()) {
         throw FSMException("Unable to load settings!\n");
     } 
 
@@ -107,7 +110,7 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
     mContextResetAwareness_ = checkForContextResetStrategy();
      
     //This function is a work in progress at the moment
-    reportGLImplementationDetails();
+    LOG(INFO) << reportGLImplementationDetails();
 
 }
 
@@ -380,48 +383,39 @@ std::string FSMRenderEnvironment::getGLFWRuntimeVersionString() const noexcept {
 // -----------------------------------------------------------------------------------------
 //                                       STEP 1 
 // -----------------------------------------------------------------------------------------
-bool FSMRenderEnvironment::loadSettings() {
+bool FSMRenderEnvironment::loadEngineSettings() {
     LOG(TRACE) << __FUNCTION__;
 
-    /*
-    //C++20 
-#if __has_cpp_attribute(likely)  
-#define LIKELY [[likely]]
-#define UNLIKELY [[unlikely]]
-#else 
-#define LIKELY     
-#define UNLIKELY     
-#endif 
-   */
+    
     //Step 1.1
     std::error_code ecFind{};
     bool settingsFileFound = locateSettingsFile(ecFind);
 
-    if (settingsFileFound) /*LIKELY*/ {
+    if (settingsFileFound) {
         parseSettingsFile();                                              //Step 1.2
         return true;
     }
 
-    else /*UNLIKELY*/ {
-        if (!ecFind) /* LIKELY */ {
+    else {
+        if (!ecFind) {
             std::error_code ecCreate{};
             bool settingsFileCreated = generateSettingsFile(ecCreate);   //Step 1.1b
-            if (settingsFileCreated && (!ecCreate)) /* LIKELY */ {
+            if (settingsFileCreated && (!ecCreate)) {
                 parseSettingsFile();                                     //Step 1.2
                 return true;
             }
-            else if (ecCreate) /*UNLIKELY*/ {
+            else if (ecCreate) {
                  LOG(ERROR) << "\nError reported by Operating System while attempting\n"
                     << "to generate configuration file (" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << ")!\n"
                     << "Operating System Error Message:\n\t"
                     << ecCreate.message() << std::endl;
             return false;
             }
-            else /*UNLIKELY*/ {
+            else {
                 return false;
             }
         }
-        else /*if (ecFind) */ /*UNLIKELY*/ { //
+        else /*if (ecFind) */ { //
             LOG(ERROR) << "\nError reported by Operating System while attempting\n"
                 << "to load configuration file (" << /*SETTINGS_FILE_NAME*/ "UNNAMED" << ")!\n"
                 << "Operating System Error Message:\n\t"
@@ -599,6 +593,19 @@ bool FSMRenderEnvironment::generateSettingsFile(std::error_code& ec) {
     return true;
 }
 
+// --------------  
+//    STEP 1.3     
+// --------------  
+bool FSMRenderEnvironment::verifySettings() const noexcept {
+    bool incompatibilityDetected = false;
+
+    //Verify that exceptions are being logged
+    if constexpr ((LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS) ||
+        (LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS)) {
+
+    }
+    return !incompatibilityDetected;
+}
 
 // -----------------------------------------------------------------------------------------
 //                                      STEP 2 
@@ -697,14 +704,7 @@ bool FSMRenderEnvironment::createContext() {
 
     //Step 3.2 
     const int monitorCount = retrieveConnectedMonitors();
-    if (monitorCount < 1) {
-        LOG(ERROR) << "Error! Unable to detect any connected monitors!";
-        return false;
-    }
-    else {
-        std::string msg = std::string("Detected ") + std::to_string(monitorCount) + std::string(" monitors available.");
-            LOG(INFO) << msg;
-    }
+    
     //Step 3.3
     bool success = createContextAndWindow();
 
@@ -740,7 +740,6 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
     glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR); 
    
 
-
 }
 
 // --------------
@@ -754,8 +753,55 @@ int FSMRenderEnvironment::retrieveConnectedMonitors() noexcept {
         for (int i = 0; i < count; i++) 
             mMonitors_.push_back(createMonitorHandle(monitors[i]));
     }
+    
     return count;
 }
+
+// --------------
+//    STEP 3.2b  [Optional]
+// --------------
+std::string FSMRenderEnvironment::reportNumberOfConnectedMonitors() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
+    constexpr const size_t NO_MONITORS = 0u;
+    constexpr const size_t ONE_MONITOR = 1u;
+    std::ostringstream report;
+    size_t numMonitors = mMonitors_.size();
+    if (NO_MONITORS == numMonitors)
+        report << "This Application was unable to detect any valid monitors available for use!\n";
+    else if (ONE_MONITOR == numMonitors)
+        report << "Detected there is a single monitor available for use!\n";
+    else
+        report << "Detected there are " << numMonitors << " monitors available on this system!\n";
+    return report.str();
+}
+
+// --------------
+//    STEP 3.2c  [Optional]
+// --------------
+std::string FSMRenderEnvironment::reportPropertiesOfSelectedMonitor() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
+    
+    //TODO  Change needed: Have FSMEngine track which monitor is primary by verifying 
+    //                     and potentially updating which of the monitors is currently
+    //                     the primary monitor when processing each connection/disconnection
+    //                     event. Right now the FSMMonitors are just updating their internal
+    //                     flag for their primary status each time they are queried with function
+    //                    'isPrimary()'. This just feels error-prone and will probably lead to 
+    //                     issues in the future if not fixed.
+    //                     
+
+    if (mTargetMonitor_ != NO_MONITOR_TARGETED) {
+        if (mTargetMonitor_ < mMonitors_.size()) {  //Make sure targeted monitor exists
+            auto monitorIter = mMonitors_.cbegin();
+            
+        }
+    }
+    
+    std::ostringstream report;
+
+    return report.str();
+}
+
 
 // --------------
 //    STEP 3.3
@@ -865,7 +911,7 @@ void FSMRenderEnvironment::setInitialContextState() noexcept {
 //-----------------------------------------------------------------------------------------
 //                                     STEP 5 
 //-----------------------------------------------------------------------------------------
-bool FSMRenderEnvironment::checkForContextResetStrategy() {
+bool FSMRenderEnvironment::checkForContextResetStrategy() noexcept {
     LOG(TRACE) << __FUNCTION__;
    
     bool contextResetAwarenessEnabled;
@@ -907,7 +953,7 @@ bool FSMRenderEnvironment::checkForContextResetStrategy() {
     return contextResetAwarenessEnabled;
 }
 
-void FSMRenderEnvironment::reportGLImplementationDetails() const noexcept {
+std::string FSMRenderEnvironment::reportGLImplementationDetails() const noexcept {
     LOG(TRACE) << __FUNCTION__;
 
     std::ostringstream detailsOnGLImpl;
@@ -919,7 +965,7 @@ void FSMRenderEnvironment::reportGLImplementationDetails() const noexcept {
     
     detailsOnGLImpl << getImplementationsPreferencesForFormat(GL_RGB8); //GL_RGB9_E5
  
-    LOG(INFO) << detailsOnGLImpl.str();
+    return detailsOnGLImpl.str();
 }
 
 

@@ -28,7 +28,8 @@ FSMVideoMode::VidModeImpl::VidModeImpl(FSMVideoMode::VidModeImpl&& that) noexcep
 FSMVideoMode::VidModeImpl&  FSMVideoMode::VidModeImpl::operator=(const  FSMVideoMode::VidModeImpl& that) = default;
 FSMVideoMode::VidModeImpl&  FSMVideoMode::VidModeImpl::operator=(FSMVideoMode::VidModeImpl&& that) noexcept = default;
 
-std::string  FSMVideoMode::VidModeImpl::toString() const noexcept {
+//todo: Rewrite this function to produce a better formated string containing only the most relevant details of this particular video mode
+std::string FSMVideoMode::VidModeImpl::toString() const noexcept {
     std::ostringstream vidMode;
     vidMode << "   Video Mode Details:\n";
     vidMode << "\t  DPI(height)=" << getDPI_Height() << ", DPI(width)=" << getDPI_Width() << ", DPI(avg)=" << getDPI_WidthHeightAverage();

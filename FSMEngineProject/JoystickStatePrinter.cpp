@@ -427,7 +427,7 @@ void JoystickStatePrinter::buildDetectedInputsMessage(std::stringstream& stateMs
 	}
 	int pressedButtonCounter = 0;
 	
-    stateMsg << "[DEBUG] Default state reports " << mDefaultState_.numButtons << " buttons\n";
+    //stateMsg << "[DEBUG] Default state reports " << mDefaultState_.numButtons << " buttons\n";
 
 	for (int i = 0; i < mDefaultState_.numButtons; i++) {
 		if (buttonStates[i] == GLFW_PRESS) {

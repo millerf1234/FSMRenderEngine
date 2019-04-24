@@ -12,6 +12,7 @@
 #ifndef FSM_RENDER_ENGINE_H_
 #define FSM_RENDER_ENGINE_H_
 
+#include <cmath>    //floor func
 #include <string>
 #include <string_view>
 #include <exception>
@@ -22,14 +23,14 @@
 #include <filesystem>
 #include "FSMException.h"
 #include "FSMMonitorHandle.h"
-#include "FInitSetting.h"
-#include "DefaultValuesForFSMEngine.h"
 #include "GraphicsLanguage.h"
 
 #include "JoystickStatePrinter.h"
 
-constexpr const int width = 1240;
-constexpr const int height = 980;
+constexpr const int width = 1920;
+constexpr const int height = 9 * (width / 16);
+
+static constexpr const int NO_MONITOR_TARGETED = -1;
 
 class FSMRenderEnvironment final {
 public:
@@ -79,8 +80,10 @@ public:
     //     --  [possibly] have this swap buffers/cycle frames or not
     void handleEvents();
 
-
+    
     void doMonitorSelectionLoop();
+
+    FSMMonitor getTargetMonitor();
 
 
 
@@ -141,6 +144,7 @@ private:
     bool mGLFWIsInit_;
     struct GLFWwindow* mContextWindow_;
 
+    int mTargetMonitor_;
     std::list<FSMEngineInternal::FSMMonitorHandle*> mMonitors_;
 
      //For Joystick Debug
@@ -161,52 +165,54 @@ private:
     //-------------------------------------
 
     //DELEGATING CONSTRUCTOR
-    explicit FSMRenderEnvironment(bool); //Use this delegating constructor to ensure a complete type
-    //                          //exists before any initialization operations which might
-    //                          //throw/fail are performed.
-        
-    
-    //STEP 1 
-    bool loadSettings(); 
-
-
-    //Returns true if settings file is found.
-    //Returns false if no initialization file is found or if OS reports error ec
-    bool locateSettingsFile(std::error_code& ec);          //step 1.1
-    bool generateSettingsFile(std::error_code& ec);        //step 1.1b [Only if needed] 
-    void parseSettingsFile();                              //step 1.2 
-                                                                           
-                                                                            
-                                                                           
-    //STEP 2                                                                
-    bool initializeGLFW(); 
-    void setGlobalGLFWInvariants() noexcept;       //step 2.1
-    void setPreGLFWInitCallbacks();                //step 2.2
-    bool callTheGLFWInitFunc();                    //step 2.3
-    void setPostGLFWInitCallbacks();               //step 2.4
-
-    //STEP 3
-    bool createContext();
-    void specifyContextHints() noexcept;           //step 3.1
-    int retrieveConnectedMonitors() noexcept;      //step 3.2
-    bool createContextAndWindow();                 //step 3.3
-    void setContextWindowCallbacks();              //step 3.4
-
-
-    //STEP 4
-    bool setupGLAD();
-    void specifyDebugCallbacksWithGLAD() noexcept; //step 4.1 [Debug Only]
-    bool loadOpenGLFunctions() noexcept;           //step 4.2
-    void setInitialContextState() noexcept ;       //Step 4.3
-
-    
-    //STEP 5
-    bool checkForContextResetStrategy();
-
-    void reportGLImplementationDetails() const noexcept;     //Optional and not very useful
-     
-    //void retrieveConnectedMonitors();
-
+    explicit FSMRenderEnvironment(bool) noexcept; //Use this delegating constructor to ensure a complete type
+    //                                   //exists before any initialization operations which might
+    //                                   //fail and throw are performed. This helps ensure correct 
+    //                                   //resource allocation and deallocation is able to occur.
+                                                                                
+                                                                                                  
+    //STEP 1                                                                    
+    bool loadEngineSettings();                                                                    
+    bool locateSettingsFile(std::error_code& ec);                    //step 1.1 
+    bool generateSettingsFile(std::error_code& ec);                  //step 1.2b [Only if needed] 
+    void parseSettingsFile();                                        //step 1.2a 
+    bool verifySettings() const noexcept;                            //step 1.3                   
+                                                                                
+                                                                                                  
+                                                                                
+    //STEP 2                                                                                      
+    bool initializeGLFW();                                                      
+    void setGlobalGLFWInvariants() noexcept;                         //step 2.1                   
+    void setPreGLFWInitCallbacks();                                  //step 2.2 
+    bool callTheGLFWInitFunc();                                      //step 2.3                   
+    void setPostGLFWInitCallbacks();                                 //step 2.4 
+                                                                                                  
+                                                                                
+    //STEP 3                                                                                      
+    bool createContext();                                                       
+    void specifyContextHints() noexcept;                             //step 3.1                   
+    int retrieveConnectedMonitors() noexcept;                        //step 3.2 
+    std::string reportNumberOfConnectedMonitors() const noexcept;    //step 3.2b [Optional]       
+    std::string reportPropertiesOfSelectedMonitor() const noexcept;  //step 3.2c [Optional]
+    bool createContextAndWindow();                                   //step 3.3                   
+    void setContextWindowCallbacks();                                //step 3.4 
+                                                                                                  
+                                                                                
+    //STEP 4                                                                                      
+    bool setupGLAD();                                                           
+    void specifyDebugCallbacksWithGLAD() noexcept;                   //step 4.1 [Debug Only]      
+    bool loadOpenGLFunctions() noexcept;                             //step 4.2 
+    void setInitialContextState() noexcept ;                         //Step 4.3                   
+                                                                                
+                                                                                                  
+    //STEP 5                                                                    
+    bool checkForContextResetStrategy() noexcept;                                                 
+                                                                                
+    //WARNING! reportGLImplementationDetails has an Incomplete Implementation currently and       
+    //        doesn't print out much useful information                         
+    std::string reportGLImplementationDetails() const noexcept;   //Optional and not very useful  
+                                                                                
+                                                                                                  
 
     //-------------------------------------
     //--    Upkeep Loop Functions

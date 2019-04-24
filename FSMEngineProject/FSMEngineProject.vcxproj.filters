@@ -100,12 +100,6 @@
     <Filter Include="Source Files\FSMEngine\EngineInternal\Engine">
       <UniqueIdentifier>{c3961245-a422-4a22-b27a-ea2f150e3f56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Monitor">
-      <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Common">
-      <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\Utility">
       <UniqueIdentifier>{14cbad73-a6a3-42dc-943b-1c6f691322cf}</UniqueIdentifier>
     </Filter>
@@ -126,9 +120,6 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization">
       <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization\Data Struct">
-      <UniqueIdentifier>{70ecc34e-5b3f-4ce0-babd-def18fd607c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Joystick">
       <UniqueIdentifier>{7888c779-4ebd-4b39-9356-d9ec356486ce}</UniqueIdentifier>
@@ -207,6 +198,27 @@
     </Filter>
     <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineJSON">
       <UniqueIdentifier>{1cee3ed9-28a8-4d0d-a607-64c1840ef53d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Exception">
+      <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Projects">
+      <UniqueIdentifier>{7c1e0d7e-58b2-4632-9400-6b1b07fbc76a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Monitor">
+      <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Window">
+      <UniqueIdentifier>{14ff15c4-4447-4b33-975c-10ecc139791e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Window\Implementation">
+      <UniqueIdentifier>{0ccd57d7-e792-4a09-87d7-b04899803e6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Joystick">
+      <UniqueIdentifier>{8f85be1d-fe68-490f-8b2e-774d4f7760ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Joystick\Implementation">
+      <UniqueIdentifier>{f303dcd9-3897-48db-9390-d23da9474355}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -981,17 +993,8 @@
     <ClInclude Include="FSMJoystickEventCallback.h">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
     </ClInclude>
-    <ClInclude Include="FInitSetting.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\glad\debug\glad_debug.h">
       <Filter>ThirdParty\glad\debug</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultValuesForFSMEngine.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadableAssetCollection.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\str_view-master\str_view.hpp">
       <Filter>ThirdParty\str_view</Filter>
@@ -1015,13 +1018,10 @@
       <Filter>Source Files\FSMEngine\EngineInternal\Engine</Filter>
     </ClInclude>
     <ClInclude Include="FSMException.h">
-      <Filter>Source Files\FSMEngine\Common</Filter>
+      <Filter>Source Files\FSMEngine\Exception</Filter>
     </ClInclude>
     <ClInclude Include="FSMMonitorHandle.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMJoystickCommon.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Monitor</Filter>
     </ClInclude>
     <ClInclude Include="JoystickPort.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
@@ -1107,6 +1107,21 @@
     <ClInclude Include="FSMCoreDirectoryAndFilepathInvariants.h">
       <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
     </ClInclude>
+    <ClInclude Include="RenderDemoBase.h">
+      <Filter>Source Files\Projects</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMWindow.h">
+      <Filter>Source Files\FSMEngine\Types\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMWindowImpl.h">
+      <Filter>Source Files\FSMEngine\Types\Window\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMJoystickCommon.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMJoystickHandle.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
@@ -1149,7 +1164,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FSMMonitorHandle.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\Monitor</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Monitor</Filter>
     </ClCompile>
     <ClCompile Include="JoystickPort.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
@@ -1177,6 +1192,18 @@
     </ClCompile>
     <ClCompile Include="JSON_Test.cpp">
       <Filter>Source Files\FSMEngine\Utility\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderDemoBase.cpp">
+      <Filter>Source Files\Projects</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMWindow.cpp">
+      <Filter>Source Files\FSMEngine\Types\Window\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMWindowImpl.cpp">
+      <Filter>Source Files\FSMEngine\Types\Window\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMJoystickHandle.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
