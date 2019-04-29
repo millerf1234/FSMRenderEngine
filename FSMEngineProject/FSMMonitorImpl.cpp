@@ -56,6 +56,7 @@ FSMMonitor::FSMMonitorImpl::FSMMonitorImpl(FSMMonitor::FSMMonitorImpl&& that) no
 	for (auto vidMode : that.mVideoModes_)
 		mVideoModes_.emplace_back(vidMode);
 }
+
 FSMMonitor::FSMMonitorImpl& FSMMonitor::FSMMonitorImpl::operator=(const FSMMonitor::FSMMonitorImpl& that) {
 	LOG(TRACE) << __FUNCTION__;
 	if (this != &that) {
@@ -68,6 +69,7 @@ FSMMonitor::FSMMonitorImpl& FSMMonitor::FSMMonitorImpl::operator=(const FSMMonit
 	}
 	return *this;
 }
+
 FSMMonitor::FSMMonitorImpl& FSMMonitor::FSMMonitorImpl::operator=(FSMMonitor::FSMMonitorImpl&& that) noexcept {
 	LOG(TRACE) << __FUNCTION__;
 	if (this != &that) {
@@ -133,7 +135,12 @@ float FSMMonitor::FSMMonitorImpl::getContentScaleY() const noexcept {
 
 MonitorWorkarea FSMMonitor::FSMMonitorImpl::getWorkarea() const noexcept {
     MonitorWorkarea workarea = { 0, 0, 0, 0 };
-    //glfwGetMonitorWorkarea(nullptr, nullptr, nullptr, nullptr, nullptr);//glfwGetMonitorWorkarea()
+    glfwGetMonitorWorkarea(mHandle_,
+                           &workarea.xPos,
+                           &workarea.yPos,
+                           &workarea.width,
+                           &workarea.height);
+    return workarea;
 }
 
 FSMVideoMode FSMMonitor::FSMMonitorImpl::getPrimaryVideoMode() const noexcept {

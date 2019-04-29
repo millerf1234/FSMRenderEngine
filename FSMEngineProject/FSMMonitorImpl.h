@@ -40,9 +40,6 @@ public:
 	//a positive value
 	void setGamma(float gamma) noexcept(false);
 
-	//Special Implementation-Only function
-	GLFWmonitor* get() const noexcept { return mHandle_; }
-
 private:
 	GLFWmonitor* mHandle_;
 	std::string mName_;
