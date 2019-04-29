@@ -155,8 +155,10 @@
     <ClInclude Include="FSMCoreDirectoryAndFilepathInvariants.h" />
     <ClInclude Include="FSMEngineBuildConfig.h" />
     <ClInclude Include="FSMGlobalInvariants.h" />
+    <ClInclude Include="FSMInitConfig.h" />
     <ClInclude Include="FSMJoystickHandle.h" />
     <ClInclude Include="FSMJoystickInvariants.h" />
+    <ClInclude Include="FSMPerformanceReporter.h" />
     <ClInclude Include="FSMWindow.h" />
     <ClInclude Include="FSMWindowImpl.h" />
     <ClInclude Include="JSON_Test.h" />
@@ -467,12 +469,14 @@
     <ClCompile Include="AsciiTextFile.cpp" />
     <ClCompile Include="AsciiTextFileImpl.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
+    <ClCompile Include="FSMInitConfig.cpp" />
     <ClCompile Include="FSMJoystickEventCallback.cpp" />
     <ClCompile Include="FSMJoystickHandle.cpp" />
     <ClCompile Include="FSMMonitor.cpp" />
     <ClCompile Include="FSMMonitorHandle.cpp" />
     <ClCompile Include="FSMMonitorImpl.cpp" />
     <ClCompile Include="FSMMonitorEventCallback.cpp" />
+    <ClCompile Include="FSMPerformanceReporter.cpp" />
     <ClCompile Include="FSMRenderEnvironment.cpp" />
     <ClCompile Include="FSMWindow.cpp" />
     <ClCompile Include="FSMWindowImpl.cpp" />

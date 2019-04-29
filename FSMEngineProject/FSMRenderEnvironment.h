@@ -129,8 +129,6 @@ public:
     //the GLFW library which gets linked at run-time. 
     std::string getGLFWRuntimeVersionString() const noexcept;
 
-
-
     //No Copying or Moving allowed
     FSMRenderEnvironment(const FSMRenderEnvironment&) = delete;
     FSMRenderEnvironment(FSMRenderEnvironment&&) = delete;
@@ -139,9 +137,6 @@ public:
 
 
 private:
-     
-     
-     
     bool mGLFWIsInit_;
     struct GLFWwindow* mContextWindow_;
 
@@ -195,8 +190,9 @@ private:
     int retrieveConnectedMonitors() noexcept;                        //step 3.2 
     std::string reportNumberOfConnectedMonitors() const noexcept;    //step 3.2b [Optional]       
     std::string reportPropertiesOfSelectedMonitor() const noexcept;  //step 3.2c [Optional]
-    bool createContextAndWindow();                                   //step 3.3                   
-    void setContextWindowCallbacks();                                //step 3.4 
+    //void assignUserPointerToEachMonitor() const noexcept;            //step 3.3
+    bool createContextAndWindow();                                   //step 3.4                   
+    void setContextWindowCallbacks();                                //step 3.5 
                                                                                                   
                                                                                 
     //STEP 4                                                                                      

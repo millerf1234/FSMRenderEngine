@@ -43,13 +43,6 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
     LOG(INFO) << "Initializing Application...";
     LOG(INFO) << "Creating directory for LOG files...DONE";
 
-//#ifndef USE_DEBUG_
-//    LOG(INFO) << "     LOGGER CONFIGURATION FLAGS" << reportAllLoggerConfigurationFlags(7u) << "\n\n" << std::endl;
-//#else 
-//    LOG(INFO) << "    ACTIVE LOGGER CONFIGURATION FLAGS";
-//    LOG(INFO) << reportEnabledLoggerConfigurationFlags(6u) << "\n";
-//#endif
-
     //Here Would be a good location to log Application version number and other such info
     LOG(INFO) << "Application Version 0.0 Build 0.0.01"; //Eventually a real version system will be implemented
     LOG(INFO) << "Compiler:                    MSVC " << _MSC_VER;
@@ -67,72 +60,14 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
 
     LOG(INFO) << "Inchoating The Render Environment...";
     if (!createRenderEnvironment()) {
-        //std::exit(EXIT_FAILURE);
-    }
-    /*
-    AsciiTextFile temp("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");  
-    std::cout << "\nINFO LOG HAS " << temp.countNumberOfLines() << " lines of ASCII text!\n";
-    AsciiTextFile temp2("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
-    std::cout << "\nINFO LOG HAS " << temp2.countNumberOfLines() << " lines of ASCII text!\n";
-    AsciiTextFile temp3("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
-    AsciiTextFile temp4("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
-    AsciiTextFile temp5("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\LargeAsciiTestFile.txt");
-    LOG(TRACE) << "^-----------------------------------^  " << __FUNCTION__ << "\n\n";
-
-    LOG(INFO) << "\nTemp Counting Lines that begin with '[' ";
-    LOG(INFO) << temp.countNumberOfLinesThatBeginWith('[') << "\n";
-    LOG(INFO) << "Temp2 Counting Lines that begin with '-' ";
-    LOG(INFO) << temp2.countNumberOfLinesThatBeginWith('-') << "\n";
-    LOG(INFO) << "Temp3 Counting Lines that begin with '\t' ";
-    LOG(INFO) << temp3.countNumberOfLinesThatBeginWith('\t') << "\n";
-    LOG(INFO) << "Temp4 Counting Lines that begin with 'P' ";
-    LOG(INFO) << temp4.countNumberOfLinesThatBeginWith('P') << "\n";
-    LOG(INFO) << "Temp5 Counting Lines that begin with '!' ";
-    LOG(INFO) << temp5.countNumberOfLinesThatBeginWith('!') << "\n";
-
-    size_t tempSize = temp.countNumberOfLines();
-    size_t tempCharSize = 0u;
-
-    for (size_t i = 0u; i < tempSize; i++) {
-        tempCharSize += temp.getLineLength(i);
+        LOG(ERROR) << "Failed to construct a render environment for this application.\n"
+            "Unfortunatly this means it is time to crash...\n"
+            "      [Press Enter To Terminate]   ";
+        std::cin.get();
+        std::exit(EXIT_FAILURE);
     }
 
-    LOG(INFO) << "Temp has ";
-    LOG(INFO) << tempCharSize << " characters in total!\n";
-    */
-    //The rest of the constructor code below here is just testing some functions
-
-
-
-    //Test GLFW compile version reporting
-    /*int compileVersionMajor = 0;
-    int compileVersionMinor = 0;
-    int compileVersionRevision = 0;
-    mRenderEnvironment_->getGLFWCompiletimeVersion(compileVersionMajor, compileVersionMinor, compileVersionRevision);
-    LOG(INFO) << "Program was compiled to work with GLFW " << compileVersionMajor << "."
-        << compileVersionMinor << "." << compileVersionRevision << std::endl;
-   
-    LOG(INFO) << " Using object's print function: ";
-    LOG(INFO) << mRenderEnvironment_->getGLFWCompiletimeVersionString() << "\n";
-    
-    //Test GLFW runtime version reporting
-    LOG(INFO) << "GLFW Version Loaded at Runtime String: ";
-    LOG(INFO) << mRenderEnvironment_->getGLFWRuntimeVersionString();
-    
-
-    //Test GLAD OpenGL Version Reporting
-    int openGLVerMajor = 0;
-    int openGLVerMinor = 0;
-    bool runWIthOpenGLInCompatabilityMode = false;
-    mRenderEnvironment_->getGLVersion(openGLVerMajor, openGLVerMinor, runWIthOpenGLInCompatabilityMode);
-    LOG(INFO) << "Program was compiled to target OpenGL " << openGLVerMajor << "." << openGLVerMinor << " "
-        << ((runWIthOpenGLInCompatabilityMode) ?  "Compatibility" : "Core" ) << std::endl;
-
-    LOG(INFO) << "OpenGL version constructed by class: \'" << mRenderEnvironment_->getGLVersionString() << "\n\n" << std::endl;
-    */
-    
-
-    LOG(INFO) << "\n       Applications Constructor has completed running!\n";
+    LOG(INFO) << "\n       Application's Constructor has completed running!\n";
 
 }
 

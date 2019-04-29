@@ -75,7 +75,7 @@ namespace FSMJoystickInternal {
 
 
 	//Represents the maximum supported number of simultaneously connected Joysticks
-	static constexpr const int MAX_JOY_ID = GLFW_JOYSTICK_LAST;
+	static constexpr const int FSM_MAX_JOY_ID = GLFW_JOYSTICK_LAST;
 
 	//Max Input value that can be read from an axis (Axes include  
 	static constexpr const float AXIS_INPUT_MAX = 1.0f;

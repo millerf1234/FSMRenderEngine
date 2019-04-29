@@ -335,8 +335,9 @@ int FSMRenderEnvironment::getGLVersionMinor() const noexcept {
 std::string FSMRenderEnvironment::getGLVersionString() const noexcept {
     LOG(TRACE) << __FUNCTION__;
     std::ostringstream version;
-    version << "OpenGL Version " << std::to_string(GLVersion.major) << ".";
-    version << std::to_string(GLVersion.minor) << " Core";
+    version << glGetString(GL_VERSION);
+    //version << "OpenGL Version " << std::to_string(GLVersion.major) << ".";
+    //version << std::to_string(GLVersion.minor) << " Core";
     return version.str();
 }
 
@@ -704,11 +705,16 @@ bool FSMRenderEnvironment::createContext() {
 
     //Step 3.2 
     const int monitorCount = retrieveConnectedMonitors();
-    
-    //Step 3.3
+    LOG(INFO) << reportNumberOfConnectedMonitors(); //3.2b
+    LOG(INFO) << reportPropertiesOfSelectedMonitor(); //3.2c
+
+    //step 3.3
+    //assignUserPointerToEachMonitor() const noexcept;
+
+    //Step 3.4
     bool success = createContextAndWindow();
 
-    //Step 3.3
+    //Step 3.5
     if (success) {
         setContextWindowCallbacks();
     }
@@ -732,6 +738,9 @@ void FSMRenderEnvironment::specifyContextHints() noexcept {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GL_VERSION_MINOR);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+    glfwWindowHint(GLFW_SRGB_CAPABLE, GLFW_TRUE);
+    glfwWindowHint(GLFW_STEREO, GLFW_FALSE); //Setting this to 'true' causes a crash
+    glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
     glfwWindowHint(GLFW_CONTEXT_ROBUSTNESS, GLFW_LOSE_CONTEXT_ON_RESET); //Can be set to either GLFW_NO_RESET_NOTIFICATION or GLFW_LOSE_CONTEXT_ON_RESET
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);

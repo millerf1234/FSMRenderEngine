@@ -202,12 +202,6 @@
     <Filter Include="Source Files\FSMEngine\Exception">
       <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Projects">
-      <UniqueIdentifier>{7c1e0d7e-58b2-4632-9400-6b1b07fbc76a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Monitor">
-      <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\Types\Window">
       <UniqueIdentifier>{14ff15c4-4447-4b33-975c-10ecc139791e}</UniqueIdentifier>
     </Filter>
@@ -219,6 +213,24 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\Types\Joystick\Implementation">
       <UniqueIdentifier>{f303dcd9-3897-48db-9390-d23da9474355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\Projects">
+      <UniqueIdentifier>{7c1e0d7e-58b2-4632-9400-6b1b07fbc76a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\Projects\RenderDemos">
+      <UniqueIdentifier>{44207b12-82ff-4a8f-9c1c-5acabbaa1d51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Utilities">
+      <UniqueIdentifier>{7ec91e97-5354-43d5-9f4c-d71dfb8f719e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Utilities\Performance">
+      <UniqueIdentifier>{de9c9387-8fee-48be-9b87-cdc41de92f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Utilities\Performance\FramePerformanceReport">
+      <UniqueIdentifier>{b77fcf6f-c4e3-4dc9-93d6-42d6e8a6b21a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Monitor">
+      <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1108,7 +1120,7 @@
       <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
     </ClInclude>
     <ClInclude Include="RenderDemoBase.h">
-      <Filter>Source Files\Projects</Filter>
+      <Filter>Source Files\Application\Projects</Filter>
     </ClInclude>
     <ClInclude Include="FSMWindow.h">
       <Filter>Source Files\FSMEngine\Types\Window</Filter>
@@ -1121,6 +1133,12 @@
     </ClInclude>
     <ClInclude Include="FSMJoystickHandle.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMInitConfig.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMPerformanceReporter.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Utilities\Performance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1194,7 +1212,7 @@
       <Filter>Source Files\FSMEngine\Utility\JSON</Filter>
     </ClCompile>
     <ClCompile Include="RenderDemoBase.cpp">
-      <Filter>Source Files\Projects</Filter>
+      <Filter>Source Files\Application\Projects</Filter>
     </ClCompile>
     <ClCompile Include="FSMWindow.cpp">
       <Filter>Source Files\FSMEngine\Types\Window\Implementation</Filter>
@@ -1204,6 +1222,12 @@
     </ClCompile>
     <ClCompile Include="FSMJoystickHandle.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMInitConfig.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMPerformanceReporter.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Utilities\Performance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
