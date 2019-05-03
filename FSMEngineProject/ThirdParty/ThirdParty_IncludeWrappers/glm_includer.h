@@ -4,7 +4,7 @@
 //
 // GLM Configuration:
 //            GLM has several various configuration options available to it which are determined at 
-//                compile-time. As is common when specifing compile-time settings, these are 
+//                compile-time. As is common when specifying compile-time settings, these are 
 //                enabled/disabled by defining/leaving-undefined a specific macro which determines
 //                each setting. These macros are found within the GLM documentation. 
 //
@@ -13,7 +13,7 @@
 //               
 //             
 //
-// This header's position amongst the various Graphics-Language itermediate header include-chain structure:
+// This header's position amongst the various Graphics-Language intermediate header include-chain structure:
 //
 //            Top                  "FSMEngineBuildConfig.h" ----------------+
 //                                            |                             |
@@ -33,7 +33,7 @@
 //                                            |                             |
 //                                            V                             |
 //           Bottom                    Rest of the Codebase  <--------------+    [Both "GraphicsLanguage.h" and "GraphicsLanguageFramework.h" are intended 
-//                                                                                          to be included whereever they are needed]
+//                                                                                          to be included wherever they are needed]
 //
 //
 //
@@ -61,13 +61,13 @@
 "                       +-----------------------------------------------+\n"    )
 
 //So the syntax here is a little weird because it turns out every call to '#pragma message()'
-//automatically is appended with a new line by the compiler. Thus to keep the resonses on the same
+//automatically is appended with a new line by the compiler. Thus to keep the responses on the same
 //line as their
 //prompt, there is some macro trickery at play that produces the desired output. The key behind
-//the syntax is that there can be any number of string within the parathensis of a 'message' 
+//the syntax is that there can be any number of string within the parenthesis of a 'message' 
 //call. Finally, to understand why there always needs to be an empty string at the start of each
 //message, try deleting one of them and then compiling. The compiler doesn't like that the first
-//argument to 'message()' is a macro, it wants a legit string there instead. So the empty stirng 
+//argument to 'message()' is a macro, it wants a legit string there instead. So the empty string 
 //is vital to formulating the correct output.
 //
 //Here is what that looked like:

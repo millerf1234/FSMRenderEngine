@@ -152,6 +152,8 @@
     <ClInclude Include="AsciiSterilizer.h" />
     <ClInclude Include="AsciiTextFile.h" />
     <ClInclude Include="AsciiTextFileImpl.h" />
+    <ClInclude Include="FSMAudioCommon.h" />
+    <ClInclude Include="FSMAudioTest.h" />
     <ClInclude Include="FSMCoreDirectoryAndFilepathInvariants.h" />
     <ClInclude Include="FSMEngineBuildConfig.h" />
     <ClInclude Include="FSMGlobalInvariants.h" />
@@ -162,6 +164,7 @@
     <ClInclude Include="FSMWindow.h" />
     <ClInclude Include="FSMWindowImpl.h" />
     <ClInclude Include="JSON_Test.h" />
+    <ClInclude Include="LinearlyIndependentVectorPair.h" />
     <ClInclude Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FSMCallbackInitializer.h" />
@@ -452,6 +455,12 @@
     <ClInclude Include="ThirdParty\jsoncpp\include\value.h" />
     <ClInclude Include="ThirdParty\jsoncpp\include\version.h" />
     <ClInclude Include="ThirdParty\jsoncpp\include\writer.h" />
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\al.h" />
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\alc.h" />
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\alext.h" />
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\efx-creative.h" />
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\efx-presets.h" />
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\efx.h" />
     <ClInclude Include="ThirdParty\str_view-master\str_view.hpp" />
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\elcc_includer.h" />
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\glad_includer.h" />
@@ -459,6 +468,7 @@
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\glm_includer.h">
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>
+    <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\openAL_includer.h" />
     <ClInclude Include="UniversalIncludes.h" />
     <ClInclude Include="FSMVideoMode.h" />
     <ClInclude Include="VidModeImpl.h" />
@@ -468,6 +478,8 @@
     <ClCompile Include="AsciiSterilizer.cpp" />
     <ClCompile Include="AsciiTextFile.cpp" />
     <ClCompile Include="AsciiTextFileImpl.cpp" />
+    <ClCompile Include="FSMAudioCommon.cpp" />
+    <ClCompile Include="FSMAudioTest.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
     <ClCompile Include="FSMInitConfig.cpp" />
     <ClCompile Include="FSMJoystickEventCallback.cpp" />
@@ -512,6 +524,7 @@
     <None Include="glfw3.pdb" />
     <None Include="glfw3dll.exp" />
     <None Include="Notes\WINDOWS2000_tips_windows_graphics_programming_win32_gdi_and_directd.pdf" />
+    <None Include="SampleMovies.json" />
     <None Include="ThirdParty\glm\detail\func_common.inl" />
     <None Include="ThirdParty\glm\detail\func_common_simd.inl" />
     <None Include="ThirdParty\glm\detail\func_exponential.inl" />
@@ -646,6 +659,25 @@
     <None Include="ThirdParty\glm\gtx\wrap.inl" />
     <None Include="ThirdParty\glm\readme.md" />
     <None Include="ThirdParty\jsoncpp\LICENSE" />
+    <None Include="ThirdParty\jsoncpp\test\data\fail_test_array_01.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\fail_test_stack_limit.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_01.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_02.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_03.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_04.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_05.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_06.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_07.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_basic_01.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_04.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_unicode_01.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_unicode_04.json" />
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_unicode_05.json" />
+    <None Include="ThirdParty\OpenAL\copyright" />
+    <None Include="ThirdParty\OpenAL\debug\OpenAL32.dll" />
+    <None Include="ThirdParty\OpenAL\debug\OpenAL32.pdb" />
+    <None Include="ThirdParty\OpenAL\release\OpenAL32.dll" />
+    <None Include="ThirdParty\OpenAL\release\OpenAL32.pdb" />
     <None Include="ThirdParty\str_view-master\LICENSE" />
     <None Include="ThirdParty\str_view-master\README.md" />
   </ItemGroup>
@@ -668,6 +700,7 @@
     <Text Include="IntermediateHeadersImplementation_readme.txt" />
     <Text Include="MovingTo64Bit.txt" />
     <Text Include="Notes\NotesOnMSVC.txt" />
+    <Text Include="NoteToSelf.txt" />
     <Text Include="Random Tidbits and ideas .txt" />
     <Text Include="SafeConstructableExample.txt" />
     <Text Include="ThirdParty\easyloggingpp\license.txt" />

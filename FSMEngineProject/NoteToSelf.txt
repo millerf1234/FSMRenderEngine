@@ -1,0 +1,21 @@
+
+This project uses the OpenAL-Soft implmenetation that was obtained using VCPKG.
+Both the debug and releae DLLs are the x64 versions (despite the '32' in their name)
+
+
+I already know myself in the future will have forgotten which version of OpenAL
+is in use here and may screw things up by bringing in files from the wrong version.
+
+As of me writing this note in April 2019, there are at least 2 versions of OpenAL on
+my computer. The one currently in use in this solution is what is known as the OpenAL-Light 
+implementation, and 100% of the data and files for it originated from VCPKG. Be aware that
+this implementation is LGPL licensed, so please please please do NOT static link this 
+library into the executable, it should always be loaded as a DLL. 
+
+
+There is also a second OpenAL implementation located in c/[me]/documents/OpenAL.
+This one claims to install the OpenAL SDK that comes with a usable OpenAL DLL, but I have 
+been unable to locate the DLL. It also comes with some interesting-looking audio effects.
+
+To keep things from getting mixed up, only the VCPKG version of OpenAL is in use in this
+project.

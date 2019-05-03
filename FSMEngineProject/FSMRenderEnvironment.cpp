@@ -11,6 +11,8 @@
 #include <sstream>
 #include <fstream>
 
+#include <thread>  //Thread not actually needed outside of some testing   
+
 #include "FSMRenderEnvironment.h"
 #include "UniversalIncludes.h"
 #include "FSMEngineSettings.h"
@@ -276,27 +278,30 @@ void FSMRenderEnvironment::doMonitorSelectionLoop() {
 
     glEnable(GL_BLEND);
     
-    // Game loop
-    while (!glfwWindowShouldClose(mContextWindow_)) {
+    //Variables for Render Loop
+    float time = 0.0f;
+    uint64_t counter = 0u;
 
-        static float time = 0.0f;
-        static uint64_t counter = 0u;
+    // Render Loop
+    while (!glfwWindowShouldClose(mContextWindow_)) {
+        
+        //Per-iteration logic on Render Loop variables
         counter++;
         time += 0.05f;
         
+        //FSMEngine upkeep function
 		handleEvents();
 
-
-        // Render
-        
+        //Make background color change periodically 
         if (counter % 150u == 0u) {
             setNextFrameClearColor(time);
             logToInfoNextFrameClearColor();
+            
         }
-
         glClearColor(mScreenClearColor_.r, mScreenClearColor_.g, mScreenClearColor_.b, mScreenClearColor_.a);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        //Check to see if should quit
         if (glfwGetKey(mContextWindow_, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             glfwSetWindowShouldClose(mContextWindow_, true);
         }

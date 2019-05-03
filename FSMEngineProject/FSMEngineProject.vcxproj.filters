@@ -214,12 +214,6 @@
     <Filter Include="Source Files\FSMEngine\Types\Joystick\Implementation">
       <UniqueIdentifier>{f303dcd9-3897-48db-9390-d23da9474355}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Application\Projects">
-      <UniqueIdentifier>{7c1e0d7e-58b2-4632-9400-6b1b07fbc76a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Application\Projects\RenderDemos">
-      <UniqueIdentifier>{44207b12-82ff-4a8f-9c1c-5acabbaa1d51}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Utilities">
       <UniqueIdentifier>{7ec91e97-5354-43d5-9f4c-d71dfb8f719e}</UniqueIdentifier>
     </Filter>
@@ -231,6 +225,36 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Monitor">
       <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\OpenAL">
+      <UniqueIdentifier>{b4801c91-d10b-47b0-b7d9-86a9645c945e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\OpenAL\include">
+      <UniqueIdentifier>{03412dfa-48b9-4cd6-ade5-02f5d69231a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\OpenAL\debug">
+      <UniqueIdentifier>{476aaadf-0419-4ace-9609-73baa4f4511a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\OpenAL\release">
+      <UniqueIdentifier>{483cfd05-47c3-47d9-9ad3-60af2402d235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\Audio">
+      <UniqueIdentifier>{37e22c3a-b608-4a70-89b9-bf7f0c7cdceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\JSON\TestFiles">
+      <UniqueIdentifier>{dd7ca6ad-984c-483f-9302-5e51885ebbb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\JSON\TestFiles\JsonCPP_SampleFiles">
+      <UniqueIdentifier>{43b9aea5-1ba6-4bc1-b456-bfd51f5b107a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Utility\Math">
+      <UniqueIdentifier>{7112e1c8-d77c-4e05-9676-d3c8975d5a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\Projects">
+      <UniqueIdentifier>{7c1e0d7e-58b2-4632-9400-6b1b07fbc76a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\Projects\RenderDemos">
+      <UniqueIdentifier>{44207b12-82ff-4a8f-9c1c-5acabbaa1d51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1140,6 +1164,36 @@
     <ClInclude Include="FSMPerformanceReporter.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Utilities\Performance</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\openAL_includer.h">
+      <Filter>Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\al.h">
+      <Filter>ThirdParty\OpenAL\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\alc.h">
+      <Filter>ThirdParty\OpenAL\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\alext.h">
+      <Filter>ThirdParty\OpenAL\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\efx.h">
+      <Filter>ThirdParty\OpenAL\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\efx-creative.h">
+      <Filter>ThirdParty\OpenAL\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\OpenAL\include\AL\efx-presets.h">
+      <Filter>ThirdParty\OpenAL\include</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMAudioCommon.h">
+      <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearlyIndependentVectorPair.h">
+      <Filter>Source Files\FSMEngine\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMAudioTest.h">
+      <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
@@ -1228,6 +1282,12 @@
     </ClCompile>
     <ClCompile Include="FSMPerformanceReporter.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Utilities\Performance</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMAudioCommon.cpp">
+      <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMAudioTest.cpp">
+      <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1660,6 +1720,66 @@
     <None Include="..\AssetData\JSON\FSMEngineConfig\EngineConfig.json">
       <Filter>Resource Files\JSON\FSMEngineConfig</Filter>
     </None>
+    <None Include="ThirdParty\OpenAL\copyright">
+      <Filter>ThirdParty\OpenAL</Filter>
+    </None>
+    <None Include="ThirdParty\OpenAL\debug\OpenAL32.dll">
+      <Filter>ThirdParty\OpenAL\debug</Filter>
+    </None>
+    <None Include="ThirdParty\OpenAL\debug\OpenAL32.pdb">
+      <Filter>ThirdParty\OpenAL\debug</Filter>
+    </None>
+    <None Include="ThirdParty\OpenAL\release\OpenAL32.dll">
+      <Filter>ThirdParty\OpenAL\release</Filter>
+    </None>
+    <None Include="ThirdParty\OpenAL\release\OpenAL32.pdb">
+      <Filter>ThirdParty\OpenAL\release</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\fail_test_array_01.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\fail_test_stack_limit.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_01.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_02.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_03.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_04.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_05.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_06.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_array_07.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_basic_01.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_04.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_unicode_01.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_unicode_04.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="ThirdParty\jsoncpp\test\data\test_string_unicode_05.json">
+      <Filter>Resource Files\JSON\TestFiles\JsonCPP_SampleFiles</Filter>
+    </None>
+    <None Include="SampleMovies.json">
+      <Filter>Resource Files\JSON\TestFiles</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw3dll.lib">
@@ -1693,6 +1813,9 @@
     </Text>
     <Text Include="ThirdParty\easyloggingpp\license.txt">
       <Filter>ThirdParty\easylogging++</Filter>
+    </Text>
+    <Text Include="NoteToSelf.txt">
+      <Filter>ThirdParty\OpenAL</Filter>
     </Text>
   </ItemGroup>
 </Project>
