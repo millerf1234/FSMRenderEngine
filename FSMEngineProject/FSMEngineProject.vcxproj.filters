@@ -181,20 +181,8 @@
     <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants">
       <UniqueIdentifier>{79ad884f-c4d3-4e9b-9be3-a4491334e4ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\FSMEngineHeaders\Internal">
-      <UniqueIdentifier>{770fd835-7ab5-4e58-85bf-59f1d4cf6fc3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly">
-      <UniqueIdentifier>{4bc84b2a-0021-49b1-a509-18a6097aded8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly">
-      <UniqueIdentifier>{eb442a31-e3f1-431d-9ebe-39d62cc78229}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineBuildConfig">
       <UniqueIdentifier>{14d82097-57e8-4289-a0f8-8a91efb923fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineJSON">
-      <UniqueIdentifier>{1cee3ed9-28a8-4d0d-a607-64c1840ef53d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FSMEngine\Exception">
       <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
@@ -252,6 +240,15 @@
     </Filter>
     <Filter Include="Source Files\Application\Projects\RenderDemos">
       <UniqueIdentifier>{44207b12-82ff-4a8f-9c1c-5acabbaa1d51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\Internal">
+      <UniqueIdentifier>{770fd835-7ab5-4e58-85bf-59f1d4cf6fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly">
+      <UniqueIdentifier>{4bc84b2a-0021-49b1-a509-18a6097aded8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly">
+      <UniqueIdentifier>{eb442a31-e3f1-431d-9ebe-39d62cc78229}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1132,9 +1129,6 @@
       <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
     </ClInclude>
     <ClInclude Include="FSMJoystickInvariants.h">
-      <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMCoreDirectoryAndFilepathInvariants.h">
       <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
     </ClInclude>
     <ClInclude Include="RenderDemoBase.h">

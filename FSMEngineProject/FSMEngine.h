@@ -1,6 +1,13 @@
 // 
 // File:                                                           FSMEngine.h
 //
+// Header Status:
+//                +++++++++++++++++++++++++++++++++++++++
+//                +++                                 +++
+//                ++   INCOMPLETE / WORK IN PROGRESS   ++
+//                +++                                 +++
+//                +++++++++++++++++++++++++++++++++++++++
+//
 // Description:                        Master header file that can be included
 //                                     within a project to provide full access 
 //                                              to all FSMEngine functionality.
@@ -59,3 +66,10 @@
 
 
 #pragma once
+
+#ifndef FSM_ENGINE_H_
+#define FSM_ENGINE_H_
+
+//Just include all the public FSM headers here
+
+#endif //FSM_ENGINE_H_

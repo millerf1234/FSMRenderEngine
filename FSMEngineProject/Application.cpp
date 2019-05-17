@@ -18,7 +18,6 @@
 
 #include "AsciiTextFile.h"
 
-#include "JSON_Test.h" //Experimental
 
 
 
@@ -42,24 +41,51 @@ const std::filesystem::path Application::RELATIVE_PATH_TO_SETTINGS_DIRECTORY = "
 //  Expected Files  //
 //////////////////////
 
-const std::filesystem::path Application::RELATIVE_PATH_TO_INIT_CONFIG_FILE = "..\\AssetData\\Settings\\InitConfig.json";
+const std::filesystem::path Application::RELATIVE_PATH_TO_INIT_CONFIG_FILE = "\\..\\AssetData\\Settings\\InitConfig.json";
 
 
 
 
 //////////////////////////////////////////
-//  Implementation Function Prototypes  //
-//////////////////////////////////////////
+//  Implementation Function Prototypes  //           (The definitions for these functions can
+//////////////////////////////////////////             be found towards the end of this file)
 
-//Parameter is expected to be a filepath relative to the executable's directory
-bool checkIfIsPathToDirectory(const std::filesystem::path&);
-//Parameter is expected to be a filepath relative to the executable's directory
-bool checkIfIsPathToFile(const std::filesystem::path&);
-//Please do not pass this function random bogus nonsense so that weird directories are not created
-void createDirectory(const std::filesystem::path&);
+//Checks to see if there is an existing directory at the specified location.
+//Function has been written to accept both Absolute and Relative (see note)
+//filepaths.
+//  [NOTE]: A relative filepath must be able to start in the directory containing  
+//          this executable's file and though appending itself give the path to
+//          the target directory. Relative filepaths may begin with either dots or
+//          with the path delimiting character [i.e. a '\' or '/' depending on 
+//          the OS/Environment] 
+bool checkIfIsPathToDirectory(const std::filesystem::path&) noexcept;
+//Please do not pass this function random bogus nonsense so that weird
+//directories are not created.
+//NOTE: It is recommended to only call this function after having first checked 
+//the filepath using the related function 'checkIfIsPathToFile()' to make sure a 
+//file doesn't already exist at this location.
+void createDirectory(const std::filesystem::path&) noexcept;
 
-//
+//Checks to see if there is an existing file at the specified location.
+//Function has been written to accept both Absolute and Relative (see note)
+//filepaths.
+//  [NOTE]: A relative filepath must be able to start in the directory containing  
+//          this executable's file and though appending itself give the path to
+//          the target file's location. Relative filepaths may begin with either
+//          dots or with the path delimiting character [i.e. will be a '\' or '/'
+//          depending on the Platform/OS/Environment]  
+bool checkIfIsPathToFile(const std::filesystem::path&) noexcept;
+//Please do not pass to this function a random path that goes somewhere weird.
+//NOTE: It is recommended to only call this function after having first checked 
+//the filepath using the related function 'checkIfIsPathToFile()' to make sure a 
+//file doesn't already exist at this location.
+void createJSONFile(const std::filesystem::path& filepath, std::string_view fileText) noexcept;
 
+
+//Utility function for usage with the above implementation functions. Handles 
+//converting several possible different path-input formats into a valid, absolute
+//path.
+std::filesystem::path getAbsolutePath(const std::filesystem::path&) noexcept;
 
 
 
@@ -253,12 +279,15 @@ void Application::validateAssetDirectories() const noexcept {
 
 FSMInitConfig Application::getInitConfig() const noexcept {
 
-    if (checkIfIsPathToFile(RELATIVE_PATH_TO_INIT_CONFIG_FILE))
-        (void)0; //Try to parse the 
-
     FSMInitConfig tmp;
-    tmp.test = 0;
-    tmp.test2 = 0.975f;
+
+    if (checkIfIsPathToFile(RELATIVE_PATH_TO_INIT_CONFIG_FILE))
+        tmp.test = 1;
+    else
+        createJSONFile(RELATIVE_PATH_TO_INIT_CONFIG_FILE, "//This is a test!");
+
+
+
 
     return tmp;
 }
@@ -274,7 +303,8 @@ void Application::logApplicationBuildAndConfigurationDetails() noexcept {
     LOG(INFO) << "  Compiler:                    MSVC " << _MSC_VER;
     LOG(INFO) << "  Compile Date:               " << __DATE__;
     LOG(INFO) << "  Compile Time:               " << __TIME__;
-    LOG(INFO) << "  Implementation Is Hosted:   " << ((__STDC_HOSTED__) ? "True" : "False");
+    LOG(INFO) << "  Implementation Is Hosted:   " << (__STDC_HOSTED__ ? "True" : "False");
+    LOG(INFO) << "  _HAS_CXX20                  " << (   _HAS_CXX20   ? "True" : "False");
     LOG(INFO) << " ";
 }
 
@@ -310,11 +340,23 @@ bool Application::createRenderEnvironment() {
 
 
 
-//Parameter is expected to be a relative filepath
-bool checkIfIsPathToDirectory(const std::filesystem::path& directory) {
+
+
+
+bool checkIfIsPathToDirectory(const std::filesystem::path& directory) noexcept {
     LOG(TRACE) << __FUNCTION__;
+
+    return true;
+#ifdef OLDE 
     static std::filesystem::path executablesFilepath = std::filesystem::current_path();
-    std::filesystem::path pathToDir = executablesFilepath.string() + directory.string();
+    std::filesystem::path pathToDir;
+    if (directory.is_absolute())
+        pathToDir = directory;
+    else if (*(directory.string().cbegin()) == '\\')
+        pathToDir = executablesFilepath.string() + directory.string();
+    else
+        pathToDir = executablesFilepath.string() + "\\" + directory.string();
+
 
     if (std::filesystem::exists(pathToDir)) {
         if (std::filesystem::is_directory(pathToDir))
@@ -334,11 +376,14 @@ bool checkIfIsPathToDirectory(const std::filesystem::path& directory) {
     }
     //else
     return false;
+#endif
 }
 
-bool checkIfIsPathToFile(const std::filesystem::path& filepath) {
+bool checkIfIsPathToFile(const std::filesystem::path& filepath) noexcept {
     LOG(TRACE) << __FUNCTION__;
 
+    return true;
+#ifdef OLDE 
     static std::filesystem::path executablesFilepath = std::filesystem::current_path();
     std::filesystem::path pathToFile = executablesFilepath.string() + filepath.string();
 
@@ -359,17 +404,19 @@ bool checkIfIsPathToFile(const std::filesystem::path& filepath) {
     }
     //else
     return false;
+#endif
 }
 
 //Please do not pass this function random bogus nonsense so that weird directories are not created
-void createDirectory(const std::filesystem::path& directory) {
+void createDirectory(const std::filesystem::path& directory) noexcept {
     LOG(TRACE) << __FUNCTION__;
     
+#ifdef OLDE 
     static std::filesystem::path executablesFilepath = std::filesystem::current_path();
     std::filesystem::path pathToDir = executablesFilepath.string() + directory.string();
     LOG(INFO) << "INFO!!  Creating Directory " << pathToDir.string();
 
-    std::error_code ec = {};
+    std::error_code ec = { };
     std::filesystem::create_directory(pathToDir, ec);
 
     if (ec) {
@@ -377,4 +424,77 @@ void createDirectory(const std::filesystem::path& directory) {
         std::exit(EXIT_FAILURE);
     }
 
+#endif
+}
+
+//Please do not pass this function random bogus nonsense so that weird directories are not created
+void createJSONFile(const std::filesystem::path& filepath, std::string_view fileText) noexcept {
+    LOG(TRACE) << __FUNCTION__;
+
+#ifdef OLDE
+    if (filepath.empty() || true) {
+        std::ostringstream fatalMsg;
+        fatalMsg << "\n\n\n!!!!ERROR!!!!!\n";
+        fatalMsg << "WHAT THE HECK ARE YOU DOING! DO NOT CALL THE 'createJSONFile()' function\n";
+        fatalMsg << "with an empty filepath! Luckily the code here takes the extra step to verify\n";
+        fatalMsg << "that the requested std::filesystem::path object is not completly empty!\n";
+        fatalMsg << "Because of how bad the code calling this function is for not providing a\n";
+        fatalMsg << "filepath, the Application does not deserve to keep operating. Prepare to crash!\n";
+
+        LOG(FATAL) << fatalMsg.str();
+
+        std::exit(EXIT_FAILURE);
+    }
+
+    static std::filesystem::path executablesFilepath = std::filesystem::current_path();
+    std::filesystem::path pathToFile = executablesFilepath.string() + filepath.string();
+    LOG(INFO) << "INFO!!  Creating JSON File at Path" << pathToFile.string();
+
+    //Reality check for debug safety, can remove this function once project is further along in 
+    //its development. Basically I just want to try to have a safety-measure in place to prevent
+    //any accidental creation of files/directories in weird locations.
+    const std::filesystem::path expectedDirectory("C:\\Users\\Forrest\\source\\repos\\FSMEngine\\AssetData\\Settings");
+    const std::filesystem::path actualDirectory = pathToFile.root_directory().lexically_normal();
+    if (expectedDirectory != actualDirectory) {
+        std::ostringstream wrnMsg;
+        wrnMsg << "\n\nAttention! The function 'createJSONFile()' was called to create the file\n\t\t\"";
+        wrnMsg << pathToFile.filename().string() << "\".\n";
+        wrnMsg << "This file is to be created in the directory \n\t\"" << actualDirectory.string() << "\"\n";
+        wrnMsg << "Please Verify that this is indeed where the file should be\n"
+            "created by pressing [ENTER] around 5 or so times.\n";
+        LOG(WARNING) << wrnMsg.str();
+        for (int i = 0; i < 5; i++) {
+            std::cin.get();
+            std::cout << "\n  (" << (5 - i) << " presses remain)\n";
+        }
+    }
+#endif
+}
+
+
+
+//Utility function for usage with the above implementation functions. Handles 
+//converting several possible different path-input formats into a valid, absolute
+//path.
+std::filesystem::path getAbsolutePath(const std::filesystem::path& path) noexcept {
+    LOG(TRACE) << __FUNCTION__;
+
+    static std::filesystem::path directoryOfExecutable = std::filesystem::current_path();
+    std::filesystem::path absoluteFilepath("");
+
+    if (path.empty())
+        LOG(FATAL) << "NOOO!! BAD!!!  " << __FUNCTION__;
+
+    if (path.is_absolute())
+        absoluteFilepath = path;
+    else if (*(path.string().cbegin()) == '\\') 
+        absoluteFilepath = directoryOfExecutable.string() + path.string();
+    else
+        absoluteFilepath = directoryOfExecutable.string() + "\\" + path.string();
+
+    //Do some reality checks
+    LOG(INFO) << "Reality Check! Absolute Path is: \n     \"" << absoluteFilepath.string() << "\"\n";
+    LOG(INFO) << "Reality Check Round 2! Path is absolute: " << ((absoluteFilepath.is_absolute()) ? "True!" :
+        "false     :(  \n");
+    return absoluteFilepath;
 }

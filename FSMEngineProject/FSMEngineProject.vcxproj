@@ -96,7 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <AdditionalIncludeDirectories>$(TargetDir)..\..\FSMEngineProject\ThirdParty\jsoncpp\include;$(TargetDir)..\..\FSMEngineProject\ThirdParty\str_view-master;</AdditionalIncludeDirectories>
@@ -154,7 +154,6 @@
     <ClInclude Include="AsciiTextFileImpl.h" />
     <ClInclude Include="FSMAudioCommon.h" />
     <ClInclude Include="FSMAudioTest.h" />
-    <ClInclude Include="FSMCoreDirectoryAndFilepathInvariants.h" />
     <ClInclude Include="FSMEngineBuildConfig.h" />
     <ClInclude Include="FSMGlobalInvariants.h" />
     <ClInclude Include="FSMInitConfig.h" />
