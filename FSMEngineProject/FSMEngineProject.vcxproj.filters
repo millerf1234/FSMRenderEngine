@@ -166,9 +166,6 @@
     <Filter Include="ThirdParty\jsoncpp\Debug">
       <UniqueIdentifier>{ec382926-7284-460d-b3d3-37e9e75a8f56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Utility\JSON">
-      <UniqueIdentifier>{b1222ef5-1956-4636-aca5-fc9942715d06}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\JSON">
       <UniqueIdentifier>{89e72e2e-270e-4784-aa14-3fb3a1eeb8b7}</UniqueIdentifier>
     </Filter>
@@ -1125,9 +1122,6 @@
     <ClInclude Include="ThirdParty\jsoncpp\include\writer.h">
       <Filter>ThirdParty\jsoncpp\Includes</Filter>
     </ClInclude>
-    <ClInclude Include="JSON_Test.h">
-      <Filter>Source Files\FSMEngine\Utility\JSON</Filter>
-    </ClInclude>
     <ClInclude Include="FSMEngineSettings.h">
       <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
     </ClInclude>
@@ -1187,9 +1181,6 @@
     </ClInclude>
     <ClInclude Include="FSMAudioCommon.h">
       <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="LinearlyIndependentVectorPair.h">
-      <Filter>Source Files\FSMEngine\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="FSMAudioTest.h">
       <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
@@ -1261,9 +1252,6 @@
     </ClCompile>
     <ClCompile Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\GLFunctionCall_Pre_And_Post_Callbacks</Filter>
-    </ClCompile>
-    <ClCompile Include="JSON_Test.cpp">
-      <Filter>Source Files\FSMEngine\Utility\JSON</Filter>
     </ClCompile>
     <ClCompile Include="RenderDemoBase.cpp">
       <Filter>Source Files\Application\Projects</Filter>

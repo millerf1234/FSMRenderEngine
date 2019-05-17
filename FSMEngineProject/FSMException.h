@@ -160,7 +160,7 @@ protected:
 
 class FSMNamedException final : public FSMException {
 public:
-    enum class NamedException { NO_GL_DRIVER, INVALID_ASCII_SEQ, };
+    enum class NamedException { NO_GL_DRIVER, INVALID_ASCII_SEQ /*, NO_INIT_CONFIG_FILE_FOUND*/ };
 
 #ifdef CONSTRUCT_FROM_STRING_VIEW
     /** Constructor (String type)
@@ -178,6 +178,9 @@ public:
         case NamedException::INVALID_ASCII_SEQ:
             exceptionName = "INVALID_ASCII_SEQ";
             break;
+       // case NamedException::NO_INIT_CONFIG_FILE_FOUND:
+       //     exceptionName = "NO_INIT_CONFIG_FILE_FOUND";
+       //     break;
         default:
             exceptionName = "DEFAULT_CASE_IN_SWITCH_STATEMENT";
             LOG(WARNING) << "\nWARNING! DEFAULT CASE WAS CHOSEN IN FSMNamedException's CONSTRUCTOR!\n";

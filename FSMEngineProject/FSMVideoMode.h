@@ -42,8 +42,11 @@
 #include <memory>
 #include <string>
 
-//Forward declaration of GLFWVidmode
+#include "GraphicsLanguage.h"  //Needed for glm vectors
+
+//Forward declaration of GLFWvidmode
 struct GLFWvidmode;
+
 
 class FSMVideoMode final {
 public:
@@ -134,13 +137,14 @@ public:
     double getPhysicalDisplaySizeInches() const noexcept;
     //Measures the DPI (measured based off monitor's height)
     double getDPI_Height() const noexcept;
-    //Measures the DPI (measured based off monitor's height)
+    //Measures the DPI (measured based off monitor's width)
     double getDPI_Width() const noexcept;
     //Measures the DPI (measured based off monitor's height)
     double getDPI_WidthHeightAverage() const noexcept;
 
     //Returns the refresh rate for this videomode
     int getRefreshRate() const noexcept;
+
 
     //Returns the red bit depth for this videomode
     int getRedBitDepth() const noexcept;
@@ -149,11 +153,15 @@ public:
     //Returns the red bit depth for this videomode
     int getBlueBitDepth() const noexcept;
 
+    //Returns all 3 bit depths for each of the Red, Green and Blue channels as
+    //a 3-component vector of integers 
+    glm::ivec3 getRGBBitDepth() const noexcept;
+
+
+
     //No default constructor
     FSMVideoMode() = delete;
-    //This type requires both of the display's physical height and width in order 
-    //to be a complete type. Thus a constructor which does not require physical 
-    //dimensions is not able to produce a complete object, hence why it is disabled.
+    //A physical height and width must be provided to constructor
     FSMVideoMode(const GLFWvidmode& vid) = delete; 
 
 private:

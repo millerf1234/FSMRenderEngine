@@ -10,7 +10,7 @@ namespace FSMEngineInternal {
     namespace FSMAudio {
         
         static constexpr const size_t ENUMERATED_AUDIO_DEVICE_NAME_LENGTH_LIMIT = 2048u;
-
+         
         typedef struct EnumeratedAudioDevice {
             ALchar nameBuffer[ENUMERATED_AUDIO_DEVICE_NAME_LENGTH_LIMIT];
             EnumeratedAudioDevice() { 
@@ -19,14 +19,18 @@ namespace FSMEngineInternal {
                     nameBuffer[i] = '\0';
             }
         } EnumeratedAudioDevice;
-
+         
+         
+        bool FSMAudioTest::initialized = false;
+         
+         
         bool checkForAudioDeviceEnumerationExtension() noexcept;
         std::vector<EnumeratedAudioDevice> enumerateAudioDevices() noexcept;
         void logEnumeratedDevices(const std::vector<EnumeratedAudioDevice>&) noexcept;
-
-        bool FSMAudioTest::initialized = false;
-
-        bool FSMAudioTest::initializeAudio(AudioConfiguration config) {
+         
+         
+         
+        bool FSMAudioTest::initializeAudio(AudioConfiguration config) noexcept {
             LOG(TRACE) << __FUNCTION__;
             if (checkForAudioDeviceEnumerationExtension()) {
                 //Enumerate Devices

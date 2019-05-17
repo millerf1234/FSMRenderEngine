@@ -103,3 +103,34 @@ http://www.hlsl.co.uk/blog/2017/12/1/c-noexcept-and-move-constructors-effect-on-
         errorMessage <<   "\n ###################################################";
         errorMessage <<   "\n\n";
       #endif
+
+
+
+
+
+
+
+      ///////////////////////////////////////////////////////
+
+     Filesystem test:
+     
+    // [include iostream, filesystem]
+    
+    std::filesystem::path currentPath = std::filesystem::current_path();
+    std::filesystem::path pathTestDotsFirst = currentPath.string();
+    std::filesystem::path pathTestSlashFirst = currentPath.string();
+
+    LOG(INFO) << "Current Path is: " << pathTestDotsFirst;
+    LOG(INFO) << "->\tPerforming Dots First Test by appending \"..\\\\..\\\\\"";
+    pathTestDotsFirst.append("..\\..\\");
+    LOG(INFO) << "This gives the following filepath: " << pathTestDotsFirst;
+    pathTestDotsFirst = pathTestDotsFirst.lexically_normal();
+    LOG(INFO) << pathTestDotsFirst;
+    //LOG(TRACE) << std::endl;
+   
+    LOG(INFO) << "->\tPerforming Backslash First Test by appending \"\\\\..\\\\..\"";
+    pathTestSlashFirst.append("\\..\\..");
+    LOG(INFO) << "This Gives the Following Filepath: " << pathTestSlashFirst;
+    pathTestSlashFirst = pathTestSlashFirst.lexically_normal();
+    LOG(INFO) << pathTestSlashFirst;
+    //LOG(TRACE) << std::endl;

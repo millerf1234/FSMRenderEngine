@@ -13,7 +13,7 @@
 //                                                                                                                                                                    
 // Description:                       [In Leu of The Traditional Rambling Multi-Paragraphed Desciption You Are In All Likelyhood Regularly                            
 //                                     Skipping-In-Entirety At This Point, An Alternative Experimental Approach Has Been Undertaken In Documenting                    
-//                                     Object's of type FSMEngine]                                                                                                    
+//                                      This Type]                                                                                                  
 //                                                                                                                                                                    
 //                                                                                                                                                                    
 //                                            |                                              |                                                                        

@@ -163,8 +163,6 @@
     <ClInclude Include="FSMPerformanceReporter.h" />
     <ClInclude Include="FSMWindow.h" />
     <ClInclude Include="FSMWindowImpl.h" />
-    <ClInclude Include="JSON_Test.h" />
-    <ClInclude Include="LinearlyIndependentVectorPair.h" />
     <ClInclude Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FSMCallbackInitializer.h" />
@@ -495,7 +493,6 @@
     <ClCompile Include="GetSystemDateTime.cpp" />
     <ClCompile Include="JoystickPort.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
-    <ClCompile Include="JSON_Test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.cpp" />
     <ClCompile Include="RenderDemoBase.cpp" />

@@ -2,6 +2,7 @@
 //
 //  Programmer:           Forrest Miller
 //  Created Date:         January 10, 2019
+//                [ Still Under Development as of May 17, 2019 ]
 
 
 #include <istream>  //For std::cin.get()   to keep console open
@@ -9,56 +10,126 @@
 
 #include "GraphicsLanguage.h"
 #include "FSMException.h"
+#include "FSMInitConfig.h"
 
 //The macro 'ALLOW_ELCC_CONFIGURATION' must be defined before this header can be included
 #define ALLOW_ELCC_CONFIGURATION  1
 #include "EasyLogConfiguration.h"
 
-
 #include "AsciiTextFile.h"
 
 #include "JSON_Test.h" //Experimental
 
-Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(nullptr) {
 
 
-    //WAIT! Don't move the 'Initializing Application' message up here*!!!                 *Times I have tried to
-    //How the heck is that message going to get logged if  message                            do so counter:  4
+
+
+//////////////////////////////////
+//  Expected Asset Directories  //
+//////////////////////////////////
+
+const std::filesystem::path Application::RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY = "\\..\\AssetData";
+const std::filesystem::path Application::RELATIVE_PATH_TO_TEXTURES_DIRECTORY = "\\..\\AssetData\\Textures";
+const std::filesystem::path Application::RELATIVE_PATH_TO_SHADERS_DIRECTORY = "\\..\\AssetData\\Shaders";
+const std::filesystem::path Application::RELATIVE_PATH_TO_FONTS_DIRECTORY = "\\..\\AssetData\\Fonts";
+const std::filesystem::path Application::RELATIVE_PATH_TO_AUDIO_DIRECTORY = "\\..\\AssetData\\Audio";
+const std::filesystem::path Application::RELATIVE_PATH_TO_SETTINGS_DIRECTORY = "\\..\\AssetData\\Settings";
+
+
+
+
+//////////////////////
+//  Expected Files  //
+//////////////////////
+
+const std::filesystem::path Application::RELATIVE_PATH_TO_INIT_CONFIG_FILE = "..\\AssetData\\Settings\\InitConfig.json";
+
+
+
+
+//////////////////////////////////////////
+//  Implementation Function Prototypes  //
+//////////////////////////////////////////
+
+//Parameter is expected to be a filepath relative to the executable's directory
+bool checkIfIsPathToDirectory(const std::filesystem::path&);
+//Parameter is expected to be a filepath relative to the executable's directory
+bool checkIfIsPathToFile(const std::filesystem::path&);
+//Please do not pass this function random bogus nonsense so that weird directories are not created
+void createDirectory(const std::filesystem::path&);
+
+//
+
+
+
+
+
+///////////////////
+//  Constructor  //
+/////////////////// 
+
+// Implementation Description: 
+//       Most of the heavy initialization tasks performed by the Application
+//       are saved for until after the constructor has returned successfully.
+//
+//       The tasks performed by the constructor are essentially as follows
+//             First task: 
+//                         Get the EasyLogger++ logging library initialized. 
+//                         Be aware that in some configurations it is possible
+//                         for any failures encountered while initializing logging
+//                         to throw exceptions. Ideally these should always be caught
+//                         without ever propogating beyond the constructor.
+//
+//             Second task:
+//                         Print out some basic information regarding the Application
+//                         version, Compilation/Build details, environment details, etc..
+//
+//              Third task:
+//                         Locate the existance of the several main directories used for
+//                         storing assets. If any of these directories are unlocateable,
+//                         construct a directory. Doing so will allow a guarentee for each
+//                         asset directory be guarenteed to exist for lifetime of Application.
+//
+//       and that is pretty much all there is to it 
+//                         
+Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) {
+
+    //WAIT! Don't move the 'Initializing Application' message up here*!!!          *Times I have tried to
+    //How the heck is that message going to get logged if  message                   do so counter:  4
     //logging hasn't been set up yet?
-    
-    //
-    //BUG (of sorts)
-    //   The intro message 'Initializing Application..." is printed twice if logging fails to 
-    //   properly configure yet the application is set to keep running 
-    //
-
+       
     if (!setupMessageLogs(argc, argv)) {
         std::exit(EXIT_FAILURE);
-    }
+    } 
+    LOG(TRACE) << __FUNCTION__;
+    LOG(INFO) << "Initializing Application...";
+
+    logApplicationBuildAndConfigurationDetails();
+
+    validateAssetDirectories();
+}
+
+
+
+
+//////////////////
+//  Destructor  //
+//////////////////
+
+Application::~Application() noexcept {
+    LOG(TRACE) << __FUNCTION__;
+    el::Loggers::flushAll();
+}
+
+
+
+
+void Application::launch() {
     LOG(TRACE) << __FUNCTION__;
 
-    //Once we make it beyond this point, all message logging will be done
-    //though the Easylogger++ library 
+    FSMInitConfig config = getInitConfig();
 
-    LOG(INFO) << "Initializing Application...";
-    LOG(INFO) << "Creating directory for LOG files...DONE";
-
-    //Here Would be a good location to log Application version number and other such info
-    LOG(INFO) << "Application Version 0.0 Build 0.0.01"; //Eventually a real version system will be implemented
-    LOG(INFO) << "Compiler:                    MSVC " << _MSC_VER;
-    LOG(INFO) << "Compile Date:               " << __DATE__;
-    LOG(INFO) << "Compile Time:               " << __TIME__;
-    LOG(INFO) << "Implementation Is Hosted:   " << ((__STDC_HOSTED__) ? "True" : "False");
-
-    
-    
-    LOG(INFO) << "Parsing a test JSON!\n";
-    JSON_Test testJSONParser;
-    std::filesystem::path path = std::filesystem::current_path();
-    testJSONParser.parseFile(path);
-
-
-    LOG(INFO) << "Inchoating The Render Environment...";
+    LOG(INFO) << "Initiating Render Environment";//"Inchoating The Render Environment...";
     if (!createRenderEnvironment()) {
         LOG(ERROR) << "Failed to construct a render environment for this application.\n"
             "Unfortunatly this means it is time to crash...\n"
@@ -67,21 +138,10 @@ Application::Application(int argc, char ** argv) noexcept : mRenderEnvironment_(
         std::exit(EXIT_FAILURE);
     }
 
-    LOG(INFO) << "\n       Application's Constructor has completed running!\n";
-
-}
-
-
-Application::~Application() {
-    LOG(TRACE) << __FUNCTION__;
-    el::Loggers::flushAll();
-}
-
-void Application::launch() {
-    LOG(TRACE) << __FUNCTION__;
     LOG(INFO) << "\nApplication launched....\n";
     mRenderEnvironment_->doMonitorSelectionLoop();
 }
+
 
 
 
@@ -165,6 +225,58 @@ bool Application::setupMessageLogs(int argc, char** argv) {
     return false;
 }
 
+void Application::validateAssetDirectories() const noexcept {
+    LOG(TRACE) << __FUNCTION__;
+
+    //First see if the top directory holding all the asset sub-directories exists
+    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY)) {
+        createDirectory(RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY);
+        createDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY);
+        createDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY);
+        createDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY);
+        createDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY);
+        createDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY);
+        return;
+    }
+        
+    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY))
+        createDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY);
+    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY))
+        createDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY);
+    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY))
+        createDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY);
+    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY))
+        createDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY);
+    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY))
+        createDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY);
+}
+
+FSMInitConfig Application::getInitConfig() const noexcept {
+
+    if (checkIfIsPathToFile(RELATIVE_PATH_TO_INIT_CONFIG_FILE))
+        (void)0; //Try to parse the 
+
+    FSMInitConfig tmp;
+    tmp.test = 0;
+    tmp.test2 = 0.975f;
+
+    return tmp;
+}
+
+
+void Application::logApplicationBuildAndConfigurationDetails() noexcept {
+    LOG(TRACE) << __FUNCTION__;
+
+    LOG(INFO) << " ";
+    LOG(INFO) << "Reporting Executable's Detail";
+    //Here would be a good location to log Application version number and other such info
+    LOG(INFO) << "  Version                      0.0 Build 0.0.02"; //Eventually a real version system will be implemented
+    LOG(INFO) << "  Compiler:                    MSVC " << _MSC_VER;
+    LOG(INFO) << "  Compile Date:               " << __DATE__;
+    LOG(INFO) << "  Compile Time:               " << __TIME__;
+    LOG(INFO) << "  Implementation Is Hosted:   " << ((__STDC_HOSTED__) ? "True" : "False");
+    LOG(INFO) << " ";
+}
 
 bool Application::createRenderEnvironment() {
     LOG(TRACE) << __FUNCTION__;
@@ -193,4 +305,76 @@ bool Application::createRenderEnvironment() {
             << "Application is not sure how to respond...\n";
     }
     return false;
+}
+
+
+
+
+//Parameter is expected to be a relative filepath
+bool checkIfIsPathToDirectory(const std::filesystem::path& directory) {
+    LOG(TRACE) << __FUNCTION__;
+    static std::filesystem::path executablesFilepath = std::filesystem::current_path();
+    std::filesystem::path pathToDir = executablesFilepath.string() + directory.string();
+
+    if (std::filesystem::exists(pathToDir)) {
+        if (std::filesystem::is_directory(pathToDir))
+            return true;
+        else {
+            std::ostringstream errmsg;
+            errmsg << "BAD FILESYSTEM PATH!\n"
+                "Guilty path: " << pathToDir.string() << "\n"
+                "(Normalized):" << pathToDir.lexically_normal().string() << "\n";
+            errmsg << "The path to an Expected Asset Directory was found to\n"
+                "represent an extant item, but this item is not a directory!\n"
+                "To prevent anything from getting screwed up, this program will\n"
+                "now crash...\n";
+            LOG(ERROR) << errmsg.str();
+            std::exit(EXIT_FAILURE);
+        }
+    }
+    //else
+    return false;
+}
+
+bool checkIfIsPathToFile(const std::filesystem::path& filepath) {
+    LOG(TRACE) << __FUNCTION__;
+
+    static std::filesystem::path executablesFilepath = std::filesystem::current_path();
+    std::filesystem::path pathToFile = executablesFilepath.string() + filepath.string();
+
+    if (std::filesystem::exists(pathToFile)) {
+        if (std::filesystem::is_regular_file(pathToFile))
+            return true;
+        else {
+            std::ostringstream errmsg;
+            errmsg << "Guilty Filepath: " << pathToFile.string() << "\n"
+                "The filepath to the requested location was found to\n"
+                "represent an existing location, but the item at this location\n"
+                "is not a file!\n"
+                "To prevent anything from getting screwed up, this program will\n"
+                "now crash...\n";
+            LOG(ERROR) << errmsg.str();
+            std::exit(EXIT_FAILURE);
+        }
+    }
+    //else
+    return false;
+}
+
+//Please do not pass this function random bogus nonsense so that weird directories are not created
+void createDirectory(const std::filesystem::path& directory) {
+    LOG(TRACE) << __FUNCTION__;
+    
+    static std::filesystem::path executablesFilepath = std::filesystem::current_path();
+    std::filesystem::path pathToDir = executablesFilepath.string() + directory.string();
+    LOG(INFO) << "INFO!!  Creating Directory " << pathToDir.string();
+
+    std::error_code ec = {};
+    std::filesystem::create_directory(pathToDir, ec);
+
+    if (ec) {
+        LOG(ERROR) << "\nUnable to locate or create a directory for assets at path: " << pathToDir.string();
+        std::exit(EXIT_FAILURE);
+    }
+
 }

@@ -1,28 +1,16 @@
 //  File:                    Application.h
 //  Class:                   Application
 //
-//
-//  Updated Description:    Has a constructor that sets some global state. As of right now, the 
-//                          constructor does not perform any actions that will throw (at least in
-//                          my code, not sure about 3rd party code it calls).  
-//                          This class has one function called 'launch()', which creates an instance
-//                          of the main-menu class, which then everything else runs from.
-//
-//
-//  Old Description:             'The one class to rule them all...' 
-//                           What is there to say? This class provides the global encapsulating backbone
-//                           for the Application to run inside. Essentially this class can be thought 
-//                           of in terms of the three phases of execution it implements:
-// 
-//               [Phase 1]   APPLICATION CONSTRUCTION
-//                               This phase follows the RAII-design pattern, which in this particular case 
-//                               means that 
-//                               
-//                           
-//                           
+//  This class is still undergoing development so no specific description is
+//  yet available. The overall idea here though is to provide the 'main()'
+//  function with something to invoke. Early initialization steps are performed 
+//  by this class itself enough to get many of the core systems online. After 
+//  completing its initialization, this class will invoke either 
+//           (Option A) a user-interactive menu/titlescreen, or
+//           (Option B) directly enter into a render demo
 //                           
 // Programmer:   Forrest Miller                           
-// Date:         January 9, 2019
+// Date:         January - May 2019
 //
 
 #pragma once
@@ -30,14 +18,14 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-#include <exception>
 #include "FSMRenderEnvironment.h"
 
+class FSMInitConfig;
 
 class Application final {
 public:
-    Application(int argc = 0, char ** argv = nullptr) noexcept;
-    ~Application();
+    Application(int argc = 0, char** argv = nullptr);
+    ~Application() noexcept;
 
     void launch();
 
@@ -46,11 +34,25 @@ public:
     Application& operator=(const Application& that) = delete;
 
 private:
+    //         Fields
+    static const std::filesystem::path RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY;
+    static const std::filesystem::path RELATIVE_PATH_TO_SETTINGS_DIRECTORY;
+    static const std::filesystem::path RELATIVE_PATH_TO_TEXTURES_DIRECTORY;
+    static const std::filesystem::path RELATIVE_PATH_TO_SHADERS_DIRECTORY;
+    static const std::filesystem::path RELATIVE_PATH_TO_FONTS_DIRECTORY;
+    static const std::filesystem::path RELATIVE_PATH_TO_AUDIO_DIRECTORY;
+    static const std::filesystem::path RELATIVE_PATH_TO_INIT_CONFIG_FILE;
+
     std::unique_ptr<FSMRenderEnvironment> mRenderEnvironment_ = nullptr;
 
 
 
-    bool setupMessageLogs(int argc, char ** argv);
+
+    //         Private Member Functions
+    bool setupMessageLogs(int argc, char** argv);
+    void validateAssetDirectories() const noexcept;
+    FSMInitConfig getInitConfig() const noexcept;   
+    void logApplicationBuildAndConfigurationDetails() noexcept;
     bool createRenderEnvironment();
 };
 

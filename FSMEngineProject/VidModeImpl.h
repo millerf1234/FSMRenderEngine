@@ -50,9 +50,11 @@ public:
     double getDPI_WidthHeightAverage() const noexcept;
 
     int getRefreshRate() const noexcept { return mRefreshRate_; }
+
     int getRedBitDepth() const noexcept { return mRedBits_; }
     int getGreenBitDepth() const noexcept { return mGreenBits_; }
     int getBlueBitDepth() const noexcept { return mBlueBits_; }
+    glm::ivec3 getRGBBitDepth() const noexcept { return glm::ivec3(mRedBits_, mGreenBits_, mBlueBits_); }
 
 private:
     static constexpr const double MILLIMETERS_PER_INCH = 25.4; //Used in screen DPI computations 

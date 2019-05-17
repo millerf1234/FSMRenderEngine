@@ -45,7 +45,7 @@
 ///#define LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS 1
 ///#define LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS 1
 static constexpr const bool LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS = true;
-static constexpr const bool LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS = true;
+static constexpr const bool LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS = false;
 
 
 static constexpr const int FSM_MINIMUM_GL_VERSION_MAJOR = 4;
