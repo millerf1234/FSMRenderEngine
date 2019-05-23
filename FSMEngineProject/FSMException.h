@@ -35,9 +35,9 @@
 //                          
 //               MORE DOCUMENTATION FORTHCOMING AS CODE PROGRESSES...
 //
-//                Multi-thread support forthcoming
+//                Maybe --> Multi-thread support forthcoming
 //
-//  Code is based off top answer at: 
+//  My Code was somewhat inspired by the top answer of: 
 //      https://stackoverflow.com/questions/8152720/correct-way-to-inherit-from-stdexception
 //
 //
@@ -55,11 +55,19 @@
 //                                                                                                                                   
 //        +==========================+=================================================================================+  
 //        |      EXCEPTION NAME      |                              EXCEPTION DESCRIPTION                              |  
-//        +==========================+=================================================================================+  
+//        +==========================+=================================================================================+   
+//        |                          |                                                                                 |  
+//        |  LOGGING_INIT_FAILURE    |                                                                                 |  
+//        |                          |                                                                                 |  
+//        +--------------------------+---------------------------------------------------------------------------------+   
 //        |                          |  Expected to be thrown during construction of FSMRenderEnvironment if there is  |  
 //        |       NO_GL_DRIVER       |   a failure to detect a valid OpenGL compatible driver on the current system.   |  
 //        |                          |  Seeing as this is a major issue, recommended response is to crash gracefully.  |  
 //        +--------------------------+---------------------------------------------------------------------------------+   
+//        |                          |                                                                                 |  
+//        |                          |                                                                                 |  
+//        |                          |                                                                                 |  
+//        +--------------------------+---------------------------------------------------------------------------------+    
 //        |                          |                                                                                 |  
 //        |                          |                                                                                 |  
 //        |                          |                                                                                 |  
@@ -95,66 +103,57 @@
 #define FSM_EXCEPTION_H_
 
 #include <string>
-#include <stdexcept>  //#include <exception>
+#include <exception> //<stdexcept>  //#include <exception>
 #include "UniversalIncludes.h"  //For LOG message writing
 
-//If string_view isn't available, comment the following 2 lines
-#define CONSTRUCT_FROM_STRING_VIEW 1
 #include <string_view>
 
 
-
+//Generic Exception Class 
 
 class FSMException : public std::exception {
 public:
 
-#ifdef CONSTRUCT_FROM_STRING_VIEW
-    /** Constructor (String type)
-        @param message The exception message.
-    */
-    FSMException(std::string_view message) noexcept : mMessage_(message) {
-        LOG(TRACE) << __FUNCTION__;
-    }
-#else 
-    /** Constructor (C strings).
-     *  @param message C-style string error message.
-     *                 The string contents are copied upon construction.
-     *                 Hence, responsibility for deleting the char* lies
-     *                 with the caller.
-     */
-    explicit FSMException(const char* message) noexcept :
-        mMessage_((message != nullptr)?(message):("")) {
+    //   Constructor 
+    // Creates a generic FSMException object. Each FSMException  constructed
+    // with a customizable message meant for descibing details on what, where
+    // and why this exception was thrown. There is also an optional second 
+    // parameter of a boolean flag representing whether the exception
+    // should be handled as a fatal  
+    FSMException(std::string_view message, bool isFatal = false) noexcept :
+        std::exception(message.empty() ? message.data() : "No Message Is Available for this FSMException!"),
+        mMessage_(message), mIsFatal_(isFatal) {
         LOG(TRACE) << __FUNCTION__;
     }
 
-    /** Constructor (C++ STL strings).
-     *  @param message The error message.
-     */
-    explicit FSMException(const std::string& message) noexcept :
-        mMessage_(message) {
-            LOG(TRACE) << __FUNCTION__;
-    }
-#endif // CONSTRUCT_FROM_STRING_VIEW
-
-    /** Destructor.
-     * Virtual to allow for subclassing.
-     */
+    //   Desctructor
+    // Needed to allow for additional types to inherit from this type.
     virtual ~FSMException() noexcept { LOG(TRACE) << __FUNCTION__; }
 
-    /** Returns a pointer to the (constant) error description.
-     *  @return A pointer to a const char*. The underlying memory
-     *          is in possession of the Exception object. Callers must
-     *          not attempt to free the memory.
-     */
+
+    //  ________________________________________________________________  //
+    //                                                                    //
+    //                   Member Data Accessor Functions                   //
+    //  ________________________________________________________________  //
+    //                                                                    //
+
+    /* 
+    // Returns a pointer to a null-terminated c-string which contains
+    // a description message providing information about this exception.
+    //
+    //   IMPORTANT!  The returned pointer is to data owned internally by
+    //               this object and should never be modified or released
+    //               externally by calling code
     virtual const char* what() const noexcept override {        
         LOG(TRACE) << __FUNCTION__;
         return mMessage_.c_str();
     }
+    */  
 
 protected:
-    /** Error message.
-     */
-    std::string mMessage_;
+    const std::string mMessage_;
+private: 
+    const bool mIsFatal_;
 };
 
 
