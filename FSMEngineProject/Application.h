@@ -34,19 +34,28 @@ public:
     Application& operator=(const Application& that) = delete;
 
 private:
-    //         Fields
+    //Static Members
+
     static const std::filesystem::path RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY;
     static const std::filesystem::path RELATIVE_PATH_TO_SETTINGS_DIRECTORY;
     static const std::filesystem::path RELATIVE_PATH_TO_TEXTURES_DIRECTORY;
     static const std::filesystem::path RELATIVE_PATH_TO_SHADERS_DIRECTORY;
     static const std::filesystem::path RELATIVE_PATH_TO_FONTS_DIRECTORY;
     static const std::filesystem::path RELATIVE_PATH_TO_AUDIO_DIRECTORY;
+
     static const std::filesystem::path RELATIVE_PATH_TO_INIT_CONFIG_FILE;
 
+    //         Fields
+
+
+    //Store the current filepath at the time the executable is launched.
+    //Note: https://en.cppreference.com/w/cpp/filesystem/current_path has me
+    //      worried that relying on 'current_path()' is potentially insecure.
+    //      My current work around is to try to set the 'current_path()' as
+    //      early as possible in the program's lifetime.
+    const std::filesystem::path ABSOLUTE_FILEPATH_TO_EXECUTABLE;
+
     std::unique_ptr<FSMRenderEnvironment> mRenderEnvironment_ = nullptr;
-
-
-
 
     //         Private Member Functions
     bool setupMessageLogs(int argc, char** argv);

@@ -162,6 +162,8 @@
     <ClInclude Include="FSMPerformanceReporter.h" />
     <ClInclude Include="FSMWindow.h" />
     <ClInclude Include="FSMWindowImpl.h" />
+    <ClInclude Include="InitConfigDefaults.h" />
+    <ClInclude Include="json.h" />
     <ClInclude Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FSMCallbackInitializer.h" />
@@ -513,8 +515,8 @@
     <ClCompile Include="VidModeImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\AssetData\JSON\FSMEngineConfig\EngineConfig.json" />
     <None Include="..\AssetData\Shaders\Basic.vert" />
+    <None Include="..\AssetData\Shaders\HeatMap.frag" />
     <None Include="glfw3.dll" />
     <None Include="glfw3.ilk" />
     <None Include="glfw3.pdb" />

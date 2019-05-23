@@ -6,6 +6,7 @@
 
 
 #include <istream>  //For std::cin.get()   to keep console open
+#include <cassert>
 #include "Application.h"
 
 #include "GraphicsLanguage.h"
@@ -85,7 +86,7 @@ void createJSONFile(const std::filesystem::path& filepath, std::string_view file
 //Utility function for usage with the above implementation functions. Handles 
 //converting several possible different path-input formats into a valid, absolute
 //path.
-std::filesystem::path getAbsolutePath(const std::filesystem::path&) noexcept;
+std::filesystem::path getAbsolutePath(const std::filesystem::path&, const std::filesystem::path&) noexcept;
 
 
 
@@ -118,7 +119,8 @@ std::filesystem::path getAbsolutePath(const std::filesystem::path&) noexcept;
 //
 //       and that is pretty much all there is to it 
 //                         
-Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr) {
+Application::Application(int argc, char ** argv) : mRenderEnvironment_(nullptr),
+                                                   ABSOLUTE_FILEPATH_TO_EXECUTABLE(std::filesystem::current_path()) {
 
     //WAIT! Don't move the 'Initializing Application' message up here*!!!          *Times I have tried to
     //How the heck is that message going to get logged if  message                   do so counter:  4
@@ -253,28 +255,34 @@ bool Application::setupMessageLogs(int argc, char** argv) {
 
 void Application::validateAssetDirectories() const noexcept {
     LOG(TRACE) << __FUNCTION__;
+    try {
+        //First see if the parent directory which contains all the asset sub-directories exists
+        if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY)) {
+            //If we had to create a parent directory then we know it will not contain
+            //any of the sub directories until we populate it
+            createDirectory(RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY);
+            createDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY);
+            createDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY);
+            createDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY);
+            createDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY);
+            createDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY);
+            return;
+        }
 
-    //First see if the top directory holding all the asset sub-directories exists
-    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY)) {
-        createDirectory(RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY);
-        createDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY);
-        createDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY);
-        createDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY);
-        createDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY);
-        createDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY);
-        return;
+        if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY))
+            createDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY);
+        if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY))
+            createDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY);
+        if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY))
+            createDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY);
+        if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY))
+            createDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY);
+        if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY))
+            createDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY);
     }
-        
-    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY))
-        createDirectory(RELATIVE_PATH_TO_SETTINGS_DIRECTORY);
-    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY))
-        createDirectory(RELATIVE_PATH_TO_TEXTURES_DIRECTORY);
-    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY))
-        createDirectory(RELATIVE_PATH_TO_SHADERS_DIRECTORY);
-    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY))
-        createDirectory(RELATIVE_PATH_TO_FONTS_DIRECTORY);
-    if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY))
-        createDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY);
+    catch (...) {
+
+    }
 }
 
 FSMInitConfig Application::getInitConfig() const noexcept {
@@ -345,6 +353,9 @@ bool Application::createRenderEnvironment() {
 
 bool checkIfIsPathToDirectory(const std::filesystem::path& directory) noexcept {
     LOG(TRACE) << __FUNCTION__;
+    
+    //getAbsolutePath(ABSOLUTE_FILEPATH_TO_EXECUTABLE, directory);
+
 
     return true;
 #ifdef OLDE 
@@ -430,9 +441,25 @@ void createDirectory(const std::filesystem::path& directory) noexcept {
 //Please do not pass this function random bogus nonsense so that weird directories are not created
 void createJSONFile(const std::filesystem::path& filepath, std::string_view fileText) noexcept {
     LOG(TRACE) << __FUNCTION__;
+    
+    if (filepath.empty()) {
+        std::ostringstream fatalMsg;
+        fatalMsg << "\n\n\n!!!!ERROR!!!!!\n";
+        fatalMsg << "WHAT THE HECK ARE YOU DOING! DO NOT CALL THE 'createJSONFile()' function\n";
+        fatalMsg << "with an empty filepath! Luckily the code here takes the extra step to verify\n";
+        fatalMsg << "that the requested std::filesystem::path object is not completly empty!\n";
+        fatalMsg << "Because of how bad the code calling this function is for not providing a\n";
+        fatalMsg << "filepath, the Application does not deserve to keep operating. Prepare to crash!\n";
+
+        LOG(FATAL) << fatalMsg.str();
+
+        std::exit(EXIT_FAILURE);
+    }
+
+
 
 #ifdef OLDE
-    if (filepath.empty() || true) {
+    if (filepath.empty()) {
         std::ostringstream fatalMsg;
         fatalMsg << "\n\n\n!!!!ERROR!!!!!\n";
         fatalMsg << "WHAT THE HECK ARE YOU DOING! DO NOT CALL THE 'createJSONFile()' function\n";
@@ -473,28 +500,27 @@ void createJSONFile(const std::filesystem::path& filepath, std::string_view file
 
 
 
-//Utility function for usage with the above implementation functions. Handles 
-//converting several possible different path-input formats into a valid, absolute
-//path.
-std::filesystem::path getAbsolutePath(const std::filesystem::path& path) noexcept {
+//Utility function for converting several possible different path-input
+//formats into a valid, absolute path.
+std::filesystem::path getAbsolutePath(const std::filesystem::path& basePath, const std::filesystem::path& relativePath) noexcept {
     LOG(TRACE) << __FUNCTION__;
 
-    static std::filesystem::path directoryOfExecutable = std::filesystem::current_path();
     std::filesystem::path absoluteFilepath("");
 
-    if (path.empty())
-        LOG(FATAL) << "NOOO!! BAD!!!  " << __FUNCTION__;
+   
+    //Please ensure path is not an empty string before evaluating this next statement
+    char firstCharInPath = (*(relativePath.string().cbegin()));
 
-    if (path.is_absolute())
-        absoluteFilepath = path;
-    else if (*(path.string().cbegin()) == '\\') 
-        absoluteFilepath = directoryOfExecutable.string() + path.string();
-    else
-        absoluteFilepath = directoryOfExecutable.string() + "\\" + path.string();
+    if (relativePath.is_absolute())
+        absoluteFilepath = relativePath;
+    else if (firstCharInPath == '\\') 
+        absoluteFilepath = basePath.string() + relativePath.string();
+    else if (firstCharInPath == '.')
+        absoluteFilepath = basePath.string() + "\\" + relativePath.string();
+    else 
+        absoluteFilepath = basePath.string() + "\\" + relativePath.string();
 
-    //Do some reality checks
-    LOG(INFO) << "Reality Check! Absolute Path is: \n     \"" << absoluteFilepath.string() << "\"\n";
-    LOG(INFO) << "Reality Check Round 2! Path is absolute: " << ((absoluteFilepath.is_absolute()) ? "True!" :
-        "false     :(  \n");
+    absoluteFilepath = absoluteFilepath.lexically_normal();
+
     return absoluteFilepath;
 }
