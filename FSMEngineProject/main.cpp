@@ -6,9 +6,9 @@
 //Date:                January 9, 2019
 
 #include <memory>
-#include "Application.h"
+#include "ApplicationOld.h"
 
-int main(int argc, char ** argv) {
-    std::unique_ptr<Application> app = std::make_unique<Application>(argc, argv);
+int main(int argc, char** argv) {
+    std::unique_ptr<ApplicationOld> app = std::make_unique<ApplicationOld>(argc, argv);
     app->launch(); 
 }

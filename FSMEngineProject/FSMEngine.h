@@ -70,6 +70,9 @@
 #ifndef FSM_ENGINE_H_
 #define FSM_ENGINE_H_
 
-//Just include all the public FSM headers here
+#include "GraphicsLanguageFramework.h"
+#include "UniversalIncludes.h"
+
+
 
 #endif //FSM_ENGINE_H_

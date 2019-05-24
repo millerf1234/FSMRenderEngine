@@ -118,9 +118,6 @@
     <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineBuildConfig">
       <UniqueIdentifier>{14d82097-57e8-4289-a0f8-8a91efb923fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Exception">
-      <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\Types\Window">
       <UniqueIdentifier>{14ff15c4-4447-4b33-975c-10ecc139791e}</UniqueIdentifier>
     </Filter>
@@ -274,10 +271,13 @@
     <Filter Include="ThirdParty\JSON\json for modern c++">
       <UniqueIdentifier>{9f455d5f-3bfe-4780-b221-7494f2ab56f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Logging_Initialization">
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Exception">
+      <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Logging_Initialization">
       <UniqueIdentifier>{339b20fa-2f8b-4ebb-8d3c-8f365a313220}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Logging_Initialization\Logging Init">
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Logging_Initialization\LoggingInitImplementation">
       <UniqueIdentifier>{0944decd-e772-40fd-8b18-6374f65d9ac7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1069,16 +1069,13 @@
       <Filter>Source Files\FSMEngine\Utility\DateTime</Filter>
     </ClInclude>
     <ClInclude Include="EasyLogConfiguration.h">
-      <Filter>Source Files\FSMEngine\Logging_Initialization\Logging Init</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Source Files\Application</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Logging_Initialization\LoggingInitImplementation</Filter>
     </ClInclude>
     <ClInclude Include="FSMRenderEnvironment.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Engine</Filter>
     </ClInclude>
     <ClInclude Include="FSMException.h">
-      <Filter>Source Files\FSMEngine\Exception</Filter>
+      <Filter>Source Files\FSMEngine\EngineInternal\Exception</Filter>
     </ClInclude>
     <ClInclude Include="FSMMonitorHandle.h">
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Monitor</Filter>
@@ -1149,9 +1146,6 @@
     <ClInclude Include="ThirdParty\jsoncpp\include\writer.h">
       <Filter>ThirdParty\JSON\jsoncpp\Includes</Filter>
     </ClInclude>
-    <ClInclude Include="FSMEngineSettings.h">
-      <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineInvariants</Filter>
-    </ClInclude>
     <ClInclude Include="FSMEngineBuildConfig.h">
       <Filter>Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineBuildConfig</Filter>
     </ClInclude>
@@ -1215,6 +1209,15 @@
     <ClInclude Include="json.h">
       <Filter>ThirdParty\JSON\json for modern c++</Filter>
     </ClInclude>
+    <ClInclude Include="ApplicationOld.h">
+      <Filter>Source Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMGlobalState.h">
+      <Filter>Header Files\FSMEngineHeaders\Internal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\easyloggingpp\include\easylogging++.cc">
@@ -1246,9 +1249,6 @@
     </ClCompile>
     <ClCompile Include="GetSystemDateTime.cpp">
       <Filter>Source Files\FSMEngine\Utility\DateTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="FSMRenderEnvironment.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Engine</Filter>
@@ -1306,6 +1306,15 @@
     </ClCompile>
     <ClCompile Include="FSMAudioTest.cpp">
       <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ApplicationOld.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMException.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Exception</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

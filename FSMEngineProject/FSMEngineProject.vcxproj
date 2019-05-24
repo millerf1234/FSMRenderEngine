@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ApplicationOld.h" />
     <ClInclude Include="AsciiSterilizer.h" />
     <ClInclude Include="AsciiTextFile.h" />
     <ClInclude Include="AsciiTextFileImpl.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="FSMAudioTest.h" />
     <ClInclude Include="FSMEngineBuildConfig.h" />
     <ClInclude Include="FSMGlobalInvariants.h" />
+    <ClInclude Include="FSMGlobalState.h" />
     <ClInclude Include="FSMInitConfig.h" />
     <ClInclude Include="FSMJoystickHandle.h" />
     <ClInclude Include="FSMJoystickInvariants.h" />
@@ -169,7 +171,6 @@
     <ClInclude Include="FSMCallbackInitializer.h" />
     <ClInclude Include="EasyLogging_BuildConfig.h" />
     <ClInclude Include="FSMEngine.h" />
-    <ClInclude Include="FSMEngineSettings.h" />
     <ClInclude Include="FSMErrorCallback.h" />
     <ClInclude Include="FSMException.h" />
     <ClInclude Include="FSMJoystickCommon.h" />
@@ -474,12 +475,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ApplicationOld.cpp" />
     <ClCompile Include="AsciiSterilizer.cpp" />
     <ClCompile Include="AsciiTextFile.cpp" />
     <ClCompile Include="AsciiTextFileImpl.cpp" />
     <ClCompile Include="FSMAudioCommon.cpp" />
     <ClCompile Include="FSMAudioTest.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
+    <ClCompile Include="FSMException.cpp" />
     <ClCompile Include="FSMInitConfig.cpp" />
     <ClCompile Include="FSMJoystickEventCallback.cpp" />
     <ClCompile Include="FSMJoystickHandle.cpp" />

@@ -76,6 +76,10 @@
 //  Reference:  https://www.glfw.org/docs/3.3/monitor_guide.html#monitor_scale
 //              https://www.glfw.org/docs/latest/monitor_guide.html
 //
+//  Sidenote on Gamma Ramp:  The book Game Programming Gems 4 has a section 
+//                           which explores using gamma ramp. Check out 
+//                           Chapter 5 Section 10, which starts on page 465. 
+//
 // Programmer:   Forrest Miller
 // Coded In Spurts Starting November 2018 and continuing on into Summer 2019
 //
@@ -137,8 +141,9 @@ public:
 
 	std::string getName() const noexcept;
 
-	GLFWgammaramp getGammaRamp() const noexcept;
 
+    //Retrieves the current gamma ramp for this monitor.
+	GLFWgammaramp getGammaRamp() const noexcept;
 
 	//Sets a new gamma value for this monitor. The effects of this function will 
 	//follow the GLFW documentation for the function glfwSetGamma(). The GLFW
