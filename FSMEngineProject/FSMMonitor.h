@@ -1,10 +1,17 @@
  // File:                              FSMMonitor.h                                                                                                                    
 // Class:                             FSMMonitor                                                                                                                      
-// QuickInfo:                                                                                                                                                         
+// QuickInfo:                                                                                *(NOTE ON THE BELOW NOTE: NO API CALL YET EXISTS)                
 //          Default Constructor       DISABLED    [ See Note* --> ]                   *Note: FSMMonitor objects by design have all of their public constructors       
 //          Copy Operations           ENABLED                                                (asides copy and move) restricted. The only way for these types to be    
-//          Move Operations           ENABLED                                                 created is through internal FSM                                         
-//                                                                                                                                                                    
+//          Move Operations           ENABLED                                                 created is through an API (see above) call which asks the FSMEngine's     
+//                                                                                            internal object that provides direct ownsership and lifetime management 
+//                                                                                            for a single GLFWmonitor* to create a FSMMonitor non-owning 'copy' of   
+//                                                                                            itself, which then basically serves as a weak reference. The beauty of 
+//                                                                                            this design is that any number of these FSMMonitor weak-references can 
+//                                                                                            be generated and exist simultaneously all from the one same internal 
+//                                                                                            object. The downside is if the monitor disconnects and the internal 
+//                                                                                            engine object releases itself, there is currently no way for the weak
+//                                                                                            reference objects to know their handle is no longer any good.
 //                                                                                                                                                                    
 // See Also:                          FSMVideoMode                                                                                                                    
 //                                                                                                                                                                    
@@ -59,7 +66,7 @@
 //  Psych! Here is a descripton anyways                                                                                                                               
 //  Description:
 //            Monitor connections and disconnections are processed completely autonomously by the FSMEngine 
-//          [as long as its 'processEvents()' function is  called consistently]. Due to the external hardware nature
+//          [as long as the 'processEvents()' function is called regularly]. Due to the external hardware nature 
 //          of monitors, creation and destruction of their wrapper type is to be done only internally by the engine so 
 //          that each object's lifetime matches a physical connection's lifetime.
 //           
@@ -110,6 +117,8 @@ struct MonitorWorkarea {
 
 class FSMMonitor final {
 public:
+    //Please do not try to create this type yourself, it has been 
+    //designed in a special way which allows it to function 
 	FSMMonitor() = delete;
 	FSMMonitor(const FSMMonitor&);
 	FSMMonitor(FSMMonitor&&) noexcept;
@@ -160,8 +169,8 @@ public:
 
 private:
 	FSMMonitor(GLFWmonitor* handle);
-	friend class FSMEngineInternal::FSMMonitorHandle;
-	class FSMMonitorImpl;
+	friend class FSMEngineInternal::FSMMonitorHandle; 
+    class FSMMonitorImpl;
 	std::unique_ptr<FSMMonitorImpl> pImpl_;
 };
 
