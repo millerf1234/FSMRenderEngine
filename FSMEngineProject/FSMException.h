@@ -43,12 +43,6 @@
 //
 //  IMPORTANT: Note Scope Of Re-thrown Exceptions  https://stackoverflow.com/questions/6185957/rethrowing-exceptions
 //
-//  Design Question:  Should the calls to these exception's constructors/destructors be recorded within
-//                     the trace log? I for now am leaning towards not having them logged as part of the
-//                     trace since that will keep things simpler. Hopefully choosing not to log these calls
-//                     won't come back to bite me (or another programmer) one day in the future...
-//
-//
 //
 //         Table of Named Exceptions:
 //          [Note: It looks like the OS handles reporting a missing '.dll', so no exception is needed for this event]     
@@ -57,24 +51,24 @@
 //        |      EXCEPTION NAME      |                              EXCEPTION DESCRIPTION                              |  
 //        +==========================+=================================================================================+   
 //        |                          |                                                                                 |  
-//        |  LOGGING_INIT_FAILURE    |                                                                                 |  
+//        |  LOGGING_INIT_FAILURE    |     Expected to be thrown if something goes wrong while setting up Logging.     |  
 //        |                          |                                                                                 |  
 //        +--------------------------+---------------------------------------------------------------------------------+   
 //        |                          |  Expected to be thrown during construction of FSMRenderEnvironment if there is  |  
 //        |       NO_GL_DRIVER       |   a failure to detect a valid OpenGL compatible driver on the current system.   |  
 //        |                          |  Seeing as this is a major issue, recommended response is to crash gracefully.  |  
 //        +--------------------------+---------------------------------------------------------------------------------+   
-//        |                          |                                                                                 |  
-//        |                          |                                                                                 |  
+//        |                          |       Expected to be thrown if there is an error that occurs while using        |  
+//        |     FILESYSTEM_ERROR     |        functionality found in the C++17 library <filesystem>                    |  
 //        |                          |                                                                                 |  
 //        +--------------------------+---------------------------------------------------------------------------------+    
 //        |                          |                                                                                 |  
-//        |                          |                                                                                 |  
+//        |   NO_MONITORS_DETECTED   |    Expected to be thrown if FSMEngine is unable to detect any valid monitors.   |  
 //        |                          |                                                                                 |  
 //        +--------------------------+---------------------------------------------------------------------------------+   
-//        |                          |                                                                                 |  
-//        |                          |                                                                                 |  
-//        |                          |                                                                                 |  
+//        |                          |   Expected to be thrown during the creation of a FSMWindowContext if the        |  
+//        |  INVALID_MONITOR_INDEX   |   requested monitor index represents a value beyond the end of the array of     |  
+//        |                          |   available monitors.                                                           |  
 //        +--------------------------+---------------------------------------------------------------------------------+   
 //        |                          |                                                                                 |  
 //        |                          |                                                                                 |  
@@ -107,14 +101,26 @@
 #include "UniversalIncludes.h"  //For LOG message writing
 #include <string_view>
 
-////////////////////////////////////////////
-////          Global Constants          ////
-////////////////////////////////////////////
+
+
+    //  ________________________________________________________________  //
+    //                                                                    //
+    //                    FSMException Global Constants                   //
+    //  ________________________________________________________________  //
+    //                                                                    //
+
 std::string DEFAULT_MESSAGE = "No Message Is Available For This FSMException!";
 
 
 
 
+
+
+    //  ________________________________________________________________  //
+    //                                                                    //
+    //                            FSMException                            //
+    //  ________________________________________________________________  //
+    //                                                                    //
 
 
 //   Generic Exception Class -- FSMException          [Inherits from std::exception]
@@ -173,13 +179,10 @@ public:
         LOG(TRACE) << __FUNCTION__; 
     }
 
-
-    //  ________________________________________________________________  //
-    //                                                                    //
-    //                  Member Data Accessor Function(s)                  //
-    //  ________________________________________________________________  //
-    //                                                                    //
-    
+    //If this returns true, then the fact that this exception was thrown 
+    //signifies something has failed catastophically enough to warrent a
+    //bypass of all attempts at recovery in leu of logging as much detail 
+    //as is practical before terminating the process.
     bool isFatal() const noexcept {
         LOG(TRACE) << __FUNCTION__;
         return mIsFatal_;
@@ -190,96 +193,128 @@ private:
 };
 
 
+
+
+    //  ________________________________________________________________  //
+    //                                                                    //
+    //                         FSMNamedException                          //
+    //  ________________________________________________________________  //
+    //                                                                    //
+
+//   Specific Exception Class -- FSMNamedException       [Inherits from FSMException]
+// This class is built on top of its more general-purposed parent class 
+// FSMException. This class is meant to be used for representing a wide 
+// range of typically highly-specific exception-raising conditions that 
+// have been clearly documented throughout the code as being a possible 
+// outcome from calling certain functions and thus will have an exception
+// handler routine ready and waiting just a short ways up the callstack for
+// detecting and responding to the exception specifically.
 class FSMNamedException final : public FSMException {
 public:
+
+    //  ________________________________________________________________  //
+    //                                                                    //
+    //                      FSMNamedException Names                       //
+    //  ________________________________________________________________  //
+    //                                                                    //
+    
+    enum class ExceptionName {
+        LOGGING_INIT_FAILURE,
+        FILESYSTEM_ERROR,
+        NO_GL_DRIVER,
+        NO_MONITORS_DETECTED,
+        INVALID_MONITOR_INDEX
+    };
+
+    class NamedException {
+    public:
+        NamedException() = delete;
+        NamedException(const NamedException&) noexcept;
+        NamedException(NamedException&&) noexcept;
+        NamedException& operator=(const NamedException&) noexcept;
+        NamedException& operator=(NamedException&&) noexcept;
+        NamedException(const ExceptionName) noexcept;
+        ~NamedException() noexcept;
+
+        //         Operators
+
+        bool operator==(const NamedException&) const noexcept;
+        bool operator!=(const NamedException&) const noexcept;
+
+        //         Accessors
+
+        //Get the string that contains this FSMNamedException's exception name
+        std::string nameStr() const noexcept;
+        //Get the enum value representing the name of this FSMNamedException's
+        //named exception
+        ExceptionName name() const noexcept;
+
+    private:
+        ExceptionName mName_;
+        std::string mNameStr_;
+    };
     
 
-#ifdef CONSTRUCT_FROM_STRING_VIEW
-    /** Constructor (String type)
-     *  @param name    The name of this named exception
-     *  @param message The exception message.
-    */
-    FSMNamedException(NamedException name, std::string_view message) noexcept
-        : FSMException(message), mName_(name) {
-        LOG(TRACE) << __FUNCTION__;
-        std::string exceptionName;
-        switch (name) {
-        case NamedException::NO_GL_DRIVER:
-            exceptionName = "NO_GL_DRIVER";
-            break;
-        case NamedException::INVALID_ASCII_SEQ:
-            exceptionName = "INVALID_ASCII_SEQ";
-            break;
-       // case NamedException::NO_INIT_CONFIG_FILE_FOUND:
-       //     exceptionName = "NO_INIT_CONFIG_FILE_FOUND";
-       //     break;
-        default:
-            exceptionName = "DEFAULT_CASE_IN_SWITCH_STATEMENT";
-            LOG(WARNING) << "\nWARNING! DEFAULT CASE WAS CHOSEN IN FSMNamedException's CONSTRUCTOR!\n";
-            break;
-        }
-#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
-        LOG(WARNING) <<  exceptionName;
-#endif // LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
-#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
-        LOG(ERROR) <<  exceptionName;
-#endif //LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
-       
-    }
-#else 
-    /** Constructor (C strings).
-     *  @param name    The name of this named exception
-     *  @param message C-style string error message.
-     *                 The string contents are copied upon construction.
-     *                 Hence, responsibility for deleting the char* lies
-     *                 with the caller.
-     */
-    explicit FSMNamedException(NamedException name, const char* message) noexcept :
-        FSMException(message), mName_(name) { //Let FSMException's constructor handle the potential nullptr 'message'
-        LOG(TRACE) << __FUNCTION__;   
-         std::string exceptionName;
-        switch (name) {
-        case NamedException::NO_GL_DRIVER:
-            exceptionName = "NO_GL_DRIVER";
-            break;
-        case NamedException::INVALID_ASCII_SEQ:
-            exceptionName = "INVALID_ASCII_SEQ";
-            break;
-        default:
-            exceptionName = "DEFAULT_CASE_IN_SWITCH_STATEMENT";
-            LOG(WARNING) << "\nWARNING! DEFAULT CASE WAS CHOSEN IN FSMNamedException's CONSTRUCTOR!\n";
-            break;
-        }
-#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
-        LOG(WARNING) <<  exceptionName;
-#endif // LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS
-#ifdef  LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
-        LOG(ERROR) <<  exceptionName;
-#endif //LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS
-    }
-
-    /** Constructor (C++ STL strings). 
-     *  @param name    The name of this named exception
-     *  @param message The error message.
-     */
-    explicit FSMNamedException(NamedException name, const std::string& message) noexcept :
-        FSMException(message), mName_(name) {
+    //   Constructor 
+    // Creates a FSMNamedException object.
+    //  
+    //    @param - ExceptionName name
+    //          The ExceptionName enum value representing the name of the exception
+    //          this object is to represent. 
+    //
+    //    @param - std::string_view message 
+    //          A message containing information about the nature of what caused 
+    //          this exception to need to be thrown. 
+    // 
+    //  [OPTIONAL THIRD PARAMETER]
+    //    @param - bool isFatal
+    //          An optional third parameter may be passed in at construction which 
+    //          serves as a flag to let any exception-handling code which catches this
+    //          object know that the conditions that caused the exception to be raised
+    //          are serious enough that the best course of action will be process 
+    //          termination. To enable this flag, pass in 'true' as the third parameter.
+    FSMNamedException(ExceptionName name,
+                      std::string_view message,
+                      bool isFatal = false) noexcept :
+                                                       FSMException(message,
+                                                                    isFatal),
+                                                       mName_(name) {
         LOG(TRACE) << __FUNCTION__;
     }
-#endif // CONSTRUCT_FROM_STRING_VIEW
 
     virtual ~FSMNamedException() noexcept {
         LOG(TRACE) << __FUNCTION__;
     }
 
-    /** Returns the stored enum value representing this exception's name.
-     * @return The enum value representing this exception's name.
-    */
-    NamedException getName() const noexcept { return mName_; }
+    bool operator==(const FSMNamedException& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        return (mName_ == that.mName_);
+    }
 
+    bool operator!=(const FSMNamedException& that) const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        return (mName_ != that.mName_);
+    }
+
+    //Returns an object which contains two fields (an enum and a string) that
+    //when composed together will represent this NamedException's name. 
+    NamedException getName() const noexcept { 
+        LOG(TRACE) << __FUNCTION__;
+        return mName_;
+    }
+
+    //Returns the name of this exception just as a string
+    std::string getNameStr() const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        return mName_.nameStr();
+    }
 private:
     const NamedException mName_;
 };
+
+
+
+
 
 
 
