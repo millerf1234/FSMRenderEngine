@@ -105,53 +105,86 @@
 #include <string>
 #include <exception> //<stdexcept>  //#include <exception>
 #include "UniversalIncludes.h"  //For LOG message writing
-
 #include <string_view>
 
+////////////////////////////////////////////
+////          Global Constants          ////
+////////////////////////////////////////////
+std::string DEFAULT_MESSAGE = "No Message Is Available For This FSMException!";
 
-//Generic Exception Class 
 
+
+
+
+
+//   Generic Exception Class -- FSMException          [Inherits from std::exception]
+// This class represents the most general occurances of exception-triggering
+// conditions, and as such it does not expose much functionality meant for helping
+// the exception-handler routine which may catch it many courses of action beyond 
+// reporting the contents of the internally stored message string and properly 
+// ensuring program termination if the fatal flag is enabled.
 class FSMException : public std::exception {
 public:
 
+
     //   Constructor 
-    // Creates a generic FSMException object. Each FSMException  constructed
-    // with a customizable message meant for descibing details on what, where
-    // and why this exception was thrown. There is also an optional second 
-    // parameter of a boolean flag representing whether the exception
-    // should be handled as a fatal  
-    FSMException(std::string_view message, bool isFatal = false) noexcept :
-        std::exception(message.empty() ? message.data() : "No Message Is Available for this FSMException!"),
-        mMessage_(message), mIsFatal_(isFatal) {
+    // Creates a generic FSMException object. Due to the limited amount of 
+    // functionality provided by this object, it is very important that it 
+    // be constructed with a highly-detailed message string upon construction.
+    //
+    //    @param - std::string_view message     
+    //          A string detailing as much information as possible with regards 
+    //          to the nature of the exception. This probably should include details 
+    //          such as where in the code this exception is being thrown, any possible 
+    //          state information that would be pertinent to discovering why the
+    //          exception was triggered, and maybe even possible courses of action that
+    //          could be taken to prevent the issue.
+
+    //  [OPTIONAL SECOND PARAMETER]
+    //     @param - bool isFatal
+    //          If the exception-triggering state or condition which led to this 
+    //          exception being raised is severe enough in nature such that there 
+    //          is no sense in attempting a recovery, this can be signaled to 
+    //          any exception-handling code which catches this type by adding the 
+    //          bool 'true' as a second parameter during construction. Setting this
+    //          flag let's any code which catches this exception that something seriously 
+    //          wrong has occured and it should forgo any attempts at recovery to 
+    //          instead report the exceptions message and then terrminate the process.
+    FSMException(std::string_view message,
+                 bool isFatal = false) noexcept :
+                                                 std::exception(
+                                                      (message.empty() ? message.data() 
+                                                           : DEFAULT_MESSAGE.c_str()) ),
+                                                 mIsFatal_(isFatal) {
         LOG(TRACE) << __FUNCTION__;
+        if (mIsFatal_) {
+            LOG(ERROR) << "Detected that a FSMException which is marked as fatal\n"
+                "is in the midst of being thrown!\n";
+        }
+        else {
+            LOG(WARNING) << "Detected that a non-fatal FSMException is in the process\n"
+                "of being thrown!\n";
+        }
     }
 
     //   Desctructor
     // Needed to allow for additional types to inherit from this type.
-    virtual ~FSMException() noexcept { LOG(TRACE) << __FUNCTION__; }
-
-
-    //  ________________________________________________________________  //
-    //                                                                    //
-    //                   Member Data Accessor Functions                   //
-    //  ________________________________________________________________  //
-    //                                                                    //
-
-    /* 
-    // Returns a pointer to a null-terminated c-string which contains
-    // a description message providing information about this exception.
-    //
-    //   IMPORTANT!  The returned pointer is to data owned internally by
-    //               this object and should never be modified or released
-    //               externally by calling code
-    virtual const char* what() const noexcept override {        
-        LOG(TRACE) << __FUNCTION__;
-        return mMessage_.c_str();
+    virtual ~FSMException() noexcept {
+        LOG(TRACE) << __FUNCTION__; 
     }
-    */  
 
-protected:
-    const std::string mMessage_;
+
+    //  ________________________________________________________________  //
+    //                                                                    //
+    //                  Member Data Accessor Function(s)                  //
+    //  ________________________________________________________________  //
+    //                                                                    //
+    
+    bool isFatal() const noexcept {
+        LOG(TRACE) << __FUNCTION__;
+        return mIsFatal_;
+    }
+
 private: 
     const bool mIsFatal_;
 };
@@ -159,7 +192,7 @@ private:
 
 class FSMNamedException final : public FSMException {
 public:
-    enum class NamedException { NO_GL_DRIVER, INVALID_ASCII_SEQ /*, NO_INIT_CONFIG_FILE_FOUND*/ };
+    
 
 #ifdef CONSTRUCT_FROM_STRING_VIEW
     /** Constructor (String type)
