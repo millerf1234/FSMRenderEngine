@@ -24,6 +24,12 @@ public:
     ~Application() noexcept;
 
     void launch() noexcept;
+
+private: 
+    std::unique_ptr<FSMFastInitReturnBundle> mBundle_;
+
+
+    static void reportFastInitFailures(const FSMFastInitReturnBundle&) noexcept;
 };
 
 

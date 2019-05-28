@@ -1,7 +1,9 @@
 
 //
-// Free standing function that must be callled early on to enable 
-// 
+// Free standing function that must be callled early in executable's lifetime.
+// This function is needed to initialize basic core functionality of the FSMEngine.
+// After calling this function, logging using the LOG() macro should be enabled project
+// wide.
 //
 
 #pragma once
@@ -14,7 +16,7 @@
 //which the rest of FSMEngine will be built upon. After this
 //function returns, it should be safe to fully utalize the 
 //FSMEngine's logging functionality.
-void FSM_ENGINE_BEGIN(int argc, const char** argv) noexcept;
+bool FSM_ENGINE_BEGIN(int argc, const char** argv) noexcept;
 
 
 

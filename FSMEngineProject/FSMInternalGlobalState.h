@@ -29,8 +29,8 @@ namespace FSMEngineInternal {
             enum class INIT_METHOD {
                 UNCHOSEN,
                 FAST_INIT,
-                //SKIP_FILESYSTEM,  /* Not Yet Implemented */
-                //LOAD_FILE_THEN_CUSTOMIZE  /* Not Yet Implemented */ 
+                SKIP_FILESYSTEM,
+                LOAD_FILE_THEN_CUSTOMIZE
             };
             INIT_METHOD choosenInitMethod = INIT_METHOD::UNCHOSEN;
         };

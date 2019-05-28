@@ -8,19 +8,21 @@
 #define ALLOW_ELCC_CONFIGURATION 1
 #include "EasyLogConfiguration.h"
 
-#include "FSMGlobalState.h"
+#include "FSMInternalGlobalState.h"
+
+
+    //And here we have the implementation functions
+    std::filesystem::path getPathToTheCurrentlyActiveFilesystemDirectory() noexcept;
+    void fabricateACompleteGlobalState() noexcept;
+    void setActiveFilesystemDirectoryInGlobalState(std::filesystem::path pathToDir) noexcept;
+    bool enableLoggingFunctionality(int argc, const char** argv) noexcept;
+    void updateLoggingStatusInGlobalState() noexcept;
 
 
 
-//And here we have the implementation functions
-std::filesystem::path getPathToTheCurrentlyActiveFilesystemDirectory() noexcept;
-void fabricateACompleteGlobalState() noexcept;
-void setActiveFilesystemDirectoryInGlobalState(std::filesystem::path pathToDir) noexcept;
-bool enableLoggingFunctionality(int argc, const char** argv) noexcept;
-void updateLoggingStatusInGlobalState() noexcept;
 
 
-void FSM_ENGINE_BEGIN(int argc, const char** argv) noexcept {
+bool FSM_ENGINE_BEGIN(int argc, const char** argv) noexcept {
     auto dirPath = getPathToTheCurrentlyActiveFilesystemDirectory();
     fabricateACompleteGlobalState();
     setActiveFilesystemDirectoryInGlobalState(dirPath);
@@ -33,6 +35,8 @@ void FSM_ENGINE_BEGIN(int argc, const char** argv) noexcept {
     LOG(TRACE) << __FUNCTION__;
 
     void updateLoggingStatusInGlobalState() noexcept;
+
+    return true;
 }
 
 

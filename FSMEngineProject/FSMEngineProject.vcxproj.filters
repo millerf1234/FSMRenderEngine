@@ -283,6 +283,9 @@
     <Filter Include="Source Files\FSMEngine\NewUnfinishedStuff\Utilities\Performance\FramePerformanceReport">
       <UniqueIdentifier>{b77fcf6f-c4e3-4dc9-93d6-42d6e8a6b21a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\FSMEngine\GlobalFunctions">
+      <UniqueIdentifier>{4edca60f-49da-4f4c-9f55-ccf04a2f1c3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\glad\KHR\khrplatform.h">
@@ -1221,16 +1224,10 @@
     <ClInclude Include="FSMFastInit.h">
       <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
     </ClInclude>
-    <ClInclude Include="FSMGlobalState.h">
-      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="FSMWeakReference.h">
-      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
-    </ClInclude>
     <ClInclude Include="FSMEngineBegin.h">
-      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+      <Filter>Source Files\FSMEngine\GlobalFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="FSMEngineInternal.h">
+    <ClInclude Include="FSMInternalGlobalState.h">
       <Filter>Source Files\FSMEngine\EngineInternal</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1331,14 +1328,11 @@
     <ClCompile Include="FSMException.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Exception</Filter>
     </ClCompile>
-    <ClCompile Include="FSMWeakReference.cpp">
-      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
-    </ClCompile>
     <ClCompile Include="FSMFastInit.cpp">
       <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
     </ClCompile>
     <ClCompile Include="FSMEngineBegin.cpp">
-      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+      <Filter>Source Files\FSMEngine\GlobalFunctions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
