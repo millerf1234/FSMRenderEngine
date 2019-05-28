@@ -15,7 +15,7 @@
 
 #include "FSMRenderEnvironment.h"
 #include "UniversalIncludes.h"
-#include "FSMEngineSettings.h"
+//#include "FSMEngineSettings.h"
 #include "GraphicsLanguageFramework.h"
 #include "FSMCallbackInitializer.h"
 #include "FSMJoystickInvariants.h"           //To get invariant for joystick hat behavior
@@ -91,7 +91,8 @@ FSMRenderEnvironment::FSMRenderEnvironment() : FSMRenderEnvironment(true) {
 
     //STEP 3
     if (!createContext()) {
-        throw FSMNamedException(FSMNamedException::NamedException::NO_GL_DRIVER, "Failed to Create Context. No GL Driver Tho!");
+        std::exit(EXIT_FAILURE);
+       // throw FSMNamedException(FSMNamedException::NamedException::NO_GL_DRIVER, "Failed to Create Context. No GL Driver Tho!");
         //throw FSMException("An issue was encountered while creating the GLFW window and OpenGL\n"
         //    "context! These are kinda sorta vital for this application to function properly, so \n"
         //   "the fact they failed means this whole application is probably going to have to crash!\n\n");
@@ -606,10 +607,10 @@ bool FSMRenderEnvironment::verifySettings() const noexcept {
     bool incompatibilityDetected = false;
 
     //Verify that exceptions are being logged
-    if constexpr ((LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS) ||
+  /*  if constexpr ((LOG_NAMED_FSM_EXCEPTIONS_AS_WARNINGS) ||
         (LOG_NAMED_FSM_EXCEPTIONS_AS_ERRORS)) {
 
-    }
+    }*/
     return !incompatibilityDetected;
 }
 
@@ -902,11 +903,17 @@ void FSMRenderEnvironment::setInitialContextState() noexcept {
     LOG(INFO) << "Setting Global Context State To Hardcoded [Soon To Be \"Loaded\"] values";
 
 #ifdef USE_DEBUG_ 
+#pragma message "\n\n\nOpenGL Context will run in debug mode!\n" 
     glEnable(GL_DEBUG_OUTPUT);
 #ifdef FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 
+#pragma message "OpenGL Context will remain synchronized with application\n\n"
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+#else 
+#pragma message "OpenGL Context running in asynchronus mode.\n"
+    "Context Debug output may appear out of sync in response to events\n\n"
 #endif
 #else 
+#pragma message "OpenGL Context set to run asynchronuously in release mode\n"
     glDisable(GL_DEBUG_OUTPUT);
     glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif 
@@ -930,8 +937,9 @@ bool FSMRenderEnvironment::checkForContextResetStrategy() noexcept {
    
     bool contextResetAwarenessEnabled;
           
-    //See also: https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGet.xml
-    //          https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetGraphicsResetStatus.xhtml 
+    //See also:        https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGet.xml
+    //                 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetGraphicsResetStatus.xhtml 
+    //  [Background]   https://www.khronos.org/registry/OpenGL/extensions/ARB/ARB_robustness.txt
 
     int resetStrategy = 0;    
     glGetIntegerv(GL_RESET_NOTIFICATION_STRATEGY, &resetStrategy);
@@ -944,7 +952,8 @@ bool FSMRenderEnvironment::checkForContextResetStrategy() noexcept {
         resetStrategyReport << "This corresponds to strategy.....NO_RESET_NOTIFICATION\n";
         resetStrategyReport << "\nALERT! Context will not attempt to reset and recover from\n"
             "any issues with the GL context\n"
-            "  In other words:      ( GPU Crash ==> Application Crash )\n";
+            "    ~~~  In other words:       \n"
+            "    ~~~         GPU Crash ==> Application Crash )  ~~~\n";
     }
     else if (resetStrategy == GL_LOSE_CONTEXT_ON_RESET) {
         contextResetAwarenessEnabled = true;

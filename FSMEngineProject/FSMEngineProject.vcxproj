@@ -155,13 +155,17 @@
     <ClInclude Include="AsciiTextFileImpl.h" />
     <ClInclude Include="FSMAudioCommon.h" />
     <ClInclude Include="FSMAudioTest.h" />
+    <ClInclude Include="FSMEngineBegin.h" />
     <ClInclude Include="FSMEngineBuildConfig.h" />
+    <ClInclude Include="FSMEngineInternal.h" />
+    <ClInclude Include="FSMFastInit.h" />
     <ClInclude Include="FSMGlobalInvariants.h" />
     <ClInclude Include="FSMGlobalState.h" />
     <ClInclude Include="FSMInitConfig.h" />
     <ClInclude Include="FSMJoystickHandle.h" />
     <ClInclude Include="FSMJoystickInvariants.h" />
     <ClInclude Include="FSMPerformanceReporter.h" />
+    <ClInclude Include="FSMWeakReference.h" />
     <ClInclude Include="FSMWindow.h" />
     <ClInclude Include="FSMWindowImpl.h" />
     <ClInclude Include="InitConfigDefaults.h" />
@@ -482,7 +486,9 @@
     <ClCompile Include="FSMAudioCommon.cpp" />
     <ClCompile Include="FSMAudioTest.cpp" />
     <ClCompile Include="FSMCallbackInitializer.cpp" />
+    <ClCompile Include="FSMEngineBegin.cpp" />
     <ClCompile Include="FSMException.cpp" />
+    <ClCompile Include="FSMFastInit.cpp" />
     <ClCompile Include="FSMInitConfig.cpp" />
     <ClCompile Include="FSMJoystickEventCallback.cpp" />
     <ClCompile Include="FSMJoystickHandle.cpp" />
@@ -492,6 +498,7 @@
     <ClCompile Include="FSMMonitorEventCallback.cpp" />
     <ClCompile Include="FSMPerformanceReporter.cpp" />
     <ClCompile Include="FSMRenderEnvironment.cpp" />
+    <ClCompile Include="FSMWeakReference.cpp" />
     <ClCompile Include="FSMWindow.cpp" />
     <ClCompile Include="FSMWindowImpl.cpp" />
     <ClCompile Include="GetSystemDateTime.cpp" />

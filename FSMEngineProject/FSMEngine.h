@@ -72,7 +72,10 @@
 
 #include "GraphicsLanguageFramework.h"
 #include "UniversalIncludes.h"
+#include "FSMInitConfig.h"
 
+#include "FSMEngineBegin.h"
+#include "FSMFastInit.h"
 
 
 #endif //FSM_ENGINE_H_

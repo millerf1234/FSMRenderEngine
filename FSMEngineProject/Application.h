@@ -1,8 +1,9 @@
 
-// It is Application2, whatch ya gonna do?
 //
 // Any documentation written up here will very very very likely be wrong 
-
+//
+//  So I have not written any. Part of my goal though is to have the FSMEngine  
+//  interface and types be so intuitive that they explain themselves.
 
 #pragma once
 

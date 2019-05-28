@@ -84,6 +84,7 @@
 
 #include "FSMMonitor.h"
 #include <memory>
+#include "UniversalIncludes.h"
 
 struct GLFWmonitor;
 
@@ -98,10 +99,37 @@ namespace FSMEngineInternal {
 		//FSMMonitorHandle& operator=(FSMMonitorHandle&&) noexcept;
 
        
-
+        //
 		FSMMonitor get() noexcept;
 
-		bool hasHandle(const GLFWmonitor* handle) const noexcept { return (mHandle_ == handle); }
+        //Checks to see if the specified handle matches this object's internal
+        //encapsulared handle. Will always return false when called with nullptr.
+		bool hasHandle(const GLFWmonitor* handle) const noexcept { 
+            LOG(TRACE) << __FUNCTION__;
+            if (!handle)
+                return false;
+            return (mHandle_ == handle); }
+
+        //Compares the (LEFT OPERAND) FSMMonitorHandle's encapsulated GLFWmonitor* member with
+        //the (RIGHT OPERAND) GLFWmonitor* for equality. Will always return false if the (RIGHT 
+        //OPERAND) GLFWmonitor* is NULL.
+        friend bool operator==(const FSMMonitorHandle& FSMhandle, const GLFWmonitor* handle) noexcept {
+            LOG(TRACE) << __FUNCTION__;
+            if (!handle)
+                return false;
+            return (FSMhandle.mHandle_ == handle);
+        }
+
+        //Compares the (LEFT OPERAND) GLFWmonitor* with the (RIGHT OPERAND) FSMMontirHandle's encapsulated GLFWmonitor* for
+        //equality. ALways returns false if the (LEFT OPERAND) GLFWmonitor* is NULL.
+        friend bool operator==(const GLFWmonitor* handle, const FSMMonitorHandle& FSMhandle) noexcept {
+            LOG(TRACE) << __FUNCTION__;
+            if (!handle)
+                return false;
+            return (FSMhandle.mHandle_ == handle);
+        }
+        
+        
 
 		
 	private:

@@ -14,8 +14,8 @@
 #include "FSMInitConfig.h"
 
 //The macro 'ALLOW_ELCC_CONFIGURATION' must be defined before this header can be included
-#define ALLOW_ELCC_CONFIGURATION  1
-#include "EasyLogConfiguration.h"
+//#define ALLOW_ELCC_CONFIGURATION  1
+//#include "EasyLogConfiguration.h"
 
 #include "AsciiTextFile.h"
 
@@ -174,6 +174,7 @@ void ApplicationOld::launch() {
 
 
 bool ApplicationOld::setupMessageLogs(int argc, char** argv) {
+#if olde
     //LOG(TRACE) << __FUNCTION__; //This function doesn't get traced until logs are setup
     //Set up EasyLogger++ library
     try {
@@ -222,22 +223,22 @@ bool ApplicationOld::setupMessageLogs(int argc, char** argv) {
 #endif //FECLFINAE
         }
     }
-    catch (const FSMNamedException& e) {
-        switch (e.getName()) {
-        case FSMNamedException::NamedException::NO_GL_DRIVER:
-            LOG(ERROR) << " System does not appear to have a driver which is\n"
-                "                OpenGL compatible installed!\n";
-            LOG(INFO) << "[Press enter to terminate process]";
-            std::cin.get();
-            std::exit(EXIT_FAILURE);
-            break;
+    //catch (const FSMNamedException& e) {
+    //    switch (e.getName()) {
+    //    case FSMNamedException::NamedException::NO_GL_DRIVER:
+    //        LOG(ERROR) << " System does not appear to have a driver which is\n"
+    //            "                OpenGL compatible installed!\n";
+    //        LOG(INFO) << "[Press enter to terminate process]";
+    //        std::cin.get();
+    //        std::exit(EXIT_FAILURE);
+    //        break;
 
-        default:
-            throw; //Re-throws the caught exception (Note on re-throw behavior: will go to
-            //      catch block in the next outer scope level, not one of the other catches at this scope)
-            break;
-        }
-    }
+    //    default:
+    //        throw; //Re-throws the caught exception (Note on re-throw behavior: will go to
+    //        //      catch block in the next outer scope level, not one of the other catches at this scope)
+    //        break;
+    //    }
+    //}
     catch (const FSMException& e) { //Catch 
         printf("\nApplication encountered the following exception during runtime:\n%s", e.what());
         printf("\nSeeing as how this is an integral feature to this Application, the most\n"
@@ -250,6 +251,7 @@ bool ApplicationOld::setupMessageLogs(int argc, char** argv) {
         printf("\nThere is no clear way to respond to this issue. Application will close!\n");
         std::exit(EXIT_FAILURE);
     }
+#endif
     return false;
 }
 
@@ -280,7 +282,7 @@ void ApplicationOld::validateAssetDirectories() const noexcept {
         if (!checkIfIsPathToDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY))
             createDirectory(RELATIVE_PATH_TO_AUDIO_DIRECTORY);
     }
-    catch (...) {
+    catch (...) { //Danger danger
 
     }
 }
@@ -323,17 +325,17 @@ bool ApplicationOld::createRenderEnvironment() {
         mRenderEnvironment_ = std::make_unique<FSMRenderEnvironment>();
         return true;
     }
-    catch (const FSMNamedException& e) {
-        switch (e.getName()) {
-        case FSMNamedException::NamedException::NO_GL_DRIVER:
-            LOG(ERROR) << " Unable to detect the existance of an OpenGL-capable driver.";
-            //std::ostringstream minGlVersionMsg;
-            //minGlVersionMsg << " This program requires a driver which supports OpenGL " << FSM_MINIMUM_GL_VERSION_MAJOR
-            LOG(INFO) << "[Press enter to terminate process]";
-            std::cin.get();
-            std::exit(EXIT_FAILURE);
-        }
-    }
+    //catch (const FSMNamedException& e) {
+    //    switch (e.getName()) {
+    //    case FSMNamedException::NamedException::NO_GL_DRIVER:
+    //        LOG(ERROR) << " Unable to detect the existance of an OpenGL-capable driver.";
+    //        //std::ostringstream minGlVersionMsg;
+    //        //minGlVersionMsg << " This program requires a driver which supports OpenGL " << FSM_MINIMUM_GL_VERSION_MAJOR
+    //        LOG(INFO) << "[Press enter to terminate process]";
+    //        std::cin.get();
+    //        std::exit(EXIT_FAILURE);
+    //    }
+    //}
     catch (const FSMException& e) {
         LOG(FATAL) << "The following exception was encountered: \n" << e.what()
             << "\nProgram is unable to continue running!\n";

@@ -115,6 +115,7 @@ std::string getNameStringForExcpt(FSMNamedException::ExceptionName name) noexcep
     
     }
 
+    return nameStr;
 }
 
 

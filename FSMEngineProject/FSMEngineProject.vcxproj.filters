@@ -61,14 +61,8 @@
     <Filter Include="Source Files\FSMEngine\Utility\DateTime">
       <UniqueIdentifier>{de497dee-2686-4d05-919a-b7af07ce801a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Types">
-      <UniqueIdentifier>{b424b128-9041-45dd-a852-875c3a1a8e40}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Notes">
       <UniqueIdentifier>{d5621fad-0f4f-473c-9b10-2c523b17f9e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization">
-      <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Joystick">
       <UniqueIdentifier>{7888c779-4ebd-4b39-9356-d9ec356486ce}</UniqueIdentifier>
@@ -78,15 +72,6 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer">
       <UniqueIdentifier>{becc8202-35c3-44ca-b088-46f1ad418456}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Monitor">
-      <UniqueIdentifier>{7117dfda-ca14-4edc-b48c-a7b757d4f9ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Monitor\Implementation">
-      <UniqueIdentifier>{4f574541-733e-4da7-91e3-3b9d6739f1ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Monitor\Implementation\VideoMode">
-      <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks">
       <UniqueIdentifier>{6674a74a-3864-4dc4-81ea-da281ea9c265}</UniqueIdentifier>
@@ -117,27 +102,6 @@
     </Filter>
     <Filter Include="Header Files\FSMEngineHeaders\SettingsAndConfiguration\FSMEngineBuildConfig">
       <UniqueIdentifier>{14d82097-57e8-4289-a0f8-8a91efb923fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Window">
-      <UniqueIdentifier>{14ff15c4-4447-4b33-975c-10ecc139791e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Window\Implementation">
-      <UniqueIdentifier>{0ccd57d7-e792-4a09-87d7-b04899803e6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Joystick">
-      <UniqueIdentifier>{8f85be1d-fe68-490f-8b2e-774d4f7760ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\Types\Joystick\Implementation">
-      <UniqueIdentifier>{f303dcd9-3897-48db-9390-d23da9474355}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Utilities">
-      <UniqueIdentifier>{7ec91e97-5354-43d5-9f4c-d71dfb8f719e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Utilities\Performance">
-      <UniqueIdentifier>{de9c9387-8fee-48be-9b87-cdc41de92f54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\FSMEngine\EngineInternal\Utilities\Performance\FramePerformanceReport">
-      <UniqueIdentifier>{b77fcf6f-c4e3-4dc9-93d6-42d6e8a6b21a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Components\Monitor">
       <UniqueIdentifier>{4ba72358-633d-44b9-85c3-16e27689ed04}</UniqueIdentifier>
@@ -279,6 +243,45 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Logging_Initialization\LoggingInitImplementation">
       <UniqueIdentifier>{0944decd-e772-40fd-8b18-6374f65d9ac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\NewUnfinishedStuff">
+      <UniqueIdentifier>{68e7f212-599b-45c1-9e16-f2adb390a448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\NewUnfinishedStuff\Initialization">
+      <UniqueIdentifier>{b39e1804-bc11-4a0a-bc05-5990b2ae38bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types">
+      <UniqueIdentifier>{b424b128-9041-45dd-a852-875c3a1a8e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Monitor">
+      <UniqueIdentifier>{7117dfda-ca14-4edc-b48c-a7b757d4f9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Monitor\Implementation">
+      <UniqueIdentifier>{4f574541-733e-4da7-91e3-3b9d6739f1ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Monitor\Implementation\VideoMode">
+      <UniqueIdentifier>{42e6a875-bfa5-45c3-8da4-e43ff833ff90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Window">
+      <UniqueIdentifier>{14ff15c4-4447-4b33-975c-10ecc139791e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Window\Implementation">
+      <UniqueIdentifier>{0ccd57d7-e792-4a09-87d7-b04899803e6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Joystick">
+      <UniqueIdentifier>{8f85be1d-fe68-490f-8b2e-774d4f7760ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Joystick\Implementation">
+      <UniqueIdentifier>{f303dcd9-3897-48db-9390-d23da9474355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\NewUnfinishedStuff\Utilities">
+      <UniqueIdentifier>{7ec91e97-5354-43d5-9f4c-d71dfb8f719e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\NewUnfinishedStuff\Utilities\Performance">
+      <UniqueIdentifier>{de9c9387-8fee-48be-9b87-cdc41de92f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\NewUnfinishedStuff\Utilities\Performance\FramePerformanceReport">
+      <UniqueIdentifier>{b77fcf6f-c4e3-4dc9-93d6-42d6e8a6b21a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1171,10 +1174,10 @@
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClInclude>
     <ClInclude Include="FSMInitConfig.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff\Initialization</Filter>
     </ClInclude>
     <ClInclude Include="FSMPerformanceReporter.h">
-      <Filter>Source Files\FSMEngine\EngineInternal\Utilities\Performance</Filter>
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff\Utilities\Performance</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\ThirdParty_IncludeWrappers\openAL_includer.h">
       <Filter>Header Files\FSMEngineHeaders\Internal\IntermediateHeaders_DoNotIncludeTheseDirectly\LibraryIncludeWrappers_DoNotIncludeTheseDirectly</Filter>
@@ -1215,8 +1218,20 @@
     <ClInclude Include="Application.h">
       <Filter>Source Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="FSMFastInit.h">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClInclude>
     <ClInclude Include="FSMGlobalState.h">
-      <Filter>Header Files\FSMEngineHeaders\Internal</Filter>
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMWeakReference.h">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMEngineBegin.h">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMEngineInternal.h">
+      <Filter>Source Files\FSMEngine\EngineInternal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1296,10 +1311,10 @@
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClCompile>
     <ClCompile Include="FSMInitConfig.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff\Initialization</Filter>
     </ClCompile>
     <ClCompile Include="FSMPerformanceReporter.cpp">
-      <Filter>Source Files\FSMEngine\EngineInternal\Utilities\Performance</Filter>
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff\Utilities\Performance</Filter>
     </ClCompile>
     <ClCompile Include="FSMAudioCommon.cpp">
       <Filter>Source Files\FSMEngine\Utility\Audio</Filter>
@@ -1315,6 +1330,15 @@
     </ClCompile>
     <ClCompile Include="FSMException.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMWeakReference.cpp">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMFastInit.cpp">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMEngineBegin.cpp">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
