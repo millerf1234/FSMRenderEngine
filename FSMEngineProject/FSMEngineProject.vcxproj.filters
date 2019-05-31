@@ -70,9 +70,6 @@
     <Filter Include="Source Files\FSMEngine\Utility\JoystickDebugger">
       <UniqueIdentifier>{a42c617f-be2c-4be8-a81a-1af3ba9236f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer">
-      <UniqueIdentifier>{becc8202-35c3-44ca-b088-46f1ad418456}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\CallbackFunctions\WarningAndErrorCallbacks">
       <UniqueIdentifier>{6674a74a-3864-4dc4-81ea-da281ea9c265}</UniqueIdentifier>
     </Filter>
@@ -232,9 +229,6 @@
     <Filter Include="ThirdParty\JSON\jsoncpp\Debug">
       <UniqueIdentifier>{ec382926-7284-460d-b3d3-37e9e75a8f56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ThirdParty\JSON\json for modern c++">
-      <UniqueIdentifier>{9f455d5f-3bfe-4780-b221-7494f2ab56f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\FSMEngine\EngineInternal\Exception">
       <UniqueIdentifier>{1b1a78d4-49b1-409f-be0c-77da447aeee8}</UniqueIdentifier>
     </Filter>
@@ -285,6 +279,15 @@
     </Filter>
     <Filter Include="Source Files\FSMEngine\GlobalFunctions">
       <UniqueIdentifier>{4edca60f-49da-4f4c-9f55-ccf04a2f1c3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\NewUnfinishedStuff\AsciiSterilizer">
+      <UniqueIdentifier>{becc8202-35c3-44ca-b088-46f1ad418456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\EngineInternal\Initialization">
+      <UniqueIdentifier>{19bed243-a7e4-4d7c-89ee-43b27a781485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FSMEngine\Types\Core">
+      <UniqueIdentifier>{cbb59b68-c2c2-4a1b-b4d9-2a71bbcee38b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1090,7 +1093,7 @@
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClInclude>
     <ClInclude Include="AsciiSterilizer.h">
-      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer</Filter>
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff\AsciiSterilizer</Filter>
     </ClInclude>
     <ClInclude Include="FSMMonitor.h">
       <Filter>Source Files\FSMEngine\Types\Monitor</Filter>
@@ -1212,9 +1215,6 @@
     <ClInclude Include="InitConfigDefaults.h">
       <Filter>Header Files\FSMEngineHeaders\Internal\EngineDefaults</Filter>
     </ClInclude>
-    <ClInclude Include="json.h">
-      <Filter>ThirdParty\JSON\json for modern c++</Filter>
-    </ClInclude>
     <ClInclude Include="ApplicationOld.h">
       <Filter>Source Files\Application</Filter>
     </ClInclude>
@@ -1229,6 +1229,18 @@
     </ClInclude>
     <ClInclude Include="FSMInternalGlobalState.h">
       <Filter>Source Files\FSMEngine\EngineInternal</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonParser.h">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMInitFailureReporter.h">
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMInitFailureReport.h">
+      <Filter>Source Files\FSMEngine\Types\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMFastInitReturnBundle.h">
+      <Filter>Source Files\FSMEngine\Types\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1275,7 +1287,7 @@
       <Filter>Source Files\FSMEngine\EngineInternal\Components\Joystick</Filter>
     </ClCompile>
     <ClCompile Include="AsciiSterilizer.cpp">
-      <Filter>Source Files\FSMEngine\Utility\Asset\ASCII\AsciiSterilizer</Filter>
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff\AsciiSterilizer</Filter>
     </ClCompile>
     <ClCompile Include="FSMJoystickEventCallback.cpp">
       <Filter>Source Files\FSMEngine\EngineInternal\CallbackFunctions\JoystickCallback</Filter>
@@ -1333,6 +1345,21 @@
     </ClCompile>
     <ClCompile Include="FSMEngineBegin.cpp">
       <Filter>Source Files\FSMEngine\GlobalFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonParser.cpp">
+      <Filter>Source Files\FSMEngine\NewUnfinishedStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMInternalGlobalState.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMInitFailureReporter.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMInitFailureReport.cpp">
+      <Filter>Source Files\FSMEngine\EngineInternal\Initialization</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMFastInitReturnBundle.cpp">
+      <Filter>Source Files\FSMEngine\Types\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

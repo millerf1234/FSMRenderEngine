@@ -5,6 +5,8 @@
 //                [ Still Under Development as of May 17, 2019 ]
 
 
+#if 0
+
 #include <istream>  //For std::cin.get()   to keep console open
 //#include <cassert>
 #include "ApplicationOld.h"
@@ -24,25 +26,25 @@
 
 
 
-//////////////////////////////////
-//  Expected Asset Directories  //
-//////////////////////////////////
-
-const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY = "\\..\\AssetData";
-const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_TEXTURES_DIRECTORY = "\\..\\AssetData\\Textures";
-const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_SHADERS_DIRECTORY = "\\..\\AssetData\\Shaders";
-const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_FONTS_DIRECTORY = "\\..\\AssetData\\Fonts";
-const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_AUDIO_DIRECTORY = "\\..\\AssetData\\Audio";
-const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_SETTINGS_DIRECTORY = "\\..\\AssetData\\Settings";
-
-
-
-
-//////////////////////
-//  Expected Files  //
-//////////////////////
-
-const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_INIT_CONFIG_FILE = "\\..\\AssetData\\Settings\\InitConfig.json";
+////////////////////////////////////
+////  Expected Asset Directories  //
+////////////////////////////////////
+//
+//const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY = "\\..\\AssetData";
+//const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_TEXTURES_DIRECTORY = "\\..\\AssetData\\Textures";
+//const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_SHADERS_DIRECTORY = "\\..\\AssetData\\Shaders";
+//const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_FONTS_DIRECTORY = "\\..\\AssetData\\Fonts";
+//const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_AUDIO_DIRECTORY = "\\..\\AssetData\\Audio";
+//const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_SETTINGS_DIRECTORY = "\\..\\AssetData\\Settings";
+//
+//
+//
+//
+////////////////////////
+////  Expected Files  //
+////////////////////////
+//
+//const std::filesystem::path ApplicationOld::RELATIVE_PATH_TO_INIT_CONFIG_FILE = "\\..\\AssetData\\Settings\\InitConfig.json";
 
 
 
@@ -528,3 +530,6 @@ std::filesystem::path getAbsolutePath(const std::filesystem::path& basePath,
 
     return absoluteFilepath;
 }
+
+
+#endif //#if 0

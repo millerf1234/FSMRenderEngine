@@ -158,7 +158,10 @@
     <ClInclude Include="FSMEngineBegin.h" />
     <ClInclude Include="FSMEngineBuildConfig.h" />
     <ClInclude Include="FSMFastInit.h" />
+    <ClInclude Include="FSMFastInitReturnBundle.h" />
     <ClInclude Include="FSMGlobalInvariants.h" />
+    <ClInclude Include="FSMInitFailureReport.h" />
+    <ClInclude Include="FSMInitFailureReporter.h" />
     <ClInclude Include="FSMInternalGlobalState.h" />
     <ClInclude Include="FSMInitConfig.h" />
     <ClInclude Include="FSMJoystickHandle.h" />
@@ -167,7 +170,7 @@
     <ClInclude Include="FSMWindow.h" />
     <ClInclude Include="FSMWindowImpl.h" />
     <ClInclude Include="InitConfigDefaults.h" />
-    <ClInclude Include="json.h" />
+    <ClInclude Include="JsonParser.h" />
     <ClInclude Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.h" />
     <ClInclude Include="EasyLogConfiguration.h" />
     <ClInclude Include="FSMCallbackInitializer.h" />
@@ -487,7 +490,11 @@
     <ClCompile Include="FSMEngineBegin.cpp" />
     <ClCompile Include="FSMException.cpp" />
     <ClCompile Include="FSMFastInit.cpp" />
+    <ClCompile Include="FSMFastInitReturnBundle.cpp" />
     <ClCompile Include="FSMInitConfig.cpp" />
+    <ClCompile Include="FSMInitFailureReport.cpp" />
+    <ClCompile Include="FSMInitFailureReporter.cpp" />
+    <ClCompile Include="FSMInternalGlobalState.cpp" />
     <ClCompile Include="FSMJoystickEventCallback.cpp" />
     <ClCompile Include="FSMJoystickHandle.cpp" />
     <ClCompile Include="FSMMonitor.cpp" />
@@ -501,6 +508,7 @@
     <ClCompile Include="GetSystemDateTime.cpp" />
     <ClCompile Include="JoystickPort.cpp" />
     <ClCompile Include="JoystickStatePrinter.cpp" />
+    <ClCompile Include="JsonParser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pre_And_Post_OpenGL_Function_Call_Callbacks.cpp" />
     <ClCompile Include="RenderDemoBase.cpp" />

@@ -22,8 +22,31 @@
 #ifndef FSM_ENGINE_INVARIANTS_H_
 #define FSM_ENGINE_INVARIANTS_H_
 
+#include <filesystem>
+
 namespace FSMEngineInvariant {
     
+    //////////////////////////////////
+    //  Expected Asset Directories  //
+    //////////////////////////////////
+
+    const std::filesystem::path RELATIVE_PATH_TO_ASSET_DATA_DIRECTORY = "\\..\\AssetData";
+    const std::filesystem::path RELATIVE_PATH_TO_TEXTURES_DIRECTORY = "\\..\\AssetData\\Textures";
+    const std::filesystem::path RELATIVE_PATH_TO_SHADERS_DIRECTORY = "\\..\\AssetData\\Shaders";
+    const std::filesystem::path RELATIVE_PATH_TO_FONTS_DIRECTORY = "\\..\\AssetData\\Fonts";
+    const std::filesystem::path RELATIVE_PATH_TO_AUDIO_DIRECTORY = "\\..\\AssetData\\Audio";
+    const std::filesystem::path RELATIVE_PATH_TO_SETTINGS_DIRECTORY = "\\..\\AssetData\\Settings";
+
+
+
+
+    //////////////////////
+    //  Expected Files  //
+    //////////////////////
+
+    const std::filesystem::path RELATIVE_PATH_TO_INIT_CONFIG_FILE = "\\..\\AssetData\\Settings\\InitConfig.json";
+
+
     // /--------------------------------------\  
     // |          OpenGL Invariants           |  
     // \--------------------------------------/  

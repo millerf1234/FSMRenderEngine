@@ -1,7 +1,10 @@
 
-
+//This code was never completed 
 
 #include "AsciiSterilizer.h"
+
+
+#if 0
 
 //Determines if a sequence of characters constitute a valid target
 //for purging from a source
@@ -40,3 +43,5 @@ AsciiSterilizer::AsciiSterilizer(AsciiSterilizer&& that) noexcept :
 AsciiSterilizer::~AsciiSterilizer() noexcept {
     LOG(TRACE) << __FUNCTION__;
 }
+
+#endif 

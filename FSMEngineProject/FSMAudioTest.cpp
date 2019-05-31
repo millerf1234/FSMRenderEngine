@@ -3,6 +3,8 @@
 
 #include "FSMAudioTest.h"
 
+#if 0
+
 #include <vector>
 
 namespace FSMEngineInternal {
@@ -137,3 +139,7 @@ void AudioRenderer::parseDevicesIntoVector(std::vector<const ALchar*>& devices) 
     } while (!reachedEndOfList);
 }
 */
+
+
+
+#endif //#if 0

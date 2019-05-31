@@ -15,6 +15,8 @@
 
 #pragma once
 
+#if 0
+
 #ifndef APPLICATION_OLD_H_
 #define APPLICATION_OLD_H_
 
@@ -66,3 +68,5 @@ private:
 };
 
 #endif //APPLICATION_OLD_H_
+
+#endif //#if 0

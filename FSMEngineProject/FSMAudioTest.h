@@ -3,6 +3,8 @@
 
 #pragma once
 
+#if 0
+
 #include "FSMAudioCommon.h"
 
 namespace FSMEngineInternal {
@@ -27,3 +29,6 @@ private:
     } //namespace FSMAudio
 
 } //namespace FSMEngineInternal
+
+
+#endif //#if 0

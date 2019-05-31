@@ -17,14 +17,20 @@ FSMNamedException::NamedException::NamedException(NamedException&& that) noexcep
 
 FSMNamedException::NamedException& FSMNamedException::NamedException::operator=(const NamedException& that) noexcept {
     LOG(TRACE) << __FUNCTION__;
-    mName_ = that.mName_;
-    mNameStr_ = that.mNameStr_;
+    if (this != &that) {
+        mName_ = that.mName_;
+        mNameStr_ = that.mNameStr_;
+    }
+    return *this;
 }
 
 FSMNamedException::NamedException& FSMNamedException::NamedException::operator=(NamedException&& that) noexcept {
     LOG(TRACE) << __FUNCTION__;
-    mName_ = that.mName_;
-    mNameStr_ = that.mNameStr_;
+    if (this != &that) {
+        mName_ = that.mName_;
+        mNameStr_ = that.mNameStr_;
+    }
+    return *this;
 }
 
 FSMNamedException::NamedException::NamedException(const ExceptionName excptName) noexcept : mName_(excptName) {
@@ -64,7 +70,7 @@ std::string FSMNamedException::NamedException::nameStr() const noexcept {
 
 //Get the enum value representing the name of this FSMNamedException's
 //named exception
-FSMNamedException::ExceptionName FSMNamedException::NamedException::name() const noexcept {
+FSMNamedException::ExceptionName FSMNamedException::NamedException::nameEnum() const noexcept {
     LOG(TRACE) << __FUNCTION__;
     return mName_;
 }

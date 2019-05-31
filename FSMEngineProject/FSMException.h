@@ -108,9 +108,9 @@
     //                    FSMException Global Constants                   //
     //  ________________________________________________________________  //
     //                                                                    //
-
-std::string DEFAULT_MESSAGE = "No Message Is Available For This FSMException!";
-
+namespace FSMExceptionInternal {
+    static const std::string DEFAULT_MESSAGE = "No Message Is Available For This FSMException!";
+} //namespace FSMExceptionInternal
 
 
 
@@ -159,8 +159,9 @@ public:
     FSMException(std::string_view message,
                  bool isFatal = false) noexcept :
                                                  std::exception(
-                                                      (message.empty() ? message.data() 
-                                                           : DEFAULT_MESSAGE.c_str()) ),
+                                                      (message.empty() 
+                                                          ? message.data() 
+                                                           : FSMExceptionInternal::DEFAULT_MESSAGE.c_str()) ),
                                                  mIsFatal_(isFatal) {
         LOG(TRACE) << __FUNCTION__;
         if (mIsFatal_) {
@@ -247,7 +248,7 @@ public:
         std::string nameStr() const noexcept;
         //Get the enum value representing the name of this FSMNamedException's
         //named exception
-        ExceptionName name() const noexcept;
+        ExceptionName nameEnum() const noexcept;
 
     private:
         ExceptionName mName_;

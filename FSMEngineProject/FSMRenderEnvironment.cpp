@@ -903,17 +903,17 @@ void FSMRenderEnvironment::setInitialContextState() noexcept {
     LOG(INFO) << "Setting Global Context State To Hardcoded [Soon To Be \"Loaded\"] values";
 
 #ifdef USE_DEBUG_ 
-#pragma message "\n\n\nOpenGL Context will run in debug mode!\n" 
+#pragma message ("\n\n\nOpenGL Context will run in debug mode!\n") 
     glEnable(GL_DEBUG_OUTPUT);
 #ifdef FORCE_DEBUG_CONTEXT_APP_SYNCHRONIZATION_ 
-#pragma message "OpenGL Context will remain synchronized with application\n\n"
+#pragma message ("OpenGL Context will remain synchronized with application\n\n")
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #else 
-#pragma message "OpenGL Context running in asynchronus mode.\n"
-    "Context Debug output may appear out of sync in response to events\n\n"
+#pragma message ("OpenGL Context running in asynchronus mode.\n"
+    "Context Debug output may appear out of sync in response to events\n\n")
 #endif
 #else 
-#pragma message "OpenGL Context set to run asynchronuously in release mode\n"
+#pragma message ("OpenGL Context set to run asynchronuously in release mode\n")
     glDisable(GL_DEBUG_OUTPUT);
     glDisable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif 

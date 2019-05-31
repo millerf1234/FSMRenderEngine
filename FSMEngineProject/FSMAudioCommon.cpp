@@ -1,6 +1,7 @@
 
 #include "FSMAudioCommon.h"
 
+#if 0
 
 namespace FSMEngineInternal {
 
@@ -152,3 +153,6 @@ namespace FSMEngineInternal {
     }  //namespace FSMAudio
 
 }  //namespace FSMEngineInternal
+
+
+#endif //#if 0
