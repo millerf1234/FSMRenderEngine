@@ -1,10 +1,10 @@
- // File:                              FSMMonitor.h                                                                                                                    
+// File:                              FSMMonitor.h                                                                                                                    
 // Class:                             FSMMonitor                                                                                                                      
 // QuickInfo:                                                                                *(NOTE ON THE BELOW NOTE: NO API CALL YET EXISTS)                
 //          Default Constructor       DISABLED    [ See Note* --> ]                   *Note: FSMMonitor objects by design have all of their public constructors       
 //          Copy Operations           ENABLED                                                (asides copy and move) restricted. The only way for these types to be    
-//          Move Operations           ENABLED                                                 created is through an API (see above) call which asks the FSMEngine's     
-//                                                                                            internal object that provides direct ownsership and lifetime management 
+//          Move Operations           ENABLED                                                 created is through an API (see above) call which asks the FSMEngine's   
+//                                                                                            internal object that provides direct ownership and lifetime management 
 //                                                                                            for a single GLFWmonitor* to create a FSMMonitor non-owning 'copy' of   
 //                                                                                            itself, which then basically serves as a weak reference. The beauty of 
 //                                                                                            this design is that any number of these FSMMonitor weak-references can 
@@ -108,6 +108,9 @@ namespace FSMEngineInternal {
 	class FSMMonitorHandle;
 }
 
+//Struct returned by FSMMonitor objects as part
+//of their interface. Defines the work area of 
+//the monitor
 struct MonitorWorkarea {
     int xPos;
     int yPos;

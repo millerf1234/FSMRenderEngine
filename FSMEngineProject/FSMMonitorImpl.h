@@ -32,7 +32,10 @@ public:
 	FSMVideoMode getPrimaryVideoMode() const noexcept;
 	std::vector<FSMVideoMode> getVideoModes() const noexcept;
 
+
 	std::string getName() const noexcept;
+
+    const GLFWmonitor* getHandle() const noexcept;
 
 	GLFWgammaramp getGammaRamp() const noexcept;
 

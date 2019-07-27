@@ -91,6 +91,10 @@ std::string FSMMonitor::getName() const noexcept {
 	return pImpl_->getName();
 }
 
+const GLFWmonitor* FSMMonitor::getHandle() const noexcept {
+    return pImpl_->getHandle();
+}
+
 GLFWgammaramp FSMMonitor::getGammaRamp() const noexcept {
 	LOG(TRACE) << __FUNCTION__;
 	return pImpl_->getGammaRamp();
