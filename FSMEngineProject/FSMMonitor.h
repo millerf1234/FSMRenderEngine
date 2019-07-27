@@ -109,8 +109,10 @@ namespace FSMEngineInternal {
 }
 
 //Struct returned by FSMMonitor objects as part
-//of their interface. Defines the work area of 
-//the monitor
+//of their interface. Defines the Workarea of 
+//a monitor, which is the part of the screen
+//that is not occluded by the Operating 
+//System's task bars or UI. 
 struct MonitorWorkarea {
     int xPos;
     int yPos;
@@ -143,7 +145,7 @@ public:
 	float getContentScaleY() const noexcept;
 
     //Returns the position (in screen coordinates) of the upper-left corner of the
-    //workarea along with the length and width of the workarea. The work area is
+    //Workarea along with the length and width of the Workarea. The Workarea is
     //defined as the part of the screen that is not occluded by the Operating 
     //System's task bars or UI. 
     MonitorWorkarea getWorkarea() const noexcept;
