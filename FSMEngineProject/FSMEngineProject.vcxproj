@@ -710,6 +710,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="GLSL_References.txt" />
+    <Text Include="Header_QuickInfo_Experiments.txt" />
     <Text Include="IntermediateHeadersImplementation_readme.txt" />
     <Text Include="MovingTo64Bit.txt" />
     <Text Include="Notes\NotesOnMSVC.txt" />

@@ -1889,5 +1889,8 @@
     <Text Include="NoteToSelf.txt">
       <Filter>ThirdParty\Audio\OpenAL</Filter>
     </Text>
+    <Text Include="Header_QuickInfo_Experiments.txt">
+      <Filter>Notes</Filter>
+    </Text>
   </ItemGroup>
 </Project>
