@@ -34,7 +34,7 @@
 #include "glad_includer.h"
 
 
-#define GLFW_INCLUDE_GLCOREARB
+//#define GLFW_INCLUDE_GLCOREARB  //Not portable? Needs testing
 
 #include "..\\GLFW\\glfw3.h" 
 
