@@ -18,7 +18,7 @@
 //                                                                                                                                                                    
 //                                                                                                                                                                    
 //                                                                                                                                                                    
-// Description:                       [In Leu of The Traditional Rambling Multi-Paragraphed Desciption You Are In All Likelyhood Regularly                            
+// Description:                       [In Leu of The Traditional Rambling Multi-Paragraphed Description You Are In All Likelyhood Regularly                            
 //                                     Skipping-In-Entirety At This Point, An Alternative Experimental Approach Has Been Undertaken In Documenting                    
 //                                      This Type]                                                                                                  
 //                                                                                                                                                                    
@@ -49,8 +49,8 @@
 //  glfwMonitor Pointer Which Serves    |  Callback Fn |                          |                      |  --------------  |        ))     |          |              
 //   as a Unique Handle and an Event    |  Will Ensure |   [Disconnection Queue]  |                      |                  |       //      +----------+              
 //    Code for Connect/Disconnect]      |  The Monitor |   ,;=============,       |                      | FSMMonitorHandle |      ((                                 
-//    ,==----------------------------.  | Handle       |  //              \\      |                      |                  |       \\                                
-//   /++/  ~~  ~~  ~~  ~~  ~~  ~~   ++\ |              | //     _________  |\     |[Once a matching      |  --------------  |        ))                               
+//    ,==----------------------------.  |   Handle [?] |  //              \\      |                      |                  |       \\                                
+//   /++/  ~~  ~~  ~~  ~~  ~~  ~~   ++\ |  [Is valid?] | //     _________  |\     |[Once a matching      |  --------------  |        ))                               
 //  /++/ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++\_/_____________|//   \_/<</<</<</==+ \    |  handle is found     |                  |       //                                
 //      Monitor Disconnection Event     (]=[HANDLE]=>=(/  ;-<{[--|--|--{------)<----<----<---<---<---<---| FSMMonitorHandle |      ((                                 
 //  \++\ ~~  ~~  ~~  ~~  ~~  ~~  ~~  ++/¯\¯¯¯¯¯¯¯¯¯¯¯¯¯|  /  /¯\<<\<<\<<\====J    | amongst the active   |                  |       \\                                
@@ -63,7 +63,7 @@
 //    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~((~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
 //                                                                                                                                  \\                                
 //                                                                                                                                   ))                               
-//  Psych! Here is a descripton anyways                                                                                                                               
+//  Psych! Here is a description anyways                                                                                                                              
 //  Description:
 //            Monitor connections and disconnections are processed completely autonomously by the FSMEngine 
 //          [as long as the 'processEvents()' function is called regularly]. Due to the external hardware nature 
