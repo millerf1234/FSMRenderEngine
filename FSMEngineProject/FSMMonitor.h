@@ -123,7 +123,8 @@ struct MonitorWorkarea {
 class FSMMonitor final {
 public:
     //Please do not try to create this type yourself, it has been 
-    //designed in a special way which allows it to function 
+    //designed in a special way where the engine will create objects
+	//of this type and the engine provides a function for getting them
 	FSMMonitor() = delete;
 	FSMMonitor(const FSMMonitor&);
 	FSMMonitor(FSMMonitor&&) noexcept;
@@ -155,6 +156,9 @@ public:
 
 	std::string getName() const noexcept;
 
+	//Get this object's internal monitor handle (will be useful 
+	//for making direct calls to GLFW's API)
+	const GLFWmonitor* getHandle() const noexcept;
 
     //Retrieves the current gamma ramp for this monitor.
 	GLFWgammaramp getGammaRamp() const noexcept;
