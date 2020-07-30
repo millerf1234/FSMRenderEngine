@@ -19,7 +19,7 @@ public:
     Application& operator=(const Application& that) = delete;
 
 
-    Application(int argc = 0, const char** argv = nullptr) noexcept;
+    Application(int argc, const char** argv) noexcept;
 
     ~Application() noexcept;
 

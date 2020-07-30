@@ -3,7 +3,7 @@
 #include "Application.h"
 
 
-Application::Application(int argc, char** argv) noexcept {
+Application::Application(int argc, const char** argv) noexcept {
     
     mBundle_ = nullptr;
 
@@ -20,7 +20,7 @@ Application::~Application() noexcept {
 void Application::launch() noexcept {
     LOG(TRACE) << __FUNCTION__;
 
-    mBundle_ = FSM_DO_FAST_INIT(); //Here is where the black vodoo magic happens
+    mBundle_ = FSM_DO_FAST_INIT(); //Here is where the black voodoo magic happens
     
     if (mBundle_->failures)
         reportFastInitFailures(*mBundle_);
